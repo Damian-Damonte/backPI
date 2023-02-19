@@ -12,16 +12,16 @@ import jakarta.persistence.*;
 public class Categoria {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", updatable = false)
+    @Column(name = "id", updatable = false, length = 45)
     private Long id;
 
     @Column(name = "titulo", nullable = false)
     private String titulo;
 
-    @Column(name = "descripcion")
+    @Column(name = "descripcion", nullable = false)
     private String descripcion;
 
-    @Column(name = "urlImagen")
+    @Column(name = "urlImagen", nullable = false)
     private String urlImagen;
 
     public Categoria() {
