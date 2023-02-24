@@ -35,6 +35,7 @@ public class ProductoServiceImp implements ProductoService {
     @Override
     public Producto saveProducto(Producto producto) {
         emptyTitleValidation(producto.getTitulo());
+        emptyCategoriaValidation(producto);
 
         Categoria categoria = categoriaServiceImp.existByIdValidation(producto.getCategoria().getId());
         producto.setCategoria(categoria);
@@ -52,6 +53,7 @@ public class ProductoServiceImp implements ProductoService {
     public Producto updateProducto(Producto updateProducto) {
         existByIdValidation(updateProducto.getId());
         emptyTitleValidation(updateProducto.getTitulo());
+        emptyCategoriaValidation(updateProducto);
 
         Categoria categoria = categoriaServiceImp.existByIdValidation(updateProducto.getCategoria().getId());
         updateProducto.setCategoria(categoria);
@@ -70,5 +72,10 @@ public class ProductoServiceImp implements ProductoService {
     private void emptyTitleValidation (String titulo){
         if(titulo == null || titulo.equals(""))
             throw new BadRequestException("El producto debe contener un titulo");
+    }
+
+    private void emptyCategoriaValidation(Producto producto) {
+        if(producto.getCategoria() == null)
+            throw new BadRequestException("El producto debe contener una categoria");
     }
 }

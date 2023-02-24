@@ -1,8 +1,6 @@
 package com.proyectoIntegrador.sprint1.service;
 
 import com.proyectoIntegrador.sprint1.model.Pais;
-import com.proyectoIntegrador.sprint1.model.Producto;
-
 import java.util.List;
 
 public interface PaisService {

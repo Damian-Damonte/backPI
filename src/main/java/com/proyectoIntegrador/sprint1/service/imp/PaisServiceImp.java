@@ -66,7 +66,7 @@ public class PaisServiceImp implements PaisService {
                 new NotFoundException("Pais con id " + id + " no encontrado"));
     }
 
-    public void emptyNombreValidation(String nombre) {
+    private void emptyNombreValidation(String nombre) {
         if(nombre == null || nombre.equals(""))
             throw new BadRequestException("El pais debe contener un nombre");
     }
