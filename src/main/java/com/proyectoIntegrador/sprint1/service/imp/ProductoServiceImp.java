@@ -2,6 +2,7 @@ package com.proyectoIntegrador.sprint1.service.imp;
 
 import com.proyectoIntegrador.sprint1.exception.BadRequestException;
 import com.proyectoIntegrador.sprint1.exception.NotFoundException;
+import com.proyectoIntegrador.sprint1.model.Categoria;
 import com.proyectoIntegrador.sprint1.model.Producto;
 import com.proyectoIntegrador.sprint1.repository.ProductoRepository;
 import com.proyectoIntegrador.sprint1.service.CategoriaService;
@@ -14,11 +15,11 @@ import java.util.List;
 public class ProductoServiceImp implements ProductoService {
 
     private final ProductoRepository productoRepository;
-    private final CategoriaService categoriaService;
+    private final CategoriaServiceImp categoriaServiceImp;
 
-    public ProductoServiceImp(ProductoRepository productoRepository, CategoriaService categoriaService) {
+    public ProductoServiceImp(ProductoRepository productoRepository, CategoriaServiceImp categoriaServiceImp) {
         this.productoRepository = productoRepository;
-        this.categoriaService = categoriaService;
+        this.categoriaServiceImp = categoriaServiceImp;
     }
 
     @Override
@@ -33,12 +34,10 @@ public class ProductoServiceImp implements ProductoService {
 
     @Override
     public Producto saveProducto(Producto producto) {
-        String titulo = producto.getTitulo();
-        String tituloDescripcion = producto.getTituloDescripcion();
-        String descripcion = producto.getDescripcion();
+        emptyTitleValidation(producto.getTitulo());
 
-        if(titulo == null || titulo.equals(""))
-            throw new BadRequestException("El producto debe contener un titulo");
+        Categoria categoria = categoriaServiceImp.existByIdValidation(producto.getCategoria().getId());
+        producto.setCategoria(categoria);
 
         return productoRepository.save(producto);
     }
@@ -53,6 +52,9 @@ public class ProductoServiceImp implements ProductoService {
     public Producto updateProducto(Producto updateProducto) {
         existByIdValidation(updateProducto.getId());
         emptyTitleValidation(updateProducto.getTitulo());
+
+        Categoria categoria = categoriaServiceImp.existByIdValidation(updateProducto.getCategoria().getId());
+        updateProducto.setCategoria(categoria);
 
         return productoRepository.save(updateProducto);
     }

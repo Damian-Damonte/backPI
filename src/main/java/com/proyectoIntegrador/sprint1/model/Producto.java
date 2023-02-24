@@ -17,13 +17,23 @@ public class Producto {
     @Column(name = "descripcion", columnDefinition = "TEXT")
     private String descripcion;
 
+    @ManyToOne
+    @JoinColumn(
+            name = "categoria_id",
+            nullable = false,
+            referencedColumnName = "id",
+            foreignKey = @ForeignKey(name = "productos_categorias_fk")
+    )
+    private Categoria categoria;
+
     public Producto() {
     }
 
-    public Producto(String titulo, String tituloDescripcion, String descripcion) {
+    public Producto(String titulo, String tituloDescripcion, String descripcion, Categoria categoria) {
         this.titulo = titulo;
         this.tituloDescripcion = tituloDescripcion;
         this.descripcion = descripcion;
+        this.categoria = categoria;
     }
 
     public Long getId() {
@@ -56,5 +66,13 @@ public class Producto {
 
     public void setDescripcion(String description) {
         this.descripcion = description;
+    }
+
+    public Categoria getCategoria() {
+        return categoria;
+    }
+
+    public void setCategoria(Categoria categoria) {
+        this.categoria = categoria;
     }
 }

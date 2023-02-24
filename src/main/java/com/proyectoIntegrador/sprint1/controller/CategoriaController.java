@@ -32,7 +32,7 @@ public class CategoriaController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> deleteCategoria(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteCategoria(@PathVariable Long id) {
         categoriaServiceImp.deleteCategoria(id);
         return ResponseEntity.noContent().build();
     }

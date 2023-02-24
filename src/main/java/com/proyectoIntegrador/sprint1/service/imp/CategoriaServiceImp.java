@@ -78,7 +78,7 @@ public class CategoriaServiceImp implements CategoriaService {
         return categoriaRepository.save(currentCategoria);
     }
 
-    private Categoria existByIdValidation(Long id) {
+    public Categoria existByIdValidation(Long id) {
         if(id == null)
             throw new BadRequestException("Debe enviar el id de la categoria");
         return categoriaRepository.findById(id).orElseThrow(() ->
