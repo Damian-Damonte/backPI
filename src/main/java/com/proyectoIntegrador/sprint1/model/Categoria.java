@@ -12,10 +12,10 @@ import jakarta.persistence.*;
 public class Categoria {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", updatable = false, length = 45)
+    @Column(name = "id", updatable = false)
     private Long id;
 
-    @Column(name = "titulo", nullable = false)
+    @Column(name = "titulo", nullable = false, length = 45)
     private String titulo;
 
     @Column(name = "descripcion", nullable = false)
