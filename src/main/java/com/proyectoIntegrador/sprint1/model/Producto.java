@@ -10,20 +10,20 @@ public class Producto {
     @Column(name = "id", updatable = false)
     private Long id;
 
-    @Column(name = "title", length = 45)
-    private String title;
+    @Column(name = "titulo", nullable = false, length = 45)
+    private String titulo;
     @Column(name = "title_description", length = 100)
-    private String titleDescription;
+    private String tituloDescripcion;
     @Column(name = "descripcion", columnDefinition = "TEXT")
-    private String description;
+    private String descripcion;
 
     public Producto() {
     }
 
-    public Producto(String title, String titleDescription, String description) {
-        this.title = title;
-        this.titleDescription = titleDescription;
-        this.description = description;
+    public Producto(String titulo, String tituloDescripcion, String descripcion) {
+        this.titulo = titulo;
+        this.tituloDescripcion = tituloDescripcion;
+        this.descripcion = descripcion;
     }
 
     public Long getId() {
@@ -34,27 +34,27 @@ public class Producto {
         this.id = id;
     }
 
-    public String getTitle() {
-        return title;
+    public String getTitulo() {
+        return titulo;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public void setTitulo(String title) {
+        this.titulo = title;
     }
 
-    public String getTitleDescription() {
-        return titleDescription;
+    public String getTituloDescripcion() {
+        return tituloDescripcion;
     }
 
-    public void setTitleDescription(String titleDescription) {
-        this.titleDescription = titleDescription;
+    public void setTituloDescripcion(String titleDescription) {
+        this.tituloDescripcion = titleDescription;
     }
 
-    public String getDescription() {
-        return description;
+    public String getDescripcion() {
+        return descripcion;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setDescripcion(String description) {
+        this.descripcion = description;
     }
 }
