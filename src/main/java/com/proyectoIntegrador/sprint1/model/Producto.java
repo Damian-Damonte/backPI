@@ -26,14 +26,24 @@ public class Producto {
     )
     private Categoria categoria;
 
+    @ManyToOne
+    @JoinColumn(
+            name = "ciudad_id",
+            nullable = false,
+            referencedColumnName = "id",
+            foreignKey = @ForeignKey(name = "productos_ciudad_fk")
+    )
+    private Ciudad ciudad;
+
     public Producto() {
     }
 
-    public Producto(String titulo, String tituloDescripcion, String descripcion, Categoria categoria) {
+    public Producto(String titulo, String tituloDescripcion, String descripcion, Categoria categoria, Ciudad ciudad) {
         this.titulo = titulo;
         this.tituloDescripcion = tituloDescripcion;
         this.descripcion = descripcion;
         this.categoria = categoria;
+        this.ciudad = ciudad;
     }
 
     public Long getId() {
@@ -74,5 +84,13 @@ public class Producto {
 
     public void setCategoria(Categoria categoria) {
         this.categoria = categoria;
+    }
+
+    public Ciudad getCiudad() {
+        return ciudad;
+    }
+
+    public void setCiudad(Ciudad ciudad) {
+        this.ciudad = ciudad;
     }
 }

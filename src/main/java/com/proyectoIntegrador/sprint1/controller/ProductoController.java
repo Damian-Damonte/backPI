@@ -1,6 +1,8 @@
 package com.proyectoIntegrador.sprint1.controller;
 
 import com.proyectoIntegrador.sprint1.model.Producto;
+import com.proyectoIntegrador.sprint1.projection.ProductoProjection;
+import com.proyectoIntegrador.sprint1.repository.ProductoRepository;
 import com.proyectoIntegrador.sprint1.service.imp.ProductoServiceImp;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,9 +18,14 @@ public class ProductoController {
         this.productoServiceImp = productoServiceImp;
     }
 
+    @GetMapping("/get-all-reduced")
+    public ResponseEntity<List<ProductoProjection>> getAllSoft() {
+        return ResponseEntity.ok(productoServiceImp.getAllProductoReduced());
+    }
+
     @GetMapping
     public ResponseEntity<List<Producto>> getAll() {
-        return ResponseEntity.ok(productoServiceImp.allProductos());
+        return ResponseEntity.ok(productoServiceImp.getAllProducto());
     }
 
     @GetMapping("/{id}")

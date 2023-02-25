@@ -2,6 +2,8 @@ package com.proyectoIntegrador.sprint1.model;
 
 import jakarta.persistence.*;
 
+import java.math.BigDecimal;
+
 @Entity(name = "Pais")
 @Table(
         name = "paises",

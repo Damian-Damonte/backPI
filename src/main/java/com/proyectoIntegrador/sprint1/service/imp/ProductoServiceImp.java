@@ -3,7 +3,9 @@ package com.proyectoIntegrador.sprint1.service.imp;
 import com.proyectoIntegrador.sprint1.exception.BadRequestException;
 import com.proyectoIntegrador.sprint1.exception.NotFoundException;
 import com.proyectoIntegrador.sprint1.model.Categoria;
+import com.proyectoIntegrador.sprint1.model.Ciudad;
 import com.proyectoIntegrador.sprint1.model.Producto;
+import com.proyectoIntegrador.sprint1.projection.ProductoProjection;
 import com.proyectoIntegrador.sprint1.repository.ProductoRepository;
 import com.proyectoIntegrador.sprint1.service.CategoriaService;
 import com.proyectoIntegrador.sprint1.service.ProductoService;
@@ -16,15 +18,22 @@ public class ProductoServiceImp implements ProductoService {
 
     private final ProductoRepository productoRepository;
     private final CategoriaServiceImp categoriaServiceImp;
+    private final CiudadServiceImp ciudadServiceImp;
 
-    public ProductoServiceImp(ProductoRepository productoRepository, CategoriaServiceImp categoriaServiceImp) {
+    public ProductoServiceImp(ProductoRepository productoRepository, CategoriaServiceImp categoriaServiceImp, CiudadServiceImp ciudadServiceImp) {
         this.productoRepository = productoRepository;
         this.categoriaServiceImp = categoriaServiceImp;
+        this.ciudadServiceImp = ciudadServiceImp;
     }
 
     @Override
-    public List<Producto> allProductos() {
+    public List<Producto> getAllProducto() {
         return productoRepository.findAll();
+    }
+
+    @Override
+    public List<ProductoProjection> getAllProductoReduced() {
+        return productoRepository.findAllBy();
     }
 
     @Override
@@ -34,13 +43,7 @@ public class ProductoServiceImp implements ProductoService {
 
     @Override
     public Producto saveProducto(Producto producto) {
-        emptyTitleValidation(producto.getTitulo());
-        emptyCategoriaValidation(producto);
-
-        Categoria categoria = categoriaServiceImp.existByIdValidation(producto.getCategoria().getId());
-        producto.setCategoria(categoria);
-
-        return productoRepository.save(producto);
+        return getProducto(producto);
     }
 
     @Override
@@ -52,15 +55,21 @@ public class ProductoServiceImp implements ProductoService {
     @Override
     public Producto updateProducto(Producto updateProducto) {
         existByIdValidation(updateProducto.getId());
-        emptyTitleValidation(updateProducto.getTitulo());
-        emptyCategoriaValidation(updateProducto);
-
-        Categoria categoria = categoriaServiceImp.existByIdValidation(updateProducto.getCategoria().getId());
-        updateProducto.setCategoria(categoria);
-
-        return productoRepository.save(updateProducto);
+        return getProducto(updateProducto);
     }
 
+    private Producto getProducto(Producto producto) {
+        emptyTitleValidation(producto);
+        emptyCategoriaValidation(producto);
+        emptyCiudadValidation(producto);
+
+        Ciudad ciudad = ciudadServiceImp.existByIdValidation(producto.getCiudad().getId());
+        Categoria categoria = categoriaServiceImp.existByIdValidation(producto.getCategoria().getId());
+        producto.setCiudad(ciudad);
+        producto.setCategoria(categoria);
+
+        return productoRepository.save(producto);
+    }
 
     private Producto existByIdValidation(Long id) {
         if(id == null)
@@ -69,13 +78,19 @@ public class ProductoServiceImp implements ProductoService {
                 new NotFoundException("Producto con id " + id + " no encontrado"));
     }
 
-    private void emptyTitleValidation (String titulo){
-        if(titulo == null || titulo.equals(""))
+    private void emptyTitleValidation (Producto producto){
+        String titulo = producto.getTitulo();
+        if( titulo == null || titulo.equals(""))
             throw new BadRequestException("El producto debe contener un titulo");
     }
 
     private void emptyCategoriaValidation(Producto producto) {
         if(producto.getCategoria() == null)
             throw new BadRequestException("El producto debe contener una categoria");
+    }
+
+    private void emptyCiudadValidation(Producto producto) {
+        if(producto.getCiudad() == null)
+            throw new BadRequestException("El producto debe contener una ciudad");
     }
 }

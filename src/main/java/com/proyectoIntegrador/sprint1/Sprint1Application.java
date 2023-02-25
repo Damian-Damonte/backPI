@@ -1,9 +1,13 @@
 package com.proyectoIntegrador.sprint1;
 
 import com.proyectoIntegrador.sprint1.model.Categoria;
+import com.proyectoIntegrador.sprint1.model.Ciudad;
 import com.proyectoIntegrador.sprint1.model.Pais;
+import com.proyectoIntegrador.sprint1.model.Producto;
 import com.proyectoIntegrador.sprint1.repository.CategoriaRepository;
+import com.proyectoIntegrador.sprint1.repository.CiudadRepository;
 import com.proyectoIntegrador.sprint1.repository.PaisRepository;
+import com.proyectoIntegrador.sprint1.repository.ProductoRepository;
 import com.proyectoIntegrador.sprint1.service.imp.CategoriaServiceImp;
 import com.proyectoIntegrador.sprint1.service.imp.PaisServiceImp;
 import com.proyectoIntegrador.sprint1.service.imp.ProductoServiceImp;
@@ -25,34 +29,38 @@ public class Sprint1Application {
 	@Bean
 	CommandLineRunner commandLineRunner(
 			CategoriaRepository categoriaRepository,
-			PaisRepository paisRepository
+			PaisRepository paisRepository,
+			CiudadRepository ciudadRepository,
+			ProductoRepository productoRepository
 	) {
 		return args -> {
-			Categoria hotel = new Categoria(
-					"Hotel",
-					"Descripcion de la categoria Hotel",
-					"http://imagen-categoria-hotel.com");
-			Categoria hostel = new Categoria(
-					"Hostel",
-					"Descripcion de la categoria Hostel",
-					"http://imagen-categoria-hostel.com");
-			Categoria departamento = new Categoria(
-					"Departamento",
-					"Descripcion de la categoria Departamento",
-					"http://imagen-categoria-departamento.com");
-			Categoria bedAndBreakfast = new Categoria(
-					"Bed and breakfast",
-					"Descripcion de la categoria Bed and breakfast",
-					"http://imagen-categoria-Bed and breakfast.com");
-			categoriaRepository.saveAll(List.of(hotel, hostel, departamento, bedAndBreakfast));
+			Categoria hotel = categoriaRepository.save(new Categoria("Hotel", "Descripcion de la categoria Hotel", "http://imagen-categoria-hotel.com"));
+			Categoria hostel = categoriaRepository.save(new Categoria("Hostel", "Descripcion de la categoria Hostel", "http://imagen-categoria-hostel.com"));
+			Categoria departamento = categoriaRepository.save(new Categoria("Departamento", "Descripcion de la categoria Departamento", "http://imagen-categoria-departamento.com"));
+			Categoria bedAndBreakfast = categoriaRepository.save(new Categoria("Bed and breakfast", "Descripcion de la categoria Bed and breakfast", "http://imagen-categoria-Bed and breakfast.com"));
 
-			Pais argentina = new Pais("Argentina");
-			Pais chile = new Pais("Chile");
-			Pais uruguay = new Pais("Uruguay");
-			Pais brasil = new Pais("Brasil");
-			Pais colombia = new Pais("Colombia");
-			paisRepository.saveAll(List.of(argentina, chile, uruguay, brasil, colombia));
+			Pais argentina = paisRepository.save(new Pais("Argentina"));
+			Pais chile = paisRepository.save(new Pais("Chile"));
+			Pais uruguay = paisRepository.save(new Pais("Uruguay"));
+			Pais brasil = paisRepository.save(new Pais("Brasil"));
+			Pais colombia = paisRepository.save(new Pais("Colombia"));
 
+			Ciudad buenosAires = ciudadRepository.save(new Ciudad("Buenos Aires", argentina));
+			Ciudad santiago = ciudadRepository.save(new Ciudad("Santiago", chile));
+			Ciudad monteVideo = ciudadRepository.save(new Ciudad("Montevide", uruguay));
+			Ciudad rioDeJaneiro = ciudadRepository.save(new Ciudad("Rio de Janeiro", brasil));
+			Ciudad cali = ciudadRepository.save(new Ciudad("Cali", colombia));
+
+			Producto hotel1 = new Producto("Hotel 1", "Titulo de la descripcion del hotel 1" , "Descripcion del hotel 1",
+					hotel, buenosAires);
+			Producto hostel1 = new Producto("Hostel 1", "Titulo de la descripcion del hostel 1" , "Descripcion del hostel 1",
+					hostel, rioDeJaneiro);
+			Producto departamento1 = new Producto("Deparatamento 1", "Titulo de la descripcion del departamento 1" , "Descripcion del departamento 1",
+					departamento, cali);
+			Producto bedAndBreakfast1 = new Producto("BedAndBreakfast1 1", "Titulo de la descripcion del bedAndBreakfast1 1" , "Descripcion del bedAndBreakfast1 1",
+					bedAndBreakfast, santiago);
+
+			productoRepository.saveAll(List.of(hotel1, hostel1, departamento1, bedAndBreakfast1));
 
 
 		};
