@@ -49,8 +49,8 @@ public class PaisServiceImp implements PaisService {
         Long id = updatePais.getId();
         String nombre = updatePais.getNombre();
 
-        existByIdValidation(id);
         emptyNombreValidation(nombre);
+        existByIdValidation(id);
 
         Pais paisByNombre = paisRepository.findByNombre(nombre).orElse(null);
         if(paisByNombre != null && !(paisByNombre.getId().equals(id)))

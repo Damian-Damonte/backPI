@@ -2,14 +2,14 @@ package com.proyectoIntegrador.sprint1.model;
 
 import jakarta.persistence.*;
 
-@Entity(name = "Pais")
+@Entity(name = "Caracteristica")
 @Table(
-        name = "paises",
+        name = "caracteristicas",
         uniqueConstraints = {
-                @UniqueConstraint(name = "paises_nombre_unique", columnNames = "nombre")
+                @UniqueConstraint(name = "caracteristicas_nombre_unique", columnNames = "nombre")
         }
 )
-public class Pais {
+public class Caracteristica {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", updatable = false)
@@ -17,10 +17,10 @@ public class Pais {
     @Column(name = "nombre", nullable = false)
     private String nombre;
 
-    public Pais() {
+    public Caracteristica() {
     }
 
-    public Pais(String nombre) {
+    public Caracteristica(String nombre) {
         this.nombre = nombre;
     }
 

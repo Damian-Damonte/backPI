@@ -1,13 +1,7 @@
 package com.proyectoIntegrador.sprint1;
 
-import com.proyectoIntegrador.sprint1.model.Categoria;
-import com.proyectoIntegrador.sprint1.model.Ciudad;
-import com.proyectoIntegrador.sprint1.model.Pais;
-import com.proyectoIntegrador.sprint1.model.Producto;
-import com.proyectoIntegrador.sprint1.repository.CategoriaRepository;
-import com.proyectoIntegrador.sprint1.repository.CiudadRepository;
-import com.proyectoIntegrador.sprint1.repository.PaisRepository;
-import com.proyectoIntegrador.sprint1.repository.ProductoRepository;
+import com.proyectoIntegrador.sprint1.model.*;
+import com.proyectoIntegrador.sprint1.repository.*;
 import com.proyectoIntegrador.sprint1.service.imp.CategoriaServiceImp;
 import com.proyectoIntegrador.sprint1.service.imp.PaisServiceImp;
 import com.proyectoIntegrador.sprint1.service.imp.ProductoServiceImp;
@@ -31,7 +25,8 @@ public class Sprint1Application {
 			CategoriaRepository categoriaRepository,
 			PaisRepository paisRepository,
 			CiudadRepository ciudadRepository,
-			ProductoRepository productoRepository
+			ProductoRepository productoRepository,
+			CaracteristicaRepository caracteristicaRepository
 	) {
 		return args -> {
 			Categoria hotel = categoriaRepository.save(new Categoria("Hotel", "Descripcion de la categoria Hotel", "http://imagen-categoria-hotel.com"));
@@ -61,6 +56,14 @@ public class Sprint1Application {
 					bedAndBreakfast, santiago);
 
 			productoRepository.saveAll(List.of(hotel1, hostel1, departamento1, bedAndBreakfast1));
+
+			Caracteristica wifi = caracteristicaRepository.save(new Caracteristica("Wifi"));
+			Caracteristica cocina = caracteristicaRepository.save(new Caracteristica("Cocina"));
+			Caracteristica televisor = caracteristicaRepository.save(new Caracteristica("Televisor"));
+			Caracteristica pileta = caracteristicaRepository.save(new Caracteristica("Pileta"));
+			Caracteristica aptoMascotas = caracteristicaRepository.save(new Caracteristica("Apto mascotas"));
+
+
 
 
 		};
