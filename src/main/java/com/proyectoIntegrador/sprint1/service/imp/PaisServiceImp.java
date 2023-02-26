@@ -40,7 +40,10 @@ public class PaisServiceImp implements PaisService {
 
     @Override
     public void deletePais(Long id) {
-        existByIdValidation(id);
+        Pais pais = existByIdValidation(id);
+        if(!(pais.getCiudades().isEmpty()))
+            throw new BadRequestException("No puede eliminar el pais con id " + id + " ya que hay ciudades registradas en dicho pais");
+
         paisRepository.deleteById(id);
     }
 

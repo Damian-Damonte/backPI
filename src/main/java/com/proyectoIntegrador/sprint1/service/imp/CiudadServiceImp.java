@@ -41,7 +41,11 @@ public class CiudadServiceImp implements CiudadService {
 
     @Override
     public void deleteCiudad(Long id) {
-        existByIdValidation(id);
+        Ciudad ciudad = existByIdValidation(id);
+        if(!(ciudad.getProductos().isEmpty()))
+            throw new BadRequestException("No puede eliminar la ciudad con id " + id + " ya que hay productos que en dicha ciudad");
+
+
         ciudadRepository.deleteById(id);
     }
 

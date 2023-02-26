@@ -1,6 +1,10 @@
 package com.proyectoIntegrador.sprint1.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity(name = "Ciudad")
 @Table(
@@ -23,6 +27,10 @@ public class Ciudad {
             foreignKey = @ForeignKey(name = "ciudades_paises_fk")
     )
     private Pais pais;
+
+    @OneToMany(mappedBy = "ciudad")
+    @JsonIgnore
+    private Set<Producto> productos = new HashSet<>();
 
     public Ciudad() {
     }
@@ -54,5 +62,13 @@ public class Ciudad {
 
     public void setPais(Pais pais) {
         this.pais = pais;
+    }
+
+    public Set<Producto> getProductos() {
+        return productos;
+    }
+
+    public void setProductos(Set<Producto> productos) {
+        this.productos = productos;
     }
 }

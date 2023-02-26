@@ -47,7 +47,10 @@ public class CategoriaServiceImp implements CategoriaService {
 
     @Override
     public void deleteCategoria(Long id) {
-        existByIdValidation(id);
+        Categoria categoria = existByIdValidation(id);
+        if(!(categoria.getProductos().isEmpty()))
+            throw new BadRequestException("No puede eliminar la categoria con id " + id + " ya que hay productos de dicha categoria");
+
         categoriaRepository.deleteById(id);
     }
 

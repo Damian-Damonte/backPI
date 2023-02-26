@@ -1,6 +1,8 @@
 package com.proyectoIntegrador.sprint1.model;
 
 import jakarta.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity(name = "Producto")
 @Table(name = "productos")
@@ -35,6 +37,14 @@ public class Producto {
     )
     private Ciudad ciudad;
 
+    @ManyToMany
+    @JoinTable(
+            name = "productos_caracteristicas",
+            joinColumns = @JoinColumn(name = "producto_id"),
+            inverseJoinColumns = @JoinColumn(name = "caracteristica_id")
+    )
+    private Set<Caracteristica> caracteristicas = new HashSet<>();
+
     public Producto() {
     }
 
@@ -44,6 +54,15 @@ public class Producto {
         this.descripcion = descripcion;
         this.categoria = categoria;
         this.ciudad = ciudad;
+    }
+
+    public Producto(String titulo, String tituloDescripcion, String descripcion, Categoria categoria, Ciudad ciudad, Set<Caracteristica> caracteristicas) {
+        this.titulo = titulo;
+        this.tituloDescripcion = tituloDescripcion;
+        this.descripcion = descripcion;
+        this.categoria = categoria;
+        this.ciudad = ciudad;
+        this.caracteristicas = caracteristicas;
     }
 
     public Long getId() {
@@ -92,5 +111,13 @@ public class Producto {
 
     public void setCiudad(Ciudad ciudad) {
         this.ciudad = ciudad;
+    }
+
+    public Set<Caracteristica> getCaracteristicas() {
+        return caracteristicas;
+    }
+
+    public void setCaracteristicas(Set<Caracteristica> caracteristicas) {
+        this.caracteristicas = caracteristicas;
     }
 }

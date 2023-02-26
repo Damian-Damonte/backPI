@@ -2,16 +2,20 @@ package com.proyectoIntegrador.sprint1.service.imp;
 
 import com.proyectoIntegrador.sprint1.exception.BadRequestException;
 import com.proyectoIntegrador.sprint1.exception.NotFoundException;
+import com.proyectoIntegrador.sprint1.model.Caracteristica;
 import com.proyectoIntegrador.sprint1.model.Categoria;
 import com.proyectoIntegrador.sprint1.model.Ciudad;
 import com.proyectoIntegrador.sprint1.model.Producto;
 import com.proyectoIntegrador.sprint1.projection.ProductoProjection;
+import com.proyectoIntegrador.sprint1.repository.CaracteristicaRepository;
 import com.proyectoIntegrador.sprint1.repository.ProductoRepository;
 import com.proyectoIntegrador.sprint1.service.CategoriaService;
 import com.proyectoIntegrador.sprint1.service.ProductoService;
 import org.springframework.stereotype.Service;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class ProductoServiceImp implements ProductoService {
@@ -19,11 +23,13 @@ public class ProductoServiceImp implements ProductoService {
     private final ProductoRepository productoRepository;
     private final CategoriaServiceImp categoriaServiceImp;
     private final CiudadServiceImp ciudadServiceImp;
+    private final CaracteristicaServiceImp caracteristicaServiceImp;
 
-    public ProductoServiceImp(ProductoRepository productoRepository, CategoriaServiceImp categoriaServiceImp, CiudadServiceImp ciudadServiceImp) {
+    public ProductoServiceImp(ProductoRepository productoRepository, CategoriaServiceImp categoriaServiceImp, CiudadServiceImp ciudadServiceImp, CaracteristicaServiceImp caracteristicaServiceImp) {
         this.productoRepository = productoRepository;
         this.categoriaServiceImp = categoriaServiceImp;
         this.ciudadServiceImp = ciudadServiceImp;
+        this.caracteristicaServiceImp = caracteristicaServiceImp;
     }
 
     @Override
@@ -64,9 +70,16 @@ public class ProductoServiceImp implements ProductoService {
         emptyCiudadValidation(producto);
 
         Ciudad ciudad = ciudadServiceImp.existByIdValidation(producto.getCiudad().getId());
-        Categoria categoria = categoriaServiceImp.existByIdValidation(producto.getCategoria().getId());
         producto.setCiudad(ciudad);
+        Categoria categoria = categoriaServiceImp.existByIdValidation(producto.getCategoria().getId());
         producto.setCategoria(categoria);
+
+        Set<Caracteristica> caracteristicas = new HashSet<>();
+        producto.getCaracteristicas().forEach(car-> {
+            Caracteristica currentCar = caracteristicaServiceImp.existByIdValidation(car.getId());
+            caracteristicas.add(currentCar);
+        });
+        producto.setCaracteristicas(caracteristicas);
 
         return productoRepository.save(producto);
     }

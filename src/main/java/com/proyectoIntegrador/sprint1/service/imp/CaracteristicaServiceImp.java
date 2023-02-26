@@ -4,6 +4,7 @@ import com.proyectoIntegrador.sprint1.exception.BadRequestException;
 import com.proyectoIntegrador.sprint1.exception.NotFoundException;
 import com.proyectoIntegrador.sprint1.model.Caracteristica;
 import com.proyectoIntegrador.sprint1.model.Pais;
+import com.proyectoIntegrador.sprint1.model.Producto;
 import com.proyectoIntegrador.sprint1.repository.CaracteristicaRepository;
 import com.proyectoIntegrador.sprint1.service.CaracteristicaService;
 import org.springframework.stereotype.Service;
@@ -40,7 +41,10 @@ public class CaracteristicaServiceImp implements CaracteristicaService {
 
     @Override
     public void deleteCaracteristica(Long id) {
-        existByIdValidation(id);
+        Caracteristica caracteristica = existByIdValidation(id);
+        for (Producto producto : caracteristica.getProductos()) {
+            producto.getCaracteristicas().remove(caracteristica);
+        }
         caracteristicaRepository.deleteById(id);
     }
 
