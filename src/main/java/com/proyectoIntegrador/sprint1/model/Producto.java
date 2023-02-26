@@ -45,6 +45,13 @@ public class Producto {
     )
     private Set<Caracteristica> caracteristicas = new HashSet<>();
 
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(
+            name = "producto_id",
+            referencedColumnName = "id"
+    )
+    private Set<Imagen> imagenes = new HashSet<>();
+
     public Producto() {
     }
 
@@ -119,5 +126,13 @@ public class Producto {
 
     public void setCaracteristicas(Set<Caracteristica> caracteristicas) {
         this.caracteristicas = caracteristicas;
+    }
+
+    public Set<Imagen> getImagenes() {
+        return imagenes;
+    }
+
+    public void setImagenes(Set<Imagen> imagenes) {
+        this.imagenes = imagenes;
     }
 }
