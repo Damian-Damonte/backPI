@@ -7,9 +7,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity(name = "Ciudad")
-@Table(
-        name = "ciudades"
-)
+@Table(name = "ciudades")
 public class Ciudad {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
