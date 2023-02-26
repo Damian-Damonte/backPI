@@ -16,6 +16,15 @@ public class Imagen {
     @Column(name = "url", nullable = false)
     private String url;
 
+    @ManyToOne
+    @JoinColumn(
+            name = "producto_id",
+            nullable = false,
+            referencedColumnName = "id",
+            foreignKey = @ForeignKey(name = "imgen_producto_fk")
+    )
+    private Producto producto;
+
     public Imagen() {
     }
 
@@ -46,5 +55,13 @@ public class Imagen {
 
     public void setUrl(String url) {
         this.url = url;
+    }
+
+    public Producto getProducto() {
+        return producto;
+    }
+
+    public void setProducto(Producto producto) {
+        this.producto = producto;
     }
 }

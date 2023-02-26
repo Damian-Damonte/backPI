@@ -3,18 +3,20 @@ package com.proyectoIntegrador.sprint1.service.imp;
 import com.proyectoIntegrador.sprint1.exception.BadRequestException;
 import com.proyectoIntegrador.sprint1.exception.NotFoundException;
 import com.proyectoIntegrador.sprint1.model.Imagen;
+import com.proyectoIntegrador.sprint1.model.Producto;
 import com.proyectoIntegrador.sprint1.repository.ImagenRepository;
 import com.proyectoIntegrador.sprint1.service.ImagenService;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 
 @Service
 public class ImagenServiceImp implements ImagenService {
     private final ImagenRepository imagenRepository;
+    private final ProductoServiceImp productoServiceImp;
 
-    public ImagenServiceImp(ImagenRepository imagenRepository) {
+    public ImagenServiceImp(ImagenRepository imagenRepository, ProductoServiceImp productoServiceImp) {
         this.imagenRepository = imagenRepository;
+        this.productoServiceImp = productoServiceImp;
     }
 
     @Override
@@ -29,7 +31,8 @@ public class ImagenServiceImp implements ImagenService {
 
     @Override
     public Imagen saveImagen(Imagen imagen) {
-        emptyTituloAndUrlValidation(imagen);
+        emptyAttributesValidation(imagen);
+        productoServiceImp.existByIdValidation(imagen.getProducto().getId());
         return imagenRepository.save(imagen);
     }
 
@@ -43,7 +46,8 @@ public class ImagenServiceImp implements ImagenService {
     @Override
     public Imagen updateImagen(Imagen imagen) {
         existByIdValidation(imagen.getId());
-        emptyTituloAndUrlValidation(imagen);
+        emptyAttributesValidation(imagen);
+        productoServiceImp.existByIdValidation(imagen.getProducto().getId());
         return imagenRepository.save(imagen);
     }
 
@@ -54,12 +58,15 @@ public class ImagenServiceImp implements ImagenService {
                 new NotFoundException("Imagen con id " + id + " no encontrada"));
     }
 
-    private void emptyTituloAndUrlValidation(Imagen imagen) {
+    private void emptyAttributesValidation(Imagen imagen) {
         String titulo = imagen.getTitulo();
         String url = imagen.getUrl();
+        Producto producto = imagen.getProducto();
         if(titulo == null || titulo.equals(""))
             throw new BadRequestException("La imagen debe contener un titulo");
         if(url == null || url.equals(""))
             throw new BadRequestException("La imagen debe contener una url");
+        if(producto == null)
+            throw new BadRequestException("La imagen debe pertenecer a un producto");
     }
 }

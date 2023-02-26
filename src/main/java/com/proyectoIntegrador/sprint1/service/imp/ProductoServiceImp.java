@@ -89,7 +89,7 @@ public class ProductoServiceImp implements ProductoService {
         return productoRepository.save(producto);
     }
 
-    private Producto existByIdValidation(Long id) {
+    public Producto existByIdValidation(Long id) {
         if(id == null)
             throw new BadRequestException("Debe enviar el id del producto");
         return productoRepository.findById(id).orElseThrow(() ->
