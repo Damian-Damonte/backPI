@@ -8,6 +8,7 @@ import java.util.List;
 public interface ProductoService {
     List<Producto> getAllProducto();
     List<ProductoProjection> getAllProductoReduced();
+    List<ProductoProjection> getAllProductoByCiudadIdReduced(Long ciudadId);
     Producto getProductoById(Long id);
     Producto saveProducto(Producto producto);
     void deleteProducto(Long id);

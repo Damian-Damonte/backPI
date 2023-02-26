@@ -43,6 +43,11 @@ public class ProductoServiceImp implements ProductoService {
     }
 
     @Override
+    public List<ProductoProjection> getAllProductoByCiudadIdReduced(Long ciudadId) {
+        return productoRepository.findAllByCiudad(ciudadId);
+    }
+
+    @Override
     public Producto getProductoById(Long id) {
         return existByIdValidation(id);
     }
