@@ -31,8 +31,7 @@ public class CiudadServiceImp implements CiudadService {
 
     @Override
     public Ciudad saveCiudad(Ciudad ciudad) {
-        emptyNombreValidation(ciudad.getNombre());
-        emptyPaisValidation(ciudad);
+        emptyAttributesValidation(ciudad);
         Pais pais = paisServiceImp.existByIdValidation(ciudad.getPais().getId());
         ciudad.setPais(pais);
 
@@ -45,19 +44,14 @@ public class CiudadServiceImp implements CiudadService {
         if(!(ciudad.getProductos().isEmpty()))
             throw new BadRequestException("No puede eliminar la ciudad con id " + id + " ya que hay productos que en dicha ciudad");
 
-
         ciudadRepository.deleteById(id);
     }
 
     @Override
     public Ciudad updateCiudad(Ciudad ciudad) {
-        Long id = ciudad.getId();
-
-        emptyNombreValidation(ciudad.getNombre());
-        existByIdValidation(id);
-        emptyPaisValidation(ciudad);
+        emptyAttributesValidation(ciudad);
+        existByIdValidation(ciudad.getId());
         Pais pais = paisServiceImp.existByIdValidation(ciudad.getPais().getId());
-
         ciudad.setPais(pais);
 
         return ciudadRepository.save(ciudad);
@@ -70,12 +64,10 @@ public class CiudadServiceImp implements CiudadService {
                 new NotFoundException("Ciudad con id " + id + " no encontrada"));
     }
 
-    private void emptyNombreValidation(String nombre) {
+    private void emptyAttributesValidation(Ciudad ciudad) {
+        String nombre = ciudad.getNombre();
         if(nombre == null || nombre.equals(""))
             throw new BadRequestException("Las ciudad debe contener un nombre");
-    }
-
-    private void emptyPaisValidation(Ciudad ciudad) {
         if(ciudad.getPais() == null)
             throw new BadRequestException("La ciudad debe contener un pais");
     }
