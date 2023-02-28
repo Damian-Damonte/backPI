@@ -39,6 +39,11 @@ public class ProductoServiceImp implements ProductoService {
     }
 
     @Override
+    public List<Producto> getRandomProductos() {
+        return productoRepository.findRandom();
+    }
+
+    @Override
     public Producto getProductoById(Long id) {
         return existByIdValidation(id);
     }

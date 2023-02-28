@@ -29,6 +29,11 @@ public class ProductoController {
         return ResponseEntity.ok(productoServiceImp.getAllWithFilters(ciudadId, categoriaId));
     }
 
+    @GetMapping("/random")
+    public ResponseEntity<List<Producto>> getRandomProducto() {
+        return ResponseEntity.ok(productoServiceImp.getRandomProductos());
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<Producto> getById(@PathVariable("id") Long id) {
         return ResponseEntity.ok(productoServiceImp.getProductoById(id));

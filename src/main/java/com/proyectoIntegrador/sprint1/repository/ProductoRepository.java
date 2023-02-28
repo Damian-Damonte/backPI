@@ -18,4 +18,7 @@ public interface ProductoRepository extends JpaRepository<Producto, Long> {
     List<Producto> findAllWithFilters(
             @Param("ciudadId") Long ciudadId,
             @Param("categoriaId") Long categoriaId);
+
+    @Query("SELECT p FROM Producto p ORDER BY RAND() LIMIT 4")
+    List<Producto> findRandom();
 }
