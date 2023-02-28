@@ -1,16 +1,21 @@
 package com.proyectoIntegrador.sprint1.repository;
 
 import com.proyectoIntegrador.sprint1.model.Producto;
-import com.proyectoIntegrador.sprint1.projection.ProductoProjection;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
-
+import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Repository
+@Transactional(readOnly = true)
 public interface ProductoRepository extends JpaRepository<Producto, Long> {
-    List<ProductoProjection> findAllBy();
-    @Query("SELECT p FROM Producto p WHERE p.ciudad.id = ?1")
-    List<ProductoProjection> findAllByCiudad(Long ciudadId);
+    @Query(
+            "SELECT p FROM Producto p WHERE (:ciudadId IS NULL OR p.ciudad.id = :ciudadId) AND " +
+                    "(:categoriaId IS NULL OR p.categoria.id = :categoriaId)"
+    )
+    List<Producto> findAllWithFilters(
+            @Param("ciudadId") Long ciudadId,
+            @Param("categoriaId") Long categoriaId);
 }

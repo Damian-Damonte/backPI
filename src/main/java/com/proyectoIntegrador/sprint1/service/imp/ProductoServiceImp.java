@@ -6,13 +6,9 @@ import com.proyectoIntegrador.sprint1.model.Caracteristica;
 import com.proyectoIntegrador.sprint1.model.Categoria;
 import com.proyectoIntegrador.sprint1.model.Ciudad;
 import com.proyectoIntegrador.sprint1.model.Producto;
-import com.proyectoIntegrador.sprint1.projection.ProductoProjection;
-import com.proyectoIntegrador.sprint1.repository.CaracteristicaRepository;
 import com.proyectoIntegrador.sprint1.repository.ProductoRepository;
-import com.proyectoIntegrador.sprint1.service.CategoriaService;
 import com.proyectoIntegrador.sprint1.service.ProductoService;
 import org.springframework.stereotype.Service;
-
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -38,13 +34,8 @@ public class ProductoServiceImp implements ProductoService {
     }
 
     @Override
-    public List<ProductoProjection> getAllProductoReduced() {
-        return productoRepository.findAllBy();
-    }
-
-    @Override
-    public List<ProductoProjection> getAllProductoByCiudadIdReduced(Long ciudadId) {
-        return productoRepository.findAllByCiudad(ciudadId);
+    public List<Producto> getAllWithFilters(Long ciudadId, Long categoriaId) {
+        return productoRepository.findAllWithFilters(ciudadId, categoriaId);
     }
 
     @Override
