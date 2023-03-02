@@ -48,7 +48,8 @@ public class Producto {
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(
             name = "producto_id",
-            referencedColumnName = "id"
+            referencedColumnName = "id",
+            foreignKey = @ForeignKey(name = "productos_imagenes_id_fk")
     )
     private Set<Imagen> imagenes = new HashSet<>();
 
@@ -56,9 +57,19 @@ public class Producto {
     @JoinColumn(
             name = "producto_id",
             referencedColumnName = "id",
-            nullable = false
+            nullable = false,
+            foreignKey = @ForeignKey(name = "productos_politicas_id_fk")
+
     )
     private Set<Politica> politicas = new HashSet<>();
+
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(
+            name = "coordenadas_id",
+            referencedColumnName = "id",
+            foreignKey = @ForeignKey(name = "coordenadas_id_fk")
+    )
+    private Coordenadas coordenadas;
 
     public Producto() {
     }
@@ -150,5 +161,13 @@ public class Producto {
 
     public void setPoliticas(Set<Politica> politicas) {
         this.politicas = politicas;
+    }
+
+    public Coordenadas getCoordenadas() {
+        return coordenadas;
+    }
+
+    public void setCoordenadas(Coordenadas coordenadas) {
+        this.coordenadas = coordenadas;
     }
 }

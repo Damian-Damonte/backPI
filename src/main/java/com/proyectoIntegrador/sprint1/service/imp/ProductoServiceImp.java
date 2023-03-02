@@ -82,9 +82,13 @@ public class ProductoServiceImp implements ProductoService {
         });
         producto.setCaracteristicas(caracteristicas);
 
+        producto.getImagenes().forEach(this::imagenValidation);
+
         Set<Politica> politicas = new HashSet<>();
         producto.getPoliticas().forEach(politica -> {
+            politicaValidation(politica);
             TipoPolitica tipoPolitica;
+
             if (politica.getTipoPolitica().getId() != null) {
                 tipoPolitica = tipoPoliticaServiceImp.existByIdValidation(
                         politica.getTipoPolitica().getId());
@@ -92,11 +96,14 @@ public class ProductoServiceImp implements ProductoService {
                 tipoPolitica = tipoPoliticaServiceImp.saveTipoPolitica(
                         politica.getTipoPolitica());
             }
+
             politica.setTipoPolitica(tipoPolitica);
             politicas.add(politica);
         });
         producto.setPoliticas(politicas);
 
+        if(producto.getCoordenadas() != null)
+            coordenadasValidation(producto);
 
         return productoRepository.save(producto);
     }
@@ -122,5 +129,32 @@ public class ProductoServiceImp implements ProductoService {
     private void emptyCiudadValidation(Producto producto) {
         if (producto.getCiudad() == null)
             throw new BadRequestException("El producto debe contener una ciudad");
+    }
+
+    private void imagenValidation(Imagen imagen) {
+        String titulo = imagen.getTitulo();
+        String url = imagen.getUrl();
+        if(titulo == null || titulo.equals(""))
+            throw new BadRequestException("Las imagenes debe contener un titulo");
+        if(url == null || url.equals(""))
+            throw new BadRequestException("Las imagenes debe contener una url");
+    }
+
+    private void politicaValidation(Politica politica) {
+        String descripcion = politica.getDescripcion();
+        TipoPolitica tipoPolitica = politica.getTipoPolitica();
+
+        if(descripcion == null || descripcion.equals(""))
+            throw new BadRequestException("Las politicas debe contener una descripcion");
+        if(tipoPolitica == null)
+            throw new BadRequestException("Las politicas debe contener un tipo de politica");
+    }
+
+    private void coordenadasValidation(Producto producto) {
+        Coordenadas coordenadas = producto.getCoordenadas();
+        if(coordenadas.getLongitud() == null)
+            throw new BadRequestException("Las coordenadas debe contener la longitud");
+        if(coordenadas.getLatitud() == null)
+            throw new BadRequestException("Las coordenadas debe contener la latitud");
     }
 }
