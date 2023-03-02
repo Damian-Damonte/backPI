@@ -26,7 +26,8 @@ public class Sprint1Application {
 			PaisRepository paisRepository,
 			CiudadRepository ciudadRepository,
 			ProductoRepository productoRepository,
-			CaracteristicaRepository caracteristicaRepository
+			CaracteristicaRepository caracteristicaRepository,
+			TipoPoliticaRepository tipoPoliticaRepository
 	) {
 		return args -> {
 			Categoria hotel = categoriaRepository.save(new Categoria("Hotel", "Descripcion de la categoria Hotel", "http://imagen-categoria-hotel.com"));
@@ -63,6 +64,9 @@ public class Sprint1Application {
 			Caracteristica pileta = caracteristicaRepository.save(new Caracteristica("Pileta"));
 			Caracteristica aptoMascotas = caracteristicaRepository.save(new Caracteristica("Apto mascotas"));
 
+			TipoPolitica normasDeLaCasa = tipoPoliticaRepository.save(new TipoPolitica("Normas de la casa"));
+			TipoPolitica politicaDeCancelacion = tipoPoliticaRepository.save(new TipoPolitica("Politicas de cancelacion"));
+			TipoPolitica saludYSeguridad = tipoPoliticaRepository.save(new TipoPolitica("Salud y seguridad"));
 
 
 

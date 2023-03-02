@@ -52,6 +52,14 @@ public class Producto {
     )
     private Set<Imagen> imagenes = new HashSet<>();
 
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(
+            name = "producto_id",
+            referencedColumnName = "id",
+            nullable = false
+    )
+    private Set<Politica> politicas = new HashSet<>();
+
     public Producto() {
     }
 
@@ -134,5 +142,13 @@ public class Producto {
 
     public void setImagenes(Set<Imagen> imagenes) {
         this.imagenes = imagenes;
+    }
+
+    public Set<Politica> getPoliticas() {
+        return politicas;
+    }
+
+    public void setPoliticas(Set<Politica> politicas) {
+        this.politicas = politicas;
     }
 }

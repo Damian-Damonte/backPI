@@ -2,13 +2,11 @@ package com.proyectoIntegrador.sprint1.service.imp;
 
 import com.proyectoIntegrador.sprint1.exception.BadRequestException;
 import com.proyectoIntegrador.sprint1.exception.NotFoundException;
-import com.proyectoIntegrador.sprint1.model.Caracteristica;
-import com.proyectoIntegrador.sprint1.model.Categoria;
-import com.proyectoIntegrador.sprint1.model.Ciudad;
-import com.proyectoIntegrador.sprint1.model.Producto;
+import com.proyectoIntegrador.sprint1.model.*;
 import com.proyectoIntegrador.sprint1.repository.ProductoRepository;
 import com.proyectoIntegrador.sprint1.service.ProductoService;
 import org.springframework.stereotype.Service;
+
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -20,12 +18,14 @@ public class ProductoServiceImp implements ProductoService {
     private final CategoriaServiceImp categoriaServiceImp;
     private final CiudadServiceImp ciudadServiceImp;
     private final CaracteristicaServiceImp caracteristicaServiceImp;
+    private final TipoPoliticaServiceImp tipoPoliticaServiceImp;
 
-    public ProductoServiceImp(ProductoRepository productoRepository, CategoriaServiceImp categoriaServiceImp, CiudadServiceImp ciudadServiceImp, CaracteristicaServiceImp caracteristicaServiceImp) {
+    public ProductoServiceImp(ProductoRepository productoRepository, CategoriaServiceImp categoriaServiceImp, CiudadServiceImp ciudadServiceImp, CaracteristicaServiceImp caracteristicaServiceImp, TipoPoliticaServiceImp tipoPoliticaServiceImp) {
         this.productoRepository = productoRepository;
         this.categoriaServiceImp = categoriaServiceImp;
         this.ciudadServiceImp = ciudadServiceImp;
         this.caracteristicaServiceImp = caracteristicaServiceImp;
+        this.tipoPoliticaServiceImp = tipoPoliticaServiceImp;
     }
 
     @Override
@@ -76,35 +76,51 @@ public class ProductoServiceImp implements ProductoService {
         producto.setCategoria(categoria);
 
         Set<Caracteristica> caracteristicas = new HashSet<>();
-        producto.getCaracteristicas().forEach(car-> {
+        producto.getCaracteristicas().forEach(car -> {
             Caracteristica currentCar = caracteristicaServiceImp.existByIdValidation(car.getId());
             caracteristicas.add(currentCar);
         });
         producto.setCaracteristicas(caracteristicas);
 
+        Set<Politica> politicas = new HashSet<>();
+        producto.getPoliticas().forEach(politica -> {
+            TipoPolitica tipoPolitica;
+            if (politica.getTipoPolitica().getId() != null) {
+                tipoPolitica = tipoPoliticaServiceImp.existByIdValidation(
+                        politica.getTipoPolitica().getId());
+            } else {
+                tipoPolitica = tipoPoliticaServiceImp.saveTipoPolitica(
+                        politica.getTipoPolitica());
+            }
+            politica.setTipoPolitica(tipoPolitica);
+            politicas.add(politica);
+        });
+        producto.setPoliticas(politicas);
+
+
         return productoRepository.save(producto);
     }
 
     public Producto existByIdValidation(Long id) {
-        if(id == null)
+        if (id == null)
             throw new BadRequestException("Debe enviar el id del producto");
         return productoRepository.findById(id).orElseThrow(() ->
                 new NotFoundException("Producto con id " + id + " no encontrado"));
     }
 
-    private void emptyTitleValidation (Producto producto){
+    private void emptyTitleValidation(Producto producto) {
         String titulo = producto.getTitulo();
-        if( titulo == null || titulo.equals(""))
+        if (titulo == null || titulo.equals(""))
             throw new BadRequestException("El producto debe contener un titulo");
     }
 
     private void emptyCategoriaValidation(Producto producto) {
-        if(producto.getCategoria() == null)
+        if (producto.getCategoria() == null)
             throw new BadRequestException("El producto debe contener una categoria");
     }
 
     private void emptyCiudadValidation(Producto producto) {
-        if(producto.getCiudad() == null)
+        if (producto.getCiudad() == null)
             throw new BadRequestException("El producto debe contener una ciudad");
     }
 }

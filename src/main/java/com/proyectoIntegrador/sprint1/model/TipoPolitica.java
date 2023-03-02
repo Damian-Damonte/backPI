@@ -1,6 +1,10 @@
 package com.proyectoIntegrador.sprint1.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity(name = "TipoPolitica")
 @Table(
@@ -17,6 +21,10 @@ public class TipoPolitica {
 
     @Column(name = "nombre", length = 100)
     private String nombre;
+
+    @OneToMany(mappedBy = "tipoPolitica")
+    @JsonIgnore
+    Set<Politica> politicas = new HashSet<>();
 
     public TipoPolitica() {
     }
@@ -39,5 +47,13 @@ public class TipoPolitica {
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
+    }
+
+    public Set<Politica> getPoliticas() {
+        return politicas;
+    }
+
+    public void setPoliticas(Set<Politica> politicas) {
+        this.politicas = politicas;
     }
 }

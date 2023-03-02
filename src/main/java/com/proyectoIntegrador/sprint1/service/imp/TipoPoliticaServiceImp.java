@@ -43,7 +43,8 @@ public class TipoPoliticaServiceImp implements TipoPoliticaService {
     @Override
     public void deleteTipoPolitica(Long id) {
         TipoPolitica tipoPolitica = existByIdValidation(id);
-//       Agregar validacion de si hay politicas con este tipo
+        if(!(tipoPolitica.getPoliticas().isEmpty()))
+            throw new BadRequestException("No puede eliminar el tipo de politica con id " + id + " ya que hay politicas registradas de este tipo");
         tipoPoliticaRepository.deleteById(id);
     }
 
