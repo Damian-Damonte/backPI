@@ -5,6 +5,8 @@ import com.proyectoIntegrador.sprint1.repository.*;
 import com.proyectoIntegrador.sprint1.service.imp.CategoriaServiceImp;
 import com.proyectoIntegrador.sprint1.service.imp.PaisServiceImp;
 import com.proyectoIntegrador.sprint1.service.imp.ProductoServiceImp;
+import io.swagger.v3.oas.annotations.OpenAPIDefinition;
+import io.swagger.v3.oas.annotations.info.Info;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -13,6 +15,13 @@ import org.springframework.context.annotation.Bean;
 import java.util.List;
 
 @SpringBootApplication
+@OpenAPIDefinition(
+		info = @Info(
+				title = "Digital Booking API",
+				version = "1.0.0",
+				description = "API RESTful desarrollada por el grupo 1 de la camada 7 de Certified Tech Developer. Este proyecto forma parte del proyecto integrador del primer track."
+		)
+)
 public class Sprint1Application {
 
 	public static void main(String[] args) {

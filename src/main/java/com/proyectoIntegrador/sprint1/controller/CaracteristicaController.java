@@ -3,6 +3,7 @@ package com.proyectoIntegrador.sprint1.controller;
 import com.proyectoIntegrador.sprint1.model.Caracteristica;
 import com.proyectoIntegrador.sprint1.model.Pais;
 import com.proyectoIntegrador.sprint1.service.imp.CaracteristicaServiceImp;
+import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -34,6 +35,7 @@ public class CaracteristicaController {
     }
 
     @DeleteMapping("/{id}")
+    @Operation(description = "La característica será eliminada de todos los productos.")
     public ResponseEntity<Void> deleteCaracteristica(@PathVariable Long id) {
         caracteristicaServiceImp.deleteCaracteristica(id);
         return ResponseEntity.noContent().build();
