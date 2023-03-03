@@ -56,16 +56,16 @@ public class Sprint1Application {
 			Ciudad rioDeJaneiro = ciudadRepository.save(new Ciudad("Rio de Janeiro", brasil));
 			Ciudad cali = ciudadRepository.save(new Ciudad("Cali", colombia));
 
-			Producto hotel1 = new Producto("Hotel 1", "Titulo de la descripcion del hotel 1" , "Descripcion del hotel 1",
-					hotel, buenosAires);
-			Producto hostel1 = new Producto("Hostel 1", "Titulo de la descripcion del hostel 1" , "Descripcion del hostel 1",
-					hostel, rioDeJaneiro);
-			Producto departamento1 = new Producto("Deparatamento 1", "Titulo de la descripcion del departamento 1" , "Descripcion del departamento 1",
-					departamento, cali);
-			Producto bedAndBreakfast1 = new Producto("BedAndBreakfast1 1", "Titulo de la descripcion del bedAndBreakfast1 1" , "Descripcion del bedAndBreakfast1 1",
-					bedAndBreakfast, santiago);
-
-			productoRepository.saveAll(List.of(hotel1, hostel1, departamento1, bedAndBreakfast1));
+//			Producto hotel1 = new Producto("Hotel 1", "Titulo de la descripcion del hotel 1" , "Descripcion del hotel 1",
+//					hotel, buenosAires);
+//			Producto hostel1 = new Producto("Hostel 1", "Titulo de la descripcion del hostel 1" , "Descripcion del hostel 1",
+//					hostel, rioDeJaneiro);
+//			Producto departamento1 = new Producto("Deparatamento 1", "Titulo de la descripcion del departamento 1" , "Descripcion del departamento 1",
+//					departamento, cali);
+//			Producto bedAndBreakfast1 = new Producto("BedAndBreakfast1 1", "Titulo de la descripcion del bedAndBreakfast1 1" , "Descripcion del bedAndBreakfast1 1",
+//					bedAndBreakfast, santiago);
+//
+//			productoRepository.saveAll(List.of(hotel1, hostel1, departamento1, bedAndBreakfast1));
 
 			Caracteristica wifi = caracteristicaRepository.save(new Caracteristica("Wifi"));
 			Caracteristica cocina = caracteristicaRepository.save(new Caracteristica("Cocina"));

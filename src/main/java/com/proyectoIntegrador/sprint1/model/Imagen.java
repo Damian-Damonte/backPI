@@ -1,5 +1,6 @@
 package com.proyectoIntegrador.sprint1.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 @Entity(name = "Imagen")
@@ -15,6 +16,15 @@ public class Imagen {
 
     @Column(name = "url", nullable = false)
     private String url;
+
+    @ManyToOne
+    @JoinColumn(
+            name = "producto_id",
+            referencedColumnName = "id",
+            foreignKey = @ForeignKey(name = "productos_imagenes_id_fk")
+    )
+    @JsonIgnore
+    private Producto producto;
 
     public Imagen() {
     }
@@ -48,4 +58,11 @@ public class Imagen {
         this.url = url;
     }
 
+    public Producto getProducto() {
+        return producto;
+    }
+
+    public void setProducto(Producto producto) {
+        this.producto = producto;
+    }
 }

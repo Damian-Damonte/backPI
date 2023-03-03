@@ -6,6 +6,7 @@ import com.proyectoIntegrador.sprint1.model.*;
 import com.proyectoIntegrador.sprint1.repository.ProductoRepository;
 import com.proyectoIntegrador.sprint1.service.ProductoService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashSet;
 import java.util.List;
@@ -50,6 +51,7 @@ public class ProductoServiceImp implements ProductoService {
         return existByIdValidation(id);
     }
 
+    @Transactional
     @Override
     public Producto saveProducto(Producto producto) {
         producto.getImagenes().forEach(img -> img.setId(null));
@@ -57,12 +59,14 @@ public class ProductoServiceImp implements ProductoService {
         return getProducto(producto);
     }
 
+    @Transactional
     @Override
     public void deleteProducto(Long id) {
         existByIdValidation(id);
         productoRepository.deleteById(id);
     }
 
+    @Transactional
     @Override
     public Producto updateProducto(Producto updateProducto) {
         existByIdValidation(updateProducto.getId());
@@ -77,14 +81,9 @@ public class ProductoServiceImp implements ProductoService {
         Categoria categoria = categoriaServiceImp.existByIdValidation(producto.getCategoria().getId());
         producto.setCategoria(categoria);
 
-        Set<Caracteristica> caracteristicas = new HashSet<>();
-        producto.getCaracteristicas().forEach(car -> {
-            Caracteristica currentCar = caracteristicaServiceImp.existByIdValidation(car.getId());
-            caracteristicas.add(currentCar);
-        });
-        producto.setCaracteristicas(caracteristicas);
+        getCaracteristicas(producto);
 
-        producto.getImagenes().forEach(this::imagenValidation);
+        getImagenes(producto);
 
         Set<Politica> politicas = new HashSet<>();
         producto.getPoliticas().forEach(politica -> {
@@ -127,23 +126,24 @@ public class ProductoServiceImp implements ProductoService {
             throw new BadRequestException("El producto debe contener una ciudad");
     }
 
-    private void emptyTitleValidation(Producto producto) {
-        String titulo = producto.getTitulo();
-        if (titulo == null || titulo.equals(""))
-            throw new BadRequestException("El producto debe contener un titulo");
+    private void getCaracteristicas(Producto producto) {
+        Set<Caracteristica> caracteristicas = new HashSet<>();
+        producto.getCaracteristicas().forEach(car -> {
+            Caracteristica currentCar = caracteristicaServiceImp.existByIdValidation(car.getId());
+            caracteristicas.add(currentCar);
+        });
+        producto.setCaracteristicas(caracteristicas);
     }
 
-    private void emptyCategoriaValidation(Producto producto) {
-        if (producto.getCategoria() == null)
-            throw new BadRequestException("El producto debe contener una categoria");
+    private void getImagenes(Producto producto) {
+        Long productoId = producto.getId();
+        producto.getImagenes().forEach(img -> {
+            imagenValidation(productoId, img);
+            img.setProducto(producto);
+        });
     }
 
-    private void emptyCiudadValidation(Producto producto) {
-        if (producto.getCiudad() == null)
-            throw new BadRequestException("El producto debe contener una ciudad");
-    }
-
-    private void imagenValidation(Imagen imagen) {
+    private void imagenValidation(Long productoId, Imagen imagen) {
         Long id = imagen.getId();
         String titulo = imagen.getTitulo();
         String url = imagen.getUrl();
@@ -151,8 +151,11 @@ public class ProductoServiceImp implements ProductoService {
             throw new BadRequestException("Las imagenes debe contener un titulo");
         if(url == null || url.equals(""))
             throw new BadRequestException("Las imagenes debe contener una url");
-        if(id != null)
-            imagenServiceImp.getByIdImagen(id);
+        if(id != null){
+            Imagen currentImg = imagenServiceImp.getByIdImagen(id);
+            if(!(currentImg.getProducto().getId().equals(productoId)))
+                throw new BadRequestException("La imagen con id " + id + " no pertenece a este producto");
+        }
     }
 
     private void politicaValidation(Politica politica) {

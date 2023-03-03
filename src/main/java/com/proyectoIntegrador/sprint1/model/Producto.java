@@ -45,12 +45,12 @@ public class Producto {
     )
     private Set<Caracteristica> caracteristicas = new HashSet<>();
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(
-            name = "producto_id",
-            referencedColumnName = "id",
-            foreignKey = @ForeignKey(name = "productos_imagenes_id_fk")
-    )
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "producto")
+//    @JoinColumn(
+//            name = "producto_id",
+//            referencedColumnName = "id",
+//            foreignKey = @ForeignKey(name = "productos_imagenes_id_fk")
+//    )
     private Set<Imagen> imagenes = new HashSet<>();
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
