@@ -21,6 +21,7 @@ public class Imagen {
     @JoinColumn(
             name = "producto_id",
             referencedColumnName = "id",
+            nullable = false,
             foreignKey = @ForeignKey(name = "productos_imagenes_id_fk")
     )
     @JsonIgnore

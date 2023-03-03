@@ -40,27 +40,21 @@ public class Producto {
     @ManyToMany
     @JoinTable(
             name = "productos_caracteristicas",
-            joinColumns = @JoinColumn(name = "producto_id"),
-            inverseJoinColumns = @JoinColumn(name = "caracteristica_id")
+            joinColumns = @JoinColumn(
+                    name = "producto_id",
+                    foreignKey = @ForeignKey(name = "producto_caracteristica_id")
+            ),
+            inverseJoinColumns = @JoinColumn(
+                    name = "caracteristica_id",
+                    foreignKey = @ForeignKey(name = "caracteristica_producto_id")
+            )
     )
     private Set<Caracteristica> caracteristicas = new HashSet<>();
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "producto")
-//    @JoinColumn(
-//            name = "producto_id",
-//            referencedColumnName = "id",
-//            foreignKey = @ForeignKey(name = "productos_imagenes_id_fk")
-//    )
     private Set<Imagen> imagenes = new HashSet<>();
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(
-            name = "producto_id",
-            referencedColumnName = "id",
-            nullable = false,
-            foreignKey = @ForeignKey(name = "productos_politicas_id_fk")
-
-    )
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "producto")
     private Set<Politica> politicas = new HashSet<>();
 
     @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)

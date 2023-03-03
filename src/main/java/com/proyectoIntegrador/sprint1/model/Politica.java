@@ -1,5 +1,6 @@
 package com.proyectoIntegrador.sprint1.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 @Entity(name = "Politica")
@@ -21,6 +22,16 @@ public class Politica {
             foreignKey = @ForeignKey(name = "politicas_tipo_politicas_fk")
     )
     private TipoPolitica tipoPolitica;
+
+    @ManyToOne
+    @JoinColumn(
+            name = "producto_id",
+            referencedColumnName = "id",
+            nullable = false,
+            foreignKey = @ForeignKey(name = "productos_politicas_id_fk")
+    )
+    @JsonIgnore
+    private Producto producto;
 
     public Politica() {
     }
@@ -47,5 +58,13 @@ public class Politica {
 
     public void setTipoPolitica(TipoPolitica tipoPolitica) {
         this.tipoPolitica = tipoPolitica;
+    }
+
+    public Producto getProducto() {
+        return producto;
+    }
+
+    public void setProducto(Producto producto) {
+        this.producto = producto;
     }
 }

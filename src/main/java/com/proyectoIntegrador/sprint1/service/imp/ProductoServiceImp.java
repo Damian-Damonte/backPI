@@ -7,7 +7,6 @@ import com.proyectoIntegrador.sprint1.repository.ProductoRepository;
 import com.proyectoIntegrador.sprint1.service.ProductoService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -21,14 +20,16 @@ public class ProductoServiceImp implements ProductoService {
     private final CaracteristicaServiceImp caracteristicaServiceImp;
     private final TipoPoliticaServiceImp tipoPoliticaServiceImp;
     private final ImagenServiceImp imagenServiceImp;
+    private final PoliticaServiceImp politicaServiceImp;
 
-    public ProductoServiceImp(ProductoRepository productoRepository, CategoriaServiceImp categoriaServiceImp, CiudadServiceImp ciudadServiceImp, CaracteristicaServiceImp caracteristicaServiceImp, TipoPoliticaServiceImp tipoPoliticaServiceImp, ImagenServiceImp imagenServiceImp) {
+    public ProductoServiceImp(ProductoRepository productoRepository, CategoriaServiceImp categoriaServiceImp, CiudadServiceImp ciudadServiceImp, CaracteristicaServiceImp caracteristicaServiceImp, TipoPoliticaServiceImp tipoPoliticaServiceImp, ImagenServiceImp imagenServiceImp, PoliticaServiceImp politicaServiceImp) {
         this.productoRepository = productoRepository;
         this.categoriaServiceImp = categoriaServiceImp;
         this.ciudadServiceImp = ciudadServiceImp;
         this.caracteristicaServiceImp = caracteristicaServiceImp;
         this.tipoPoliticaServiceImp = tipoPoliticaServiceImp;
         this.imagenServiceImp = imagenServiceImp;
+        this.politicaServiceImp = politicaServiceImp;
     }
 
     @Override
@@ -55,6 +56,7 @@ public class ProductoServiceImp implements ProductoService {
     @Override
     public Producto saveProducto(Producto producto) {
         producto.getImagenes().forEach(img -> img.setId(null));
+        producto.getPoliticas().forEach(pol -> pol.setId(null));
 
         return getProducto(producto);
     }
@@ -76,54 +78,17 @@ public class ProductoServiceImp implements ProductoService {
     private Producto getProducto(Producto producto) {
         emptyAttributesValidation(producto);
 
-        Ciudad ciudad = ciudadServiceImp.existByIdValidation(producto.getCiudad().getId());
-        producto.setCiudad(ciudad);
-        Categoria categoria = categoriaServiceImp.existByIdValidation(producto.getCategoria().getId());
-        producto.setCategoria(categoria);
+        producto.setCiudad(ciudadServiceImp.existByIdValidation(producto.getCiudad().getId()));
+        producto.setCategoria(categoriaServiceImp.existByIdValidation(producto.getCategoria().getId()));
 
         getCaracteristicas(producto);
-
         getImagenes(producto);
-
-        Set<Politica> politicas = new HashSet<>();
-        producto.getPoliticas().forEach(politica -> {
-            politicaValidation(politica);
-            TipoPolitica tipoPolitica;
-
-            if (politica.getTipoPolitica().getId() != null) {
-                tipoPolitica = tipoPoliticaServiceImp.existByIdValidation(
-                        politica.getTipoPolitica().getId());
-            } else {
-                tipoPolitica = tipoPoliticaServiceImp.saveTipoPolitica(
-                        politica.getTipoPolitica());
-            }
-
-            politica.setTipoPolitica(tipoPolitica);
-            politicas.add(politica);
-        });
-        producto.setPoliticas(politicas);
+        getPoliticas(producto);
 
         if(producto.getCoordenadas() != null)
             coordenadasValidation(producto);
 
         return productoRepository.save(producto);
-    }
-
-    public Producto existByIdValidation(Long id) {
-        if (id == null)
-            throw new BadRequestException("Debe enviar el id del producto");
-        return productoRepository.findById(id).orElseThrow(() ->
-                new NotFoundException("Producto con id " + id + " no encontrado"));
-    }
-
-    private void emptyAttributesValidation(Producto producto) {
-        String titulo = producto.getTitulo();
-        if (titulo == null || titulo.equals(""))
-            throw new BadRequestException("El producto debe contener un titulo");
-        if (producto.getCategoria() == null)
-            throw new BadRequestException("El producto debe contener una categoria");
-        if (producto.getCiudad() == null)
-            throw new BadRequestException("El producto debe contener una ciudad");
     }
 
     private void getCaracteristicas(Producto producto) {
@@ -143,6 +108,45 @@ public class ProductoServiceImp implements ProductoService {
         });
     }
 
+    private void getPoliticas(Producto producto) {
+        Long productoId = producto.getId();
+        Set<Politica> politicas = new HashSet<>();
+        producto.getPoliticas().forEach(politica -> {
+            politicaValidation(productoId, politica);
+            getTipoPolitica(politica);
+            politica.setProducto(producto);
+            politicas.add(politica);
+        });
+        producto.setPoliticas(politicas);
+    }
+
+    private void getTipoPolitica(Politica politica) {
+        Long tipoPoliticaId = politica.getTipoPolitica().getId();
+
+        TipoPolitica tipoPolitica = tipoPoliticaId != null
+                ? tipoPoliticaServiceImp.existByIdValidation(tipoPoliticaId)
+                : tipoPoliticaServiceImp.saveTipoPolitica(politica.getTipoPolitica());
+
+        politica.setTipoPolitica(tipoPolitica);
+    }
+
+    public Producto existByIdValidation(Long id) {
+        if (id == null)
+            throw new BadRequestException("Debe enviar el id del producto");
+        return productoRepository.findById(id).orElseThrow(() ->
+                new NotFoundException("Producto con id " + id + " no encontrado"));
+    }
+
+    private void emptyAttributesValidation(Producto producto) {
+        String titulo = producto.getTitulo();
+        if (titulo == null || titulo.equals(""))
+            throw new BadRequestException("El producto debe contener un titulo");
+        if (producto.getCategoria() == null)
+            throw new BadRequestException("El producto debe contener una categoria");
+        if (producto.getCiudad() == null)
+            throw new BadRequestException("El producto debe contener una ciudad");
+    }
+
     private void imagenValidation(Long productoId, Imagen imagen) {
         Long id = imagen.getId();
         String titulo = imagen.getTitulo();
@@ -158,14 +162,19 @@ public class ProductoServiceImp implements ProductoService {
         }
     }
 
-    private void politicaValidation(Politica politica) {
+    private void politicaValidation(Long productoId, Politica politica) {
+        Long id = politica.getId();
         String descripcion = politica.getDescripcion();
-        TipoPolitica tipoPolitica = politica.getTipoPolitica();
-
         if(descripcion == null || descripcion.equals(""))
             throw new BadRequestException("Las politicas debe contener una descripcion");
-        if(tipoPolitica == null)
+        if(politica.getTipoPolitica() == null)
             throw new BadRequestException("Las politicas debe contener un tipo de politica");
+        if(id != null){
+            Politica currentPolitica = politicaServiceImp.getByIdPolitica(id);
+            if(!(currentPolitica.getProducto().getId().equals(productoId)))
+                throw new BadRequestException("La politica con id " + id + " no pertenece a este producto");
+        }
+
     }
 
     private void coordenadasValidation(Producto producto) {
