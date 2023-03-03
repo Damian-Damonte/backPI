@@ -57,6 +57,7 @@ public class ProductoServiceImp implements ProductoService {
     public Producto saveProducto(Producto producto) {
         producto.getImagenes().forEach(img -> img.setId(null));
         producto.getPoliticas().forEach(pol -> pol.setId(null));
+        producto.getCoordenadas().setId(null);
 
         return getProducto(producto);
     }
@@ -102,10 +103,13 @@ public class ProductoServiceImp implements ProductoService {
 
     private void getImagenes(Producto producto) {
         Long productoId = producto.getId();
+        Set<Imagen> imagenes = new HashSet<>();
         producto.getImagenes().forEach(img -> {
             imagenValidation(productoId, img);
             img.setProducto(producto);
+            imagenes.add(img);
         });
+        producto.setImagenes(imagenes);
     }
 
     private void getPoliticas(Producto producto) {

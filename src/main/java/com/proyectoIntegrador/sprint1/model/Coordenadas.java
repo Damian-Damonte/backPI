@@ -1,7 +1,6 @@
 package com.proyectoIntegrador.sprint1.model;
 
 import jakarta.persistence.*;
-
 import java.math.BigDecimal;
 
 @Entity(name = "Coordenadas")
@@ -18,6 +17,11 @@ public class Coordenadas {
     private BigDecimal longitud;
 
     public Coordenadas() {
+    }
+
+    public Coordenadas(BigDecimal latitud, BigDecimal longitud) {
+        this.latitud = latitud;
+        this.longitud = longitud;
     }
 
     public Long getId() {

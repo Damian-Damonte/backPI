@@ -36,6 +36,11 @@ public class Politica {
     public Politica() {
     }
 
+    public Politica(String descripcion, TipoPolitica tipoPolitica) {
+        this.descripcion = descripcion;
+        this.tipoPolitica = tipoPolitica;
+    }
+
     public Long getId() {
         return id;
     }

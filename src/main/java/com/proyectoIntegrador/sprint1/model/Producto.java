@@ -76,13 +76,16 @@ public class Producto {
         this.ciudad = ciudad;
     }
 
-    public Producto(String titulo, String tituloDescripcion, String descripcion, Categoria categoria, Ciudad ciudad, Set<Caracteristica> caracteristicas) {
+    public Producto(String titulo, String tituloDescripcion, String descripcion, Categoria categoria, Ciudad ciudad, Set<Caracteristica> caracteristicas, Set<Imagen> imagenes, Set<Politica> politicas, Coordenadas coordenadas) {
         this.titulo = titulo;
         this.tituloDescripcion = tituloDescripcion;
         this.descripcion = descripcion;
         this.categoria = categoria;
         this.ciudad = ciudad;
         this.caracteristicas = caracteristicas;
+        this.imagenes = imagenes;
+        this.politicas = politicas;
+        this.coordenadas = coordenadas;
     }
 
     public Long getId() {
