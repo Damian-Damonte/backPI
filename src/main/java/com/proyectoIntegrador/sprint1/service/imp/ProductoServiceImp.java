@@ -59,7 +59,8 @@ public class ProductoServiceImp implements ProductoService {
     public Producto saveProducto(Producto producto) {
         producto.getImagenes().forEach(img -> img.setId(null));
         producto.getPoliticas().forEach(pol -> pol.setId(null));
-        producto.getCoordenadas().setId(null);
+        if(producto.getCoordenadas() != null)
+            producto.getCoordenadas().setId(null);
 
         return getProducto(producto);
     }
@@ -87,10 +88,8 @@ public class ProductoServiceImp implements ProductoService {
         getCaracteristicas(producto);
         getImagenes(producto);
         getPoliticas(producto);
-        getCoordenadas(producto);
-
-//        if(producto.getCoordenadas() != null)
-//            coordenadasValidation(producto);
+        if(producto.getCoordenadas() != null)
+            getCoordenadas(producto);
 
         return productoRepository.save(producto);
     }
