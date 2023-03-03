@@ -19,13 +19,15 @@ public class ProductoServiceImp implements ProductoService {
     private final CiudadServiceImp ciudadServiceImp;
     private final CaracteristicaServiceImp caracteristicaServiceImp;
     private final TipoPoliticaServiceImp tipoPoliticaServiceImp;
+    private final ImagenServiceImp imagenServiceImp;
 
-    public ProductoServiceImp(ProductoRepository productoRepository, CategoriaServiceImp categoriaServiceImp, CiudadServiceImp ciudadServiceImp, CaracteristicaServiceImp caracteristicaServiceImp, TipoPoliticaServiceImp tipoPoliticaServiceImp) {
+    public ProductoServiceImp(ProductoRepository productoRepository, CategoriaServiceImp categoriaServiceImp, CiudadServiceImp ciudadServiceImp, CaracteristicaServiceImp caracteristicaServiceImp, TipoPoliticaServiceImp tipoPoliticaServiceImp, ImagenServiceImp imagenServiceImp) {
         this.productoRepository = productoRepository;
         this.categoriaServiceImp = categoriaServiceImp;
         this.ciudadServiceImp = ciudadServiceImp;
         this.caracteristicaServiceImp = caracteristicaServiceImp;
         this.tipoPoliticaServiceImp = tipoPoliticaServiceImp;
+        this.imagenServiceImp = imagenServiceImp;
     }
 
     @Override
@@ -50,6 +52,8 @@ public class ProductoServiceImp implements ProductoService {
 
     @Override
     public Producto saveProducto(Producto producto) {
+        producto.getImagenes().forEach(img -> img.setId(null));
+
         return getProducto(producto);
     }
 
@@ -66,9 +70,7 @@ public class ProductoServiceImp implements ProductoService {
     }
 
     private Producto getProducto(Producto producto) {
-        emptyTitleValidation(producto);
-        emptyCategoriaValidation(producto);
-        emptyCiudadValidation(producto);
+        emptyAttributesValidation(producto);
 
         Ciudad ciudad = ciudadServiceImp.existByIdValidation(producto.getCiudad().getId());
         producto.setCiudad(ciudad);
@@ -115,6 +117,16 @@ public class ProductoServiceImp implements ProductoService {
                 new NotFoundException("Producto con id " + id + " no encontrado"));
     }
 
+    private void emptyAttributesValidation(Producto producto) {
+        String titulo = producto.getTitulo();
+        if (titulo == null || titulo.equals(""))
+            throw new BadRequestException("El producto debe contener un titulo");
+        if (producto.getCategoria() == null)
+            throw new BadRequestException("El producto debe contener una categoria");
+        if (producto.getCiudad() == null)
+            throw new BadRequestException("El producto debe contener una ciudad");
+    }
+
     private void emptyTitleValidation(Producto producto) {
         String titulo = producto.getTitulo();
         if (titulo == null || titulo.equals(""))
@@ -132,12 +144,15 @@ public class ProductoServiceImp implements ProductoService {
     }
 
     private void imagenValidation(Imagen imagen) {
+        Long id = imagen.getId();
         String titulo = imagen.getTitulo();
         String url = imagen.getUrl();
         if(titulo == null || titulo.equals(""))
             throw new BadRequestException("Las imagenes debe contener un titulo");
         if(url == null || url.equals(""))
             throw new BadRequestException("Las imagenes debe contener una url");
+        if(id != null)
+            imagenServiceImp.getByIdImagen(id);
     }
 
     private void politicaValidation(Politica politica) {
