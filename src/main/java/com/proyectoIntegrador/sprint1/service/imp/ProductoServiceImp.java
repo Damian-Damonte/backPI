@@ -21,8 +21,9 @@ public class ProductoServiceImp implements ProductoService {
     private final TipoPoliticaServiceImp tipoPoliticaServiceImp;
     private final ImagenServiceImp imagenServiceImp;
     private final PoliticaServiceImp politicaServiceImp;
+    private final CoordenadasServiceImp coordenadasServiceImp;
 
-    public ProductoServiceImp(ProductoRepository productoRepository, CategoriaServiceImp categoriaServiceImp, CiudadServiceImp ciudadServiceImp, CaracteristicaServiceImp caracteristicaServiceImp, TipoPoliticaServiceImp tipoPoliticaServiceImp, ImagenServiceImp imagenServiceImp, PoliticaServiceImp politicaServiceImp) {
+    public ProductoServiceImp(ProductoRepository productoRepository, CategoriaServiceImp categoriaServiceImp, CiudadServiceImp ciudadServiceImp, CaracteristicaServiceImp caracteristicaServiceImp, TipoPoliticaServiceImp tipoPoliticaServiceImp, ImagenServiceImp imagenServiceImp, PoliticaServiceImp politicaServiceImp, CoordenadasServiceImp coordenadasServiceImp) {
         this.productoRepository = productoRepository;
         this.categoriaServiceImp = categoriaServiceImp;
         this.ciudadServiceImp = ciudadServiceImp;
@@ -30,6 +31,7 @@ public class ProductoServiceImp implements ProductoService {
         this.tipoPoliticaServiceImp = tipoPoliticaServiceImp;
         this.imagenServiceImp = imagenServiceImp;
         this.politicaServiceImp = politicaServiceImp;
+        this.coordenadasServiceImp = coordenadasServiceImp;
     }
 
     @Override
@@ -85,9 +87,10 @@ public class ProductoServiceImp implements ProductoService {
         getCaracteristicas(producto);
         getImagenes(producto);
         getPoliticas(producto);
+        getCoordenadas(producto);
 
-        if(producto.getCoordenadas() != null)
-            coordenadasValidation(producto);
+//        if(producto.getCoordenadas() != null)
+//            coordenadasValidation(producto);
 
         return productoRepository.save(producto);
     }
@@ -134,6 +137,14 @@ public class ProductoServiceImp implements ProductoService {
         politica.setTipoPolitica(tipoPolitica);
     }
 
+    public void getCoordenadas(Producto producto) {
+        Long productoId = producto.getId();
+        Coordenadas coordenadas = producto.getCoordenadas();
+        coordenadasValidation(productoId, coordenadas);
+        coordenadas.setProducto(producto);
+        producto.setCoordenadas(coordenadas);
+    }
+
     public Producto existByIdValidation(Long id) {
         if (id == null)
             throw new BadRequestException("Debe enviar el id del producto");
@@ -178,14 +189,18 @@ public class ProductoServiceImp implements ProductoService {
             if(!(currentPolitica.getProducto().getId().equals(productoId)))
                 throw new BadRequestException("La politica con id " + id + " no pertenece a este producto");
         }
-
     }
 
-    private void coordenadasValidation(Producto producto) {
-        Coordenadas coordenadas = producto.getCoordenadas();
+    private void coordenadasValidation(Long productoId, Coordenadas coordenadas) {
+        Long id = coordenadas.getId();
         if(coordenadas.getLongitud() == null)
             throw new BadRequestException("Las coordenadas debe contener la longitud");
         if(coordenadas.getLatitud() == null)
             throw new BadRequestException("Las coordenadas debe contener la latitud");
+        if(id != null) {
+            Coordenadas currentCoordenadas = coordenadasServiceImp.getByIdCoordenadas(id);
+            if(!(currentCoordenadas.getProducto().getId().equals(productoId)))
+                throw new BadRequestException("Las coordenadas con id " + id + " no pertenecen a este producto");
+        }
     }
 }

@@ -1,5 +1,6 @@
 package com.proyectoIntegrador.sprint1.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import java.math.BigDecimal;
 
@@ -15,6 +16,10 @@ public class Coordenadas {
     private BigDecimal latitud;
     @Column(precision = 10, scale = 6, nullable = false)
     private BigDecimal longitud;
+
+    @OneToOne(mappedBy = "coordenadas")
+    @JsonIgnore
+    private Producto producto;
 
     public Coordenadas() {
     }
@@ -46,5 +51,13 @@ public class Coordenadas {
 
     public void setLongitud(BigDecimal longitud) {
         this.longitud = longitud;
+    }
+
+    public Producto getProducto() {
+        return producto;
+    }
+
+    public void setProducto(Producto producto) {
+        this.producto = producto;
     }
 }
