@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/tipos-politicas")
+@RequestMapping("/tipos-politicas")
 public class TipoPoliticaController {
     private final TipoPoliticaServiceImp tipoPoliticaServiceImp;
 

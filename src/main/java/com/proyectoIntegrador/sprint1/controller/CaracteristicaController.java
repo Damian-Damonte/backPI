@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/caracteristicas")
+@RequestMapping("/caracteristicas")
 public class CaracteristicaController {
     private final CaracteristicaServiceImp caracteristicaServiceImp;
 
