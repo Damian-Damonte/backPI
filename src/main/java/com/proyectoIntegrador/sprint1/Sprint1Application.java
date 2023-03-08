@@ -42,10 +42,10 @@ public class Sprint1Application {
             TipoPoliticaRepository tipoPoliticaRepository
     ) {
         return args -> {
-            Categoria hotel = categoriaServiceImp.saveCategoria(new Categoria("Hotel", "Descripcion de la categoria Hotel", "http://imagen-categoria-hotel.com"));
-            Categoria hostel = categoriaServiceImp.saveCategoria(new Categoria("Hostel", "Descripcion de la categoria Hostel", "http://imagen-categoria-hostel.com"));
-            Categoria departamento = categoriaServiceImp.saveCategoria(new Categoria("Departamento", "Descripcion de la categoria Departamento", "http://imagen-categoria-departamento.com"));
-            Categoria bedAndBreakfast = categoriaServiceImp.saveCategoria(new Categoria("Bed and breakfast", "Descripcion de la categoria Bed and breakfast", "http://imagen-categoria-Bed and breakfast.com"));
+            Categoria hotel = categoriaServiceImp.saveCategoria(new Categoria("Hotel", "Descripcion de la categoria Hotel", "https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80"));
+            Categoria hostel = categoriaServiceImp.saveCategoria(new Categoria("Hostel", "Descripcion de la categoria Hostel", "https://images.unsplash.com/photo-1555854877-bab0e564b8d5?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1769&q=80"));
+            Categoria departamento = categoriaServiceImp.saveCategoria(new Categoria("Departamento", "Descripcion de la categoria Departamento", "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80"));
+            Categoria bedAndBreakfast = categoriaServiceImp.saveCategoria(new Categoria("Bed and breakfast", "Descripcion de la categoria Bed and breakfast", "https://images.unsplash.com/photo-1463620910506-d0458143143e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80"));
 
             Pais argentina = paisRepository.save(new Pais("Argentina"));
             Pais chile = paisRepository.save(new Pais("Chile"));
@@ -54,10 +54,17 @@ public class Sprint1Application {
             Pais colombia = paisRepository.save(new Pais("Colombia"));
 
             Ciudad buenosAires = ciudadRepository.save(new Ciudad("Buenos Aires", argentina));
+            Ciudad marDelPlata = ciudadRepository.save(new Ciudad("Mar del Plata", argentina));
+            Ciudad laPlata = ciudadRepository.save(new Ciudad("La Plata", argentina));
+            Ciudad rosario = ciudadRepository.save(new Ciudad("Rosario", argentina));
             Ciudad santiago = ciudadRepository.save(new Ciudad("Santiago", chile));
             Ciudad monteVideo = ciudadRepository.save(new Ciudad("Montevide", uruguay));
             Ciudad rioDeJaneiro = ciudadRepository.save(new Ciudad("Rio de Janeiro", brasil));
             Ciudad cali = ciudadRepository.save(new Ciudad("Cali", colombia));
+            Ciudad bogota = ciudadRepository.save(new Ciudad("Bogotá", colombia));
+            Ciudad medellin = ciudadRepository.save(new Ciudad("Medellín", colombia));
+            Ciudad cartagena = ciudadRepository.save(new Ciudad("Cartagena", colombia));
+            Ciudad barranquilla = ciudadRepository.save(new Ciudad("Barranquilla", colombia));
 
             Caracteristica wifi = caracteristicaRepository.save(new Caracteristica("Wifi"));
             Caracteristica cocina = caracteristicaRepository.save(new Caracteristica("Cocina"));
@@ -77,8 +84,13 @@ public class Sprint1Application {
             Imagen imagen2 = new Imagen("Imagen 2", "https://images.unsplash.com/photo-1555854877-bab0e564b8d5?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1769&q=80%27");
             Imagen imagen3 = new Imagen("Imagen 3", "https://images.unsplash.com/photo-1563298723-dcfebaa392e3?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1767&q=80%27");
             Imagen imagen4 = new Imagen("Imagen 4", "https://images.unsplash.com/photo-1463620910506-d0458143143e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80%27");
+            Imagen imagen5 = new Imagen("Imagen 2", "https://images.unsplash.com/photo-1555854877-bab0e564b8d5?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1769&q=80%27");
 
-            Set<Imagen> imagenesSet = new HashSet<>(Set.of(imagen1, imagen2, imagen3, imagen4));
+            Set<Imagen> imagenesSet5 = new HashSet<>(Set.of(imagen1, imagen2, imagen3, imagen4, imagen5));
+            Set<Imagen> imagenesSet4 = new HashSet<>(Set.of(imagen1, imagen2, imagen3, imagen4));
+            Set<Imagen> imagenesSet3 = new HashSet<>(Set.of(imagen1, imagen2, imagen3));
+            Set<Imagen> imagenesSet2 = new HashSet<>(Set.of(imagen1, imagen2));
+            Set<Imagen> imagenesSet1 = new HashSet<>(Set.of(imagen1));
 
             Politica politica1 = new Politica("Check-out: 10:00", normasDeLaCasa);
             Politica politica2 = new Politica("No se permiten fiestas", normasDeLaCasa);
@@ -101,7 +113,7 @@ public class Sprint1Application {
                     hotel,
                     buenosAires,
                     caracteristicas1,
-                    imagenesSet,
+                    imagenesSet5,
                     politicas1,
                     coordenadas
             );
@@ -113,7 +125,7 @@ public class Sprint1Application {
                     hostel,
                     rioDeJaneiro,
                     caracteristicas2,
-                    imagenesSet,
+                    imagenesSet4,
                     politicas2,
                     coordenadas
             );
@@ -125,7 +137,7 @@ public class Sprint1Application {
                     departamento,
                     cali,
                     caracteristicas3,
-                    imagenesSet,
+                    imagenesSet3,
                     politicas3,
                     coordenadas
             );
@@ -137,8 +149,20 @@ public class Sprint1Application {
                     bedAndBreakfast,
                     santiago,
                     caracteristicas1,
-                    imagenesSet,
+                    imagenesSet2,
                     politicas1,
+                    coordenadas
+            );
+
+            Producto bedAndBreakfast2 = new Producto(
+                    "Bed and breakfast 2",
+                    "Titulo de la descripcion del Bed and breakfast 2",
+                    "There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text. All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary, making this the first true generator on the Internet. It uses a dictionary of over 200 Latin words, combined with a handful of model sentence structures, to generate Lorem Ipsum which looks reasonable. The generated Lorem Ipsum is therefore always free from repetition, injected humour, or non-characteristic words etc",
+                    bedAndBreakfast,
+                    buenosAires,
+                    caracteristicas1,
+                    imagenesSet1,
+                    new HashSet<>(),
                     coordenadas
             );
 
@@ -146,6 +170,7 @@ public class Sprint1Application {
             productoServiceImp.saveProducto(hostel1);
             productoServiceImp.saveProducto(departamento1);
             productoServiceImp.saveProducto(bedAndBreakfast1);
+            productoServiceImp.saveProducto(bedAndBreakfast2);
         };
     }
 }
