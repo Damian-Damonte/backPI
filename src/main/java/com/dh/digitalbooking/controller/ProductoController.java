@@ -3,6 +3,7 @@ package com.dh.digitalbooking.controller;
 import com.dh.digitalbooking.model.Producto;
 import com.dh.digitalbooking.service.imp.ProductoServiceImp;
 import io.swagger.v3.oas.annotations.Operation;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,10 +18,16 @@ public class ProductoController {
         this.productoServiceImp = productoServiceImp;
     }
 
+
     @GetMapping
-    public ResponseEntity<List<Producto>> getAll() {
-        return ResponseEntity.ok(productoServiceImp.getAllProducto());
+    public ResponseEntity<Page<Producto>> getAllPage(@RequestParam(defaultValue = "0") int page) {
+        return ResponseEntity.ok(productoServiceImp.getAllPage(page));
     }
+
+//    @GetMapping
+//    public ResponseEntity<List<Producto>> getAll() {
+//        return ResponseEntity.ok(productoServiceImp.getAllProducto());
+//    }
 
     @GetMapping("/filters")
     @Operation(

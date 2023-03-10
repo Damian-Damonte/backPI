@@ -6,6 +6,8 @@ import com.dh.digitalbooking.exception.NotFoundException;
 import com.dh.digitalbooking.model.*;
 import com.dh.digitalbooking.repository.ProductoRepository;
 import com.dh.digitalbooking.service.ProductoService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.util.HashSet;
@@ -38,6 +40,12 @@ public class ProductoServiceImp implements ProductoService {
     @Override
     public List<Producto> getAllProducto() {
         return productoRepository.findAll();
+    }
+
+    public Page<Producto> getAllPage(int page) {
+        PageRequest pageRequest = PageRequest.ofSize(2).withPage(page);
+        Page<Producto> productoPage = productoRepository.findAll(pageRequest);
+        return productoPage;
     }
 
     @Override
