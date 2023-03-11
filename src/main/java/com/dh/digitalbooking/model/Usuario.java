@@ -14,7 +14,6 @@ public class Usuario implements UserDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", updatable = false)
     private Long id;
-
     @Column(name = "nombre", nullable = false, length = 45)
     private String nombre;
     @Column(name = "apellido", nullable = false, length = 45)
@@ -32,6 +31,14 @@ public class Usuario implements UserDetails {
 
 
     public Usuario() {
+    }
+
+    public Usuario(String nombre, String apellido, String email, String password, Rol rol) {
+        this.nombre = nombre;
+        this.apellido = apellido;
+        this.email = email;
+        this.password = password;
+        this.rol = rol;
     }
 
     @Override
