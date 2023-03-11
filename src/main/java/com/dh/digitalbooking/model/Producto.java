@@ -15,7 +15,7 @@ public class Producto {
     private String titulo;
     @Column(name = "title_description", length = 100)
     private String tituloDescripcion;
-    @Column(name = "descripcion", columnDefinition = "TEXT")
+    @Column(name = "descripcion", columnDefinition = "TEXT", length = 500)
     private String descripcion;
 
     @ManyToOne
@@ -63,6 +63,8 @@ public class Producto {
             foreignKey = @ForeignKey(name = "coordenadas_id_fk")
     )
     private Coordenadas coordenadas;
+
+
 
     public Producto() {
     }

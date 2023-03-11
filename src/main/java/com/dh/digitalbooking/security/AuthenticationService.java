@@ -34,7 +34,7 @@ public class AuthenticationService {
         usuarioValidation(request);
 
         Rol rol = roleRepository.findByNombre("ROLE_USER").orElseThrow(
-                () -> new NotFoundException("Role no encontrado"));
+                () -> new NotFoundException("Rol no encontrado"));
 
         Usuario usuario = new Usuario(
                 request.getNombre(),
@@ -59,7 +59,7 @@ public class AuthenticationService {
         );
 
         Usuario usuario = usuarioRepository.findByEmail(requestPayload.getEmail())
-                .orElseThrow(() -> new NotFoundException("Usuario no encontrado"));
+                .orElseThrow(() -> new NotFoundException("Credenciales incorrectas"));
 
         String jwtToken = jwtService.generateToken(usuario);
 
