@@ -3,6 +3,7 @@ package com.dh.digitalbooking.controller;
 import com.dh.digitalbooking.dto.ReservaDto;
 import com.dh.digitalbooking.model.Caracteristica;
 import com.dh.digitalbooking.service.imp.ReservaServiceImp;
+import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,9 +25,22 @@ public class ReservaController {
         return ResponseEntity.ok(reservaServiceImp.allReserva());
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<ReservaDto> getByIdReserva(@PathVariable("id") Long id) {
+        return ResponseEntity.ok(reservaServiceImp.getByIdReseva(id));
+    }
+
     @PostMapping
     public ResponseEntity<ReservaDto> saveReserva(@RequestBody @Valid ReservaDto reservaDto) {
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(reservaServiceImp.saveReserva(reservaDto));
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteReserva(@PathVariable Long id) {
+        reservaServiceImp.deleteReserva(id);
+        return ResponseEntity.noContent().build();
+    }
+
+
 }

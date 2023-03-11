@@ -15,7 +15,8 @@ public class ReservaDtoMapper {
                 dto.getCheckOut(),
                 dto.getHoraLlegada(),
                 dto.getDatosExtra(),
-                dto.isVacunaCovid()
+                dto.isVacunaCovid(),
+                dto.getProducto()
         );
     }
 
@@ -26,7 +27,8 @@ public class ReservaDtoMapper {
                 reserva.getCheckOut(),
                 reserva.getHoraLlegada(),
                 reserva.getDatosExtra(),
-                reserva.isVacunaCovid()
+                reserva.isVacunaCovid(),
+                reserva.getProducto()
         );
     }
 

@@ -65,9 +65,9 @@ public class Producto {
     )
     private Coordenadas coordenadas;
 
-//    @OneToMany(mappedBy = "producto")
-//    @JsonIgnoreProperties("producto")
-//    private Set<Reserva> reservas = new HashSet<>();
+    @OneToMany(mappedBy = "producto")
+    @JsonIgnoreProperties("producto")
+    private Set<Reserva> reservas = new HashSet<>();
 
     public Producto() {
     }
@@ -172,11 +172,11 @@ public class Producto {
         this.coordenadas = coordenadas;
     }
 
-//    public Set<Reserva> getReservas() {
-//        return reservas;
-//    }
-//
-//    public void setReservas(Set<Reserva> reservas) {
-//        this.reservas = reservas;
-//    }
+    public Set<Reserva> getReservas() {
+        return reservas;
+    }
+
+    public void setReservas(Set<Reserva> reservas) {
+        this.reservas = reservas;
+    }
 }

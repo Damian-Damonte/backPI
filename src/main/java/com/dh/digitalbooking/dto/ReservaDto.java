@@ -1,5 +1,7 @@
 package com.dh.digitalbooking.dto;
 
+import com.dh.digitalbooking.model.Producto;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.validation.constraints.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -17,9 +19,11 @@ public class ReservaDto {
     @NotNull(message = "Debe agregar la hora de llegada")
     private LocalTime horaLlegada;
     @Size(max = 500, message = "El mensaje extra no debe tener más de 500 caracteres")
-    @DateTimeFormat(pattern = "HH:mm")
     private String datosExtra;
     private boolean vacunaCovid;
+    @NotNull(message = "Debe agregar el id del producto")
+    @JsonIgnoreProperties("reservas")
+    private Producto producto;
 
     public ReservaDto() {
     }
@@ -31,6 +35,16 @@ public class ReservaDto {
         this.horaLlegada = horaLlegada;
         this.datosExtra = datosExtra;
         this.vacunaCovid = vacunaCovid;
+    }
+
+    public ReservaDto(Long id, LocalDate checkIn, LocalDate checkOut, LocalTime horaLlegada, String datosExtra, boolean vacunaCovid, Producto producto) {
+        this.id = id;
+        this.checkIn = checkIn;
+        this.checkOut = checkOut;
+        this.horaLlegada = horaLlegada;
+        this.datosExtra = datosExtra;
+        this.vacunaCovid = vacunaCovid;
+        this.producto = producto;
     }
 
     public Long getId() {
@@ -79,5 +93,13 @@ public class ReservaDto {
 
     public void setVacunaCovid(boolean vacunaCovid) {
         this.vacunaCovid = vacunaCovid;
+    }
+
+    public Producto getProducto() {
+        return producto;
+    }
+
+    public void setProducto(Producto producto) {
+        this.producto = producto;
     }
 }
