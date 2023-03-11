@@ -31,7 +31,7 @@ public class AuthenticationService {
                 request.getNombre(),
                 request.getApellido(),
                 request.getEmail(),
-                request.getPassword(),
+                passwordEncoder.encode(request.getPassword()),
                 Rol.ROLE_USER
         );
 
