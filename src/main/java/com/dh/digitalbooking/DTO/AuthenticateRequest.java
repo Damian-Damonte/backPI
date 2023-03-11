@@ -1,7 +1,12 @@
 package com.dh.digitalbooking.DTO;
 
+import jakarta.validation.constraints.NotBlank;
+
 public class AuthenticateRequest {
+
+    @NotBlank(message = "Debe enviar el email")
     private String email;
+    @NotBlank(message = "Debe enviar la contraseña")
     private String password;
 
     public AuthenticateRequest() {

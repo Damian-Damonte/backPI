@@ -2,23 +2,19 @@ package com.dh.digitalbooking.exception;
 
 import org.springframework.http.HttpStatus;
 import java.time.ZonedDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 public class BadRequest {
-    private String message;
-    private int status;
-    private ZonedDateTime timestamp;
+    private int status = HttpStatus.BAD_REQUEST.value();
+    private ZonedDateTime timestamp = ZonedDateTime.now();
+    private List<String> errors = new ArrayList<>();
 
     public BadRequest() {
     }
 
-    public BadRequest(String message) {
-        this.message = message;
-        this.status = HttpStatus.BAD_REQUEST.value();
-        this.timestamp = ZonedDateTime.now();
-    }
-
-    public String getMessage() {
-        return message;
+    public List<String> getErrors() {
+        return errors;
     }
 
     public int getStatus() {
@@ -27,5 +23,11 @@ public class BadRequest {
 
     public ZonedDateTime getTimestamp() {
         return timestamp;
+    }
+
+
+    public BadRequest addError(String error) {
+        this.errors.add(error);
+        return this;
     }
 }

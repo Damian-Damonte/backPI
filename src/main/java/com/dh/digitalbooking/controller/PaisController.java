@@ -2,6 +2,7 @@ package com.dh.digitalbooking.controller;
 
 import com.dh.digitalbooking.model.Pais;
 import com.dh.digitalbooking.service.imp.PaisServiceImp;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -27,7 +28,7 @@ public class PaisController {
     }
 
     @PostMapping
-    public ResponseEntity<Pais> savePais(@RequestBody Pais pais) {
+    public ResponseEntity<Pais> savePais(@RequestBody @Valid Pais pais) {
         return ResponseEntity.status(HttpStatus.CREATED).body(paisServiceImp.savePais(pais));
     }
 
@@ -38,7 +39,7 @@ public class PaisController {
     }
 
     @PutMapping
-    public ResponseEntity<Pais> updatePais(@RequestBody Pais pais) {
+    public ResponseEntity<Pais> updatePais(@RequestBody @Valid Pais pais) {
         return ResponseEntity.ok(paisServiceImp.updatePais(pais));
     }
 }

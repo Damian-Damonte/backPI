@@ -1,10 +1,22 @@
 package com.dh.digitalbooking.DTO;
 
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 
 public class RegisterRequest {
+    @NotBlank(message = "El usuario debe tener un nombre")
+    @Size(max = 45, message = "El nombre no debe tener más de 45 caracteres")
     private String nombre;
+    @NotBlank(message = "El usuario debe tener un apellido")
+    @Size(max = 45, message = "El apellido no debe tener más de 45 caracteres")
     private String apellido;
+    @Email(message = "El email debe tener un formato válido")
+    @NotBlank(message = "El usuario debe tener un email")
+    @Size(max = 255, message = "El email no debe tener más de 255 caracteres")
     private String email;
+    @NotBlank(message = "El usuario debe tener un nombre")
+    @Size(max = 255, message = "El email no debe tener más de 255 caracteres")
     private String password;
 
     public RegisterRequest() {

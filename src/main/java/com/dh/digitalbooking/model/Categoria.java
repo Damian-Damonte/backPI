@@ -2,6 +2,10 @@ package com.dh.digitalbooking.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
+
 import java.util.HashSet;
 import java.util.Set;
 
@@ -19,12 +23,17 @@ public class Categoria {
     private Long id;
 
     @Column(name = "titulo", nullable = false, length = 45)
+    @NotBlank(message = "La categoria debe tener un titulo")
+    @Size(max = 45, message = "El titulo no puede tener mas de 45 caracteres")
     private String titulo;
 
     @Column(name = "descripcion", nullable = false)
+    @NotBlank(message = "La categoria debe tener una descripcion")
+    @Size(max = 45, message = "El titulo no puede tener mas de 45 caracteres")
     private String descripcion;
 
     @Column(name = "urlImagen", nullable = false)
+    @NotBlank(message = "La categoria debe tener una imagen")
     private String urlImagen;
     @OneToMany(mappedBy = "categoria")
     @JsonIgnore

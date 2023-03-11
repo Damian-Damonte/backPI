@@ -1,14 +1,21 @@
 package com.dh.digitalbooking.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+
 import java.util.Collection;
 import java.util.List;
 
 @Entity(name = "Usuario")
-@Table(name = "usuarios")
+@Table(
+        name = "usuarios",
+        uniqueConstraints = {
+                @UniqueConstraint(name = "usuario_email_unique", columnNames = "email")
+        }
+)
 public class Usuario implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -18,17 +25,21 @@ public class Usuario implements UserDetails {
     private String nombre;
     @Column(name = "apellido", nullable = false, length = 45)
     private String apellido;
-    @Column(name = "email", nullable = false, unique = true)
+    @Column(name = "email", nullable = false)
     private String email;
     @Column(name = "password", nullable = false)
     private String password;
     @Column(name = "ciudad")
     private String ciudad;
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "rol_id")
+    @ManyToOne()
+    @JoinColumn(
+            name = "rol_id",
+            nullable = false,
+            referencedColumnName = "id",
+            foreignKey = @ForeignKey(name = "usuario_rol_fk")
+    )
     private Rol rol;
-
 
     public Usuario() {
     }
@@ -43,7 +54,7 @@ public class Usuario implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(new SimpleGrantedAuthority(rol.name()));
+        return List.of(new SimpleGrantedAuthority(rol.getNombre()));
     }
 
     @Override
@@ -120,11 +131,11 @@ public class Usuario implements UserDetails {
         this.ciudad = ciudad;
     }
 
-    public Rol getRol() {
+    public Rol getRole() {
         return rol;
     }
 
-    public void setRol(Rol rol) {
+    public void setRole(Rol rol) {
         this.rol = rol;
     }
 }

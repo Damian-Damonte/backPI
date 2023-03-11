@@ -2,6 +2,7 @@ package com.dh.digitalbooking.controller;
 
 import com.dh.digitalbooking.model.Categoria;
 import com.dh.digitalbooking.service.imp.CategoriaServiceImp;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -28,7 +29,7 @@ public class CategoriaController {
     }
 
     @PostMapping
-    public ResponseEntity<Categoria> saveCategoria(@RequestBody Categoria categoria) {
+    public ResponseEntity<Categoria> saveCategoria(@RequestBody @Valid Categoria categoria) {
         return ResponseEntity.status(HttpStatus.CREATED).body(categoriaServiceImp.saveCategoria(categoria));
     }
 
@@ -39,7 +40,7 @@ public class CategoriaController {
     }
 
     @PutMapping
-    public ResponseEntity<Categoria> updateCategoria(@RequestBody Categoria categoria) {
+    public ResponseEntity<Categoria> updateCategoria(@RequestBody @Valid Categoria categoria) {
         return ResponseEntity.ok(categoriaServiceImp.updateCategoria(categoria));
     }
 }

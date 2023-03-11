@@ -4,6 +4,7 @@ import com.dh.digitalbooking.DTO.AuthenticateRequest;
 import com.dh.digitalbooking.DTO.AuthenticationResponse;
 import com.dh.digitalbooking.DTO.RegisterRequest;
 import com.dh.digitalbooking.security.AuthenticationService;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,7 +19,7 @@ public class AuthController {
     }
 
     @PostMapping("/registro")
-    public ResponseEntity<AuthenticationResponse> register(@RequestBody RegisterRequest registerRequest) {
+    public ResponseEntity<AuthenticationResponse> register(@RequestBody @Valid RegisterRequest registerRequest) {
         return ResponseEntity
                 .status(HttpStatus.CREATED)
                 .body(authenticationService.register(registerRequest));
@@ -26,7 +27,7 @@ public class AuthController {
 
     @GetMapping("/autenticacion")
     public ResponseEntity<AuthenticationResponse> authenticate(
-            @RequestBody AuthenticateRequest authenticateRequest) {
+            @RequestBody @Valid AuthenticateRequest authenticateRequest) {
         return ResponseEntity.ok(authenticationService.authenticate(authenticateRequest));
     }
 }
