@@ -1,5 +1,6 @@
 package com.dh.digitalbooking.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
@@ -64,7 +65,9 @@ public class Producto {
     )
     private Coordenadas coordenadas;
 
-
+//    @OneToMany(mappedBy = "producto")
+//    @JsonIgnoreProperties("producto")
+//    private Set<Reserva> reservas = new HashSet<>();
 
     public Producto() {
     }
@@ -168,4 +171,12 @@ public class Producto {
     public void setCoordenadas(Coordenadas coordenadas) {
         this.coordenadas = coordenadas;
     }
+
+//    public Set<Reserva> getReservas() {
+//        return reservas;
+//    }
+//
+//    public void setReservas(Set<Reserva> reservas) {
+//        this.reservas = reservas;
+//    }
 }

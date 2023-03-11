@@ -1,8 +1,8 @@
 package com.dh.digitalbooking.controller;
 
-import com.dh.digitalbooking.DTO.AuthenticateRequest;
-import com.dh.digitalbooking.DTO.AuthenticationResponse;
-import com.dh.digitalbooking.DTO.RegisterRequest;
+import com.dh.digitalbooking.dto.AuthenticateRequest;
+import com.dh.digitalbooking.dto.AuthenticationResponse;
+import com.dh.digitalbooking.dto.RegisterRequest;
 import com.dh.digitalbooking.security.AuthenticationService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;

@@ -1,4 +1,4 @@
-package com.dh.digitalbooking.DTO;
+package com.dh.digitalbooking.dto;
 
 public class AuthenticationResponse {
     private String token;

@@ -1,8 +1,8 @@
 package com.dh.digitalbooking.security;
 
-import com.dh.digitalbooking.DTO.AuthenticateRequest;
-import com.dh.digitalbooking.DTO.AuthenticationResponse;
-import com.dh.digitalbooking.DTO.RegisterRequest;
+import com.dh.digitalbooking.dto.AuthenticateRequest;
+import com.dh.digitalbooking.dto.AuthenticationResponse;
+import com.dh.digitalbooking.dto.RegisterRequest;
 import com.dh.digitalbooking.exception.BadRequestException;
 import com.dh.digitalbooking.exception.NotFoundException;
 import com.dh.digitalbooking.model.Rol;

@@ -1,6 +1,7 @@
 package com.dh.digitalbooking.model;
 
 import jakarta.persistence.*;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -23,24 +24,33 @@ public class Reserva {
     @Column(name = "vacuna_covid")
     private boolean vacunaCovid;
 
-    @ManyToOne
-    @JoinColumn(
-            name = "producto_id",
-            nullable = false,
-            referencedColumnName = "id",
-            foreignKey = @ForeignKey(name = "reserva_producto_fk")
-    )
-    private Producto producto;
-    @ManyToOne
-    @JoinColumn(
-            name = "usuario_id",
-            nullable = false,
-            referencedColumnName = "id",
-            foreignKey = @ForeignKey(name = "reserva_usuario_fk")
-    )
-    private Usuario usuario;
+//    @ManyToOne
+//    @JoinColumn(
+//            name = "producto_id",
+//            nullable = false,
+//            referencedColumnName = "id",
+//            foreignKey = @ForeignKey(name = "reserva_producto_fk")
+//    )
+//    private Producto producto;
+//    @ManyToOne
+//    @JoinColumn(
+//            name = "usuario_id",
+//            nullable = false,
+//            referencedColumnName = "id",
+//            foreignKey = @ForeignKey(name = "reserva_usuario_fk")
+//    )
+//    private Usuario usuario;
 
     public Reserva() {
+    }
+
+    public Reserva(Long id, LocalDate checkIn, LocalDate checkOut, LocalTime horaLlegada, String datosExtra, boolean vacunaCovid) {
+        this.id = id;
+        this.checkIn = checkIn;
+        this.checkOut = checkOut;
+        this.horaLlegada = horaLlegada;
+        this.datosExtra = datosExtra;
+        this.vacunaCovid = vacunaCovid;
     }
 
     public Long getId() {
@@ -91,19 +101,19 @@ public class Reserva {
         this.vacunaCovid = vacunaCovid;
     }
 
-    public Producto getProducto() {
-        return producto;
-    }
+//    public Producto getProducto() {
+//        return producto;
+//    }
+//
+//    public void setProducto(Producto producto) {
+//        this.producto = producto;
+//    }
 
-    public void setProducto(Producto producto) {
-        this.producto = producto;
-    }
-
-    public Usuario getUsuario() {
-        return usuario;
-    }
-
-    public void setUsuario(Usuario usuario) {
-        this.usuario = usuario;
-    }
+//    public Usuario getUsuario() {
+//        return usuario;
+//    }
+//
+//    public void setUsuario(Usuario usuario) {
+//        this.usuario = usuario;
+//    }
 }
