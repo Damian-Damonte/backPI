@@ -6,4 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface PuntuacionRepository extends JpaRepository<Puntuacion, Long> {
+
 }

@@ -40,4 +40,9 @@ public class PuntuacionController {
         puntuacionServiceImp.deletePuntuacion(id);
         return ResponseEntity.noContent().build();
     }
+
+    @PutMapping
+    public ResponseEntity<Puntuacion> updateCiudad(@RequestBody Puntuacion puntuacion) {
+        return ResponseEntity.ok(puntuacionServiceImp.updatePuntuacion(puntuacion));
+    }
 }
