@@ -131,11 +131,11 @@ public class Usuario implements UserDetails {
         this.ciudad = ciudad;
     }
 
-    public Rol getRole() {
+    public Rol getRol() {
         return rol;
     }
 
-    public void setRole(Rol rol) {
+    public void setRol(Rol rol) {
         this.rol = rol;
     }
 }
