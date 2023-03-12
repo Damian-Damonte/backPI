@@ -2,7 +2,7 @@ package com.dh.digitalbooking.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
-import org.springframework.format.annotation.DateTimeFormat;
+import jakarta.validation.constraints.NotNull;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -15,16 +15,28 @@ public class Reserva {
     @Column(name = "id", updatable = false)
     private Long id;
     @Column(name = "check_in", nullable = false)
+    @NotNull(message = "Debe ingresar la fecha de inicio de la reserva")
     private LocalDate checkIn;
     @Column(name = "check_out", nullable = false)
+    @NotNull(message = "Debe ingresar la fecha de finalización de la reserva")
     private LocalDate checkOut;
     @Column(name = "hora_llegada", nullable = false)
+    @NotNull(message = "Debe ingresar la hora de llegada")
     private LocalTime horaLlegada;
     @Column(name = "datos_extra", columnDefinition = "TEXT", length = 500)
     private String datosExtra;
     @Column(name = "vacuna_covid")
     private boolean vacunaCovid;
-
+    @ManyToOne
+    @JoinColumn(
+            name = "usuario_id",
+            nullable = false,
+            referencedColumnName = "id",
+            foreignKey = @ForeignKey(name = "reserva_usuario_fk")
+    )
+    @NotNull(message = "Debe ingresar el usuario")
+    @JsonIgnoreProperties("reservas")
+    private Usuario usuario;
     @ManyToOne
     @JoinColumn(
             name = "producto_id",
@@ -32,16 +44,9 @@ public class Reserva {
             referencedColumnName = "id",
             foreignKey = @ForeignKey(name = "reserva_producto_fk")
     )
+    @NotNull(message = "Debe ingresar el producto")
     @JsonIgnoreProperties("reservas")
     private Producto producto;
-//    @ManyToOne
-//    @JoinColumn(
-//            name = "usuario_id",
-//            nullable = false,
-//            referencedColumnName = "id",
-//            foreignKey = @ForeignKey(name = "reserva_usuario_fk")
-//    )
-//    private Usuario usuario;
 
     public Reserva() {
     }
@@ -121,11 +126,11 @@ public class Reserva {
         this.producto = producto;
     }
 
-//    public Usuario getUsuario() {
-//        return usuario;
-//    }
-//
-//    public void setUsuario(Usuario usuario) {
-//        this.usuario = usuario;
-//    }
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
+    }
 }

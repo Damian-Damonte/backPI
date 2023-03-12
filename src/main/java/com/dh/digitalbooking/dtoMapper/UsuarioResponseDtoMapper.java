@@ -3,21 +3,23 @@ package com.dh.digitalbooking.dtoMapper;
 import com.dh.digitalbooking.dto.UsuarioResponseDto;
 import com.dh.digitalbooking.model.Usuario;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
 public class UsuarioResponseDtoMapper {
+
     public UsuarioResponseDto toUsuarioResponseDto(Usuario usuario) {
-        return new UsuarioResponseDto(
-                usuario.getId(),
-                usuario.getNombre(),
-                usuario.getApellido(),
-                usuario.getEmail(),
-                usuario.getCiudad(),
-                usuario.getRol()
-        );
+        UsuarioResponseDto usuarioResponseDto = new UsuarioResponseDto();
+        usuarioResponseDto.setId(usuario.getId());
+        usuarioResponseDto.setNombre(usuario.getNombre());
+        usuarioResponseDto.setApellido(usuario.getApellido());
+        usuarioResponseDto.setEmail(usuario.getEmail());
+        usuarioResponseDto.setCiudad(usuario.getCiudad());
+        usuarioResponseDto.setRol(usuario.getRol());
+        usuarioResponseDto.setReservas(usuario.getReservas());
+
+        return usuarioResponseDto;
     }
 
     public Usuario toUsuario(UsuarioResponseDto dto) {

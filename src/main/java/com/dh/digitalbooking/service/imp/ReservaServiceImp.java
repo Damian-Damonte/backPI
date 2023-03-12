@@ -1,12 +1,10 @@
 package com.dh.digitalbooking.service.imp;
 
-import com.dh.digitalbooking.dto.ReservaDto;
-import com.dh.digitalbooking.dtoMapper.ReservaDtoMapper;
 import com.dh.digitalbooking.exception.BadRequestException;
 import com.dh.digitalbooking.exception.NotFoundException;
-import com.dh.digitalbooking.model.Ciudad;
 import com.dh.digitalbooking.model.Producto;
 import com.dh.digitalbooking.model.Reserva;
+import com.dh.digitalbooking.model.Usuario;
 import com.dh.digitalbooking.repository.ReservaRepository;
 import com.dh.digitalbooking.service.ReservaService;
 import org.springframework.stereotype.Service;
@@ -18,30 +16,30 @@ import java.util.List;
 @Service
 public class ReservaServiceImp implements ReservaService {
     private final ReservaRepository reservaRepository;
-    private final ReservaDtoMapper mapper;
     private final ProductoServiceImp productoServiceImp;
+    private final UsuarioServiceImp usuarioServiceImp;
 
-    public ReservaServiceImp(ReservaRepository reservaRepository, ReservaDtoMapper mapper, ProductoServiceImp productoServiceImp) {
+    public ReservaServiceImp(ReservaRepository reservaRepository, ProductoServiceImp productoServiceImp, UsuarioServiceImp usuarioServiceImp) {
         this.reservaRepository = reservaRepository;
-        this.mapper = mapper;
         this.productoServiceImp = productoServiceImp;
+        this.usuarioServiceImp = usuarioServiceImp;
     }
 
     @Override
-    public List<ReservaDto> allReserva() {
-        return mapper.toListReservaDto(reservaRepository.findAll());
+    public List<Reserva> allReserva() {
+        return reservaRepository.findAll();
     }
 
     @Override
-    public ReservaDto getByIdReseva(Long id) {
-        return mapper.toResevaDto(existByIdValidation(id));
+    public Reserva getByIdReseva(Long id) {
+        return existByIdValidation(id);
     }
 
     @Override
     @Transactional
-    public ReservaDto saveReserva(ReservaDto reservaDto) {
-        checkAvailability(reservaDto, true);
-        return getReserva(reservaDto);
+    public Reserva saveReserva(Reserva reserva) {
+        checkAvailability(reserva, true);
+        return getReserva(reserva);
     }
 
     @Override
@@ -53,19 +51,23 @@ public class ReservaServiceImp implements ReservaService {
 
     @Override
     @Transactional
-    public ReservaDto updateReserva(ReservaDto reservaDto) {
-        existByIdValidation(reservaDto.getId());
-        checkAvailability(reservaDto, false);
-        return getReserva(reservaDto);
+    public Reserva updateReserva(Reserva reserva) {
+        existByIdValidation(reserva.getId());
+        checkAvailability(reserva, false);
+        return getReserva(reserva);
     }
 
-    private ReservaDto getReserva(ReservaDto reservaDto) {
-        Reserva reserva = mapper.toReserva(reservaDto);
+    private Reserva getReserva(Reserva reserva) {
+        datesValidation(reserva);
         Producto producto = productoServiceImp.existByIdValidation(reserva.getProducto().getId());
         producto.getReservas().add(reserva);
         reserva.setProducto(producto);
 
-        return mapper.toResevaDto(reservaRepository.save(reserva));
+        Usuario usuario = usuarioServiceImp.existByIdValidation(reserva.getUsuario().getId());
+        usuario.getReservas().add(reserva);
+        reserva.setUsuario(usuario);
+
+        return reservaRepository.save(reserva);
     }
 
     public Reserva existByIdValidation(Long id) {
@@ -75,24 +77,34 @@ public class ReservaServiceImp implements ReservaService {
                 new NotFoundException("Reserva con id " + id + " no encontrada"));
     }
 
-    public void checkAvailability(ReservaDto reservaDto, boolean save) {
+    private void checkAvailability(Reserva reserva, boolean save) {
         int count = reservaRepository.countReservaByDates(
-                reservaDto.getProducto().getId(),
-                reservaDto.getCheckIn(),
-                reservaDto.getCheckOut()
+                reserva.getProducto().getId(),
+                reserva.getCheckIn(),
+                reserva.getCheckOut()
         );
         if(save && count > 0)
             throw new BadRequestException("El producto no disponible en las fechas ingresadas");
         if(!save && count > 1)
             throw new BadRequestException("El producto no disponible en las fechas ingresadas");
         if(!save && count == 1) {
-            Reserva reserva = reservaRepository.findReservaByDates(
-                    reservaDto.getProducto().getId(),
-                    reservaDto.getCheckIn(),
-                    reservaDto.getCheckOut()
+            Reserva reservaByDates = reservaRepository.findReservaByDates(
+                    reserva.getProducto().getId(),
+                    reserva.getCheckIn(),
+                    reserva.getCheckOut()
             );
-            if(!(reserva.getId().equals(reservaDto.getId())))
+            if(!(reservaByDates.getId().equals(reserva.getId())))
                 throw new BadRequestException("El producto no disponible en las fechas ingresadas");
         }
     }
+
+    private void datesValidation(Reserva reserva) {
+        LocalDate checkIn = reserva.getCheckIn();
+        LocalDate checkOut = reserva.getCheckOut();
+
+        if(checkIn.isAfter(checkOut))
+            throw new BadRequestException("La fecha de ingreso no puede ser posterior a la fecha de finalización");
+
+    }
+
 }

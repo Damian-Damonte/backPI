@@ -1,9 +1,13 @@
 package com.dh.digitalbooking.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -26,6 +30,7 @@ public class Usuario implements UserDetails {
     @Column(name = "email", nullable = false)
     private String email;
     @Column(name = "password", nullable = false)
+    @JsonIgnore
     private String password;
     @Column(name = "ciudad")
     private String ciudad;
@@ -39,9 +44,12 @@ public class Usuario implements UserDetails {
     )
     private Rol rol;
 
+    @OneToMany(mappedBy = "usuario", cascade = CascadeType.REMOVE, orphanRemoval = true)
+    @JsonIgnoreProperties("usuario")
+    List<Reserva> reservas = new ArrayList<>();
+
     public Usuario() {
     }
-
 
 
     public Usuario(String nombre, String apellido, String email, String password, Rol rol) {
@@ -53,6 +61,7 @@ public class Usuario implements UserDetails {
     }
 
     @Override
+    @JsonIgnore
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return List.of(new SimpleGrantedAuthority(rol.getNombre()));
     }
@@ -63,26 +72,31 @@ public class Usuario implements UserDetails {
     }
 
     @Override
+    @JsonIgnore
     public String getUsername() {
         return email;
     }
 
     @Override
+    @JsonIgnore
     public boolean isAccountNonExpired() {
         return true;
     }
 
     @Override
+    @JsonIgnore
     public boolean isAccountNonLocked() {
         return true;
     }
 
     @Override
+    @JsonIgnore
     public boolean isCredentialsNonExpired() {
         return true;
     }
 
     @Override
+    @JsonIgnore
     public boolean isEnabled() {
         return true;
     }
@@ -137,5 +151,13 @@ public class Usuario implements UserDetails {
 
     public void setRol(Rol rol) {
         this.rol = rol;
+    }
+
+    public List<Reserva> getReservas() {
+        return reservas;
+    }
+
+    public void setReservas(List<Reserva> reservas) {
+        this.reservas = reservas;
     }
 }

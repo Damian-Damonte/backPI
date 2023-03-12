@@ -1,6 +1,6 @@
 package com.dh.digitalbooking.controller;
 
-import com.dh.digitalbooking.dto.ReservaDto;
+import com.dh.digitalbooking.model.Reserva;
 import com.dh.digitalbooking.service.imp.ReservaServiceImp;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
@@ -18,19 +18,19 @@ public class ReservaController {
     }
 
     @GetMapping
-    public ResponseEntity<List<ReservaDto>> getAllReserva() {
+    public ResponseEntity<List<Reserva>> getAllReserva() {
         return ResponseEntity.ok(reservaServiceImp.allReserva());
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ReservaDto> getByIdReserva(@PathVariable("id") Long id) {
+    public ResponseEntity<Reserva> getByIdReserva(@PathVariable("id") Long id) {
         return ResponseEntity.ok(reservaServiceImp.getByIdReseva(id));
     }
 
     @PostMapping
-    public ResponseEntity<ReservaDto> saveReserva(@RequestBody @Valid ReservaDto reservaDto) {
+    public ResponseEntity<Reserva> saveReserva(@RequestBody @Valid Reserva reserva) {
         return ResponseEntity.status(HttpStatus.CREATED)
-                .body(reservaServiceImp.saveReserva(reservaDto));
+                .body(reservaServiceImp.saveReserva(reserva));
     }
 
     @DeleteMapping("/{id}")
@@ -40,7 +40,7 @@ public class ReservaController {
     }
 
     @PutMapping
-    public ResponseEntity<ReservaDto> updateReserva(@RequestBody ReservaDto reservaDto) {
-        return ResponseEntity.ok(reservaServiceImp.updateReserva(reservaDto));
+    public ResponseEntity<Reserva> updateReserva(@RequestBody Reserva reserva) {
+        return ResponseEntity.ok(reservaServiceImp.updateReserva(reserva));
     }
 }

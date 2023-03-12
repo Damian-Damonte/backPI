@@ -12,7 +12,6 @@ import com.dh.digitalbooking.repository.UsuarioRepository;
 import com.dh.digitalbooking.service.UsuarioService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 
 @Service

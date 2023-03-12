@@ -26,11 +26,12 @@ public class SecurityConfiguration {
         http
                 .csrf().disable()
                 .authorizeHttpRequests(requests -> requests
-                        .requestMatchers("/auth/**").permitAll()
-                        .requestMatchers(HttpMethod.GET).permitAll()
-                        .requestMatchers(HttpMethod.POST, "/reservas").hasAnyRole("USER", "ADMIN")
-                        .anyRequest().hasRole("ADMIN")
-//                        .anyRequest().permitAll()
+//                        .requestMatchers(HttpMethod.POST, "/reservas").hasAnyRole("USER", "ADMIN")
+//                        .requestMatchers("/usuarios/**").hasRole("ADMIN")
+//                        .requestMatchers("/auth/**").permitAll()
+//                        .requestMatchers(HttpMethod.GET).permitAll()
+//                        .anyRequest().hasRole("ADMIN")
+                        .anyRequest().permitAll()
                 )
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)

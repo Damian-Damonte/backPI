@@ -1,12 +1,11 @@
 package com.dh.digitalbooking.controller;
 
 import com.dh.digitalbooking.dto.UsuarioResponseDto;
-import com.dh.digitalbooking.model.Pais;
 import com.dh.digitalbooking.service.imp.UsuarioServiceImp;
+import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 @RestController
@@ -35,6 +34,9 @@ public class UsuarioController {
     }
 
     @PutMapping
+    @Operation(
+            description = "Se pueden actualizar todos los atributos excepto la contraseña. No hace falta enviar las reservas, ya que de todas formas no se pueden actualizar a través del usuario."
+    )
     public ResponseEntity<UsuarioResponseDto> updatePais(
             @RequestBody @Valid UsuarioResponseDto usuarioResponseDto) {
         return ResponseEntity.ok(usuarioServiceImp.updateUsuario(usuarioResponseDto));
