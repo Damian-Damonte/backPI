@@ -20,6 +20,17 @@ public class UsuarioResponseDtoMapper {
         );
     }
 
+    public Usuario toUsuario(UsuarioResponseDto dto) {
+        Usuario usuario = new Usuario();
+        usuario.setId(dto.getId());
+        usuario.setNombre(dto.getNombre());
+        usuario.setApellido(dto.getApellido());
+        usuario.setEmail(dto.getEmail());
+        usuario.setCiudad(dto.getCiudad());
+        usuario.setRol(dto.getRol());
+        return usuario;
+    }
+
     public List<UsuarioResponseDto> toListUsuarioResponseDto(List<Usuario> usuarios) {
         return usuarios.stream().map(this::toUsuarioResponseDto).collect(Collectors.toList());
     }

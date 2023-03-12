@@ -9,6 +9,7 @@ import com.dh.digitalbooking.model.Rol;
 import com.dh.digitalbooking.model.Usuario;
 import com.dh.digitalbooking.repository.RoleRepository;
 import com.dh.digitalbooking.repository.UsuarioRepository;
+import com.dh.digitalbooking.service.imp.UsuarioServiceImp;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -16,35 +17,18 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class AuthenticationService {
-    private final UsuarioRepository usuarioRepository;
-    private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
-    private final RoleRepository roleRepository;
+    private final UsuarioServiceImp usuarioServiceImp;
 
-    public AuthenticationService(UsuarioRepository usuarioRepository, PasswordEncoder passwordEncoder, JwtService jwtService, AuthenticationManager authenticationManager, RoleRepository roleRepository) {
-        this.usuarioRepository = usuarioRepository;
-        this.passwordEncoder = passwordEncoder;
+    public AuthenticationService(JwtService jwtService, AuthenticationManager authenticationManager, UsuarioServiceImp usuarioServiceImp) {
         this.jwtService = jwtService;
         this.authenticationManager = authenticationManager;
-        this.roleRepository = roleRepository;
+        this.usuarioServiceImp = usuarioServiceImp;
     }
 
-    public AuthenticationResponse register(UsuarioRequestDto request) {
-        usuarioValidation(request);
-
-        Rol rol = roleRepository.findByNombre("ROLE_USER").orElseThrow(
-                () -> new NotFoundException("Rol no encontrado"));
-
-        Usuario usuario = new Usuario(
-                request.getNombre(),
-                request.getApellido(),
-                request.getEmail(),
-                passwordEncoder.encode(request.getPassword()),
-                rol
-        );
-
-        usuarioRepository.save(usuario);
+    public AuthenticationResponse register(UsuarioRequestDto usuarioRequestDto) {
+        Usuario usuario = usuarioServiceImp.saveUsuario(usuarioRequestDto);
 
         String jwtToken = jwtService.generateToken(usuario);
         return new AuthenticationResponse(jwtToken);
@@ -57,18 +41,8 @@ public class AuthenticationService {
                         requestPayload.getPassword()
                 )
         );
-
-        Usuario usuario = usuarioRepository.findByEmail(requestPayload.getEmail())
-                .orElseThrow(() -> new NotFoundException("Credenciales incorrectas"));
-
+        Usuario usuario = usuarioServiceImp.findByEmail(requestPayload.getEmail());
         String jwtToken = jwtService.generateToken(usuario);
-
         return new AuthenticationResponse(jwtToken);
-    }
-
-    private void usuarioValidation(UsuarioRequestDto request) {
-        String email = request.getEmail();
-        if(usuarioRepository.findByEmail(email).isPresent())
-            throw new BadRequestException("El email '" + email + "' ya se encuentra registrado");
     }
 }
