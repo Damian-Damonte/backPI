@@ -77,7 +77,9 @@ public class ProductoServiceImp implements ProductoService {
     @Transactional
     @Override
     public void deleteProducto(Long id) {
-        existByIdValidation(id);
+        Producto producto = existByIdValidation(id);
+        if(!(producto.getReservas().isEmpty()))
+            throw new BadRequestException("El producto con id " + id + " no puede ser eliminado ya que se encuentra reservado");
         productoRepository.deleteById(id);
     }
 

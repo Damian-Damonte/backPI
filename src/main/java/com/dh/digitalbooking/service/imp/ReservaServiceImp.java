@@ -10,6 +10,8 @@ import com.dh.digitalbooking.model.Reserva;
 import com.dh.digitalbooking.repository.ReservaRepository;
 import com.dh.digitalbooking.service.ReservaService;
 import org.springframework.stereotype.Service;
+
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -36,12 +38,8 @@ public class ReservaServiceImp implements ReservaService {
 
     @Override
     public ReservaDto saveReserva(ReservaDto reservaDto) {
-        Reserva reserva = mapper.toReserva(reservaDto);
-        Producto producto = productoServiceImp.existByIdValidation(reserva.getProducto().getId());
-        producto.getReservas().add(reserva);
-        reserva.setProducto(producto);
-
-        return mapper.toResevaDto(reservaRepository.save(reserva));
+        checkAvailability(reservaDto, true);
+        return getReserva(reservaDto);
     }
 
     @Override
@@ -52,7 +50,18 @@ public class ReservaServiceImp implements ReservaService {
 
     @Override
     public ReservaDto updateReserva(ReservaDto reservaDto) {
-        return null;
+        existByIdValidation(reservaDto.getId());
+        checkAvailability(reservaDto, false);
+        return getReserva(reservaDto);
+    }
+
+    private ReservaDto getReserva(ReservaDto reservaDto) {
+        Reserva reserva = mapper.toReserva(reservaDto);
+        Producto producto = productoServiceImp.existByIdValidation(reserva.getProducto().getId());
+        producto.getReservas().add(reserva);
+        reserva.setProducto(producto);
+
+        return mapper.toResevaDto(reservaRepository.save(reserva));
     }
 
     public Reserva existByIdValidation(Long id) {
@@ -60,5 +69,26 @@ public class ReservaServiceImp implements ReservaService {
             throw new BadRequestException("Debe enviar el id de la reserva");
         return reservaRepository.findById(id).orElseThrow(() ->
                 new NotFoundException("Reserva con id " + id + " no encontrada"));
+    }
+
+    public void checkAvailability(ReservaDto reservaDto, boolean save) {
+        int count = reservaRepository.countReservaByDates(
+                reservaDto.getProducto().getId(),
+                reservaDto.getCheckIn(),
+                reservaDto.getCheckOut()
+        );
+        if(save && count > 0)
+            throw new BadRequestException("El producto no disponible en las fechas ingresadas");
+        if(!save && count > 1)
+            throw new BadRequestException("El producto no disponible en las fechas ingresadas");
+        if(!save && count == 1) {
+            Reserva reserva = reservaRepository.findReservaByDates(
+                    reservaDto.getProducto().getId(),
+                    reservaDto.getCheckIn(),
+                    reservaDto.getCheckOut()
+            );
+            if(!(reserva.getId().equals(reservaDto.getId())))
+                throw new BadRequestException("El producto no disponible en las fechas ingresadas");
+        }
     }
 }
