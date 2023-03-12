@@ -2,7 +2,7 @@ package com.dh.digitalbooking.security;
 
 import com.dh.digitalbooking.dto.AuthenticateRequest;
 import com.dh.digitalbooking.dto.AuthenticationResponse;
-import com.dh.digitalbooking.dto.RegisterRequest;
+import com.dh.digitalbooking.dto.UsuarioRequestDto;
 import com.dh.digitalbooking.exception.BadRequestException;
 import com.dh.digitalbooking.exception.NotFoundException;
 import com.dh.digitalbooking.model.Rol;
@@ -30,7 +30,7 @@ public class AuthenticationService {
         this.roleRepository = roleRepository;
     }
 
-    public AuthenticationResponse register(RegisterRequest request) {
+    public AuthenticationResponse register(UsuarioRequestDto request) {
         usuarioValidation(request);
 
         Rol rol = roleRepository.findByNombre("ROLE_USER").orElseThrow(
@@ -66,7 +66,7 @@ public class AuthenticationService {
         return new AuthenticationResponse(jwtToken);
     }
 
-    private void usuarioValidation(RegisterRequest request) {
+    private void usuarioValidation(UsuarioRequestDto request) {
         String email = request.getEmail();
         if(usuarioRepository.findByEmail(email).isPresent())
             throw new BadRequestException("El email '" + email + "' ya se encuentra registrado");

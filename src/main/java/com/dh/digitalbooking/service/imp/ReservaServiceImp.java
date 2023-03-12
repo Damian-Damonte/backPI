@@ -10,6 +10,7 @@ import com.dh.digitalbooking.model.Reserva;
 import com.dh.digitalbooking.repository.ReservaRepository;
 import com.dh.digitalbooking.service.ReservaService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -37,18 +38,21 @@ public class ReservaServiceImp implements ReservaService {
     }
 
     @Override
+    @Transactional
     public ReservaDto saveReserva(ReservaDto reservaDto) {
         checkAvailability(reservaDto, true);
         return getReserva(reservaDto);
     }
 
     @Override
+    @Transactional
     public void deleteReserva(Long id) {
         existByIdValidation(id);
         reservaRepository.deleteById(id);
     }
 
     @Override
+    @Transactional
     public ReservaDto updateReserva(ReservaDto reservaDto) {
         existByIdValidation(reservaDto.getId());
         checkAvailability(reservaDto, false);
