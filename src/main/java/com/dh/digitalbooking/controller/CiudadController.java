@@ -2,6 +2,7 @@ package com.dh.digitalbooking.controller;
 
 import com.dh.digitalbooking.model.Ciudad;
 import com.dh.digitalbooking.service.imp.CiudadServiceImp;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -27,7 +28,7 @@ public class CiudadController {
     }
 
     @PostMapping
-    public ResponseEntity<Ciudad> saveCiudad(@RequestBody Ciudad ciudad) {
+    public ResponseEntity<Ciudad> saveCiudad(@RequestBody @Valid Ciudad ciudad) {
         return ResponseEntity.status(HttpStatus.CREATED).body(ciudadServiceImp.saveCiudad(ciudad));
     }
 
@@ -38,7 +39,7 @@ public class CiudadController {
     }
 
     @PutMapping
-    public ResponseEntity<Ciudad> updateCiudad(@RequestBody Ciudad ciudad) {
+    public ResponseEntity<Ciudad> updateCiudad(@RequestBody @Valid Ciudad ciudad) {
         return ResponseEntity.ok(ciudadServiceImp.updateCiudad(ciudad));
     }
 }

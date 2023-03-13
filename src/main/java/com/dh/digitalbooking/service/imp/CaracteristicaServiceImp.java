@@ -30,7 +30,6 @@ public class CaracteristicaServiceImp implements CaracteristicaService {
     @Override
     public Caracteristica saveCaracteristica(Caracteristica caracteristica) {
         String nombre = caracteristica.getNombre();
-        emptyNombreValidation(nombre);
         if(caracteristicaRepository.findByNombre(nombre).isPresent())
             throw new BadRequestException("Ya existe una caracteristica con el nombre '" + nombre + "'");
 
@@ -51,7 +50,6 @@ public class CaracteristicaServiceImp implements CaracteristicaService {
         Long id = caracteristica.getId();
         String nombre = caracteristica.getNombre();
 
-        emptyNombreValidation(nombre);
         existByIdValidation(id);
 
         Caracteristica caracteristicaByNombre = caracteristicaRepository.findByNombre(nombre).orElse(null);
@@ -66,10 +64,5 @@ public class CaracteristicaServiceImp implements CaracteristicaService {
             throw new BadRequestException("Debe enviar el id de la caracteristica");
         return caracteristicaRepository.findById(id).orElseThrow(() ->
                 new NotFoundException("Caracteristica con id " + id + " no encontrada"));
-    }
-
-    private void emptyNombreValidation(String nombre) {
-        if(nombre == null || nombre.equals(""))
-            throw new BadRequestException("La caracteristica debe contener un nombre");
     }
 }

@@ -2,6 +2,9 @@ package com.dh.digitalbooking.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
+
 import java.util.HashSet;
 import java.util.Set;
 
@@ -18,6 +21,8 @@ public class Caracteristica {
     @Column(name = "id", updatable = false)
     private Long id;
     @Column(name = "nombre", nullable = false)
+    @NotBlank(message = "La característica debe tener un nombre")
+    @Size(max = 255, message = "El nombre de la característica no debe tener más de 255 caracteres")
     private String nombre;
 
     @ManyToMany(mappedBy = "caracteristicas")

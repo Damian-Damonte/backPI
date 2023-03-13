@@ -3,6 +3,7 @@ package com.dh.digitalbooking.controller;
 import com.dh.digitalbooking.model.Caracteristica;
 import com.dh.digitalbooking.service.imp.CaracteristicaServiceImp;
 import io.swagger.v3.oas.annotations.Operation;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -28,7 +29,7 @@ public class CaracteristicaController {
     }
 
     @PostMapping
-    public ResponseEntity<Caracteristica> saveCaracteristica(@RequestBody Caracteristica caracteristica) {
+    public ResponseEntity<Caracteristica> saveCaracteristica(@RequestBody @Valid Caracteristica caracteristica) {
         return ResponseEntity.status(HttpStatus.CREATED).body(caracteristicaServiceImp.saveCaracteristica(caracteristica));
     }
 
@@ -40,7 +41,7 @@ public class CaracteristicaController {
     }
 
     @PutMapping
-    public ResponseEntity<Caracteristica> updateCaracteristica(@RequestBody Caracteristica caracteristica) {
+    public ResponseEntity<Caracteristica> updateCaracteristica(@RequestBody @Valid Caracteristica caracteristica) {
         return ResponseEntity.ok(caracteristicaServiceImp.updateCaracteristica(caracteristica));
     }
 }

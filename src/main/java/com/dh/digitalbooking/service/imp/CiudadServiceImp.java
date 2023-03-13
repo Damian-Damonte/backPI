@@ -31,7 +31,6 @@ public class CiudadServiceImp implements CiudadService {
 
     @Override
     public Ciudad saveCiudad(Ciudad ciudad) {
-        emptyAttributesValidation(ciudad);
         Pais pais = paisServiceImp.existByIdValidation(ciudad.getPais().getId());
         ciudad.setPais(pais);
 
@@ -49,7 +48,6 @@ public class CiudadServiceImp implements CiudadService {
 
     @Override
     public Ciudad updateCiudad(Ciudad ciudad) {
-        emptyAttributesValidation(ciudad);
         existByIdValidation(ciudad.getId());
         Pais pais = paisServiceImp.existByIdValidation(ciudad.getPais().getId());
         ciudad.setPais(pais);
@@ -62,13 +60,5 @@ public class CiudadServiceImp implements CiudadService {
             throw new BadRequestException("Debe enviar el id de la ciudad");
         return ciudadRepository.findById(id).orElseThrow(() ->
                 new NotFoundException("Ciudad con id " + id + " no encontrada"));
-    }
-
-    private void emptyAttributesValidation(Ciudad ciudad) {
-        String nombre = ciudad.getNombre();
-        if(nombre == null || nombre.equals(""))
-            throw new BadRequestException("Las ciudad debe contener un nombre");
-        if(ciudad.getPais() == null)
-            throw new BadRequestException("La ciudad debe contener un pais");
     }
 }
