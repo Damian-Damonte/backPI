@@ -110,71 +110,72 @@ public class DigitalbookingApplication {
 					new BigDecimal("-34.55044"),
 					new BigDecimal("-58.47996"));
 
-			Producto hotel1 = new Producto(
-					"Hotel 1",
-					"Titulo de la descripcion del hotel 1",
-					"Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
-					hotel,
-					buenosAires,
-					caracteristicas1,
-					imagenesSet5,
-					politicas1,
-					coordenadas
-			);
+			Producto hotel1 = new Producto();
+			hotel1.setTitulo("Hotel 1");
+			hotel1.setTituloDescripcion("Titulo de la descripcion del hotel 1");
+			hotel1.setDescripcion("Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.");
+			hotel1.setDireccion("Av Congreso 3423");
+			hotel1.setPrecioPorNoche(new BigDecimal("5200.00"));
+			hotel1.setCategoria(hotel);
+			hotel1.setCiudad(buenosAires);
+			hotel1.setCaracteristicas(caracteristicas1);
+			hotel1.setImagenes(imagenesSet5);
+			hotel1.setPoliticas(politicas1);
+			hotel1.setCoordenadas(coordenadas);
 
-			Producto hostel1 = new Producto(
-					"Hostel 1",
-					"Titulo de la descripcion del hostel 1",
-					"Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries,",
-					hostel,
-					rioDeJaneiro,
-					caracteristicas2,
-					imagenesSet4,
-					politicas2,
-					coordenadas
-			);
-
-			Producto departamento1 = new Producto(
-					"Departamento 1",
-					"Titulo de la descripcion del departamento 1",
-					"There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text. All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary, making this the first true generator on the Internet. It uses a dictionary of over 200 Latin words, combined with a handful of model sentence structures, to generate Lorem Ipsum which looks reasonable. The generated Lorem Ipsum is therefore always free from repetition, injected humour, or non-characteristic words etc",
-					departamento,
-					cali,
-					caracteristicas3,
-					imagenesSet3,
-					politicas3,
-					coordenadas
-			);
-
-			Producto bedAndBreakfast1 = new Producto(
-					"Bed and breakfast 1",
-					"Titulo de la descripcion del Bed and breakfast 1",
-					"There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text. All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary, making this the first true generator on the Internet. It uses a dictionary of over 200 Latin words, combined with a handful of model sentence structures, to generate Lorem Ipsum which looks reasonable. The generated Lorem Ipsum is therefore always free from repetition, injected humour, or non-characteristic words etc",
-					bedAndBreakfast,
-					santiago,
-					caracteristicas1,
-					imagenesSet2,
-					politicas1,
-					coordenadas
-			);
-
-			Producto bedAndBreakfast2 = new Producto(
-					"Bed and breakfast 2",
-					"Titulo de la descripcion del Bed and breakfast 2",
-					"There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text. All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary, making this the first true generator on the Internet. It uses a dictionary of over 200 Latin words, combined with a handful of model sentence structures, to generate Lorem Ipsum which looks reasonable. The generated Lorem Ipsum is therefore always free from repetition, injected humour, or non-characteristic words etc",
-					bedAndBreakfast,
-					buenosAires,
-					caracteristicas1,
-					imagenesSet1,
-					new HashSet<>(),
-					coordenadas
-			);
+//			Producto hostel1 = new Producto(
+//					"Hostel 1",
+//					"Titulo de la descripcion del hostel 1",
+//					"Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries,",
+//					hostel,
+//					rioDeJaneiro,
+//					caracteristicas2,
+//					imagenesSet4,
+//					politicas2,
+//					coordenadas
+//			);
+//
+//			Producto departamento1 = new Producto(
+//					"Departamento 1",
+//					"Titulo de la descripcion del departamento 1",
+//					"There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text. All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary, making this the first true generator on the Internet. It uses a dictionary of over 200 Latin words, combined with a handful of model sentence structures, to generate Lorem Ipsum which looks reasonable. The generated Lorem Ipsum is therefore always free from repetition, injected humour, or non-characteristic words etc",
+//					departamento,
+//					cali,
+//					caracteristicas3,
+//					imagenesSet3,
+//					politicas3,
+//					coordenadas
+//			);
+//
+//			Producto bedAndBreakfast1 = new Producto(
+//					"Bed and breakfast 1",
+//					"Titulo de la descripcion del Bed and breakfast 1",
+//					"There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text. All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary, making this the first true generator on the Internet. It uses a dictionary of over 200 Latin words, combined with a handful of model sentence structures, to generate Lorem Ipsum which looks reasonable. The generated Lorem Ipsum is therefore always free from repetition, injected humour, or non-characteristic words etc",
+//					bedAndBreakfast,
+//					santiago,
+//					caracteristicas1,
+//					imagenesSet2,
+//					politicas1,
+//					coordenadas
+//			);
+//
+//			Producto bedAndBreakfast2 = new Producto(
+//					"Bed and breakfast 2",
+//					"Titulo de la descripcion del Bed and breakfast 2",
+//					"There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text. All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary, making this the first true generator on the Internet. It uses a dictionary of over 200 Latin words, combined with a handful of model sentence structures, to generate Lorem Ipsum which looks reasonable. The generated Lorem Ipsum is therefore always free from repetition, injected humour, or non-characteristic words etc",
+//					bedAndBreakfast,
+//					buenosAires,
+//					caracteristicas1,
+//					imagenesSet1,
+//					new HashSet<>(),
+//					coordenadas
+//			);
 
 			productoServiceImp.saveProducto(hotel1);
-			productoServiceImp.saveProducto(hostel1);
-			productoServiceImp.saveProducto(departamento1);
-			productoServiceImp.saveProducto(bedAndBreakfast1);
-			productoServiceImp.saveProducto(bedAndBreakfast2);
+//			productoServiceImp.saveProducto(hostel1);
+//			productoServiceImp.saveProducto(departamento1);
+//			productoServiceImp.saveProducto(bedAndBreakfast1);
+//			productoServiceImp.saveProducto(bedAndBreakfast2);
 		};
 	}
 }

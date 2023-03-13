@@ -3,10 +3,9 @@ package com.dh.digitalbooking.model;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.*;
 
+import java.math.BigDecimal;
 import java.util.HashSet;
 import java.util.Set;
 @Entity(name = "Producto")
@@ -27,6 +26,21 @@ public class Producto {
     @Column(name = "descripcion", columnDefinition = "TEXT", length = 800)
     @Size(max = 800, message = "La descripcion no debe tener más de 800 caracteres")
     private String descripcion;
+    @Column(name = "direccion", nullable = false)
+    @NotBlank(message = "El producto debe tener una dirección")
+    @Size(max = 255, message = "La dirección del producto no debe tener más de 255 caracteres")
+    private String direccion;
+
+    @Column(name = "precio_por_noche",precision = 10, scale = 2, nullable = false)
+    @DecimalMin(value = "0.00",  message = "El precio por noche no puede ser menor a 0.00")
+    @DecimalMax(value = "99999999.99", message = "El precio por noche no puede ser mayor a 99999999.99")
+    @NotNull(message = "El producto debe tener un precio por noche")
+    private BigDecimal precioPorNoche;
+
+    @Column(name = "promedio_puntuacion",precision = 3, scale = 1)
+    @DecimalMin(value = "0.00",  message = "El promedio no puede ser menor a 0.00")
+    @DecimalMax(value = "10.0", message = "El promedio no puede ser mayor a 10.0")
+    private BigDecimal promedio_puntuacion;
 
     @ManyToOne
     @JoinColumn(
@@ -192,5 +206,29 @@ public class Producto {
 
     public void setReservas(Set<Reserva> reservas) {
         this.reservas = reservas;
+    }
+
+    public String getDireccion() {
+        return direccion;
+    }
+
+    public void setDireccion(String direccion) {
+        this.direccion = direccion;
+    }
+
+    public BigDecimal getPrecioPorNoche() {
+        return precioPorNoche;
+    }
+
+    public void setPrecioPorNoche(BigDecimal precioPorNoche) {
+        this.precioPorNoche = precioPorNoche;
+    }
+
+    public BigDecimal getPromedio_puntuacion() {
+        return promedio_puntuacion;
+    }
+
+    public void setPromedio_puntuacion(BigDecimal promedio_puntuacion) {
+        this.promedio_puntuacion = promedio_puntuacion;
     }
 }
