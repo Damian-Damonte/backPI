@@ -2,6 +2,9 @@ package com.dh.digitalbooking.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 
 @Entity(name = "Politica")
 @Table(name = "politicas")
@@ -12,6 +15,8 @@ public class Politica {
     private Long id;
 
     @Column(name = "descripcion", nullable = false, columnDefinition = "TEXT", length = 600)
+    @Size(max = 600, message = "La descripcion de la política no debe tener más de 600 caracteres")
+    @NotBlank(message = "La política debe tener una descrpción")
     private String descripcion;
 
     @ManyToOne
@@ -21,6 +26,7 @@ public class Politica {
             referencedColumnName = "id",
             foreignKey = @ForeignKey(name = "politicas_tipo_politicas_fk")
     )
+    @NotNull(message = "La polílica debe tener un tipo de política")
     private TipoPolitica tipoPolitica;
 
     @ManyToOne

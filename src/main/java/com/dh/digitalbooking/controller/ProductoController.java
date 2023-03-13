@@ -3,6 +3,7 @@ package com.dh.digitalbooking.controller;
 import com.dh.digitalbooking.model.Producto;
 import com.dh.digitalbooking.service.imp.ProductoServiceImp;
 import io.swagger.v3.oas.annotations.Operation;
+import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -53,7 +54,7 @@ public class ProductoController {
     }
 
     @PostMapping
-    public ResponseEntity<Producto> saveProducto(@RequestBody Producto producto) {
+    public ResponseEntity<Producto> saveProducto(@RequestBody @Valid Producto producto) {
         return ResponseEntity.status(HttpStatus.CREATED).body(productoServiceImp.saveProducto(producto));
     }
 
@@ -65,7 +66,7 @@ public class ProductoController {
     }
 
     @PutMapping
-    public ResponseEntity<Producto> updateProducto(@RequestBody Producto producto) {
+    public ResponseEntity<Producto> updateProducto(@RequestBody @Valid Producto producto) {
         return ResponseEntity.ok(productoServiceImp.updateProducto(producto));
     }
 }

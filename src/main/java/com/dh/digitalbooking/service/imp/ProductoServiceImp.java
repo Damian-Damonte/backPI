@@ -91,8 +91,6 @@ public class ProductoServiceImp implements ProductoService {
     }
 
     private Producto getProducto(Producto producto) {
-        emptyAttributesValidation(producto);
-
         producto.setCiudad(ciudadServiceImp.existByIdValidation(producto.getCiudad().getId()));
         producto.setCategoria(categoriaServiceImp.existByIdValidation(producto.getCategoria().getId()));
 
@@ -162,24 +160,8 @@ public class ProductoServiceImp implements ProductoService {
                 new NotFoundException("Producto con id " + id + " no encontrado"));
     }
 
-    private void emptyAttributesValidation(Producto producto) {
-        String titulo = producto.getTitulo();
-        if (titulo == null || titulo.equals(""))
-            throw new BadRequestException("El producto debe contener un titulo");
-        if (producto.getCategoria() == null)
-            throw new BadRequestException("El producto debe contener una categoria");
-        if (producto.getCiudad() == null)
-            throw new BadRequestException("El producto debe contener una ciudad");
-    }
-
     private void imagenValidation(Long productoId, Imagen imagen) {
         Long id = imagen.getId();
-        String titulo = imagen.getTitulo();
-        String url = imagen.getUrl();
-        if(titulo == null || titulo.equals(""))
-            throw new BadRequestException("Las imagenes debe contener un titulo");
-        if(url == null || url.equals(""))
-            throw new BadRequestException("Las imagenes debe contener una url");
         if(id != null){
             Imagen currentImg = imagenServiceImp.getByIdImagen(id);
             if(!(currentImg.getProducto().getId().equals(productoId)))
@@ -189,11 +171,6 @@ public class ProductoServiceImp implements ProductoService {
 
     private void politicaValidation(Long productoId, Politica politica) {
         Long id = politica.getId();
-        String descripcion = politica.getDescripcion();
-        if(descripcion == null || descripcion.equals(""))
-            throw new BadRequestException("Las politicas debe contener una descripcion");
-        if(politica.getTipoPolitica() == null)
-            throw new BadRequestException("Las politicas debe contener un tipo de politica");
         if(id != null){
             Politica currentPolitica = politicaServiceImp.getByIdPolitica(id);
             if(!(currentPolitica.getProducto().getId().equals(productoId)))
@@ -203,10 +180,6 @@ public class ProductoServiceImp implements ProductoService {
 
     private void coordenadasValidation(Long productoId, Coordenadas coordenadas) {
         Long id = coordenadas.getId();
-        if(coordenadas.getLongitud() == null)
-            throw new BadRequestException("Las coordenadas debe contener la longitud");
-        if(coordenadas.getLatitud() == null)
-            throw new BadRequestException("Las coordenadas debe contener la latitud");
         if(id != null) {
             Coordenadas currentCoordenadas = coordenadasServiceImp.getByIdCoordenadas(id);
             if(!(currentCoordenadas.getProducto().getId().equals(productoId)))

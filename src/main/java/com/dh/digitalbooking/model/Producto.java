@@ -2,6 +2,11 @@ package com.dh.digitalbooking.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
+
 import java.util.HashSet;
 import java.util.Set;
 @Entity(name = "Producto")
@@ -13,10 +18,14 @@ public class Producto {
     private Long id;
 
     @Column(name = "titulo", nullable = false, length = 45)
+    @NotBlank(message = "El producto debe tener un titulo")
+    @Size(max = 45, message = "El titulo no debe tener más de 45 caracteres")
     private String titulo;
     @Column(name = "title_description", length = 100)
+    @Size(max = 100, message = "El titulo de la descripcion no debe tener más de 100 caracteres")
     private String tituloDescripcion;
-    @Column(name = "descripcion", columnDefinition = "TEXT", length = 500)
+    @Column(name = "descripcion", columnDefinition = "TEXT", length = 800)
+    @Size(max = 800, message = "La descripcion no debe tener más de 800 caracteres")
     private String descripcion;
 
     @ManyToOne
@@ -26,6 +35,7 @@ public class Producto {
             referencedColumnName = "id",
             foreignKey = @ForeignKey(name = "productos_categorias_fk")
     )
+    @NotNull(message = "El producto debe pertenecer a una categoria")
     private Categoria categoria;
 
     @ManyToOne
@@ -35,6 +45,7 @@ public class Producto {
             referencedColumnName = "id",
             foreignKey = @ForeignKey(name = "productos_ciudad_fk")
     )
+    @NotNull(message = "El producto debe pertenecer a una ciudad")
     private Ciudad ciudad;
 
     @ManyToMany
@@ -52,9 +63,11 @@ public class Producto {
     private Set<Caracteristica> caracteristicas = new HashSet<>();
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "producto")
+    @Valid
     private Set<Imagen> imagenes = new HashSet<>();
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "producto")
+    @Valid
     private Set<Politica> politicas = new HashSet<>();
 
     @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
@@ -63,6 +76,7 @@ public class Producto {
             referencedColumnName = "id",
             foreignKey = @ForeignKey(name = "coordenadas_id_fk")
     )
+    @Valid
     private Coordenadas coordenadas;
 
     @OneToMany(mappedBy = "producto")

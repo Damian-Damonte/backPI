@@ -2,6 +2,10 @@ package com.dh.digitalbooking.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.DecimalMax;
+import jakarta.validation.constraints.DecimalMin;
+import jakarta.validation.constraints.NotNull;
+
 import java.math.BigDecimal;
 
 @Entity(name = "Coordenadas")
@@ -13,8 +17,14 @@ public class Coordenadas {
     private Long id;
 
     @Column(precision = 10, scale = 6, nullable = false)
+    @NotNull(message = "Las coordenadas debe tener una latitud")
+    @DecimalMin(value = "-90.000000",  message = "La latitud no debe ser menor a -90.000000")
+    @DecimalMax(value = "90.000000", message = "La latitud no debe ser mayor a 90.000000")
     private BigDecimal latitud;
     @Column(precision = 10, scale = 6, nullable = false)
+    @NotNull(message = "Las coordenadas debe tener una longitud")
+    @DecimalMin(value = "-180.000000",  message = "La longitud no debe ser menor a -180.000000")
+    @DecimalMax(value = "180.000000", message = "La latitud no debe ser mayor a 180.000000")
     private BigDecimal longitud;
 
     @OneToOne(mappedBy = "coordenadas")
