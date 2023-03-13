@@ -39,8 +39,9 @@ public class PuntuacionServiceImp implements PuntuacionService {
 
     @Override
     public void deletePuntuacion(Long id) {
-        existByIdValidation(id);
+        Puntuacion puntuacion = existByIdValidation(id);
         puntuacionRepository.deleteById(id);
+        puntuacionRepository.updatePromedioPuntuacionProducto(puntuacion.getProducto().getId());
     }
 
     @Override
@@ -54,7 +55,9 @@ public class PuntuacionServiceImp implements PuntuacionService {
         Usuario usuario = usuarioServiceImp.existByIdValidation(puntuacion.getUsuario().getId());
         puntuacion.setProducto(producto);
         puntuacion.setUsuario(usuario);
-        return puntuacionRepository.save(puntuacion);
+        Puntuacion puntuacionSave = puntuacionRepository.save(puntuacion);
+        puntuacionRepository.updatePromedioPuntuacionProducto(producto.getId());
+        return puntuacionSave;
     }
 
     public Puntuacion existByIdValidation(Long id) {

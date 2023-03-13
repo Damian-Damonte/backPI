@@ -60,7 +60,8 @@ public class ProductoController {
     }
 
     @DeleteMapping("/{id}")
-    @Operation(description = "Al eliminar el producto se eliminarán automaticamente las imagenes y politicas relacionadas a este")
+    @Operation(description = "Al eliminar el producto se eliminarán automaticamente las imagenes, puntuaciones y politicas relacionadas a este. " +
+            "El producto no podrá ser eliminado si cuenta con reservas")
     public ResponseEntity<Void> deleteProducto(@PathVariable Long id) {
         productoServiceImp.deleteProducto(id);
         return ResponseEntity.noContent().build();

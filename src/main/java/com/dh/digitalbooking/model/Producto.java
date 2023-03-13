@@ -1,5 +1,6 @@
 package com.dh.digitalbooking.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import jakarta.validation.Valid;
@@ -93,9 +94,13 @@ public class Producto {
     @Valid
     private Coordenadas coordenadas;
 
-    @OneToMany(mappedBy = "producto")
+    @OneToMany(mappedBy = "producto", cascade = CascadeType.REMOVE, orphanRemoval = true)
     @JsonIgnoreProperties("producto")
     private Set<Reserva> reservas = new HashSet<>();
+
+    @OneToMany(cascade = CascadeType.REMOVE, orphanRemoval = true, mappedBy = "producto")
+    @JsonIgnore
+    private Set<Puntuacion> puntuaciones = new HashSet<>();
 
     public Producto() {
     }

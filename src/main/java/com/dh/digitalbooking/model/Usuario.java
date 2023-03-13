@@ -7,9 +7,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
 
 @Entity(name = "Usuario")
 @Table(
@@ -47,6 +45,10 @@ public class Usuario implements UserDetails {
     @OneToMany(mappedBy = "usuario", cascade = CascadeType.REMOVE, orphanRemoval = true)
     @JsonIgnoreProperties("usuario")
     List<Reserva> reservas = new ArrayList<>();
+
+    @OneToMany(cascade = CascadeType.REMOVE, orphanRemoval = true, mappedBy = "usuario")
+    @JsonIgnore
+    private Set<Puntuacion> puntuaciones = new HashSet<>();
 
     public Usuario() {
     }
