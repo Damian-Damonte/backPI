@@ -1,5 +1,6 @@
 package com.dh.digitalbooking.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
@@ -27,6 +28,7 @@ public class Puntuacion {
             foreignKey = @ForeignKey(name = "puntuacion_usuario_fk")
     )
     @NotNull(message = "La puntuacion debe estar asociada a un usuario")
+    @JsonIgnoreProperties("reservas")
     private Usuario usuario;
     @ManyToOne
     @JoinColumn(
@@ -36,6 +38,7 @@ public class Puntuacion {
             foreignKey = @ForeignKey(name = "puntuacion_producto_fk")
     )
     @NotNull(message = "La puntuacion debe estar asociada a un producto")
+    @JsonIgnoreProperties("reservas")
     private Producto producto;
 
     public Puntuacion() {

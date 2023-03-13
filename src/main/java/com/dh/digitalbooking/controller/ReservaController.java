@@ -40,7 +40,7 @@ public class ReservaController {
     }
 
     @PutMapping
-    public ResponseEntity<Reserva> updateReserva(@RequestBody Reserva reserva) {
+    public ResponseEntity<Reserva> updateReserva(@RequestBody @Valid Reserva reserva) {
         return ResponseEntity.ok(reservaServiceImp.updateReserva(reserva));
     }
 }

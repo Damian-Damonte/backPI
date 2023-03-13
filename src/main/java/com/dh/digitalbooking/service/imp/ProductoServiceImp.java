@@ -86,7 +86,9 @@ public class ProductoServiceImp implements ProductoService {
     @Transactional
     @Override
     public Producto updateProducto(Producto updateProducto) {
-        existByIdValidation(updateProducto.getId());
+        Producto producto = existByIdValidation(updateProducto.getId());
+        updateProducto.setPromedioPuntuacion(producto.getPromedioPuntuacion());
+        updateProducto.setReservas(producto.getReservas());
         return getProducto(updateProducto);
     }
 

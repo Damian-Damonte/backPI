@@ -40,7 +40,7 @@ public class Producto {
     @Column(name = "promedio_puntuacion",precision = 3, scale = 1)
     @DecimalMin(value = "0.00",  message = "El promedio no puede ser menor a 0.00")
     @DecimalMax(value = "10.0", message = "El promedio no puede ser mayor a 10.0")
-    private BigDecimal promedio_puntuacion;
+    private BigDecimal promedioPuntuacion;
 
     @ManyToOne
     @JoinColumn(
@@ -224,11 +224,11 @@ public class Producto {
         this.precioPorNoche = precioPorNoche;
     }
 
-    public BigDecimal getPromedio_puntuacion() {
-        return promedio_puntuacion;
+    public BigDecimal getPromedioPuntuacion() {
+        return promedioPuntuacion;
     }
 
-    public void setPromedio_puntuacion(BigDecimal promedio_puntuacion) {
-        this.promedio_puntuacion = promedio_puntuacion;
+    public void setPromedioPuntuacion(BigDecimal promedio_puntuacion) {
+        this.promedioPuntuacion = promedio_puntuacion;
     }
 }

@@ -54,6 +54,7 @@ public class ProductoController {
     }
 
     @PostMapping
+    @Operation(description = "Al crear un producto el promedio de puntuaciones siempre será null")
     public ResponseEntity<Producto> saveProducto(@RequestBody @Valid Producto producto) {
         return ResponseEntity.status(HttpStatus.CREATED).body(productoServiceImp.saveProducto(producto));
     }
@@ -66,6 +67,8 @@ public class ProductoController {
     }
 
     @PutMapping
+    @Operation(description = "El promedio de puntuaciones y las reservas de un producto no puede ser modificadas a través de este endpoint. " +
+            "Cuando se modifique un producto se pueden omitir estos atributos")
     public ResponseEntity<Producto> updateProducto(@RequestBody @Valid Producto producto) {
         return ResponseEntity.ok(productoServiceImp.updateProducto(producto));
     }
