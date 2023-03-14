@@ -22,7 +22,8 @@ public interface ProductoRepository extends JpaRepository<Producto, Long> {
                 "AND (:categoriaId IS NULL OR p.categoria.id = :categoriaId) " +
                 "AND ((:checkIn IS NULL AND :checkOut IS NULL) OR p.id NOT IN " +
                 "(SELECT r.producto.id FROM Reserva r WHERE " +
-                    "(r.checkIn <= :checkOut AND r.checkOut >= :checkIn)))"
+                    "(r.checkIn <= :checkOut AND r.checkOut >= :checkIn))) " +
+                "ORDER BY p.id ASC"
     )
     List<Producto> findAllFilters(
             @Param("ciudadId") Long ciudadId,
