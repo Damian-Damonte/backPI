@@ -13,20 +13,20 @@ import java.util.List;
 @Repository
 @Transactional(readOnly = true)
 public interface ProductoRepository extends JpaRepository<Producto, Long> {
-    @Query(
-            "SELECT p FROM Producto p WHERE (:ciudadId IS NULL OR p.ciudad.id = :ciudadId) AND " +
-                    "(:categoriaId IS NULL OR p.categoria.id = :categoriaId)"
-    )
-    List<Producto> findAllWithFilters(
-            @Param("ciudadId") Long ciudadId,
-            @Param("categoriaId") Long categoriaId);
-
     @Query("SELECT p FROM Producto p ORDER BY RAND() LIMIT 4")
     List<Producto> findRandom();
 
-    @Query("SELECT p FROM Producto p WHERE p.id NOT IN "
-            + "(SELECT r.producto.id FROM Reserva r WHERE (r.checkIn <= :checkOut AND r.checkOut >= :checkIn))")
-    List<Producto> findByFechasSinReserva(
+    @Query(
+            "SELECT p FROM Producto p WHERE " +
+                "(:ciudadId IS NULL OR p.ciudad.id = :ciudadId) " +
+                "AND (:categoriaId IS NULL OR p.categoria.id = :categoriaId) " +
+                "AND ((:checkIn IS NULL AND :checkOut IS NULL) OR p.id NOT IN " +
+                "(SELECT r.producto.id FROM Reserva r WHERE " +
+                    "(r.checkIn <= :checkOut AND r.checkOut >= :checkIn)))"
+    )
+    List<Producto> findAllFilters(
+            @Param("ciudadId") Long ciudadId,
+            @Param("categoriaId") Long categoriaId,
             @Param("checkIn") LocalDate checkIn,
             @Param("checkOut") LocalDate checkOut
     );

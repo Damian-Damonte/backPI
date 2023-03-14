@@ -1,22 +1,18 @@
 package com.dh.digitalbooking.service.imp;
 
 
+import com.dh.digitalbooking.dto.ProductoFilterRequest;
 import com.dh.digitalbooking.exception.BadRequestException;
 import com.dh.digitalbooking.exception.NotFoundException;
 import com.dh.digitalbooking.model.*;
 import com.dh.digitalbooking.repository.ProductoRepository;
 import com.dh.digitalbooking.service.ProductoService;
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.PersistenceContext;
-import jakarta.persistence.TypedQuery;
-import jakarta.persistence.criteria.*;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -49,6 +45,7 @@ public class ProductoServiceImp implements ProductoService {
         return productoRepository.findAll();
     }
 
+    @Override
     public Page<Producto> getAllPage(int page) {
         PageRequest pageRequest = PageRequest.ofSize(2).withPage(page);
         Page<Producto> productoPage = productoRepository.findAll(pageRequest);
@@ -56,13 +53,23 @@ public class ProductoServiceImp implements ProductoService {
     }
 
     @Override
-    public List<Producto> getAllWithFilters(Long ciudadId, Long categoriaId) {
-        return productoRepository.findAllWithFilters(ciudadId, categoriaId);
-    }
+    public List<Producto> getByAllFilters(ProductoFilterRequest filters) {
+        Long ciudadId = filters.getCiudadId();
+        Long categoriaId = filters.getCategoriaId();
+        LocalDate checkIn = filters.getCheckIn();
+        LocalDate checkOut = filters.getCheckOut();
+        if (ciudadId != null)
+            ciudadServiceImp.existByIdValidation(ciudadId);
+        if (categoriaId != null)
+            categoriaServiceImp.existByIdValidation(categoriaId);
+        if (checkIn != null && checkOut != null)
+            datesValidation(checkIn, checkOut);
 
-    public List<Producto> getProductosDisponibles(LocalDate checkIn, LocalDate checkOut) {
-        datesValidation(checkIn, checkOut);
-        return productoRepository.findByFechasSinReserva(checkIn, checkOut);
+        return productoRepository.findAllFilters(
+                filters.getCiudadId(),
+                filters.getCategoriaId(),
+                filters.getCheckIn(),
+                filters.getCheckOut());
     }
 
     @Override

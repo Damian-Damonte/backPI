@@ -1,12 +1,15 @@
 package com.dh.digitalbooking.service;
 
+import com.dh.digitalbooking.dto.ProductoFilterRequest;
 import com.dh.digitalbooking.model.Producto;
+import org.springframework.data.domain.Page;
 
 import java.util.List;
 
 public interface ProductoService {
     List<Producto> getAllProducto();
-    List<Producto> getAllWithFilters(Long ciudadId, Long categoriaId);
+    Page<Producto> getAllPage(int page);
+    List<Producto> getByAllFilters(ProductoFilterRequest filters);
     List<Producto> getRandomProductos();
     Producto getProductoById(Long id);
     Producto saveProducto(Producto producto);

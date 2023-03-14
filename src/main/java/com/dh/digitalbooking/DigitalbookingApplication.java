@@ -123,6 +123,20 @@ public class DigitalbookingApplication {
 			hotel1.setCoordenadas(coordenadas);
 			productoServiceImp.saveProducto(hotel1);
 
+			Producto hotel2 = new Producto();
+			hotel2.setTitulo("Hotel 2");
+			hotel2.setTituloDescripcion("Titulo de la descripcion del hotel 2");
+			hotel2.setDescripcion("Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.");
+			hotel2.setDireccion("Av Corrientes 1924");
+			hotel2.setPrecioPorNoche(new BigDecimal("9700.00"));
+			hotel2.setCategoria(hotel);
+			hotel2.setCiudad(marDelPlata);
+			hotel2.setCaracteristicas(caracteristicas3);
+			hotel2.setImagenes(imagenesSet2);
+			hotel2.setPoliticas(politicas3);
+			hotel2.setCoordenadas(coordenadas);
+			productoServiceImp.saveProducto(hotel2);
+
 
 //			Producto hostel1 = new Producto(
 //					"Hostel 1",

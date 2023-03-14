@@ -1,5 +1,6 @@
 package com.dh.digitalbooking.controller;
 
+import com.dh.digitalbooking.dto.ProductoFilterRequest;
 import com.dh.digitalbooking.model.Producto;
 import com.dh.digitalbooking.service.imp.ProductoServiceImp;
 import io.swagger.v3.oas.annotations.Operation;
@@ -9,7 +10,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -21,38 +21,24 @@ public class ProductoController {
         this.productoServiceImp = productoServiceImp;
     }
 
-
     @GetMapping
     public ResponseEntity<Page<Producto>> getAllPage(@RequestParam(defaultValue = "0") int page) {
         return ResponseEntity.ok(productoServiceImp.getAllPage(page));
     }
 
-//    @GetMapping
-//    public ResponseEntity<List<Producto>> getAll() {
-//        return ResponseEntity.ok(productoServiceImp.getAllProducto());
-//    }
-
     @GetMapping("/filters")
     @Operation(
-            summary = "Devuelve productos filtrados por ciudad y categoría",
-            description = "En caso de no enviar ningún parámetro tendrá el mismo funcionamiento que el endpoint /api/productos"
+            summary = "Productos filtrados por ciudad, categoría, fecha checkIn y fecha checkOut",
+            description = "En caso de no enviar ningún parámetro devolverá todos los productos. " +
+                    "No es necesario enviar todos los parámetros para para poder realizar un filtrado."
     )
-    public ResponseEntity<List<Producto>> getAllProductoWithFilters(
-            @RequestParam(name = "ciudadId", required = false) Long ciudadId,
-            @RequestParam(name = "categoriaId", required = false) Long categoriaId
-    ) {
-        return ResponseEntity.ok(productoServiceImp.getAllWithFilters(ciudadId, categoriaId));
+    public ResponseEntity<List<Producto>> getAllFilters(
+            @RequestBody(required = false) @Valid ProductoFilterRequest filters) {
+        if (filters == null)
+            filters = new ProductoFilterRequest();
+        return ResponseEntity.ok(productoServiceImp.getByAllFilters(filters));
     }
 
-    @GetMapping("/disponibles-por-fechas")
-    public ResponseEntity<List<Producto>> getCriteriaFilter(
-            @RequestParam(name = "ciudadId", required = false) Long ciudadId,
-            @RequestParam(name = "categoriaId", required = false) Long categoriaId,
-            @RequestParam(name = "checkIn", required = false) LocalDate checkIn,
-            @RequestParam(name = "checkOut", required = false) LocalDate checkOut
-            ) {
-        return ResponseEntity.ok(productoServiceImp.getProductosDisponibles(checkIn, checkOut));
-    }
 
     @GetMapping("/random")
     @Operation(summary = "Devuelve 4 productos de forma aleatoria")
@@ -81,7 +67,7 @@ public class ProductoController {
 
     @PutMapping
     @Operation(description = "El promedio de puntuaciones y las reservas de un producto no puede ser modificadas a través de este endpoint. " +
-            "Cuando se modifique un producto se pueden omitir estos atributos")
+            "Cuando se modifique un producto se pueden omitir dichos atributos")
     public ResponseEntity<Producto> updateProducto(@RequestBody @Valid Producto producto) {
         return ResponseEntity.ok(productoServiceImp.updateProducto(producto));
     }
