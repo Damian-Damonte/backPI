@@ -6,10 +6,17 @@ import com.dh.digitalbooking.exception.NotFoundException;
 import com.dh.digitalbooking.model.*;
 import com.dh.digitalbooking.repository.ProductoRepository;
 import com.dh.digitalbooking.service.ProductoService;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
+import jakarta.persistence.TypedQuery;
+import jakarta.persistence.criteria.*;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -53,6 +60,11 @@ public class ProductoServiceImp implements ProductoService {
         return productoRepository.findAllWithFilters(ciudadId, categoriaId);
     }
 
+    public List<Producto> getProductosDisponibles(LocalDate checkIn, LocalDate checkOut) {
+        datesValidation(checkIn, checkOut);
+        return productoRepository.findByFechasSinReserva(checkIn, checkOut);
+    }
+
     @Override
     public List<Producto> getRandomProductos() {
         return productoRepository.findRandom();
@@ -68,7 +80,7 @@ public class ProductoServiceImp implements ProductoService {
     public Producto saveProducto(Producto producto) {
         producto.getImagenes().forEach(img -> img.setId(null));
         producto.getPoliticas().forEach(pol -> pol.setId(null));
-        if(producto.getCoordenadas() != null)
+        if (producto.getCoordenadas() != null)
             producto.getCoordenadas().setId(null);
 
         return getProducto(producto);
@@ -78,7 +90,7 @@ public class ProductoServiceImp implements ProductoService {
     @Override
     public void deleteProducto(Long id) {
         Producto producto = existByIdValidation(id);
-        if(!(producto.getReservas().isEmpty()))
+        if (!(producto.getReservas().isEmpty()))
             throw new BadRequestException("El producto con id " + id + " no puede ser eliminado ya que se encuentra reservado");
         productoRepository.deleteById(id);
     }
@@ -99,7 +111,7 @@ public class ProductoServiceImp implements ProductoService {
         getCaracteristicas(producto);
         getImagenes(producto);
         getPoliticas(producto);
-        if(producto.getCoordenadas() != null)
+        if (producto.getCoordenadas() != null)
             getCoordenadas(producto);
 
         return productoRepository.save(producto);
@@ -164,28 +176,33 @@ public class ProductoServiceImp implements ProductoService {
 
     private void imagenValidation(Long productoId, Imagen imagen) {
         Long id = imagen.getId();
-        if(id != null){
+        if (id != null) {
             Imagen currentImg = imagenServiceImp.getByIdImagen(id);
-            if(!(currentImg.getProducto().getId().equals(productoId)))
+            if (!(currentImg.getProducto().getId().equals(productoId)))
                 throw new BadRequestException("La imagen con id " + id + " no pertenece a este producto");
         }
     }
 
     private void politicaValidation(Long productoId, Politica politica) {
         Long id = politica.getId();
-        if(id != null){
+        if (id != null) {
             Politica currentPolitica = politicaServiceImp.getByIdPolitica(id);
-            if(!(currentPolitica.getProducto().getId().equals(productoId)))
+            if (!(currentPolitica.getProducto().getId().equals(productoId)))
                 throw new BadRequestException("La politica con id " + id + " no pertenece a este producto");
         }
     }
 
     private void coordenadasValidation(Long productoId, Coordenadas coordenadas) {
         Long id = coordenadas.getId();
-        if(id != null) {
+        if (id != null) {
             Coordenadas currentCoordenadas = coordenadasServiceImp.getByIdCoordenadas(id);
-            if(!(currentCoordenadas.getProducto().getId().equals(productoId)))
+            if (!(currentCoordenadas.getProducto().getId().equals(productoId)))
                 throw new BadRequestException("Las coordenadas con id " + id + " no pertenecen a este producto");
         }
+    }
+
+    private void datesValidation(LocalDate checkIn, LocalDate checkOut) {
+        if(checkIn.isAfter(checkOut))
+            throw new BadRequestException("La fecha de ingreso deber anterior a la fecha de finalización");
     }
 }

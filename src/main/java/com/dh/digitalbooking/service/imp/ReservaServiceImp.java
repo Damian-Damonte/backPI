@@ -78,15 +78,15 @@ public class ReservaServiceImp implements ReservaService {
     }
 
     private void checkAvailability(Reserva reserva, boolean save) {
-        int count = reservaRepository.countReservaByDates(
+        int count = reservaRepository.countReservasByDates(
                 reserva.getProducto().getId(),
                 reserva.getCheckIn(),
                 reserva.getCheckOut()
         );
+        if(count > 1)
+            throw new BadRequestException("Producto no disponible en las fechas ingresadas");
         if(save && count > 0)
-            throw new BadRequestException("El producto no disponible en las fechas ingresadas");
-        if(!save && count > 1)
-            throw new BadRequestException("El producto no disponible en las fechas ingresadas");
+            throw new BadRequestException("Producto no disponible en las fechas ingresadas");
         if(!save && count == 1) {
             Reserva reservaByDates = reservaRepository.findReservaByDates(
                     reserva.getProducto().getId(),
@@ -94,7 +94,7 @@ public class ReservaServiceImp implements ReservaService {
                     reserva.getCheckOut()
             );
             if(!(reservaByDates.getId().equals(reserva.getId())))
-                throw new BadRequestException("El producto no disponible en las fechas ingresadas");
+                throw new BadRequestException("Producto no disponible en las fechas ingresadas");
         }
     }
 
@@ -103,8 +103,6 @@ public class ReservaServiceImp implements ReservaService {
         LocalDate checkOut = reserva.getCheckOut();
 
         if(checkIn.isAfter(checkOut))
-            throw new BadRequestException("La fecha de ingreso no puede ser posterior a la fecha de finalización");
-
+            throw new BadRequestException("La fecha de ingreso deber anterior a la fecha de finalización");
     }
-
 }

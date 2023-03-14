@@ -6,6 +6,8 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.time.LocalDate;
 import java.util.List;
 
 @Repository
@@ -21,4 +23,11 @@ public interface ProductoRepository extends JpaRepository<Producto, Long> {
 
     @Query("SELECT p FROM Producto p ORDER BY RAND() LIMIT 4")
     List<Producto> findRandom();
+
+    @Query("SELECT p FROM Producto p WHERE p.id NOT IN "
+            + "(SELECT r.producto.id FROM Reserva r WHERE (r.checkIn <= :checkOut AND r.checkOut >= :checkIn))")
+    List<Producto> findByFechasSinReserva(
+            @Param("checkIn") LocalDate checkIn,
+            @Param("checkOut") LocalDate checkOut
+    );
 }

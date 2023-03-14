@@ -8,6 +8,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -40,6 +42,16 @@ public class ProductoController {
             @RequestParam(name = "categoriaId", required = false) Long categoriaId
     ) {
         return ResponseEntity.ok(productoServiceImp.getAllWithFilters(ciudadId, categoriaId));
+    }
+
+    @GetMapping("/disponibles-por-fechas")
+    public ResponseEntity<List<Producto>> getCriteriaFilter(
+            @RequestParam(name = "ciudadId", required = false) Long ciudadId,
+            @RequestParam(name = "categoriaId", required = false) Long categoriaId,
+            @RequestParam(name = "checkIn", required = false) LocalDate checkIn,
+            @RequestParam(name = "checkOut", required = false) LocalDate checkOut
+            ) {
+        return ResponseEntity.ok(productoServiceImp.getProductosDisponibles(checkIn, checkOut));
     }
 
     @GetMapping("/random")

@@ -121,6 +121,8 @@ public class DigitalbookingApplication {
 			hotel1.setImagenes(imagenesSet5);
 			hotel1.setPoliticas(politicas1);
 			hotel1.setCoordenadas(coordenadas);
+			productoServiceImp.saveProducto(hotel1);
+
 
 //			Producto hostel1 = new Producto(
 //					"Hostel 1",
@@ -134,18 +136,34 @@ public class DigitalbookingApplication {
 //					coordenadas
 //			);
 //
-//			Producto departamento1 = new Producto(
-//					"Departamento 1",
-//					"Titulo de la descripcion del departamento 1",
-//					"There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text. All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary, making this the first true generator on the Internet. It uses a dictionary of over 200 Latin words, combined with a handful of model sentence structures, to generate Lorem Ipsum which looks reasonable. The generated Lorem Ipsum is therefore always free from repetition, injected humour, or non-characteristic words etc",
-//					departamento,
-//					cali,
-//					caracteristicas3,
-//					imagenesSet3,
-//					politicas3,
-//					coordenadas
-//			);
-//
+			Producto departamento1 = new Producto(
+					"Departamento 1",
+					"Titulo de la descripcion del departamento 1",
+					"There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text. All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary, making this the first true generator on the Internet. It uses a dictionary of over 200 Latin words, combined with a handful of model sentence structures, to generate Lorem Ipsum which looks reasonable. The generated Lorem Ipsum is therefore always free from repetition, injected humour, or non-characteristic words etc",
+					departamento,
+					cali,
+					caracteristicas3,
+					imagenesSet3,
+					politicas3,
+					coordenadas
+			);
+			departamento1.setTitulo("Departamento 1");
+			departamento1.setTituloDescripcion("Titulo de la descripcion del departamento 1");
+			departamento1.setDescripcion("There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text. All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary, making this the first true generator on the Internet. It uses a dictionary of over 200 Latin words, combined with a handful of model sentence structures, to generate Lorem Ipsum which looks reasonable. The generated Lorem Ipsum is therefore always free from repetition, injected humour, or non-characteristic words etc");
+			departamento1.setDireccion("Av Rivadavia 8423");
+			departamento1.setPrecioPorNoche(new BigDecimal("6600.00"));
+			departamento1.setCategoria(departamento);
+			departamento1.setCiudad(cali);
+			departamento1.setCaracteristicas(caracteristicas3);
+			departamento1.setImagenes(imagenesSet3);
+			departamento1.setPoliticas(politicas3);
+			departamento1.setCoordenadas(coordenadas);
+			productoServiceImp.saveProducto(departamento1);
+
+
+
+
+
 //			Producto bedAndBreakfast1 = new Producto(
 //					"Bed and breakfast 1",
 //					"Titulo de la descripcion del Bed and breakfast 1",
@@ -170,9 +188,7 @@ public class DigitalbookingApplication {
 //					coordenadas
 //			);
 
-			productoServiceImp.saveProducto(hotel1);
 //			productoServiceImp.saveProducto(hostel1);
-//			productoServiceImp.saveProducto(departamento1);
 //			productoServiceImp.saveProducto(bedAndBreakfast1);
 //			productoServiceImp.saveProducto(bedAndBreakfast2);
 		};

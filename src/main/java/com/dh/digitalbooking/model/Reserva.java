@@ -2,6 +2,7 @@ package com.dh.digitalbooking.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.FutureOrPresent;
 import jakarta.validation.constraints.NotNull;
 
 import java.time.LocalDate;
@@ -16,9 +17,11 @@ public class Reserva {
     private Long id;
     @Column(name = "check_in", nullable = false)
     @NotNull(message = "Debe ingresar la fecha de inicio de la reserva")
+    @FutureOrPresent(message = "La fecha de inicio no debe ser anterior a la fecha actual")
     private LocalDate checkIn;
     @Column(name = "check_out", nullable = false)
     @NotNull(message = "Debe ingresar la fecha de finalización de la reserva")
+    @FutureOrPresent(message = "La fecha de finalización no debe ser anterior a la fecha actual")
     private LocalDate checkOut;
     @Column(name = "hora_llegada", nullable = false)
     @NotNull(message = "Debe ingresar la hora de llegada")

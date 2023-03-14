@@ -11,23 +11,20 @@ import java.time.LocalDate;
 @Repository
 @Transactional(readOnly = true)
 public interface ReservaRepository extends JpaRepository<Reserva, Long> {
-    @Query("SELECT COUNT(*) FROM Reserva r " +
-            "WHERE r.producto.id = :productoId " +
-            "AND ((r.checkIn BETWEEN :checkInDate AND :checkOutDate) " +
-            "OR (r.checkOut BETWEEN :checkInDate AND :checkOutDate))")
-    int countReservaByDates(
-            @Param("productoId") Long productId,
-            @Param("checkInDate") LocalDate checkInDate,
-            @Param("checkOutDate") LocalDate checkOutDate
-    );
 
-    @Query("SELECT r FROM Reserva r " +
-            "WHERE r.producto.id = :productoId " +
-            "AND ((r.checkIn BETWEEN :checkInDate AND :checkOutDate) " +
-            "OR (r.checkOut BETWEEN :checkInDate AND :checkOutDate))")
-    Reserva findReservaByDates(
-            @Param("productoId") Long productId,
-            @Param("checkInDate") LocalDate checkInDate,
-            @Param("checkOutDate") LocalDate checkOutDate
-    );
+    @Query("SELECT r FROM Reserva r WHERE r.producto.id = :productoId " +
+            "AND ((r.checkIn <= :checkIn AND r.checkOut >= :checkIn) OR " +
+            "(r.checkIn <= :checkOut AND r.checkOut >= :checkOut) OR " +
+            "(r.checkIn >= :checkIn AND r.checkOut <= :checkOut))")
+    Reserva findReservaByDates(@Param("productoId") Long productoId,
+                               @Param("checkIn") LocalDate checkIn,
+                               @Param("checkOut") LocalDate checkOut);
+
+    @Query("SELECT COUNT(r) FROM Reserva r WHERE r.producto.id = :productoId " +
+            "AND ((r.checkIn <= :checkIn AND r.checkOut >= :checkIn) OR " +
+            "(r.checkIn <= :checkOut AND r.checkOut >= :checkOut) OR " +
+            "(r.checkIn >= :checkIn AND r.checkOut <= :checkOut))")
+    int countReservasByDates(@Param("productoId") Long productoId,
+                             @Param("checkIn") LocalDate checkIn,
+                             @Param("checkOut") LocalDate checkOut);
 }
