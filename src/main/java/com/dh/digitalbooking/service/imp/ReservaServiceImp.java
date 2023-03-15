@@ -37,7 +37,9 @@ public class ReservaServiceImp implements ReservaService {
 
     @Override
     @Transactional
-    public Reserva saveReserva(Reserva reserva) {
+    public Reserva saveReserva(Reserva reserva, Long userId) {
+        if(!(reserva.getUsuario().getId().equals(userId)))
+            throw new BadRequestException("La información del usuario proporcionado no coincide con el usuario actualmente autenticado");
         checkAvailability(reserva, true);
         return getReserva(reserva);
     }

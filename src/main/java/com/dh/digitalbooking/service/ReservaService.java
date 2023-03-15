@@ -6,7 +6,7 @@ import java.util.List;
 public interface ReservaService {
     List<Reserva> allReserva();
     Reserva getByIdReseva(Long id);
-    Reserva saveReserva(Reserva reserva);
+    Reserva saveReserva(Reserva reserva, Long userId);
     void deleteReserva(Long id);
     Reserva updateReserva(Reserva reserva);
 }

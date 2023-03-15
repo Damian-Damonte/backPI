@@ -1,10 +1,12 @@
 package com.dh.digitalbooking.controller;
 
 import com.dh.digitalbooking.model.Reserva;
+import com.dh.digitalbooking.security.AuthenticationFacade;
 import com.dh.digitalbooking.service.imp.ReservaServiceImp;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
@@ -12,9 +14,11 @@ import java.util.List;
 @RequestMapping("/reservas")
 public class ReservaController {
     private final ReservaServiceImp reservaServiceImp;
+    private final AuthenticationFacade authenticationFacade;
 
-    public ReservaController(ReservaServiceImp reservaServiceImp) {
+    public ReservaController(ReservaServiceImp reservaServiceImp, AuthenticationFacade authenticationFacade) {
         this.reservaServiceImp = reservaServiceImp;
+        this.authenticationFacade = authenticationFacade;
     }
 
     @GetMapping
@@ -28,9 +32,12 @@ public class ReservaController {
     }
 
     @PostMapping
-    public ResponseEntity<Reserva> saveReserva(@RequestBody @Valid Reserva reserva) {
+    public ResponseEntity<Reserva> saveReserva(
+            @RequestBody @Valid Reserva reserva,
+            Authentication authentication) {
+        Long userId = authenticationFacade.getUserId(authentication);
         return ResponseEntity.status(HttpStatus.CREATED)
-                .body(reservaServiceImp.saveReserva(reserva));
+                .body(reservaServiceImp.saveReserva(reserva, userId));
     }
 
     @DeleteMapping("/{id}")
