@@ -7,12 +7,17 @@ import java.time.LocalDate;
 public class ProductoFilterRequest {
     private Long ciudadId;
     private Long categoriaId;
-    @FutureOrPresent(message = "La fecha de inicio no debe ser anterior a la fecha actual")
     private LocalDate checkIn;
-    @FutureOrPresent(message = "La fecha de finalización no debe ser anterior a la fecha actual")
     private LocalDate checkOut;
 
     public ProductoFilterRequest() {
+    }
+
+    public ProductoFilterRequest(Long ciudadId, Long categoriaId, LocalDate checkIn, LocalDate checkOut) {
+        this.ciudadId = ciudadId;
+        this.categoriaId = categoriaId;
+        this.checkIn = checkIn;
+        this.checkOut = checkOut;
     }
 
     public Long getCiudadId() {

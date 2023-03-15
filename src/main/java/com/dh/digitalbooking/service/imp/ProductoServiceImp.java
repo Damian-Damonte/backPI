@@ -54,17 +54,7 @@ public class ProductoServiceImp implements ProductoService {
 
     @Override
     public List<Producto> getByAllFilters(ProductoFilterRequest filters) {
-        Long ciudadId = filters.getCiudadId();
-        Long categoriaId = filters.getCategoriaId();
-        LocalDate checkIn = filters.getCheckIn();
-        LocalDate checkOut = filters.getCheckOut();
-        if (ciudadId != null)
-            ciudadServiceImp.existByIdValidation(ciudadId);
-        if (categoriaId != null)
-            categoriaServiceImp.existByIdValidation(categoriaId);
-        if (checkIn != null && checkOut != null)
-            datesValidation(checkIn, checkOut);
-
+        filtersValidations(filters);
         return productoRepository.findAllFilters(
                 filters.getCiudadId(),
                 filters.getCategoriaId(),
@@ -208,8 +198,31 @@ public class ProductoServiceImp implements ProductoService {
         }
     }
 
+    private void filtersValidations (ProductoFilterRequest filters) {
+        Long ciudadId = filters.getCiudadId();
+        Long categoriaId = filters.getCategoriaId();
+        LocalDate checkIn = filters.getCheckIn();
+        LocalDate checkOut = filters.getCheckOut();
+
+        if (ciudadId != null)
+            ciudadServiceImp.existByIdValidation(ciudadId);
+        if (categoriaId != null)
+            categoriaServiceImp.existByIdValidation(categoriaId);
+        if (checkIn != null)
+            notPastDate(checkIn);
+        if (checkOut != null)
+            notPastDate(checkOut);
+        if (checkIn != null && checkOut != null)
+            datesValidation(checkIn, checkOut);
+    }
+
     private void datesValidation(LocalDate checkIn, LocalDate checkOut) {
         if(checkIn.isAfter(checkOut))
             throw new BadRequestException("La fecha de ingreso deber anterior a la fecha de finalización");
+    }
+
+    private void notPastDate (LocalDate date){
+        if(date.isBefore(LocalDate.now()))
+            throw new BadRequestException("Las fechas fechas no deben ser anterior al día actual");
     }
 }
