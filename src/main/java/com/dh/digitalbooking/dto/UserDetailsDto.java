@@ -1,13 +1,13 @@
 package com.dh.digitalbooking.dto;
 
-public class AuthenticationDto {
+public class UserDetailsDto {
     private Long userId;
     private String userRol;
 
-    public AuthenticationDto() {
+    public UserDetailsDto() {
     }
 
-    public AuthenticationDto(Long userId, String userRol) {
+    public UserDetailsDto(Long userId, String userRol) {
         this.userId = userId;
         this.userRol = userRol;
     }

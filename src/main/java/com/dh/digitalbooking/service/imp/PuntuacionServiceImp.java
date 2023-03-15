@@ -1,5 +1,6 @@
 package com.dh.digitalbooking.service.imp;
 
+import com.dh.digitalbooking.dto.UserDetailsDto;
 import com.dh.digitalbooking.exception.BadRequestException;
 import com.dh.digitalbooking.exception.NotFoundException;
 import com.dh.digitalbooking.model.Producto;
@@ -33,7 +34,14 @@ public class PuntuacionServiceImp implements PuntuacionService {
     }
 
     @Override
-    public Puntuacion savePuntuacion(Puntuacion puntuacion) {
+    public Puntuacion savePuntuacion(Puntuacion puntuacion, UserDetailsDto userDetailsDto) {
+        Long puntuacionUserId = puntuacion.getUsuario().getId();
+
+        if (!userDetailsDto.getUserRol().equals("ROLE_ADMIN")) {
+            if (!puntuacionUserId.equals(userDetailsDto.getUserId()))
+                throw new BadRequestException("La información del usuario proporcionado no coincide con el usuario actualmente autenticado");
+        }
+
         return getPuntuacion(puntuacion);
     }
 

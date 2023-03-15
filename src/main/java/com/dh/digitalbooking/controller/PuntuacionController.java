@@ -1,11 +1,13 @@
 package com.dh.digitalbooking.controller;
 
-import com.dh.digitalbooking.model.Ciudad;
+import com.dh.digitalbooking.dto.UserDetailsDto;
 import com.dh.digitalbooking.model.Puntuacion;
+import com.dh.digitalbooking.security.AuthenticationFacade;
 import com.dh.digitalbooking.service.imp.PuntuacionServiceImp;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -14,9 +16,11 @@ import java.util.List;
 @RequestMapping("/puntuaciones")
 public class PuntuacionController {
     private final PuntuacionServiceImp puntuacionServiceImp;
+    private final AuthenticationFacade authenticationFacade;
 
-    public PuntuacionController(PuntuacionServiceImp puntuacionServiceImp) {
+    public PuntuacionController(PuntuacionServiceImp puntuacionServiceImp, AuthenticationFacade authenticationFacade) {
         this.puntuacionServiceImp = puntuacionServiceImp;
+        this.authenticationFacade = authenticationFacade;
     }
 
     @GetMapping
@@ -30,9 +34,13 @@ public class PuntuacionController {
     }
 
     @PostMapping
-    public ResponseEntity<Puntuacion> savePuntuacion(@RequestBody @Valid Puntuacion puntuacion) {
+    public ResponseEntity<Puntuacion> savePuntuacion(
+            @RequestBody @Valid Puntuacion puntuacion,
+            Authentication authentication
+            ) {
+        UserDetailsDto userDetailsDto = authenticationFacade.getUserInfo(authentication);
         return ResponseEntity.status(HttpStatus.CREATED).body(
-                puntuacionServiceImp.savePuntuacion(puntuacion));
+                puntuacionServiceImp.savePuntuacion(puntuacion, userDetailsDto));
     }
 
     @DeleteMapping("/{id}")
@@ -42,7 +50,7 @@ public class PuntuacionController {
     }
 
     @PutMapping
-    public ResponseEntity<Puntuacion> updateCiudad(@RequestBody Puntuacion puntuacion) {
+    public ResponseEntity<Puntuacion> updateCiudad(@RequestBody @Valid  Puntuacion puntuacion) {
         return ResponseEntity.ok(puntuacionServiceImp.updatePuntuacion(puntuacion));
     }
 }

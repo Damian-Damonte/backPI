@@ -1,6 +1,6 @@
 package com.dh.digitalbooking.controller;
 
-import com.dh.digitalbooking.dto.AuthenticationDto;
+import com.dh.digitalbooking.dto.UserDetailsDto;
 import com.dh.digitalbooking.model.Reserva;
 import com.dh.digitalbooking.security.AuthenticationFacade;
 import com.dh.digitalbooking.service.imp.ReservaServiceImp;
@@ -36,7 +36,7 @@ public class ReservaController {
     public ResponseEntity<Reserva> saveReserva(
             @RequestBody @Valid Reserva reserva,
             Authentication authentication) {
-        AuthenticationDto userDto = authenticationFacade.getUserInfo(authentication);
+        UserDetailsDto userDto = authenticationFacade.getUserInfo(authentication);
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(reservaServiceImp.saveReserva(reserva, userDto));
     }
