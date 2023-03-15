@@ -1,5 +1,6 @@
 package com.dh.digitalbooking.service.imp;
 
+import com.dh.digitalbooking.dto.AuthenticationDto;
 import com.dh.digitalbooking.exception.BadRequestException;
 import com.dh.digitalbooking.exception.NotFoundException;
 import com.dh.digitalbooking.model.Producto;
@@ -37,9 +38,14 @@ public class ReservaServiceImp implements ReservaService {
 
     @Override
     @Transactional
-    public Reserva saveReserva(Reserva reserva, Long userId) {
-        if(!(reserva.getUsuario().getId().equals(userId)))
-            throw new BadRequestException("La información del usuario proporcionado no coincide con el usuario actualmente autenticado");
+    public Reserva saveReserva(Reserva reserva, AuthenticationDto authenticationDto) {
+        Long reservaUserId = reserva.getUsuario().getId();
+
+        if (!authenticationDto.getUserRol().equals("ROLE_ADMIN")) {
+            if (!reservaUserId.equals(authenticationDto.getUserId()))
+                throw new BadRequestException("La información del usuario proporcionado no coincide con el usuario actualmente autenticado");
+        }
+
         checkAvailability(reserva, true);
         return getReserva(reserva);
     }
