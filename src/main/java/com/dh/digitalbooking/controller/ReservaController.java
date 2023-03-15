@@ -4,6 +4,7 @@ import com.dh.digitalbooking.dto.UserDetailsDto;
 import com.dh.digitalbooking.model.Reserva;
 import com.dh.digitalbooking.security.AuthenticationFacade;
 import com.dh.digitalbooking.service.imp.ReservaServiceImp;
+import com.dh.digitalbooking.service.imp.UsuarioServiceImp;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,10 +17,12 @@ import java.util.List;
 public class ReservaController {
     private final ReservaServiceImp reservaServiceImp;
     private final AuthenticationFacade authenticationFacade;
+    private final UsuarioServiceImp usuarioServiceImp;
 
-    public ReservaController(ReservaServiceImp reservaServiceImp, AuthenticationFacade authenticationFacade) {
+    public ReservaController(ReservaServiceImp reservaServiceImp, AuthenticationFacade authenticationFacade, UsuarioServiceImp usuarioServiceImp) {
         this.reservaServiceImp = reservaServiceImp;
         this.authenticationFacade = authenticationFacade;
+        this.usuarioServiceImp = usuarioServiceImp;
     }
 
     @GetMapping

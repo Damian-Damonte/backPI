@@ -72,6 +72,7 @@ public class ReservaServiceImp implements ReservaService {
         reserva.setProducto(producto);
 
         Usuario usuario = usuarioServiceImp.existByIdValidation(reserva.getUsuario().getId());
+        usuario.setCiudad(reserva.getCiudadUsuario());
         usuario.getReservas().add(reserva);
         reserva.setUsuario(usuario);
 

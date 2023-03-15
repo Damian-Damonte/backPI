@@ -1,9 +1,9 @@
 package com.dh.digitalbooking.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.FutureOrPresent;
-import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.*;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -26,10 +26,16 @@ public class Reserva {
     @Column(name = "hora_llegada", nullable = false)
     @NotNull(message = "Debe ingresar la hora de llegada")
     private LocalTime horaLlegada;
+    @Column(name = "ciudad_usuario", nullable = false, length = 100)
+    @NotBlank(message = "Debe ingresar la ciudad del usuario")
+    @Size(max = 100, message = "La ciudad del usuario no debe tener más de 100 caracteres")
+    private String ciudadUsuario;
     @Column(name = "datos_extra", columnDefinition = "TEXT", length = 500)
+    @Size(max = 500, message = "Los datos extra al vendedor no deben tener más de 500 caracteres")
     private String datosExtra;
     @Column(name = "vacuna_covid")
     private boolean vacunaCovid;
+
     @ManyToOne
     @JoinColumn(
             name = "usuario_id",
@@ -135,5 +141,13 @@ public class Reserva {
 
     public void setUsuario(Usuario usuario) {
         this.usuario = usuario;
+    }
+
+    public String getCiudadUsuario() {
+        return ciudadUsuario;
+    }
+
+    public void setCiudadUsuario(String ciudadUsuario) {
+        this.ciudadUsuario = ciudadUsuario;
     }
 }
