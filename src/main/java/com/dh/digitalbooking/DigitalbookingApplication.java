@@ -106,8 +106,8 @@ public class DigitalbookingApplication {
 			Set<Politica> politicas3 = new HashSet<>(Set.of(politica1));
 
 			Coordenadas coordenadas = new Coordenadas(
-					new BigDecimal("-34.55044"),
-					new BigDecimal("-58.47996"));
+					new BigDecimal("-34.593179"),
+					new BigDecimal("-58.374930"));
 
 			Producto hotel1 = new Producto();
 			hotel1.setTitulo("Hotel 1");
