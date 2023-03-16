@@ -78,6 +78,7 @@ public class Producto {
     private Set<Caracteristica> caracteristicas = new HashSet<>();
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "producto")
+    @OrderBy("id ASC")
     @Valid
     private Set<Imagen> imagenes = new HashSet<>();
 
