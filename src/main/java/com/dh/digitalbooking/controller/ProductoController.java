@@ -40,15 +40,18 @@ public class ProductoController {
             @RequestParam(name = "categoriaId",required = false) Long categoriaId,
             @RequestParam(name = "checkIn",required = false) LocalDate checkIn,
             @RequestParam(name = "checkOut",required = false) LocalDate checkOut
-            ) {
+            ) throws InterruptedException {
         ProductoFilterRequest filters = new ProductoFilterRequest(ciudadId, categoriaId, checkIn, checkOut);
+        Thread.sleep(1000);
+
         return ResponseEntity.ok(productoServiceImp.getByAllFilters(page, filters));
     }
 
 
     @GetMapping("/random")
     @Operation(summary = "Devuelve 4 productos de forma aleatoria")
-    public ResponseEntity<List<Producto>> getRandomProducto(){
+    public ResponseEntity<List<Producto>> getRandomProducto() throws InterruptedException {
+        Thread.sleep(1000);
         return ResponseEntity.ok(productoServiceImp.getRandomProductos());
     }
 
