@@ -109,33 +109,55 @@ public class DigitalbookingApplication {
 					new BigDecimal("-34.593179"),
 					new BigDecimal("-58.374930"));
 
-			Producto hotel1 = new Producto();
-			hotel1.setTitulo("Hotel 1");
-			hotel1.setTituloDescripcion("Titulo de la descripcion del hotel 1");
-			hotel1.setDescripcion("Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.");
-			hotel1.setDireccion("Av Congreso 3423");
-			hotel1.setPrecioPorNoche(new BigDecimal("5200.00"));
-			hotel1.setCategoria(hotel);
-			hotel1.setCiudad(buenosAires);
-			hotel1.setCaracteristicas(caracteristicas1);
-			hotel1.setImagenes(imagenesSet5);
-			hotel1.setPoliticas(politicas1);
-			hotel1.setCoordenadas(coordenadas);
-			productoServiceImp.saveProducto(hotel1);
+//			Producto hotel1 = new Producto();
+//			hotel1.setTitulo("Hotel 1");
+//			hotel1.setTituloDescripcion("Titulo de la descripcion del hotel 1");
+//			hotel1.setDescripcion("Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.");
+//			hotel1.setDireccion("Av Congreso 3423");
+//			hotel1.setPrecioPorNoche(new BigDecimal("5200.00"));
+//			hotel1.setCategoria(hotel);
+//			hotel1.setCiudad(buenosAires);
+//			hotel1.setCaracteristicas(caracteristicas1);
+//			hotel1.setImagenes(imagenesSet5);
+//			hotel1.setPoliticas(politicas1);
+//			hotel1.setCoordenadas(coordenadas);
+//			productoServiceImp.saveProducto(hotel1);
 
-			Producto hotel2 = new Producto();
-			hotel2.setTitulo("Hotel 2");
-			hotel2.setTituloDescripcion("Titulo de la descripcion del hotel 2");
-			hotel2.setDescripcion("Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.");
-			hotel2.setDireccion("Av Corrientes 1924");
-			hotel2.setPrecioPorNoche(new BigDecimal("9700.00"));
-			hotel2.setCategoria(hotel);
-			hotel2.setCiudad(marDelPlata);
-			hotel2.setCaracteristicas(caracteristicas3);
-			hotel2.setImagenes(imagenesSet2);
-			hotel2.setPoliticas(politicas3);
-			hotel2.setCoordenadas(coordenadas);
-			productoServiceImp.saveProducto(hotel2);
+			for(int i = 0; i < 30; i++) {
+				Producto hotel1 = new Producto();
+				hotel1.setTitulo("Hotel " + i);
+				hotel1.setTituloDescripcion("Titulo de la descripcion del hotel " + i);
+				hotel1.setDescripcion("Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.");
+				hotel1.setDireccion("Av Congreso 3423");
+				hotel1.setPrecioPorNoche(new BigDecimal("5200.00"));
+				hotel1.setCategoria(hotel);
+				hotel1.setCiudad(buenosAires);
+				hotel1.setCaracteristicas(caracteristicas1);
+				hotel1.setImagenes(imagenesSet5);
+				hotel1.setPoliticas(politicas1);
+				hotel1.setCoordenadas(coordenadas);
+				productoServiceImp.saveProducto(hotel1);
+			}
+
+//			Producto hotel2 = new Producto();
+//			hotel2.setTitulo("Hotel 2");
+//			hotel2.setTituloDescripcion("Titulo de la descripcion del hotel 2");
+//			hotel2.setDescripcion("Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.");
+//			hotel2.setDireccion("Av Corrientes 1924");
+//			hotel2.setPrecioPorNoche(new BigDecimal("9700.00"));
+//			hotel2.setCategoria(hotel);
+//			hotel2.setCiudad(marDelPlata);
+//			hotel2.setCaracteristicas(caracteristicas3);
+//			hotel2.setImagenes(imagenesSet2);
+//			hotel2.setPoliticas(politicas3);
+//			hotel2.setCoordenadas(coordenadas);
+//			productoServiceImp.saveProducto(hotel2);
+
+//			for(int i = 0; i < 5; i++) {
+//				hotel2.setId(null);
+//				hotel2.setTitulo("Hotel" + i * 2);
+//				productoServiceImp.saveProducto(hotel2);
+//			}
 
 
 //			Producto hostel1 = new Producto(
@@ -150,32 +172,35 @@ public class DigitalbookingApplication {
 //					coordenadas
 //			);
 //
-			Producto departamento1 = new Producto(
-					"Departamento 1",
-					"Titulo de la descripcion del departamento 1",
-					"There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text. All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary, making this the first true generator on the Internet. It uses a dictionary of over 200 Latin words, combined with a handful of model sentence structures, to generate Lorem Ipsum which looks reasonable. The generated Lorem Ipsum is therefore always free from repetition, injected humour, or non-characteristic words etc",
-					departamento,
-					cali,
-					caracteristicas3,
-					imagenesSet3,
-					politicas3,
-					coordenadas
-			);
-			departamento1.setTitulo("Departamento 1");
-			departamento1.setTituloDescripcion("Titulo de la descripcion del departamento 1");
-			departamento1.setDescripcion("There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text. All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary, making this the first true generator on the Internet. It uses a dictionary of over 200 Latin words, combined with a handful of model sentence structures, to generate Lorem Ipsum which looks reasonable. The generated Lorem Ipsum is therefore always free from repetition, injected humour, or non-characteristic words etc");
-			departamento1.setDireccion("Av Rivadavia 8423");
-			departamento1.setPrecioPorNoche(new BigDecimal("6600.00"));
-			departamento1.setCategoria(departamento);
-			departamento1.setCiudad(cali);
-			departamento1.setCaracteristicas(caracteristicas3);
-			departamento1.setImagenes(imagenesSet3);
-			departamento1.setPoliticas(politicas3);
-			departamento1.setCoordenadas(coordenadas);
-			productoServiceImp.saveProducto(departamento1);
+//			Producto departamento1 = new Producto();
+//			departamento1.setTitulo("Departamento 1");
+//			departamento1.setTituloDescripcion("Titulo de la descripcion del departamento 1");
+//			departamento1.setDescripcion("There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text. All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary, making this the first true generator on the Internet. It uses a dictionary of over 200 Latin words, combined with a handful of model sentence structures, to generate Lorem Ipsum which looks reasonable. The generated Lorem Ipsum is therefore always free from repetition, injected humour, or non-characteristic words etc");
+//			departamento1.setDireccion("Av Rivadavia 8423");
+//			departamento1.setPrecioPorNoche(new BigDecimal("6600.00"));
+//			departamento1.setCategoria(departamento);
+//			departamento1.setCiudad(cali);
+//			departamento1.setCaracteristicas(caracteristicas3);
+//			departamento1.setImagenes(imagenesSet3);
+//			departamento1.setPoliticas(politicas3);
+//			departamento1.setCoordenadas(coordenadas);
+//			productoServiceImp.saveProducto(departamento1);
 
-
-
+			for(int i = 0; i < 30; i++) {
+				Producto departamento1 = new Producto();
+				departamento1.setTitulo("Departamento " + i);
+				departamento1.setTituloDescripcion("Titulo de la descripcion del departamento 1");
+				departamento1.setDescripcion("There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text. All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary, making this the first true generator on the Internet. It uses a dictionary of over 200 Latin words, combined with a handful of model sentence structures, to generate Lorem Ipsum which looks reasonable. The generated Lorem Ipsum is therefore always free from repetition, injected humour, or non-characteristic words etc");
+				departamento1.setDireccion("Av Rivadavia 8423");
+				departamento1.setPrecioPorNoche(new BigDecimal("6600.00"));
+				departamento1.setCategoria(departamento);
+				departamento1.setCiudad(cali);
+				departamento1.setCaracteristicas(caracteristicas3);
+				departamento1.setImagenes(imagenesSet3);
+				departamento1.setPoliticas(politicas3);
+				departamento1.setCoordenadas(coordenadas);
+				productoServiceImp.saveProducto(departamento1);
+			}
 
 
 //			Producto bedAndBreakfast1 = new Producto(

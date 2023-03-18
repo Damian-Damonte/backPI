@@ -1,6 +1,7 @@
 package com.dh.digitalbooking.service.imp;
 
 
+import com.dh.digitalbooking.dto.ProductPageDto;
 import com.dh.digitalbooking.dto.ProductoFilterRequest;
 import com.dh.digitalbooking.exception.BadRequestException;
 import com.dh.digitalbooking.exception.NotFoundException;
@@ -53,13 +54,17 @@ public class ProductoServiceImp implements ProductoService {
     }
 
     @Override
-    public List<Producto> getByAllFilters(ProductoFilterRequest filters) {
+    public ProductPageDto getByAllFilters(int page, ProductoFilterRequest filters) {
         filtersValidations(filters);
-        return productoRepository.findAllFilters(
+        PageRequest pageRequest = PageRequest.ofSize(4).withPage(page);
+        Page<Producto> productoPage = productoRepository.findAllFilters(
                 filters.getCiudadId(),
                 filters.getCategoriaId(),
                 filters.getCheckIn(),
-                filters.getCheckOut());
+                filters.getCheckOut(),
+                pageRequest
+        );
+        return toProductPageDto(productoPage);
     }
 
     @Override
@@ -224,5 +229,14 @@ public class ProductoServiceImp implements ProductoService {
     private void notPastDate (LocalDate date){
         if(date.isBefore(LocalDate.now()))
             throw new BadRequestException("Las fechas fechas no deben ser anterior al día actual");
+    }
+
+    private ProductPageDto toProductPageDto(Page<Producto> page) {
+        ProductPageDto pageDto = new ProductPageDto();
+        pageDto.setContent(page.getContent());
+        pageDto.setTotalPages(page.getTotalPages());
+        pageDto.setCurrentPage(page.getNumber());
+        pageDto.setTotalElements(page.getTotalElements());
+        return pageDto;
     }
 }

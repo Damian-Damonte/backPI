@@ -1,5 +1,6 @@
 package com.dh.digitalbooking.controller;
 
+import com.dh.digitalbooking.dto.ProductPageDto;
 import com.dh.digitalbooking.dto.ProductoFilterRequest;
 import com.dh.digitalbooking.model.Producto;
 import com.dh.digitalbooking.service.imp.ProductoServiceImp;
@@ -33,20 +34,21 @@ public class ProductoController {
             description = "En caso de no enviar ningún parámetro devolverá todos los productos. " +
                     "No es necesario enviar todos los parámetros para para poder realizar un filtrado."
     )
-    public ResponseEntity<List<Producto>> getAllFilters(
+    public ResponseEntity<ProductPageDto> getAllFilters(
+            @RequestParam(name = "page", required = false, defaultValue = "0") Integer page,
             @RequestParam(name = "ciudadId", required = false) Long ciudadId,
             @RequestParam(name = "categoriaId",required = false) Long categoriaId,
             @RequestParam(name = "checkIn",required = false) LocalDate checkIn,
             @RequestParam(name = "checkOut",required = false) LocalDate checkOut
             ) {
         ProductoFilterRequest filters = new ProductoFilterRequest(ciudadId, categoriaId, checkIn, checkOut);
-        return ResponseEntity.ok(productoServiceImp.getByAllFilters(filters));
+        return ResponseEntity.ok(productoServiceImp.getByAllFilters(page, filters));
     }
 
 
     @GetMapping("/random")
     @Operation(summary = "Devuelve 4 productos de forma aleatoria")
-    public ResponseEntity<List<Producto>> getRandomProducto() {
+    public ResponseEntity<List<Producto>> getRandomProducto(){
         return ResponseEntity.ok(productoServiceImp.getRandomProductos());
     }
 
