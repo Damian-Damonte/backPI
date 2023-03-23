@@ -1,5 +1,6 @@
 package com.dh.digitalbooking.security;
 
+import com.dh.digitalbooking.exception.ForbiddenException;
 import com.dh.digitalbooking.exception.NotFoundException;
 import com.dh.digitalbooking.repository.UsuarioRepository;
 import org.springframework.context.annotation.Bean;
@@ -25,7 +26,7 @@ public class ApplicationConfig {
     @Bean
     public UserDetailsService userDetailsService(){
         return email -> usuarioRepository.findByEmail(email)
-                .orElseThrow(() -> new NotFoundException("Usuario no encontrado"));
+                .orElseThrow(ForbiddenException::new);
     }
 
     @Bean

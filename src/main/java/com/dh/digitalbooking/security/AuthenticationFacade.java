@@ -14,7 +14,7 @@ public class AuthenticationFacade {
                 authentication == null
                         || !authentication.isAuthenticated()
                         || !(authentication.getPrincipal() instanceof Usuario)) {
-            throw new BadRequestException("El usuario no está autenticado o no se pudo encontrar la información del usuario autenticado");
+            throw new BadRequestException("El usuario no está autenticado o no se pudo obtener la información del usuario autenticado");
         }
 
         Long userId = ((Usuario) authentication.getPrincipal()).getId();
@@ -22,12 +22,6 @@ public class AuthenticationFacade {
                 .map(GrantedAuthority::getAuthority).orElseThrow(() ->
                         new BadRequestException("No se puedo obtener el rol del usuario")
                 );
-
-
-        System.out.println("-----------------------++++++++++++++************");
-        System.out.println("id: " + userId);
-        System.out.println("rol: " + userRol);
-
         return new UserDetailsDto(userId, userRol);
     }
 }

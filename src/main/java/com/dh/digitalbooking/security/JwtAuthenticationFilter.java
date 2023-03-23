@@ -1,6 +1,6 @@
 package com.dh.digitalbooking.security;
 
-import com.dh.digitalbooking.exception.NotFoundException;
+import com.dh.digitalbooking.exception.ForbiddenException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -50,7 +50,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             UserDetails userDetails;
             try {
                 userDetails = userDetailsService.loadUserByUsername(userEmail);
-            } catch (NotFoundException ex) {
+            } catch (ForbiddenException ex) {
 //                agregar logger
                 System.out.println("No se encontró al usuario");
                 filterChain.doFilter(request, response);
