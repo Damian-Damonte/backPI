@@ -1,6 +1,8 @@
 package com.dh.digitalbooking.security;
 
 import com.dh.digitalbooking.exception.ForbiddenException;
+import io.jsonwebtoken.ExpiredJwtException;
+import io.jsonwebtoken.MalformedJwtException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -32,45 +34,46 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             @NotNull HttpServletResponse response,
             @NotNull FilterChain filterChain
     ) throws ServletException, IOException {
+        try {
+            final String authHeader = request.getHeader("Authorization");
+            final String jwt;
+            final String userEmail;
 
-        final String authHeader = request.getHeader("Authorization");
-        final String jwt;
-        final String userEmail;
-
-        if (authHeader == null || !authHeader.startsWith("Bearer ")) {
-            filterChain.doFilter(request, response);
-            return;
-        }
-
-        jwt = authHeader.substring(7);
-        userEmail = jwtService.extractUserneme(jwt);
-
-        if (userEmail != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-
-            UserDetails userDetails;
-            try {
-                userDetails = userDetailsService.loadUserByUsername(userEmail);
-            } catch (ForbiddenException ex) {
-//                agregar logger
-                System.out.println("No se encontró al usuario");
+            if (authHeader == null || !authHeader.startsWith("Bearer ")) {
                 filterChain.doFilter(request, response);
                 return;
             }
 
-            if (jwtService.isTokenValid(jwt, userDetails)) {
-                UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
-                        userDetails,
-                        null,
-                        userDetails.getAuthorities()
-                );
+            jwt = authHeader.substring(7);
+            userEmail = jwtService.extractUserneme(jwt);
 
-                authToken.setDetails(
-                        new WebAuthenticationDetailsSource().buildDetails(request)
-                );
+            if (userEmail != null && SecurityContextHolder.getContext().getAuthentication() == null) {
+                UserDetails userDetails = userDetailsService.loadUserByUsername(userEmail);
 
-                SecurityContextHolder.getContext().setAuthentication(authToken);
+                if (jwtService.isTokenValid(jwt, userDetails)) {
+                    UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
+                            userDetails,
+                            null,
+                            userDetails.getAuthorities()
+                    );
+                    authToken.setDetails(
+                            new WebAuthenticationDetailsSource().buildDetails(request)
+                    );
+                    SecurityContextHolder.getContext().setAuthentication(authToken);
+                }
             }
+            filterChain.doFilter(request, response);
+
+//          agergar logger
+        } catch (MalformedJwtException ex) {
+            System.out.println("JWT mal formado");
+            filterChain.doFilter(request, response);
+        } catch (ExpiredJwtException ex) {
+            System.out.println("JWT expirado");
+            filterChain.doFilter(request, response);
+        } catch (ForbiddenException ex) {
+            System.out.println("No se encontró al usuario");
+            filterChain.doFilter(request, response);
         }
-        filterChain.doFilter(request, response);
     }
 }

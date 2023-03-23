@@ -24,8 +24,8 @@ public class Producto {
     @Column(name = "title_description", length = 100)
     @Size(max = 100, message = "El titulo de la descripcion no debe tener más de 100 caracteres")
     private String tituloDescripcion;
-    @Column(name = "descripcion", columnDefinition = "TEXT", length = 800)
-    @Size(max = 800, message = "La descripcion no debe tener más de 800 caracteres")
+    @Column(name = "descripcion", columnDefinition = "TEXT", length = 1000)
+    @Size(max = 1000, message = "La descripcion no debe tener más de 1000 caracteres")
     private String descripcion;
     @Column(name = "direccion", nullable = false)
     @NotBlank(message = "El producto debe tener una dirección")
