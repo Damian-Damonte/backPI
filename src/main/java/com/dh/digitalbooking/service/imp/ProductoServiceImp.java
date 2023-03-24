@@ -136,6 +136,8 @@ public class ProductoServiceImp implements ProductoService {
     }
 
     private void getImagenes(Producto producto) {
+        if(producto.getImagenes().isEmpty())
+            throw new BadRequestException("El producto debe tener por lo menos una imagen");
         Long productoId = producto.getId();
         Set<Imagen> imagenes = new HashSet<>();
         producto.getImagenes().forEach(img -> {
