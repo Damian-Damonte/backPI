@@ -35,6 +35,8 @@ public class Categoria {
     @Column(name = "urlImagen", nullable = false)
     @NotBlank(message = "La categoria debe tener una imagen")
     private String urlImagen;
+    @Column(name = "cant_productos")
+    private int cantProductos;
     @OneToMany(mappedBy = "categoria")
     @JsonIgnore
     private Set<Producto> productos = new HashSet<>();
@@ -86,5 +88,13 @@ public class Categoria {
 
     public void setProductos(Set<Producto> productos) {
         this.productos = productos;
+    }
+
+    public int getCantProductos() {
+        return cantProductos;
+    }
+
+    public void setCantProductos(int cantProductos) {
+        this.cantProductos = cantProductos;
     }
 }

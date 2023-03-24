@@ -33,6 +33,7 @@ public class CategoriaServiceImp implements CategoriaService {
 
         if (categoriaRepository.findByTitulo(titulo).isPresent())
             throw new BadRequestException("Ya existe una categoria con el titulo '" + titulo + "'");
+        categoria.setCantProductos(0);
 
         return categoriaRepository.save(categoria);
     }
@@ -50,13 +51,24 @@ public class CategoriaServiceImp implements CategoriaService {
     public Categoria updateCategoria(Categoria updateCategoria) {
         String updateTitulo = updateCategoria.getTitulo();
         Long id = updateCategoria.getId();
-        existByIdValidation(id);
+        Categoria categoria = existByIdValidation(id);
 
         Categoria categoriaByTitulo = categoriaRepository.findByTitulo(updateTitulo).orElse(null);
-        if (categoriaByTitulo != null && !(Objects.equals(categoriaByTitulo.getId(), id))) {
+        if (categoriaByTitulo != null && !(Objects.equals(categoriaByTitulo.getId(), id)))
             throw new BadRequestException("Ya existe una categoria con el titulo '" + updateTitulo + "'");
-        }
+
+        updateCategoria.setCantProductos(categoria.getCantProductos());
         return categoriaRepository.save(updateCategoria);
+    }
+
+    @Override
+    public void sumarProducto(Long id) {
+        categoriaRepository.sumarProducto(id);
+    }
+
+    @Override
+    public void restarProducto(Long id) {
+        categoriaRepository.restarProducto(id);
     }
 
     public Categoria existByIdValidation(Long id) {

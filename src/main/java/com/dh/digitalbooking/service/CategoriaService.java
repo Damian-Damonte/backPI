@@ -10,4 +10,6 @@ public interface CategoriaService {
     Categoria saveCategoria(Categoria categoria);
     void deleteCategoria(Long id);
     Categoria updateCategoria(Categoria updateCategoria);
+    void sumarProducto(Long id);
+    void restarProducto(Long id);
 }

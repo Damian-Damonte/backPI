@@ -49,8 +49,7 @@ public class ProductoServiceImp implements ProductoService {
     @Override
     public Page<Producto> getAllPage(int page) {
         PageRequest pageRequest = PageRequest.ofSize(2).withPage(page);
-        Page<Producto> productoPage = productoRepository.findAll(pageRequest);
-        return productoPage;
+        return productoRepository.findAll(pageRequest);
     }
 
     @Override
@@ -84,6 +83,7 @@ public class ProductoServiceImp implements ProductoService {
         producto.getPoliticas().forEach(pol -> pol.setId(null));
         if (producto.getCoordenadas() != null)
             producto.getCoordenadas().setId(null);
+        categoriaServiceImp.sumarProducto(producto.getCategoria().getId());
 
         return getProducto(producto);
     }
@@ -94,6 +94,7 @@ public class ProductoServiceImp implements ProductoService {
         Producto producto = existByIdValidation(id);
         if (!(producto.getReservas().isEmpty()))
             throw new BadRequestException("El producto con id " + id + " no puede ser eliminado ya que se encuentra reservado");
+        categoriaServiceImp.restarProducto(producto.getCategoria().getId());
         productoRepository.deleteById(id);
     }
 
@@ -103,6 +104,12 @@ public class ProductoServiceImp implements ProductoService {
         Producto producto = existByIdValidation(updateProducto.getId());
         updateProducto.setPromedioPuntuacion(producto.getPromedioPuntuacion());
         updateProducto.setReservas(producto.getReservas());
+
+        if (!(updateProducto.getCategoria().getId().equals(producto.getCategoria().getId()))) {
+            categoriaServiceImp.restarProducto(producto.getCategoria().getId());
+            categoriaServiceImp.sumarProducto(updateProducto.getCategoria().getId());
+        }
+
         return getProducto(updateProducto);
     }
 
@@ -203,7 +210,7 @@ public class ProductoServiceImp implements ProductoService {
         }
     }
 
-    private void filtersValidations (ProductoFilterRequest filters) {
+    private void filtersValidations(ProductoFilterRequest filters) {
         Long ciudadId = filters.getCiudadId();
         Long categoriaId = filters.getCategoriaId();
         LocalDate checkIn = filters.getCheckIn();
@@ -222,12 +229,12 @@ public class ProductoServiceImp implements ProductoService {
     }
 
     private void datesValidation(LocalDate checkIn, LocalDate checkOut) {
-        if(checkIn.isAfter(checkOut))
+        if (checkIn.isAfter(checkOut))
             throw new BadRequestException("La fecha de ingreso deber anterior a la fecha de finalización");
     }
 
-    private void notPastDate (LocalDate date){
-        if(date.isBefore(LocalDate.now()))
+    private void notPastDate(LocalDate date) {
+        if (date.isBefore(LocalDate.now()))
             throw new BadRequestException("Las fechas fechas no deben ser anterior al día actual");
     }
 

@@ -2,6 +2,7 @@ package com.dh.digitalbooking.controller;
 
 import com.dh.digitalbooking.model.Categoria;
 import com.dh.digitalbooking.service.imp.CategoriaServiceImp;
+import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -40,6 +41,10 @@ public class CategoriaController {
     }
 
     @PutMapping
+    @Operation(
+            description = "No se puede actualizar la cantidad de productos que tiene la categoria a traves de este endpoint. " +
+                    "Este atributo depende de la cantidad de productos existentes de de dicha categoria."
+    )
     public ResponseEntity<Categoria> updateCategoria(@RequestBody @Valid Categoria categoria) {
         return ResponseEntity.ok(categoriaServiceImp.updateCategoria(categoria));
     }
