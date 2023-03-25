@@ -124,8 +124,7 @@ public class ProductoServiceImp implements ProductoService {
         getCaracteristicas(producto);
         getImagenes(producto);
         getPoliticas(producto);
-        if (producto.getCoordenadas() != null)
-            getCoordenadas(producto);
+        getCoordenadas(producto);
 
         return productoRepository.save(producto);
     }
@@ -140,7 +139,7 @@ public class ProductoServiceImp implements ProductoService {
     }
 
     private void getImagenes(Producto producto) {
-        if(producto.getImagenes().isEmpty())
+        if (producto.getImagenes().isEmpty())
             throw new BadRequestException("El producto debe tener por lo menos una imagen");
         Long productoId = producto.getId();
         Set<Imagen> imagenes = new HashSet<>();
@@ -175,11 +174,13 @@ public class ProductoServiceImp implements ProductoService {
     }
 
     public void getCoordenadas(Producto producto) {
-        Long productoId = producto.getId();
-        Coordenadas coordenadas = producto.getCoordenadas();
-        coordenadasValidation(productoId, coordenadas);
-        coordenadas.setProducto(producto);
-        producto.setCoordenadas(coordenadas);
+        if (producto.getCoordenadas() != null) {
+            Long productoId = producto.getId();
+            Coordenadas coordenadas = producto.getCoordenadas();
+            coordenadasValidation(productoId, coordenadas);
+            coordenadas.setProducto(producto);
+            producto.setCoordenadas(coordenadas);
+        }
     }
 
     public Producto existByIdValidation(Long id) {
