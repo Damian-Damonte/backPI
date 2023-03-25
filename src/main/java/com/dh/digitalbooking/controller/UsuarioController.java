@@ -1,20 +1,28 @@
 package com.dh.digitalbooking.controller;
 
+import com.dh.digitalbooking.dto.FavoritoDto;
+import com.dh.digitalbooking.dto.UserDetailsDto;
 import com.dh.digitalbooking.dto.UsuarioResponseDto;
+import com.dh.digitalbooking.security.AuthenticationFacade;
 import com.dh.digitalbooking.service.imp.UsuarioServiceImp;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 
 @RestController
 @RequestMapping("/usuarios")
 public class UsuarioController {
     private final UsuarioServiceImp usuarioServiceImp;
+    private final AuthenticationFacade authenticationFacade;
 
-    public UsuarioController(UsuarioServiceImp usuarioServiceImp) {
+
+    public UsuarioController(UsuarioServiceImp usuarioServiceImp, AuthenticationFacade authenticationFacade) {
         this.usuarioServiceImp = usuarioServiceImp;
+        this.authenticationFacade = authenticationFacade;
     }
 
     @GetMapping
@@ -43,5 +51,14 @@ public class UsuarioController {
     public ResponseEntity<UsuarioResponseDto> updatePais(
             @RequestBody @Valid UsuarioResponseDto usuarioResponseDto) {
         return ResponseEntity.ok(usuarioServiceImp.updateUsuario(usuarioResponseDto));
+    }
+
+    @PostMapping("/favoritos")
+    public ResponseEntity<Void> handleFav(
+            @RequestBody @Valid FavoritoDto favoritoDto,
+            Authentication authentication) {
+        UserDetailsDto userDto = authenticationFacade.getUserInfo(authentication);
+        usuarioServiceImp.handleFav(favoritoDto, userDto);
+        return ResponseEntity.noContent().build();
     }
 }

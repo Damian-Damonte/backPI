@@ -28,6 +28,7 @@ public class SecurityConfiguration {
                 .authorizeHttpRequests(requests -> requests
                         .requestMatchers(HttpMethod.POST, "/reservas").hasAnyRole("USER", "ADMIN")
                         .requestMatchers(HttpMethod.POST, "/puntuaciones").hasAnyRole("USER", "ADMIN")
+                        .requestMatchers(HttpMethod.POST, "/usuarios/favoritos").authenticated()
                         .requestMatchers("/usuarios/**").hasRole("ADMIN")
                         .requestMatchers("/auth/**").permitAll()
                         .requestMatchers(HttpMethod.GET).permitAll()

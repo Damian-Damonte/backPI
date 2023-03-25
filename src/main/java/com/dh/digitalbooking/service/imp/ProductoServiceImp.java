@@ -94,6 +94,10 @@ public class ProductoServiceImp implements ProductoService {
         Producto producto = existByIdValidation(id);
         if (!(producto.getReservas().isEmpty()))
             throw new BadRequestException("El producto con id " + id + " no puede ser eliminado ya que se encuentra reservado");
+
+        Set<Usuario> usuariosFav = producto.getFavoritos();
+        usuariosFav.forEach(user -> user.removeFav(producto));
+
         categoriaServiceImp.restarProducto(producto.getCategoria().getId());
         productoRepository.deleteById(id);
     }

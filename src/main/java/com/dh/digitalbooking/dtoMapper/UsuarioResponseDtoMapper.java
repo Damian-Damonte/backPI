@@ -18,6 +18,7 @@ public class UsuarioResponseDtoMapper {
         usuarioResponseDto.setCiudad(usuario.getCiudad());
         usuarioResponseDto.setRol(usuario.getRol());
         usuarioResponseDto.setReservas(usuario.getReservas());
+        usuarioResponseDto.setFavoritos(usuario.getFavoritos());
 
         return usuarioResponseDto;
     }
@@ -30,6 +31,7 @@ public class UsuarioResponseDtoMapper {
         usuario.setEmail(dto.getEmail());
         usuario.setCiudad(dto.getCiudad());
         usuario.setRol(dto.getRol());
+        usuario.setFavoritos(dto.getFavoritos());
         return usuario;
     }
 

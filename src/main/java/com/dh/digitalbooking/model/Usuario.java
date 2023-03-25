@@ -50,9 +50,23 @@ public class Usuario implements UserDetails {
     @JsonIgnore
     private Set<Puntuacion> puntuaciones = new HashSet<>();
 
+    @ManyToMany()
+    @JoinTable(
+            name = "favoritos",
+            joinColumns = @JoinColumn(
+                    name = "usuario_id",
+                    foreignKey = @ForeignKey(name = "usuario_producto_id")
+            ),
+            inverseJoinColumns = @JoinColumn(
+                    name = "producto_id",
+                    foreignKey = @ForeignKey(name = "producto_usuario_id")
+            )
+    )
+    @JsonIgnoreProperties("reservas")
+    private List<Producto> favoritos = new ArrayList<>();
+
     public Usuario() {
     }
-
 
     public Usuario(String nombre, String apellido, String email, String password, Rol rol) {
         this.nombre = nombre;
@@ -60,6 +74,13 @@ public class Usuario implements UserDetails {
         this.email = email;
         this.password = password;
         this.rol = rol;
+    }
+
+    public void addFav(Producto producto) {
+        favoritos.add(producto);
+    }
+    public void removeFav(Producto producto) {
+        favoritos.remove(producto);
     }
 
     @Override
@@ -161,5 +182,13 @@ public class Usuario implements UserDetails {
 
     public void setReservas(List<Reserva> reservas) {
         this.reservas = reservas;
+    }
+
+    public List<Producto> getFavoritos() {
+        return favoritos;
+    }
+
+    public void setFavoritos(List<Producto> favoritos) {
+        this.favoritos = favoritos;
     }
 }

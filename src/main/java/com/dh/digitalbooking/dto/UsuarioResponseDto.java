@@ -1,11 +1,13 @@
 package com.dh.digitalbooking.dto;
 
+import com.dh.digitalbooking.model.Producto;
 import com.dh.digitalbooking.model.Reserva;
 import com.dh.digitalbooking.model.Rol;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonIncludeProperties;
 
 import java.util.List;
+import java.util.Set;
 
 public class UsuarioResponseDto {
     private Long id;
@@ -16,6 +18,8 @@ public class UsuarioResponseDto {
     private Rol rol;
     @JsonIgnoreProperties("usuario")
     private List<Reserva> reservas;
+    @JsonIgnoreProperties("reservas")
+    private List<Producto> favoritos;
 
     public UsuarioResponseDto() {
     }
@@ -83,5 +87,13 @@ public class UsuarioResponseDto {
 
     public void setReservas(List<Reserva> reservas) {
         this.reservas = reservas;
+    }
+
+    public List<Producto> getFavoritos() {
+        return favoritos;
+    }
+
+    public void setFavoritos(List<Producto> favoritos) {
+        this.favoritos = favoritos;
     }
 }

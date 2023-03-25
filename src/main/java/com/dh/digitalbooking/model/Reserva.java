@@ -1,6 +1,5 @@
 package com.dh.digitalbooking.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
@@ -44,7 +43,7 @@ public class Reserva {
             foreignKey = @ForeignKey(name = "reserva_usuario_fk")
     )
     @NotNull(message = "Debe ingresar el usuario")
-    @JsonIgnoreProperties("reservas")
+    @JsonIgnoreProperties({"reservas", "favoritos"})
     private Usuario usuario;
     @ManyToOne
     @JoinColumn(
