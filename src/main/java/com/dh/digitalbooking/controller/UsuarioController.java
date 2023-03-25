@@ -31,8 +31,11 @@ public class UsuarioController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<UsuarioResponseDto> getById(@PathVariable("id") Long id) {
-        return ResponseEntity.ok(usuarioServiceImp.getByIdUsuario(id));
+    public ResponseEntity<UsuarioResponseDto> getById(
+            @PathVariable("id") Long id,
+            Authentication authentication) {
+        UserDetailsDto userDto = authenticationFacade.getUserInfo(authentication);
+        return ResponseEntity.ok(usuarioServiceImp.getByIdUsuario(id, userDto));
     }
 
     @DeleteMapping("/{id}")

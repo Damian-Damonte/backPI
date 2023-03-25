@@ -26,9 +26,10 @@ public class SecurityConfiguration {
         http
                 .csrf().disable()
                 .authorizeHttpRequests(requests -> requests
-                        .requestMatchers(HttpMethod.POST, "/reservas").hasAnyRole("USER", "ADMIN")
-                        .requestMatchers(HttpMethod.POST, "/puntuaciones").hasAnyRole("USER", "ADMIN")
+                        .requestMatchers(HttpMethod.POST, "/reservas").authenticated()
+                        .requestMatchers(HttpMethod.POST, "/puntuaciones").authenticated()
                         .requestMatchers(HttpMethod.POST, "/usuarios/favoritos").authenticated()
+                        .requestMatchers(HttpMethod.GET, "/usuarios/{id}").authenticated()
                         .requestMatchers("/usuarios/**").hasRole("ADMIN")
                         .requestMatchers("/auth/**").permitAll()
                         .requestMatchers(HttpMethod.GET).permitAll()

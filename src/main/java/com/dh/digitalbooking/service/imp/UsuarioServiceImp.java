@@ -41,7 +41,11 @@ public class UsuarioServiceImp implements UsuarioService {
     }
 
     @Override
-    public UsuarioResponseDto getByIdUsuario(Long id) {
+    public UsuarioResponseDto getByIdUsuario(Long id, UserDetailsDto userDetailsDto) {
+        if (!userDetailsDto.getUserRol().equals("ROLE_ADMIN")) {
+            if (!id.equals(userDetailsDto.getUserId()))
+                throw new BadRequestException("La información del usuario proporcionado no coincide con el usuario actualmente autenticado");
+        }
         return usuarioResponseMapper.toUsuarioResponseDto(existByIdValidation(id));
     }
 

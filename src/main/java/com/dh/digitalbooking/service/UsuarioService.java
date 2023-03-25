@@ -11,7 +11,7 @@ import java.util.List;
 
 public interface UsuarioService {
     List<UsuarioResponseDto> allUsuario();
-    UsuarioResponseDto getByIdUsuario(Long id);
+    UsuarioResponseDto getByIdUsuario(Long id, UserDetailsDto userDetailsDto);
     Usuario findByEmail(String email);
     Usuario saveUsuario(UsuarioRequestDto usuarioRequestDto);
     void deleteUsuario(Long id);
