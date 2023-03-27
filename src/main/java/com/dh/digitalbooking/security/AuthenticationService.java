@@ -54,6 +54,7 @@ public class AuthenticationService {
         claims.put("id", usuario.getId());
         claims.put("nombre", usuario.getNombre());
         claims.put("apellido", usuario.getApellido());
+        claims.put("rol", usuario.getRol().getNombre().substring(5));
         return claims;
     }
 }

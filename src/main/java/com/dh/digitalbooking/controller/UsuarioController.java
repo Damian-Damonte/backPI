@@ -59,9 +59,10 @@ public class UsuarioController {
     @PostMapping("/favoritos")
     public ResponseEntity<Void> handleFav(
             @RequestBody @Valid FavoritoDto favoritoDto,
-            Authentication authentication) {
+            Authentication authentication) throws InterruptedException {
         UserDetailsDto userDto = authenticationFacade.getUserInfo(authentication);
         usuarioServiceImp.handleFav(favoritoDto, userDto);
+        Thread.sleep(1000);
         return ResponseEntity.noContent().build();
     }
 }
