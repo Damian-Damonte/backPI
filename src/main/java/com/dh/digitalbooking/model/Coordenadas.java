@@ -18,13 +18,13 @@ public class Coordenadas {
 
     @Column(precision = 17, scale = 15, nullable = false)
     @NotNull(message = "Las coordenadas debe tener una latitud")
-    @DecimalMin(value = "-90.000000000000000",  message = "La latitud no debe ser menor a -90.000000000000000")
-    @DecimalMax(value = "90.000000000000000", message = "La latitud no debe ser mayor a 90.000000000000000")
+    @DecimalMin(value = "-90.0",  message = "La latitud no debe ser menor a -90.0")
+    @DecimalMax(value = "90.0", message = "La latitud no debe ser mayor a 90.0")
     private BigDecimal latitud;
     @Column(precision = 18, scale = 15, nullable = false)
     @NotNull(message = "Las coordenadas debe tener una longitud")
-    @DecimalMin(value = "-180.000000000000000",  message = "La longitud no debe ser menor a -180.000000000000000")
-    @DecimalMax(value = "180.000000000000000", message = "La latitud no debe ser mayor a 180.000000000000000")
+    @DecimalMin(value = "-180.0",  message = "La longitud no debe ser menor a -180.0")
+    @DecimalMax(value = "180.0", message = "La latitud no debe ser mayor a 180.0")
     private BigDecimal longitud;
 
     @OneToOne(mappedBy = "coordenadas")

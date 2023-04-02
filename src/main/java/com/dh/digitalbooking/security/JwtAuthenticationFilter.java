@@ -64,7 +64,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             }
             filterChain.doFilter(request, response);
 
-//          agergar logger
+//          agregar logger
         } catch (MalformedJwtException ex) {
             System.out.println("JWT mal formado");
             filterChain.doFilter(request, response);
