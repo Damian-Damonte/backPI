@@ -38,9 +38,8 @@ public class ReservaController {
     @PostMapping
     public ResponseEntity<Reserva> saveReserva(
             @RequestBody @Valid Reserva reserva,
-            Authentication authentication) throws InterruptedException {
+            Authentication authentication){
         UserDetailsDto userDto = authenticationFacade.getUserInfo(authentication);
-        Thread.sleep(1000);
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(reservaServiceImp.saveReserva(reserva, userDto));
     }

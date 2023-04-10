@@ -48,11 +48,10 @@ public class DigitalbookingApplication {
                     rolAdmin
             ));
 
-
-            Categoria hotel = categoriaServiceImp.saveCategoria(new Categoria("Hotel", "Descripcion de la categoria Hotel", "https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80"));
-            Categoria hostel = categoriaServiceImp.saveCategoria(new Categoria("Hostel", "Descripcion de la categoria Hostel", "https://images.unsplash.com/photo-1555854877-bab0e564b8d5?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1769&q=80"));
-            Categoria departamento = categoriaServiceImp.saveCategoria(new Categoria("Departamento", "Descripcion de la categoria Departamento", "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80"));
-            Categoria bedAndBreakfast = categoriaServiceImp.saveCategoria(new Categoria("Bed and breakfast", "Descripcion de la categoria Bed and breakfast", "https://images.unsplash.com/photo-1463620910506-d0458143143e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80"));
+            Categoria hotel = categoriaServiceImp.saveCategoria(new Categoria("Hotel", "Descripcion de la categoria Hotel", "https://grupo1-digitalbooking-s3-images.s3.amazonaws.com/categorias/catHotel.jpg"));
+            Categoria hostel = categoriaServiceImp.saveCategoria(new Categoria("Hostel", "Descripcion de la categoria Hostel", "https://grupo1-digitalbooking-s3-images.s3.amazonaws.com/categorias/catHostel.jpg"));
+            Categoria departamento = categoriaServiceImp.saveCategoria(new Categoria("Departamento", "Descripcion de la categoria Departamento", "https://grupo1-digitalbooking-s3-images.s3.amazonaws.com/categorias/catDepartamento.jpg"));
+            Categoria bedAndBreakfast = categoriaServiceImp.saveCategoria(new Categoria("Bed and breakfast", "Descripcion de la categoria Bed and breakfast", "https://grupo1-digitalbooking-s3-images.s3.amazonaws.com/categorias/CatBedBreakfast.jpg"));
 
             Pais argentina = paisRepository.save(new Pais("Argentina"));
             Pais italia = paisRepository.save(new Pais("Italia"));
@@ -137,10 +136,36 @@ public class DigitalbookingApplication {
             Set<Politica> plantica = new HashSet<>(Set.of(politica1, politica2, politica3));
             Set<Politica> pantico = new HashSet<>(Set.of(politica1, politica2, politica3));
             Set<Politica> pzero = new HashSet<>(Set.of(politica1, politica2, politica3));
+            Set<Politica> papaTokio = new HashSet<>(Set.of(politica1, politica2, politica3));
+            Set<Politica> pakihabara = new HashSet<>(Set.of(politica1, politica2, politica3));
+            Set<Politica> pcerulean = new HashSet<>(Set.of(politica1, politica2, politica3));
+            Set<Politica> pmandarin = new HashSet<>(Set.of(politica1, politica2, politica3));
 
             Set<Caracteristica> caracteristicas1 = new HashSet<>(Set.of(cocina, televisor, parrilla, lavadora, noFumar));
             Set<Caracteristica> caracteristicas2 = new HashSet<>(Set.of(noFumar, parrilla, lavadora, pileta, aptoMascotas, televisor, wifi));
             Set<Caracteristica> caracteristicas3 = new HashSet<>(Set.of(wifi, cocina, televisor, pileta, aptoMascotas, banioPrivado, vistaCiudad, parrilla, lavadora));
+
+            //iakihabara
+            Imagen akihabara1 = new Imagen("Imagen 1", "https://grupo1-digitalbooking-s3-images.s3.amazonaws.com/hoteles/akihabara/102923328.jpg");
+            Imagen akihabara2 = new Imagen("Imagen 2", "https://grupo1-digitalbooking-s3-images.s3.amazonaws.com/hoteles/akihabara/102927809.jpg");
+            Imagen akihabara3 = new Imagen("Imagen 3", "https://grupo1-digitalbooking-s3-images.s3.amazonaws.com/hoteles/akihabara/102929333.jpg");
+            Imagen akihabara4 = new Imagen("Imagen 4", "https://grupo1-digitalbooking-s3-images.s3.amazonaws.com/hoteles/akihabara/102933385.jpg");
+            Imagen akihabara5 = new Imagen("Imagen 5", "https://grupo1-digitalbooking-s3-images.s3.amazonaws.com/hoteles/akihabara/148149172.jpg");
+            Imagen akihabara6 = new Imagen("Imagen 6", "https://grupo1-digitalbooking-s3-images.s3.amazonaws.com/hoteles/akihabara/91528717.jpg");
+
+
+            //iapaTokio
+            Imagen apaTokio1 = new Imagen("Imagen 1", "https://grupo1-digitalbooking-s3-images.s3.amazonaws.com/hoteles/ApaTokio/267561410.jpg");
+            Imagen apaTokio2 = new Imagen("Imagen 2", "https://grupo1-digitalbooking-s3-images.s3.amazonaws.com/hoteles/ApaTokio/267562611.jpg");
+            Imagen apaTokio3 = new Imagen("Imagen 3", "https://grupo1-digitalbooking-s3-images.s3.amazonaws.com/hoteles/ApaTokio/267562762.jpg");
+            Imagen apaTokio4 = new Imagen("Imagen 4", "https://grupo1-digitalbooking-s3-images.s3.amazonaws.com/hoteles/ApaTokio/267562958.jpg");
+            Imagen apaTokio5 = new Imagen("Imagen 5", "https://grupo1-digitalbooking-s3-images.s3.amazonaws.com/hoteles/ApaTokio/268256913.jpg");
+            Imagen apaTokio6 = new Imagen("Imagen 6", "https://grupo1-digitalbooking-s3-images.s3.amazonaws.com/hoteles/ApaTokio/351263389.jpg");
+            Imagen apaTokio7 = new Imagen("Imagen 7", "https://grupo1-digitalbooking-s3-images.s3.amazonaws.com/hoteles/ApaTokio/423018626.jpg");
+            Imagen apaTokio8 = new Imagen("Imagen 8", "https://grupo1-digitalbooking-s3-images.s3.amazonaws.com/hoteles/ApaTokio/423018785.jpg");
+            Imagen apaTokio9 = new Imagen("Imagen 9", "https://grupo1-digitalbooking-s3-images.s3.amazonaws.com/hoteles/ApaTokio/423019058.jpg");
+            Imagen apaTokio10 = new Imagen("Imagen 10", "https://grupo1-digitalbooking-s3-images.s3.amazonaws.com/hoteles/ApaTokio/425037658.jpg");
+
 
             //zero
             Imagen zero1 = new Imagen("Imagen 1", "https://grupo1-digitalbooking-s3-images.s3.amazonaws.com/hostels/zero/317878776.jpg");
@@ -303,6 +328,32 @@ public class DigitalbookingApplication {
             Imagen nineHours9 = new Imagen("Imagen 9", "https://grupo1-digitalbooking-s3-images.s3.amazonaws.com/hostels/ninehours/338517816.jpg");
             Imagen nineHours10 = new Imagen("Imagen 10", "https://grupo1-digitalbooking-s3-images.s3.amazonaws.com/hostels/ninehours/365167162.jpg");
 
+            //cerulean
+            Imagen cerulean1 = new Imagen("Imagen 1", "https://grupo1-digitalbooking-s3-images.s3.amazonaws.com/hoteles/cerulean/136498098.jpg");
+            Imagen cerulean2 = new Imagen("Imagen 2", "https://grupo1-digitalbooking-s3-images.s3.amazonaws.com/hoteles/cerulean/158462606.jpg");
+            Imagen cerulean3 = new Imagen("Imagen 3", "https://grupo1-digitalbooking-s3-images.s3.amazonaws.com/hoteles/cerulean/163449048.jpg");
+            Imagen cerulean4 = new Imagen("Imagen 4", "https://grupo1-digitalbooking-s3-images.s3.amazonaws.com/hoteles/cerulean/163449119.jpg");
+            Imagen cerulean5 = new Imagen("Imagen 5", "https://grupo1-digitalbooking-s3-images.s3.amazonaws.com/hoteles/cerulean/188219952.jpg");
+            Imagen cerulean6 = new Imagen("Imagen 6", "https://grupo1-digitalbooking-s3-images.s3.amazonaws.com/hoteles/cerulean/197566623.jpg");
+            Imagen cerulean7 = new Imagen("Imagen 7", "https://grupo1-digitalbooking-s3-images.s3.amazonaws.com/hoteles/cerulean/238504753.jpg");
+            Imagen cerulean8 = new Imagen("Imagen 8", "https://grupo1-digitalbooking-s3-images.s3.amazonaws.com/hoteles/cerulean/238505124.jpg");
+            Imagen cerulean9 = new Imagen("Imagen 9", "https://grupo1-digitalbooking-s3-images.s3.amazonaws.com/hoteles/cerulean/287460269.jpg");
+            Imagen cerulean10 = new Imagen("Imagen 10", "https://grupo1-digitalbooking-s3-images.s3.amazonaws.com/hoteles/cerulean/287460533.jpg");
+
+
+            //mandarin
+            Imagen mandarin1 = new Imagen("Imagen 1", "https://grupo1-digitalbooking-s3-images.s3.amazonaws.com/hoteles/mandarin/177035322.jpg");
+            Imagen mandarin2 = new Imagen("Imagen 2", "https://grupo1-digitalbooking-s3-images.s3.amazonaws.com/hoteles/mandarin/233111733.jpg");
+            Imagen mandarin3 = new Imagen("Imagen 3", "https://grupo1-digitalbooking-s3-images.s3.amazonaws.com/hoteles/mandarin/233112283.jpg");
+            Imagen mandarin4 = new Imagen("Imagen 4", "https://grupo1-digitalbooking-s3-images.s3.amazonaws.com/hoteles/mandarin/233112480.jpg");
+            Imagen mandarin5 = new Imagen("Imagen 5", "https://grupo1-digitalbooking-s3-images.s3.amazonaws.com/hoteles/mandarin/239889460.jpg");
+            Imagen mandarin6 = new Imagen("Imagen 6", "https://grupo1-digitalbooking-s3-images.s3.amazonaws.com/hoteles/mandarin/239899002.jpg");
+            Imagen mandarin7 = new Imagen("Imagen 7", "https://grupo1-digitalbooking-s3-images.s3.amazonaws.com/hoteles/mandarin/241804125.jpg");
+            Imagen mandarin8 = new Imagen("Imagen 8", "https://grupo1-digitalbooking-s3-images.s3.amazonaws.com/hoteles/mandarin/250322928.jpg");
+            Imagen mandarin9 = new Imagen("Imagen 9", "https://grupo1-digitalbooking-s3-images.s3.amazonaws.com/hoteles/mandarin/250323305.jpg");
+
+
+
 
             //Set de imagenes por producto nombrarlos i+el nombre del producto
             Set<Imagen> iantico= new HashSet<>(Set.of(antico1, antico2, antico3, antico4, antico5, antico6));
@@ -322,6 +373,12 @@ public class DigitalbookingApplication {
             Set<Imagen> iinterContinental= new HashSet<>(Set.of(interContinental1, interContinental2, interContinental3, interContinental4, interContinental5, interContinental6, interContinental7, interContinental8));
             Set<Imagen> ininehours= new HashSet<>(Set.of(nineHours1, nineHours2, nineHours3, nineHours4, nineHours5, nineHours6, nineHours7, nineHours8, nineHours9, nineHours10));
             Set<Imagen> izero= new HashSet<>(Set.of(zero1, zero2, zero3, zero4, zero5, zero6, zero7, zero8, zero9, zero10));
+            Set<Imagen> iapaTokio= new HashSet<>(Set.of(apaTokio1, apaTokio2, apaTokio3, apaTokio4, apaTokio5, apaTokio6, apaTokio7, apaTokio8, apaTokio9, apaTokio10));
+            Set<Imagen> iakihabara= new HashSet<>(Set.of(akihabara1, akihabara2, akihabara3, akihabara4, akihabara5, akihabara6));
+            Set<Imagen> icerulean= new HashSet<>(Set.of(cerulean1, cerulean2, cerulean3, cerulean4, cerulean5, cerulean6, cerulean7, cerulean8, cerulean9, cerulean10));
+            Set<Imagen> imandarin= new HashSet<>(Set.of(mandarin1, mandarin2, mandarin3, mandarin4, mandarin5, mandarin6, mandarin7, mandarin8, mandarin9));
+
+
 
             //coordenadas NombreHotel+c
             Coordenadas hiltongardenc = new Coordenadas(
@@ -366,13 +423,13 @@ public class DigitalbookingApplication {
 
             Coordenadas nacionaldeCubac = new Coordenadas(
                     new BigDecimal("23.1408"),
-                    new BigDecimal("82.3889"));
+                    new BigDecimal("-82.3889"));
 
             Coordenadas interContinentalc = new Coordenadas(
                     new BigDecimal("40.7553"),
-                    new BigDecimal("73.9861"));
+                    new BigDecimal("-73.9861"));
 
-            Coordenadas shangriLac = new Coordenadas(
+            Coordenadas nineHoursc = new Coordenadas(
                     new BigDecimal("35.6664"),
                     new BigDecimal("139.7504"));
 
@@ -415,6 +472,27 @@ public class DigitalbookingApplication {
             Coordenadas zeroc = new Coordenadas(
                     new BigDecimal("41.400409870994125"),
                     new BigDecimal("2.205703437638464"));
+
+            Coordenadas apaTokioc = new Coordenadas(
+                    new BigDecimal("35.696109036046906"),
+                    new BigDecimal("139.70259149813182"));
+
+            Coordenadas akihabarac = new Coordenadas(
+                    new BigDecimal("35.6973835392973"),
+                    new BigDecimal("139.77405384055245"));
+
+            Coordenadas ceruleanc = new Coordenadas(
+                    new BigDecimal("35.65656227250088"),
+                    new BigDecimal("139.69938911841297"));
+
+            Coordenadas mandarinc = new Coordenadas(
+                    new BigDecimal("35.68714139008886"),
+                    new BigDecimal("139.7730927195066"));
+
+
+
+
+
 
             Producto zero = new Producto();
             zero.setTitulo("L'antica Locanda Dell'Orso");
@@ -735,20 +813,111 @@ public class DigitalbookingApplication {
             productoServiceImp.saveProducto(interContinental);
 
             Producto nineHours  = new Producto();
-            nineHours .setTitulo("Nine Hours Shinjuku-North");
-            nineHours .setTituloDescripcion("Alojate en el corazón de Tokio");
-            nineHours .setDescripcion("Nine Hours Shinjuku-North, El nine hours Suidobashi goza de una buena ubicación en el distrito Chiyoda de Tokio, a 500 metros del santuario Misaki Inari, a menos de 1 km de la iglesia de San Francisco Javier y a 11 minutos a pie del santuario Tsukudo. Este hotel cápsula de 2 estrellas ofrece habitaciones con aire acondicionado, baño compartido y WiFi gratuita. Cuenta con recepción 24 horas y consigna de equipaje.\n" +
+            nineHours.setTitulo("Nine Hours Shinjuku-North");
+            nineHours.setTituloDescripcion("Alojate en el corazón de Tokio");
+            nineHours.setDescripcion("Nine Hours Shinjuku-North, El nine hours Suidobashi goza de una buena ubicación en el distrito Chiyoda de Tokio, a 500 metros del santuario Misaki Inari, a menos de 1 km de la iglesia de San Francisco Javier y a 11 minutos a pie del santuario Tsukudo. Este hotel cápsula de 2 estrellas ofrece habitaciones con aire acondicionado, baño compartido y WiFi gratuita. Cuenta con recepción 24 horas y consigna de equipaje.\n" +
                     "\n" +
                     "Cerca del hotel cápsula hay varios lugares de interés, como el Museo de Arte del Centro de la Amistad de Japón-China, el Museo y Salón de la Fama del Béisbol y el centro comercial Ramla. El nine hours Suidobashi se halla a 16 km del aeropuerto internacional de Tokio-Haneda, el más cercano. ");
-            nineHours .setDireccion("100-8283 Tokio, Chiyoda-ku, Marunouchi Trust Tower Main, 1-8-3 Marunouchi,Japón");
-            nineHours .setPrecioPorNoche(new BigDecimal("323124.00"));
-            nineHours .setCategoria(hotel);
-            nineHours .setCiudad(tokio);
-            nineHours .setCaracteristicas(caracteristicas2);
-            nineHours .setImagenes(ininehours);
-            nineHours .setPoliticas(pnineHours);
-            nineHours .setCoordenadas(shangriLac);
+            nineHours.setDireccion("100-8283 Tokio, Chiyoda-ku, Marunouchi Trust Tower Main, 1-8-3 Marunouchi,Japón");
+            nineHours.setPrecioPorNoche(new BigDecimal("323124.00"));
+            nineHours.setCategoria(hostel);
+            nineHours.setCiudad(tokio);
+            nineHours.setCaracteristicas(caracteristicas2);
+            nineHours.setImagenes(ininehours);
+            nineHours.setPoliticas(pnineHours);
+            nineHours.setCoordenadas(nineHoursc);
             productoServiceImp.saveProducto(nineHours);
+
+            Producto apaTokio  = new Producto();
+            apaTokio.setTitulo("APA Hotel Higashi Shinjuku Kabukicho Tower");
+            apaTokio.setTituloDescripcion("Alojate en el corazón de Tokio");
+            apaTokio.setDescripcion("\n" +
+                    "\n" +
+                    "El APA Hotel Higashi Shinjuku Kabukicho Tower alberga un centro de spa y bienestar y se encuentra en Tokio, en la región de Tokio, a 300 metros del parque conmemorativo Koizumi Yakumo y del Museo de Corea. Este hotel de 3 estrellas alberga un restaurante y ofrece habitaciones con aire acondicionado y baño privado. Se ofrece aparcamiento privado por un suplemento.\n" +
+                    "\n" +
+                    "Las habitaciones están equipadas con escritorio, TV de pantalla plana y baño compartido. Todas las habitaciones incluyen nevera.\n" +
+                    "\n" +
+                    "El APA Higashishinjuku Kabukicho Tower sirve un desayuno buffet todas las mañanas.\n" +
+                    "\n" +
+                    "El personal de la recepción habla japonés e inglés y puede facilitar información sobre la zona.\n" +
+                    "\n" +
+                    "El establecimiento está cerca de varios lugares de interés, como el Museo Samurai, el parque Okubo y el santuario de Inari. El aeropuerto internacional de Tokio Haneda es el más cercano y queda a 17 km del APA Hotel Higashi Shinjuku Kabukicho Tower.\n");
+            apaTokio.setDireccion("160-0021 Prefectura de Tokio, Shinjuku-ku Kabukicho 2-31-12, Japón ");
+            apaTokio.setPrecioPorNoche(new BigDecimal("88657.00"));
+            apaTokio.setCategoria(hotel);
+            apaTokio.setCiudad(tokio);
+            apaTokio.setCaracteristicas(caracteristicas2);
+            apaTokio.setImagenes(iapaTokio);
+            apaTokio.setPoliticas(papaTokio);
+            apaTokio.setCoordenadas(apaTokioc);
+            productoServiceImp.saveProducto(apaTokio);
+
+
+            //Akihabara Washington Hotel
+            Producto akihabara  = new Producto();
+            akihabara.setTitulo("Akihabara Washington Hotel");
+            akihabara.setTituloDescripcion("Alojate en el corazón de Tokio");
+            akihabara.setDescripcion("El Akihabara Washington Hotel se encuentra a 1 minuto a pie de la estación JR Akihabara, a 9 minutos en coche de la estación de Tokio, y ofrece alojamientos modernos, restaurante y WiFi gratuita en todas sus instalaciones.\n" +
+                    "\n" +
+                    "Las habitaciones disponen de aire acondicionado, nevera, escritorio y TV de pantalla plana. También incluyen baño con bañera y artículos de aseo.\n" +
+                    "\n" +
+                    "El establecimiento cuenta con recepción abierta las 24 horas, consigna de equipaje, servicio de cambio de divisa y caja fuerte. También se ofrece servicio de lavandería.\n" +
+                    "\n" +
+                    "El Hotel Washington Akihabara está a 25 minutos en coche del parque temático Tokyo Disneyland. Queda a 19 km del aeropuerto de Haneda.\n");
+            akihabara.setDireccion("160-0021 Prefectura de Tokio, Shinjuku-ku Kabukicho 2-31-12, Japón ");
+            akihabara.setPrecioPorNoche(new BigDecimal("88657.00"));
+            akihabara.setCategoria(hotel);
+            akihabara.setCiudad(tokio);
+            akihabara.setCaracteristicas(caracteristicas2);
+            akihabara.setImagenes(iakihabara);
+            akihabara.setPoliticas(pakihabara);
+            akihabara.setCoordenadas(akihabarac);
+            productoServiceImp.saveProducto(akihabara);
+
+
+            //Cerulean Tower Tokyu Hotel
+            Producto cerulean  = new Producto();
+            cerulean.setTitulo("Cerulean Tower Tokyu Hotel");
+            cerulean.setTituloDescripcion("Alojate en el corazón de Tokio");
+            cerulean.setDescripcion("El Cerulean Tower Tokyu Hotel está en el centro de Shibuya y ofrece habitaciones amplias con vistas panorámicas a la ciudad. El hotel cuenta con un centro de fitness y varios sitios para comer.\n" +
+                    "\n" +
+                    "El Cerulean Tower se encuentra a solo 5 minutos a pie de la estación de Shibuya, que enlaza con numerosas líneas de tren y metro. Desde la estación se puede llegar en tren a Harajuku y al Santuario Meiji Jingu en solo 2 minutos.\n" +
+                    "\n" +
+                    "Las habitaciones están en la planta 19 y superiores. Todas tienen vistas a la zona metropolitana más importante, aire acondicionado, escritorio, TV de pantalla plana, minibar y baño privado con bañera, ducha y artículos de aseo gratuitos, como cepillo de dientes, champú, acondicionador y gel de ducha. Hay servicio de habitaciones las 24 horas.\n" +
+                    "\n" +
+                    "El Tokyu Hotel Cerulean Tower alberga una sauna, una bañera de hidromasaje y un salón de belleza donde se realizan tratamientos. También consta de pastelería y servicio de guardería.\n" +
+                    "\n" +
+                    "El Cerulean Tower Tokyu Hotel cuenta con 8 restaurantes que sirven cocina japonesa, china y francesa. El bar de la última planta, el Garden Lounge y el Jazz Club sirven bebidas.\n");
+            cerulean.setDireccion("150-8512 Prefectura de Tokio, Shibuya-ku, Sakuragaokacho 26-1, Japón ");
+            cerulean.setPrecioPorNoche(new BigDecimal("88657.00"));
+            cerulean.setCategoria(hotel);
+            cerulean.setCiudad(tokio);
+            cerulean.setCaracteristicas(caracteristicas2);
+            cerulean.setImagenes(icerulean);
+            cerulean.setPoliticas(pcerulean);
+            cerulean.setCoordenadas(ceruleanc);
+            productoServiceImp.saveProducto(cerulean);
+
+            //Mandarin Oriental
+            Producto mandarin  = new Producto();
+            mandarin.setTitulo("Mandarin Oriental");
+            mandarin.setTituloDescripcion("Alojate en el corazón de Tokio");
+            mandarin.setDescripcion("El Mandarin Oriental, ubicado en la zona histórica de Nihonbashi, en el centro de Tokio, alberga excelentes restaurantes y un spa galardonado (situado en la planta 37) y ofrece todos los lujos de un hotel de 5 estrellas. Las habitaciones son de las más amplias de Tokio y tienen vistas impresionantes a la ciudad. El hotel está comunicado directamente con la estación de metro Mitsukoshimae y con la estación de tren JR Shin-Nihonbashi.\n" +
+                    "\n" +
+                    "Este hotel ha sido galardonado con el premio Travellers' Choice y con el Certificado de Excelencia de TripAdvisor en el año 2016.\n" +
+                    "\n" +
+                    "Las habitaciones del Mandarin Oriental, Tokyo disponen de ventanales con un diseño elegante inspirado en la estética japonesa. Además, incluyen una amplia variedad de comodidades modernas como TV de pantalla plana con canales vía satélite. Todas las habitaciones tienen sofá, zona de estar con escritorio y baño con bañera grande y ducha independiente."
+            );
+            mandarin.setDireccion("103-8328 Prefectura de Tokio, Chuo-ku Nihonbashi Muromachi 2-1-1, Japón");
+            mandarin.setPrecioPorNoche(new BigDecimal("839552.00"));
+            mandarin.setCategoria(hotel);
+            mandarin.setCiudad(tokio);
+            mandarin.setCaracteristicas(caracteristicas2);
+            mandarin.setImagenes(imandarin);
+            mandarin.setPoliticas(pmandarin);
+            mandarin.setCoordenadas(mandarinc);
+            productoServiceImp.saveProducto(mandarin);
+
 
 
             UserDetailsDto userDetailsDtoAdmin = new UserDetailsDto();
@@ -798,6 +967,32 @@ public class DigitalbookingApplication {
             puntuacionInterContinental.setUsuario(usuarioAdmin);
             puntuacionServiceImp.savePuntuacion(puntuacionInterContinental, userDetailsDtoAdmin);
 
+            Puntuacion puntuacionapaTokio = new Puntuacion();
+            puntuacionapaTokio.setValor(4);
+            puntuacionapaTokio.setProducto(lantica);
+            puntuacionapaTokio.setUsuario(usuarioAdmin);
+            puntuacionServiceImp.savePuntuacion(puntuacionapaTokio, userDetailsDtoAdmin);
+
+            Puntuacion puntuacionakihabara = new Puntuacion();
+            puntuacionakihabara.setValor(5);
+            puntuacionakihabara.setProducto(leBatiment);
+            puntuacionakihabara.setUsuario(usuarioAdmin);
+            puntuacionServiceImp.savePuntuacion(puntuacionakihabara , userDetailsDtoAdmin);
+
+            Puntuacion puntuacioncerulean = new Puntuacion();
+            puntuacioncerulean.setValor(5);
+            puntuacioncerulean.setProducto(nineHours);
+            puntuacioncerulean.setUsuario(usuarioAdmin);
+            puntuacionServiceImp.savePuntuacion(puntuacioncerulean, userDetailsDtoAdmin);
+
+            Puntuacion puntuacionmandarin = new Puntuacion();
+            puntuacionmandarin.setValor(5);
+            puntuacionmandarin.setProducto(lantica);
+            puntuacionmandarin.setUsuario(usuarioAdmin);
+            puntuacionServiceImp.savePuntuacion(puntuacionmandarin, userDetailsDtoAdmin);
+
+
+
 //			puntuaciones hostel
             Puntuacion puntuacionUrbanyHostel = new Puntuacion();
             puntuacionUrbanyHostel.setValor(3);
@@ -813,7 +1008,7 @@ public class DigitalbookingApplication {
 
             Puntuacion puntuacionNineHours = new Puntuacion();
             puntuacionNineHours.setValor(5);
-            puntuacionNineHours.setProducto(laBrisa);
+            puntuacionNineHours.setProducto(mandarin);
             puntuacionNineHours.setUsuario(usuarioAdmin);
             puntuacionServiceImp.savePuntuacion(puntuacionNineHours, userDetailsDtoAdmin);
 
@@ -839,21 +1034,15 @@ public class DigitalbookingApplication {
 
             Puntuacion puntuacionPousadaBonfim = new Puntuacion();
             puntuacionPousadaBonfim.setValor(5);
-            puntuacionPousadaBonfim.setProducto(pousadaBonfim);
+            puntuacionPousadaBonfim.setProducto(cerulean);
             puntuacionPousadaBonfim.setUsuario(usuarioAdmin);
             puntuacionServiceImp.savePuntuacion(puntuacionPousadaBonfim, userDetailsDtoAdmin);
 
             Puntuacion puntuacionLantica = new Puntuacion();
             puntuacionLantica.setValor(3);
-            puntuacionLantica.setProducto(pousadaBonfim);
+            puntuacionLantica.setProducto(akihabara);
             puntuacionLantica.setUsuario(usuarioAdmin);
             puntuacionServiceImp.savePuntuacion(puntuacionLantica, userDetailsDtoAdmin);
-
-            Puntuacion puntuacionAntico = new Puntuacion();
-            puntuacionAntico.setValor(5);
-            puntuacionAntico.setProducto(pousadaBonfim);
-            puntuacionAntico.setUsuario(usuarioAdmin);
-            puntuacionServiceImp.savePuntuacion(puntuacionAntico, userDetailsDtoAdmin);
 
         };
     }
