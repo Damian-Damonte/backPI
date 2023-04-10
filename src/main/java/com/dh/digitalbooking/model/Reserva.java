@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
@@ -34,6 +35,8 @@ public class Reserva {
     private String datosExtra;
     @Column(name = "vacuna_covid")
     private boolean vacunaCovid;
+    @Column(name = "total", precision = 14, scale = 2, nullable = false)
+    private BigDecimal total;
 
     @ManyToOne
     @JoinColumn(
@@ -148,5 +151,13 @@ public class Reserva {
 
     public void setCiudadUsuario(String ciudadUsuario) {
         this.ciudadUsuario = ciudadUsuario;
+    }
+
+    public BigDecimal getTotal() {
+        return total;
+    }
+
+    public void setTotal(BigDecimal total) {
+        this.total = total;
     }
 }

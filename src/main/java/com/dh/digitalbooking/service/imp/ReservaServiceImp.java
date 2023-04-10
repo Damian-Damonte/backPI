@@ -11,7 +11,9 @@ import com.dh.digitalbooking.service.ReservaService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 
 @Service
@@ -68,10 +70,13 @@ public class ReservaServiceImp implements ReservaService {
     private Reserva getReserva(Reserva reserva) {
         datesValidation(reserva);
         Producto producto = productoServiceImp.existByIdValidation(reserva.getProducto().getId());
+        Usuario usuario = usuarioServiceImp.existByIdValidation(reserva.getUsuario().getId());
+
+        reserva.setTotal(getTotal(reserva.getCheckIn(), reserva.getCheckOut(), producto.getPrecioPorNoche()));
+
         producto.getReservas().add(reserva);
         reserva.setProducto(producto);
 
-        Usuario usuario = usuarioServiceImp.existByIdValidation(reserva.getUsuario().getId());
         usuario.setCiudad(reserva.getCiudadUsuario());
         usuario.getReservas().add(reserva);
         reserva.setUsuario(usuario);
@@ -80,7 +85,7 @@ public class ReservaServiceImp implements ReservaService {
     }
 
     public Reserva existByIdValidation(Long id) {
-        if(id == null)
+        if (id == null)
             throw new BadRequestException("Debe enviar el id de la reserva");
         return reservaRepository.findById(id).orElseThrow(() ->
                 new NotFoundException("Reserva con id " + id + " no encontrada"));
@@ -92,17 +97,17 @@ public class ReservaServiceImp implements ReservaService {
                 reserva.getCheckIn(),
                 reserva.getCheckOut()
         );
-        if(count > 1)
+        if (count > 1)
             throw new BadRequestException("Producto no disponible en las fechas ingresadas");
-        if(save && count > 0)
+        if (save && count > 0)
             throw new BadRequestException("Producto no disponible en las fechas ingresadas");
-        if(!save && count == 1) {
+        if (!save && count == 1) {
             Reserva reservaByDates = reservaRepository.findReservaByDates(
                     reserva.getProducto().getId(),
                     reserva.getCheckIn(),
                     reserva.getCheckOut()
             );
-            if(!(reservaByDates.getId().equals(reserva.getId())))
+            if (!(reservaByDates.getId().equals(reserva.getId())))
                 throw new BadRequestException("Producto no disponible en las fechas ingresadas");
         }
     }
@@ -111,7 +116,16 @@ public class ReservaServiceImp implements ReservaService {
         LocalDate checkIn = reserva.getCheckIn();
         LocalDate checkOut = reserva.getCheckOut();
 
-        if(checkIn.isAfter(checkOut))
+        if (checkIn.isAfter(checkOut))
             throw new BadRequestException("La fecha de ingreso deber anterior a la fecha de finalización");
+    }
+
+    private BigDecimal getTotal(LocalDate checkin, LocalDate checkout, BigDecimal precio) {
+        if (checkin.isEqual(checkout)) {
+            return precio;
+        } else {
+            long daysBetween = ChronoUnit.DAYS.between(checkin, checkout);
+            return BigDecimal.valueOf(daysBetween).multiply(precio);
+        }
     }
 }
