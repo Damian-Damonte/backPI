@@ -140,6 +140,9 @@ public class DigitalbookingApplication {
             Set<Politica> pakihabara = new HashSet<>(Set.of(politica1, politica2, politica3));
             Set<Politica> pcerulean = new HashSet<>(Set.of(politica1, politica2, politica3));
             Set<Politica> pmandarin = new HashSet<>(Set.of(politica1, politica2, politica3));
+            Set<Politica> priari = new HashSet<>(Set.of(politica1, politica2, politica3));
+            Set<Politica> phigashiGinza = new HashSet<>(Set.of(politica1, politica2, politica3));
+
 
             Set<Caracteristica> caracteristicas1 = new HashSet<>(Set.of(cocina, televisor, parrilla, lavadora, noFumar));
             Set<Caracteristica> caracteristicas2 = new HashSet<>(Set.of(noFumar, parrilla, lavadora, pileta, aptoMascotas, televisor, wifi));
@@ -353,6 +356,27 @@ public class DigitalbookingApplication {
             Imagen mandarin9 = new Imagen("Imagen 9", "https://grupo1-digitalbooking-s3-images.s3.amazonaws.com/hoteles/mandarin/250323305.jpg");
 
 
+            //iriari
+            Imagen riari1 = new Imagen("Imagen 1", "https://grupo1-digitalbooking-s3-images.s3.amazonaws.com/bedAndBreakfast/Riari/12923368.jpg");
+            Imagen riari2 = new Imagen("Imagen 2", "https://grupo1-digitalbooking-s3-images.s3.amazonaws.com/bedAndBreakfast/Riari/32212853.jpg");
+            Imagen riari3 = new Imagen("Imagen 3", "https://grupo1-digitalbooking-s3-images.s3.amazonaws.com/bedAndBreakfast/Riari/32220044.jpg");
+            Imagen riari4 = new Imagen("Imagen 4", "https://grupo1-digitalbooking-s3-images.s3.amazonaws.com/bedAndBreakfast/Riari/32220119.jpg");
+            Imagen riari5 = new Imagen("Imagen 5", "https://grupo1-digitalbooking-s3-images.s3.amazonaws.com/bedAndBreakfast/Riari/446123361.jpg");
+            Imagen riari6 = new Imagen("Imagen 6", "https://grupo1-digitalbooking-s3-images.s3.amazonaws.com/bedAndBreakfast/Riari/446123363.jpg");
+
+
+            //higashiGinza
+            Imagen higashiGinza1 = new Imagen("Imagen 1", "https://grupo1-digitalbooking-s3-images.s3.amazonaws.com/hoteles/higashi/340823300.jpg");
+            Imagen higashiGinza2 = new Imagen("Imagen 2", "https://grupo1-digitalbooking-s3-images.s3.amazonaws.com/hoteles/higashi/340823829.jpg");
+            Imagen higashiGinza3 = new Imagen("Imagen 3", "https://grupo1-digitalbooking-s3-images.s3.amazonaws.com/hoteles/higashi/340823911.jpg");
+            Imagen higashiGinza4 = new Imagen("Imagen 4", "https://grupo1-digitalbooking-s3-images.s3.amazonaws.com/hoteles/higashi/342286608.jpg");
+            Imagen higashiGinza5 = new Imagen("Imagen 5", "https://grupo1-digitalbooking-s3-images.s3.amazonaws.com/hoteles/higashi/342349570.jpg");
+            Imagen higashiGinza6 = new Imagen("Imagen 6", "https://grupo1-digitalbooking-s3-images.s3.amazonaws.com/hoteles/higashi/347373486.jpg");
+            Imagen higashiGinza7 = new Imagen("Imagen 7", "https://grupo1-digitalbooking-s3-images.s3.amazonaws.com/hoteles/higashi/347374544.jpg");
+            Imagen higashiGinza8 = new Imagen("Imagen 8", "https://grupo1-digitalbooking-s3-images.s3.amazonaws.com/hoteles/higashi/446039267.jpg");
+            Imagen higashiGinza9 = new Imagen("Imagen 9", "https://grupo1-digitalbooking-s3-images.s3.amazonaws.com/hoteles/higashi/446039323.jpg");
+            Imagen higashiGinza10 = new Imagen("Imagen 10", "https://grupo1-digitalbooking-s3-images.s3.amazonaws.com/hoteles/higashi/446702783.jpg");
+            Imagen higashiGinza11 = new Imagen("Imagen 10", "https://grupo1-digitalbooking-s3-images.s3.amazonaws.com/hoteles/higashi/446919588.jpg");
 
 
             //Set de imagenes por producto nombrarlos i+el nombre del producto
@@ -377,6 +401,8 @@ public class DigitalbookingApplication {
             Set<Imagen> iakihabara= new HashSet<>(Set.of(akihabara1, akihabara2, akihabara3, akihabara4, akihabara5, akihabara6));
             Set<Imagen> icerulean= new HashSet<>(Set.of(cerulean1, cerulean2, cerulean3, cerulean4, cerulean5, cerulean6, cerulean7, cerulean8, cerulean9, cerulean10));
             Set<Imagen> imandarin= new HashSet<>(Set.of(mandarin1, mandarin2, mandarin3, mandarin4, mandarin5, mandarin6, mandarin7, mandarin8, mandarin9));
+            Set<Imagen> iriari= new HashSet<>(Set.of(riari1, riari2, riari3, riari4, riari5, riari6 ));
+            Set<Imagen> ihigashiGinza= new HashSet<>(Set.of(higashiGinza1, higashiGinza2, higashiGinza3, higashiGinza4, higashiGinza5, higashiGinza6, higashiGinza7, higashiGinza8, higashiGinza9, higashiGinza10, higashiGinza11));
 
 
 
@@ -453,9 +479,9 @@ public class DigitalbookingApplication {
                     new BigDecimal("-23.5814"),
                     new BigDecimal("46.6774"));
 
-            Coordenadas santaCaterinac = new Coordenadas(
-                    new BigDecimal("40.6349"),
-                    new BigDecimal("14.6110"));
+            Coordenadas riaric = new Coordenadas(
+                    new BigDecimal("41.89318764064088"),
+                    new BigDecimal("12.464547415839215"));
 
             Coordenadas lanticac = new Coordenadas(
                     new BigDecimal("41.90205777396797"),
@@ -463,7 +489,7 @@ public class DigitalbookingApplication {
 
             Coordenadas leBatimentc = new Coordenadas(
                     new BigDecimal("-34.59636804201318"),
-                    new BigDecimal("58.40801951557742"));
+                    new BigDecimal("-58.40801951557742"));
 
             Coordenadas anticoc = new Coordenadas(
                     new BigDecimal("43.768165137628806"),
@@ -489,21 +515,27 @@ public class DigitalbookingApplication {
                     new BigDecimal("35.68714139008886"),
                     new BigDecimal("139.7730927195066"));
 
+            Coordenadas higashiGinzac = new Coordenadas(
+                    new BigDecimal("35.66431125601999"),
+                    new BigDecimal("139.77144674967388"));
+
+
+
 
 
 
 
 
             Producto zero = new Producto();
-            zero.setTitulo("L'antica Locanda Dell'Orso");
+            zero.setTitulo("Hotel SB Diagonal Zero Barcelona");
             zero.setTituloDescripcion("Alojate en el corazón de Florencia");
-            zero.setDescripcion("El Antico Centro Suite ofrece alojamientos modernos con conexión wifi gratis en el centro de Florencia, junto a la Piazza della Repubblica y a 2 minutos a pie de la catedral de Santa María del Fiore.\n" +
+            zero.setDescripcion("El Hotel SB Diagonal Zero Barcelona se encuentra en Barcelona, frente al centro internacional de convenciones y el Auditori Fòrum. Cuenta con spa, centro de fitness, piscina panorámica de temporada y solárium en la azotea.\n" +
                     "\n" +
-                    "Las habitaciones están insonorizadas y cuentan con suelo de parquet, aire acondicionado, TV, zona de estar y minibar. El baño privado incluye secador de pelo y artículos de aseo gratuitos.\n" +
+                    "El centro de fitness es de acceso gratuito. El acceso al spa es solo para mayores de 14 años e incluye baño turco y sauna finlandesa. Se ofrecen tratamientos de belleza y masajes por un suplemento.\n" +
                     "\n" +
-                    "El Antico Centro Suite se encuentra a 350 metros del Ponete Vecchio, a 4 minutos a pie de la Galería Uffizi y a 900 metros de la estación de tren de Florencia Santa Maria Novella.\n" +
+                    "Las habitaciones del Hotel SB Diagonal Zero Barcelona están insonorizadas y disponen de aire acondicionado, TV vía satélite de pantalla plana, conexión WiFi gratuita, caja fuerte para ordenador portátil y soporte para iPod.\n" +
                     "\n" +
-                    "Nuestros clientes dicen que esta parte de Florencia es su favorita, según los comentarios independientes. ");
+                    "Los huéspedes disponen de utensilios de planchado, set de té y café, hervidor de agua, sistema de pantalla táctil para regular la luz y la temperatura, y baño privado con secador de pelo. Se facilitan albornoces y zapatillas bajo petición.");
             zero.setDireccion("Via De' Brunelleschi, 5, Uffizi, 50122 Florencia, Italia");
             zero.setPrecioPorNoche(new BigDecimal("39200.00"));
             zero.setCategoria(hostel);
@@ -534,26 +566,25 @@ public class DigitalbookingApplication {
             antico.setCoordenadas(anticoc);
             productoServiceImp.saveProducto(antico);
 
-            Producto lantica = new Producto();
-            lantica.setTitulo("L'antica Locanda Dell'Orso");
-            lantica.setTituloDescripcion("Alojate en el corazón de Roma");
-            lantica.setDescripcion(
-                    "L'antica Locanda Dell'Orso ocupa un edificio del siglo XIII del centro de Roma, a 350 metros de la plaza Piazza Navona. Hay wifi gratis en todo el recinto.\n" +
-                            "\n" +
-                            "Todas las habitaciones están insonorizadas y disponen de techos con vigas a la vista, aire acondicionado, TV de pantalla plana y minibar. El baño privado incluye ducha, secador de pelo y artículos de aseo gratuitos.\n" +
-                            "\n" +
-                            "La Fontana di Trevi está a 15 minutos a pie de L'antica Locanda Dell'Orso y el Coliseo, a 2 km.\n" +
-                            "\n" +
-                            "Nuestros clientes dicen que esta parte de Roma es su favorita, según los comentarios independientes.");
-            lantica.setDireccion("Paraguay 2862, Recoleta, 1425 Buenos Aires, Argentina");
-            lantica.setPrecioPorNoche(new BigDecimal("46400.00"));
-            lantica.setCategoria(bedAndBreakfast);
-            lantica.setCiudad(roma);
-            lantica.setCaracteristicas(caracteristicas3);
-            lantica.setImagenes(ilantica);
-            lantica.setPoliticas(plantica);
-            lantica.setCoordenadas(lanticac);
-            productoServiceImp.saveProducto(lantica);
+            Producto riari = new Producto();
+            riari.setTitulo("Villa Riari Garden");
+            riari.setTituloDescripcion("Alojate en el corazón de Roma");
+            riari.setDescripcion("La Villa Riari Garden, situada en el singular barrio romano de Trastevere, cuenta con un jardín privado con mesas y sillas.\n" +
+                    "\n" +
+                    "Las habitaciones están amuebladas con sencillez, son funcionales y disponen de suelo de baldosa, escritorio y lavamanos. Algunas tienen baño compartido. Los huéspedes pueden relajarse en un salón con conexión a internet gratuita y TV LCD.\n" +
+                    "\n" +
+                    "El personal de la Riari Villa está disponible las 24 horas y proporciona servicio de información turística. La conexión Wi-Fi es gratuita.\n" +
+                    "\n" +
+                    "El establecimiento se encuentra a 10 minutos a pie de la animada plaza Trilussa, que está rodeada de enotecas, cafeterías y restaurantes. La basílica de San Pedro y la plaza Navona están a 1,5 km.\n");
+            riari.setDireccion("Via Dei Riari 44, Trastevere, 00165 Roma, Italia");
+            riari.setPrecioPorNoche(new BigDecimal("46400.00"));
+            riari.setCategoria(bedAndBreakfast);
+            riari.setCiudad(roma);
+            riari.setCaracteristicas(caracteristicas3);
+            riari.setImagenes(iriari);
+            riari.setPoliticas(priari);
+            riari.setCoordenadas(riaric);
+            productoServiceImp.saveProducto(riari);
 
             Producto leBatiment = new Producto();
             leBatiment.setTitulo("Le Batiment");
@@ -919,6 +950,29 @@ public class DigitalbookingApplication {
             productoServiceImp.saveProducto(mandarin);
 
 
+            //higashiGinza
+            Producto higashiGinza = new Producto();
+            higashiGinza.setTitulo("Higashi Ginza");
+            higashiGinza.setTituloDescripcion("Alojate en el corazón de Tokio");
+            higashiGinza.setDescripcion("Higashi-Ginza ofrece habitaciones con aire acondicionado y TV de pantalla plana en el distrito Chuo de Tokio. Este hotel de 3 estrellas cuenta con recepción 24 horas. El establecimiento se encuentra a 500 metros del centro de la ciudad y a 200 metros del templo Hojuji.\n" +
+                    "\n" +
+                    "Todos los alojamientos incluyen hervidor de agua. Las habitaciones del KEIKYU EX INN Higashi-Ginza disponen de WiFi gratuita y baño privado con bidet y secador de pelo. Algunas tienen vistas a la ciudad. Hay nevera.\n" +
+                    "\n" +
+                    "Todas las mañanas se sirve un desayuno continental y asiático.\n" +
+                    "\n" +
+                    "Cerca del establecimiento hay varios lugares de interés. El KEIKYU EX INN Higashi-Ginza incluye Nihon Tenji Seitei no Chi, el templo Ensho-ji y el santuario Hoju Inari. El aeropuerto más cercano es el de Tokio Haneda, ubicado a 15 km del hotel."
+            );
+            higashiGinza.setDireccion("104-0045 Tokyo-to, 2-15-15 Tsukiji, Chuo-ku, Japan ");
+            higashiGinza.setPrecioPorNoche(new BigDecimal("95800.00"));
+            higashiGinza.setCategoria(hotel);
+            higashiGinza.setCiudad(tokio);
+            higashiGinza.setCaracteristicas(caracteristicas2);
+            higashiGinza.setImagenes(ihigashiGinza);
+            higashiGinza.setPoliticas(phigashiGinza);
+            higashiGinza.setCoordenadas(higashiGinzac);
+            productoServiceImp.saveProducto(higashiGinza);
+
+
 
             UserDetailsDto userDetailsDtoAdmin = new UserDetailsDto();
             userDetailsDtoAdmin.setUserId(1L);
@@ -943,12 +997,6 @@ public class DigitalbookingApplication {
             puntuacionVilladEste.setUsuario(usuarioAdmin);
             puntuacionServiceImp.savePuntuacion(puntuacionVilladEste, userDetailsDtoAdmin);
 
-            Puntuacion puntuacionLaSoberanaHosteria = new Puntuacion();
-            puntuacionLaSoberanaHosteria.setValor(2);
-            puntuacionLaSoberanaHosteria.setProducto(laSoberanaHosteria);
-            puntuacionLaSoberanaHosteria.setUsuario(usuarioAdmin);
-            puntuacionServiceImp.savePuntuacion(puntuacionLaSoberanaHosteria, userDetailsDtoAdmin);
-
             Puntuacion puntuacionLaReservaVirginLodge = new Puntuacion();
             puntuacionLaReservaVirginLodge.setValor(3);
             puntuacionLaReservaVirginLodge.setProducto(laReservaVirginLodge);
@@ -969,27 +1017,33 @@ public class DigitalbookingApplication {
 
             Puntuacion puntuacionapaTokio = new Puntuacion();
             puntuacionapaTokio.setValor(4);
-            puntuacionapaTokio.setProducto(lantica);
+            puntuacionapaTokio.setProducto(apaTokio);
             puntuacionapaTokio.setUsuario(usuarioAdmin);
             puntuacionServiceImp.savePuntuacion(puntuacionapaTokio, userDetailsDtoAdmin);
 
             Puntuacion puntuacionakihabara = new Puntuacion();
             puntuacionakihabara.setValor(5);
-            puntuacionakihabara.setProducto(leBatiment);
+            puntuacionakihabara.setProducto(akihabara);
             puntuacionakihabara.setUsuario(usuarioAdmin);
             puntuacionServiceImp.savePuntuacion(puntuacionakihabara , userDetailsDtoAdmin);
 
             Puntuacion puntuacioncerulean = new Puntuacion();
             puntuacioncerulean.setValor(5);
-            puntuacioncerulean.setProducto(nineHours);
+            puntuacioncerulean.setProducto(cerulean);
             puntuacioncerulean.setUsuario(usuarioAdmin);
             puntuacionServiceImp.savePuntuacion(puntuacioncerulean, userDetailsDtoAdmin);
 
             Puntuacion puntuacionmandarin = new Puntuacion();
             puntuacionmandarin.setValor(5);
-            puntuacionmandarin.setProducto(lantica);
+            puntuacionmandarin.setProducto(mandarin);
             puntuacionmandarin.setUsuario(usuarioAdmin);
             puntuacionServiceImp.savePuntuacion(puntuacionmandarin, userDetailsDtoAdmin);
+
+            Puntuacion puntuacionHigashiGinza = new Puntuacion();
+            puntuacionHigashiGinza.setValor(4);
+            puntuacionHigashiGinza.setProducto(higashiGinza);
+            puntuacionHigashiGinza.setUsuario(usuarioAdmin);
+            puntuacionServiceImp.savePuntuacion(puntuacionHigashiGinza, userDetailsDtoAdmin);
 
 
 
@@ -1008,9 +1062,15 @@ public class DigitalbookingApplication {
 
             Puntuacion puntuacionNineHours = new Puntuacion();
             puntuacionNineHours.setValor(5);
-            puntuacionNineHours.setProducto(mandarin);
+            puntuacionNineHours.setProducto(nineHours);
             puntuacionNineHours.setUsuario(usuarioAdmin);
             puntuacionServiceImp.savePuntuacion(puntuacionNineHours, userDetailsDtoAdmin);
+
+            Puntuacion puntuacionZero = new Puntuacion();
+            puntuacionZero.setValor(3);
+            puntuacionZero.setProducto(zero);
+            puntuacionZero.setUsuario(usuarioAdmin);
+            puntuacionServiceImp.savePuntuacion(puntuacionZero, userDetailsDtoAdmin);
 
 //			putuaciones departamentos
             Puntuacion puntuacionUtaka = new Puntuacion();
@@ -1021,28 +1081,45 @@ public class DigitalbookingApplication {
 
             Puntuacion puntuacionLeBatiment = new Puntuacion();
             puntuacionLeBatiment.setValor(5);
-            puntuacionLeBatiment.setProducto(pousadaBonfim);
+            puntuacionLeBatiment.setProducto(leBatiment);
             puntuacionLeBatiment.setUsuario(usuarioAdmin);
             puntuacionServiceImp.savePuntuacion(puntuacionLeBatiment, userDetailsDtoAdmin);
 
-//			puntuaciones bed and breakfast
             Puntuacion puntuacionOrillaMansa = new Puntuacion();
             puntuacionOrillaMansa.setValor(4);
             puntuacionOrillaMansa.setProducto(orillaMansa);
             puntuacionOrillaMansa.setUsuario(usuarioAdmin);
             puntuacionServiceImp.savePuntuacion(puntuacionOrillaMansa, userDetailsDtoAdmin);
 
+//			puntuaciones bed and breakfast
+
             Puntuacion puntuacionPousadaBonfim = new Puntuacion();
             puntuacionPousadaBonfim.setValor(5);
-            puntuacionPousadaBonfim.setProducto(cerulean);
+            puntuacionPousadaBonfim.setProducto(pousadaBonfim);
             puntuacionPousadaBonfim.setUsuario(usuarioAdmin);
             puntuacionServiceImp.savePuntuacion(puntuacionPousadaBonfim, userDetailsDtoAdmin);
 
+            Puntuacion puntuacionLaSoberanaHosteria = new Puntuacion();
+            puntuacionLaSoberanaHosteria.setValor(2);
+            puntuacionLaSoberanaHosteria.setProducto(laSoberanaHosteria);
+            puntuacionLaSoberanaHosteria.setUsuario(usuarioAdmin);
+            puntuacionServiceImp.savePuntuacion(puntuacionLaSoberanaHosteria, userDetailsDtoAdmin);
+
             Puntuacion puntuacionLantica = new Puntuacion();
             puntuacionLantica.setValor(3);
-            puntuacionLantica.setProducto(akihabara);
+            puntuacionLantica.setProducto(antico);
             puntuacionLantica.setUsuario(usuarioAdmin);
             puntuacionServiceImp.savePuntuacion(puntuacionLantica, userDetailsDtoAdmin);
+
+            Puntuacion puntuacionRiari = new Puntuacion();
+            puntuacionRiari.setValor(4);
+            puntuacionRiari.setProducto(riari);
+            puntuacionRiari.setUsuario(usuarioAdmin);
+            puntuacionServiceImp.savePuntuacion(puntuacionRiari, userDetailsDtoAdmin);
+
+
+
+
 
         };
     }
