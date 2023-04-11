@@ -78,8 +78,9 @@ public class Producto {
     private Set<Caracteristica> caracteristicas = new HashSet<>();
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "producto")
-    @OrderBy("id ASC")
+    @OrderBy("orden ASC NULLS LAST ")
     @Valid
+    @Size(max = 50, message = "El producto no puede tener más de 50 imágenes")
     private Set<Imagen> imagenes = new HashSet<>();
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "producto")

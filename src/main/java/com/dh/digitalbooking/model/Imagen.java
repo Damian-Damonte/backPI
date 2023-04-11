@@ -1,8 +1,10 @@
 package com.dh.digitalbooking.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
@@ -23,6 +25,11 @@ public class Imagen {
     @NotBlank(message = "La imagen debe tener una url")
     @Size(max = 255, message = "La url de la imagen no debe tener más de 255 caracteres")
     private String url;
+    @Column(name = "orden")
+    @Min(value = 0, message = "El valor del orden debe ser mayor o igual a 0.")
+    @Max(value = 100, message = "El valor del orden debe ser menor o igual a 100.")
+    @Nullable
+    private Integer orden;
 
     @ManyToOne
     @JoinColumn(
@@ -40,6 +47,12 @@ public class Imagen {
     public Imagen(String titulo, String url) {
         this.titulo = titulo;
         this.url = url;
+    }
+
+    public Imagen(String titulo, String url, Integer orden) {
+        this.titulo = titulo;
+        this.url = url;
+        this.orden = orden;
     }
 
     public Long getId() {
@@ -72,5 +85,13 @@ public class Imagen {
 
     public void setProducto(Producto producto) {
         this.producto = producto;
+    }
+
+    public Integer getOrden() {
+        return orden;
+    }
+
+    public void setOrden(Integer orden) {
+        this.orden = orden;
     }
 }

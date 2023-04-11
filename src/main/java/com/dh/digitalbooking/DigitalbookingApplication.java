@@ -198,7 +198,7 @@ public class DigitalbookingApplication {
 
             //LeBatiment
             Imagen leBatiment1 = new Imagen("Imagen 1", "https://grupo1-digitalbooking-s3-images.s3.amazonaws.com/apartments/LeBatiment/222877138.jpg");
-            Imagen leBatiment2 = new Imagen("Imagen 2", "https://grupo1-digitalbooking-s3-images.s3.amazonaws.com/apartments/LeBatiment/222877504.jpg");
+            Imagen leBatiment2 = new Imagen("Imagen 2", "https://grupo1-digitalbooking-s3-images.s3.amazonaws.com/apartments/LeBatiment/222877504.jpg", 1);
             Imagen leBatiment3 = new Imagen("Imagen 3", "https://grupo1-digitalbooking-s3-images.s3.amazonaws.com/apartments/LeBatiment/222879984.jpg");
             Imagen leBatiment4 = new Imagen("Imagen 4", "https://grupo1-digitalbooking-s3-images.s3.amazonaws.com/apartments/LeBatiment/222890172.jpg");
             Imagen leBatiment5 = new Imagen("Imagen 5", "https://grupo1-digitalbooking-s3-images.s3.amazonaws.com/apartments/LeBatiment/222890182.jpg");
@@ -206,14 +206,14 @@ public class DigitalbookingApplication {
             Imagen leBatiment7 = new Imagen("Imagen 7", "https://grupo1-digitalbooking-s3-images.s3.amazonaws.com/apartments/LeBatiment/54304600.jpg");
 
             //hiltongarden
-            Imagen hiltongarden1 = new Imagen("Imagen 1", "https://grupo1-digitalbooking-s3-images.s3.amazonaws.com/hoteles/Hilton/249632667.jpg");
+            Imagen hiltongarden1 = new Imagen("Imagen 1", "https://grupo1-digitalbooking-s3-images.s3.amazonaws.com/hoteles/Hilton/249632667.jpg", 1);
             Imagen hiltongarden2 = new Imagen("Imagen 2", "https://grupo1-digitalbooking-s3-images.s3.amazonaws.com/hoteles/Hilton/249633069.jpg");
             Imagen hiltongarden3 = new Imagen("Imagen 3", "https://grupo1-digitalbooking-s3-images.s3.amazonaws.com/hoteles/Hilton/249634973.jpg");
             Imagen hiltongarden4 = new Imagen("Imagen 4", "https://grupo1-digitalbooking-s3-images.s3.amazonaws.com/hoteles/Hilton/249871836.jpg");
             Imagen hiltongarden5 = new Imagen("Imagen 5", "https://grupo1-digitalbooking-s3-images.s3.amazonaws.com/hoteles/Hilton/313379046.jpg");
 
             //laBrisa
-            Imagen laBrisa1 = new Imagen("Imagen 1", "https://grupo1-digitalbooking-s3-images.s3.amazonaws.com/hostels/LaBrisa/151251211.jpg");
+            Imagen laBrisa1 = new Imagen("Imagen 1", "https://grupo1-digitalbooking-s3-images.s3.amazonaws.com/hostels/LaBrisa/151251211.jpg", 1);
             Imagen laBrisa2 = new Imagen("Imagen 2", "https://grupo1-digitalbooking-s3-images.s3.amazonaws.com/hostels/LaBrisa/151251594.jpg");
             Imagen laBrisa3 = new Imagen("Imagen 3", "https://grupo1-digitalbooking-s3-images.s3.amazonaws.com/hostels/LaBrisa/207644787.jpg");
             Imagen laBrisa4 = new Imagen("Imagen 4", "https://grupo1-digitalbooking-s3-images.s3.amazonaws.com/hostels/LaBrisa/207876546.jpg");
@@ -338,7 +338,7 @@ public class DigitalbookingApplication {
             Imagen cerulean7 = new Imagen("Imagen 7", "https://grupo1-digitalbooking-s3-images.s3.amazonaws.com/hoteles/cerulean/238504753.jpg");
             Imagen cerulean8 = new Imagen("Imagen 8", "https://grupo1-digitalbooking-s3-images.s3.amazonaws.com/hoteles/cerulean/238505124.jpg");
             Imagen cerulean9 = new Imagen("Imagen 9", "https://grupo1-digitalbooking-s3-images.s3.amazonaws.com/hoteles/cerulean/287460269.jpg");
-            Imagen cerulean10 = new Imagen("Imagen 10", "https://grupo1-digitalbooking-s3-images.s3.amazonaws.com/hoteles/cerulean/287460533.jpg");
+            Imagen cerulean10 = new Imagen("Imagen 10", "https://grupo1-digitalbooking-s3-images.s3.amazonaws.com/hoteles/cerulean/287460533.jpg", 1);
 
 
             //mandarin
