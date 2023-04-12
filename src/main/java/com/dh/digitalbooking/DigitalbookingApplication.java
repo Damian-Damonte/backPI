@@ -90,6 +90,21 @@ public class DigitalbookingApplication {
             Caracteristica noFumar = caracteristicaRepository.save(new Caracteristica("No fumar"));
             Caracteristica vistaCiudad = caracteristicaRepository.save(new Caracteristica("Vistas a la ciudad"));
 
+            Caracteristica desayuno = caracteristicaRepository.save(new Caracteristica("Desayuno incluido"));
+            Caracteristica calefaccion = caracteristicaRepository.save(new Caracteristica("Calefaccion"));
+            Caracteristica gimnasio = caracteristicaRepository.save(new Caracteristica("Gimnasio"));
+            Caracteristica recepcion24 = caracteristicaRepository.save(new Caracteristica("Recepcion 24hs"));
+            Caracteristica spa = caracteristicaRepository.save(new Caracteristica("Spa"));
+            Caracteristica seguridad24 = caracteristicaRepository.save(new Caracteristica("Seguridad las 24hs"));
+            Caracteristica bicicletas = caracteristicaRepository.save(new Caracteristica("Alquiler de bicicletas"));
+            Caracteristica conferencias = caracteristicaRepository.save(new Caracteristica("Sala de conferencias"));
+            Caracteristica restaurant = caracteristicaRepository.save(new Caracteristica("Restaurant"));
+            Caracteristica playa = caracteristicaRepository.save(new Caracteristica("Acceso a la playa"));
+            Caracteristica infantil = caracteristicaRepository.save(new Caracteristica("Zona infantil"));
+            Caracteristica bar = caracteristicaRepository.save(new Caracteristica("Bar"));
+            Caracteristica cajaFuerte = caracteristicaRepository.save(new Caracteristica("Caja fuerte"));
+            Caracteristica minibar = caracteristicaRepository.save(new Caracteristica("Minibar"));
+            Caracteristica chimenea = caracteristicaRepository.save(new Caracteristica("Chimenea"));
 
             TipoPolitica normasDeLaCasa = tipoPoliticaRepository.save(new TipoPolitica("Normas de la casa"));
             TipoPolitica saludYSeguridad = tipoPoliticaRepository.save(new TipoPolitica("Salud y seguridad"));
@@ -104,19 +119,15 @@ public class DigitalbookingApplication {
                     , saludYSeguridad);
 
             Politica politica2 = new Politica(
-                    "Check-out: 10:00\n"+
+                    "Check-out: 22:00\n"+
                             "No se permiten fiestas\n" +
                             "No fumar\n" +
-                            "Check-in: 10:00\n" +
-                            "No se permiten fiestas\n",
+                            "Check-in: 10:00",
                     normasDeLaCasa
             );
 
             Politica politica3 = new Politica(
-                    "Agregá las fechas de tu viaje para obtener los detalles de cancelacion de esta estadía\n" +
-                            "reintegro del 50%\n"+
-                            "politica de cancelación 1\n" +
-                            "politica de cancelación 2\n",
+                    "Agregá las fechas de tu viaje para obtener los detalles de cancelacion de esta estadía",
                     politicaDeCancelacion
             );
 
@@ -144,9 +155,13 @@ public class DigitalbookingApplication {
             Set<Politica> phigashiGinza = new HashSet<>(Set.of(politica1, politica2, politica3));
 
 
-            Set<Caracteristica> caracteristicas1 = new HashSet<>(Set.of(cocina, televisor, parrilla, lavadora, noFumar));
-            Set<Caracteristica> caracteristicas2 = new HashSet<>(Set.of(noFumar, parrilla, lavadora, pileta, aptoMascotas, televisor, wifi));
+            Set<Caracteristica> caracteristicas1 = new HashSet<>(Set.of(cocina, televisor, desayuno, bar, noFumar));
+            Set<Caracteristica> caracteristicas2 = new HashSet<>(Set.of(cajaFuerte, parrilla, lavadora, pileta, aptoMascotas, seguridad24, wifi));
             Set<Caracteristica> caracteristicas3 = new HashSet<>(Set.of(wifi, cocina, televisor, pileta, aptoMascotas, banioPrivado, vistaCiudad, parrilla, lavadora));
+            Set<Caracteristica> caracteristicas4 = new HashSet<>(Set.of(desayuno, calefaccion, gimnasio, recepcion24, spa, noFumar, bicicletas, conferencias, restaurant));
+            Set<Caracteristica> caracteristicas5 = new HashSet<>(Set.of(playa, infantil, bar, cajaFuerte, seguridad24, pileta, wifi, aptoMascotas, televisor));
+            Set<Caracteristica> caracteristicas6 = new HashSet<>(Set.of( desayuno, bicicletas, televisor, playa, noFumar, aptoMascotas, restaurant));
+
 
             //iakihabara
             Imagen akihabara1 = new Imagen("Imagen 1", "https://grupo1-digitalbooking-s3-images.s3.amazonaws.com/hoteles/akihabara/102923328.jpg");
@@ -154,7 +169,7 @@ public class DigitalbookingApplication {
             Imagen akihabara3 = new Imagen("Imagen 3", "https://grupo1-digitalbooking-s3-images.s3.amazonaws.com/hoteles/akihabara/102929333.jpg");
             Imagen akihabara4 = new Imagen("Imagen 4", "https://grupo1-digitalbooking-s3-images.s3.amazonaws.com/hoteles/akihabara/102933385.jpg");
             Imagen akihabara5 = new Imagen("Imagen 5", "https://grupo1-digitalbooking-s3-images.s3.amazonaws.com/hoteles/akihabara/148149172.jpg");
-            Imagen akihabara6 = new Imagen("Imagen 6", "https://grupo1-digitalbooking-s3-images.s3.amazonaws.com/hoteles/akihabara/91528717.jpg");
+            Imagen akihabara6 = new Imagen("Imagen 6", "https://grupo1-digitalbooking-s3-images.s3.amazonaws.com/hoteles/akihabara/91528717.jpg", 1);
 
 
             //iapaTokio
@@ -166,12 +181,12 @@ public class DigitalbookingApplication {
             Imagen apaTokio6 = new Imagen("Imagen 6", "https://grupo1-digitalbooking-s3-images.s3.amazonaws.com/hoteles/ApaTokio/351263389.jpg");
             Imagen apaTokio7 = new Imagen("Imagen 7", "https://grupo1-digitalbooking-s3-images.s3.amazonaws.com/hoteles/ApaTokio/423018626.jpg");
             Imagen apaTokio8 = new Imagen("Imagen 8", "https://grupo1-digitalbooking-s3-images.s3.amazonaws.com/hoteles/ApaTokio/423018785.jpg");
-            Imagen apaTokio9 = new Imagen("Imagen 9", "https://grupo1-digitalbooking-s3-images.s3.amazonaws.com/hoteles/ApaTokio/423019058.jpg");
+            Imagen apaTokio9 = new Imagen("Imagen 9", "https://grupo1-digitalbooking-s3-images.s3.amazonaws.com/hoteles/ApaTokio/423019058.jpg", 1);
             Imagen apaTokio10 = new Imagen("Imagen 10", "https://grupo1-digitalbooking-s3-images.s3.amazonaws.com/hoteles/ApaTokio/425037658.jpg");
 
 
             //zero
-            Imagen zero1 = new Imagen("Imagen 1", "https://grupo1-digitalbooking-s3-images.s3.amazonaws.com/hostels/zero/317878776.jpg");
+            Imagen zero1 = new Imagen("Imagen 1", "https://grupo1-digitalbooking-s3-images.s3.amazonaws.com/hostels/zero/317878776.jpg", 1);
             Imagen zero2 = new Imagen("Imagen 2", "https://grupo1-digitalbooking-s3-images.s3.amazonaws.com/hostels/zero/335358534.jpg");
             Imagen zero3 = new Imagen("Imagen 3", "https://grupo1-digitalbooking-s3-images.s3.amazonaws.com/hostels/zero/335358537.jpg");
             Imagen zero4 = new Imagen("Imagen 4", "https://grupo1-digitalbooking-s3-images.s3.amazonaws.com/hostels/zero/379975372.jpg");
@@ -185,7 +200,7 @@ public class DigitalbookingApplication {
 
             //antico
             Imagen antico1 = new Imagen("Imagen 1", "https://grupo1-digitalbooking-s3-images.s3.amazonaws.com/bedAndBreakfast/antico/158951841.jpg");
-            Imagen antico2 = new Imagen("Imagen 2", "https://grupo1-digitalbooking-s3-images.s3.amazonaws.com/bedAndBreakfast/antico/44251868.jpg");
+            Imagen antico2 = new Imagen("Imagen 2", "https://grupo1-digitalbooking-s3-images.s3.amazonaws.com/bedAndBreakfast/antico/44251868.jpg", 1);
             Imagen antico3 = new Imagen("Imagen 3", "https://grupo1-digitalbooking-s3-images.s3.amazonaws.com/bedAndBreakfast/antico/44252068.jpg");
             Imagen antico4 = new Imagen("Imagen 4", "https://grupo1-digitalbooking-s3-images.s3.amazonaws.com/bedAndBreakfast/antico/59144935.jpg");
             Imagen antico5 = new Imagen("Imagen 5", "https://grupo1-digitalbooking-s3-images.s3.amazonaws.com/bedAndBreakfast/antico/59144968.jpg");
@@ -231,7 +246,7 @@ public class DigitalbookingApplication {
             Imagen nuovoMiami3 = new Imagen("Imagen 3", "https://grupo1-digitalbooking-s3-images.s3.amazonaws.com/hoteles/NuovoMiami/404024541.jpg");
             Imagen nuovoMiami4 = new Imagen("Imagen 4", "https://grupo1-digitalbooking-s3-images.s3.amazonaws.com/hoteles/NuovoMiami/404024544.jpg");
             Imagen nuovoMiami5 = new Imagen("Imagen 5", "https://grupo1-digitalbooking-s3-images.s3.amazonaws.com/hoteles/NuovoMiami/404024601.jpg");
-            Imagen nuovoMiami6 = new Imagen("Imagen 6", "https://grupo1-digitalbooking-s3-images.s3.amazonaws.com/hoteles/NuovoMiami/404024608.jpg");
+            Imagen nuovoMiami6 = new Imagen("Imagen 6", "https://grupo1-digitalbooking-s3-images.s3.amazonaws.com/hoteles/NuovoMiami/404024608.jpg", 1);
             Imagen nuovoMiami7 = new Imagen("Imagen 7", "https://grupo1-digitalbooking-s3-images.s3.amazonaws.com/hoteles/NuovoMiami/404024704.jpg");
             Imagen nuovoMiami8 = new Imagen("Imagen 8", "https://grupo1-digitalbooking-s3-images.s3.amazonaws.com/hoteles/NuovoMiami/404024805.jpg");
 
@@ -239,7 +254,7 @@ public class DigitalbookingApplication {
             Imagen villadEste1 = new Imagen("Imagen 1", "https://grupo1-digitalbooking-s3-images.s3.amazonaws.com/hoteles/villadEste/367990746.jpg");
             Imagen villadEste2 = new Imagen("Imagen 2", "https://grupo1-digitalbooking-s3-images.s3.amazonaws.com/hoteles/villadEste/367990812.jpg");
             Imagen villadEste3 = new Imagen("Imagen 3", "https://grupo1-digitalbooking-s3-images.s3.amazonaws.com/hoteles/villadEste/367991438.jpg");
-            Imagen villadEste4 = new Imagen("Imagen 4", "https://grupo1-digitalbooking-s3-images.s3.amazonaws.com/hoteles/villadEste/367991543.jpg");
+            Imagen villadEste4 = new Imagen("Imagen 4", "https://grupo1-digitalbooking-s3-images.s3.amazonaws.com/hoteles/villadEste/367991543.jpg", 1);
             Imagen villadEste5 = new Imagen("Imagen 5", "https://grupo1-digitalbooking-s3-images.s3.amazonaws.com/hoteles/villadEste/367992879.jpg");
             Imagen villadEste6 = new Imagen("Imagen 6", "https://grupo1-digitalbooking-s3-images.s3.amazonaws.com/hoteles/villadEste/92126852.jpg");
             Imagen villadEste7 = new Imagen("Imagen 7", "https://grupo1-digitalbooking-s3-images.s3.amazonaws.com/hoteles/villadEste/92133640.jpg");
@@ -252,7 +267,7 @@ public class DigitalbookingApplication {
             Imagen urbanyHostel5 = new Imagen("Imagen 5", "https://grupo1-digitalbooking-s3-images.s3.amazonaws.com/hostels/urbany/382378386.jpg");
             Imagen urbanyHostel6 = new Imagen("Imagen 1", "https://grupo1-digitalbooking-s3-images.s3.amazonaws.com/hostels/urbany/382380792.jpg");
             Imagen urbanyHostel7 = new Imagen("Imagen 2", "https://grupo1-digitalbooking-s3-images.s3.amazonaws.com/hostels/urbany/382380918.jpg");
-            Imagen urbanyHostel8 = new Imagen("Imagen 3", "https://grupo1-digitalbooking-s3-images.s3.amazonaws.com/hostels/urbany/382381536.jpg");
+            Imagen urbanyHostel8 = new Imagen("Imagen 3", "https://grupo1-digitalbooking-s3-images.s3.amazonaws.com/hostels/urbany/382381536.jpg", 1);
             Imagen urbanyHostel9 = new Imagen("Imagen 4", "https://grupo1-digitalbooking-s3-images.s3.amazonaws.com/hostels/urbany/382381552.jpg");
             Imagen urbanyHostel10 = new Imagen("Imagen 5", "https://grupo1-digitalbooking-s3-images.s3.amazonaws.com/hostels/urbany/382381640.jpg");
 
@@ -261,7 +276,7 @@ public class DigitalbookingApplication {
             Imagen laSoberanaHosteria2 = new Imagen("Imagen 2", "https://grupo1-digitalbooking-s3-images.s3.amazonaws.com/bedAndBreakfast/LaSoberana/128348420.jpg");
             Imagen laSoberanaHosteria3 = new Imagen("Imagen 3", "https://grupo1-digitalbooking-s3-images.s3.amazonaws.com/bedAndBreakfast/LaSoberana/128352007.jpg");
             Imagen laSoberanaHosteria4 = new Imagen("Imagen 4", "https://grupo1-digitalbooking-s3-images.s3.amazonaws.com/bedAndBreakfast/LaSoberana/156003329.jpg");
-            Imagen laSoberanaHosteria5 = new Imagen("Imagen 5", "https://grupo1-digitalbooking-s3-images.s3.amazonaws.com/bedAndBreakfast/LaSoberana/216458663.jpg");
+            Imagen laSoberanaHosteria5 = new Imagen("Imagen 5", "https://grupo1-digitalbooking-s3-images.s3.amazonaws.com/bedAndBreakfast/LaSoberana/216458663.jpg", 1);
             Imagen laSoberanaHosteria6 = new Imagen("Imagen 6", "https://grupo1-digitalbooking-s3-images.s3.amazonaws.com/bedAndBreakfast/LaSoberana/216458911.jpg");
 
             //utaka
@@ -271,7 +286,7 @@ public class DigitalbookingApplication {
             Imagen utaka4 = new Imagen("Imagen 4", "https://grupo1-digitalbooking-s3-images.s3.amazonaws.com/apartments/utaka/227766702.jpg");
             Imagen utaka5 = new Imagen("Imagen 5", "https://grupo1-digitalbooking-s3-images.s3.amazonaws.com/apartments/utaka/227766715.jpg");
             Imagen utaka6 = new Imagen("Imagen 6", "https://grupo1-digitalbooking-s3-images.s3.amazonaws.com/apartments/utaka/248803298.jpg");
-            Imagen utaka7 = new Imagen("Imagen 7", "https://grupo1-digitalbooking-s3-images.s3.amazonaws.com/apartments/utaka/336734755.jpg");
+            Imagen utaka7 = new Imagen("Imagen 7", "https://grupo1-digitalbooking-s3-images.s3.amazonaws.com/apartments/utaka/336734755.jpg", 1);
 
             //orillaMansa
             Imagen orillaMansa1 = new Imagen("Imagen 1", "https://grupo1-digitalbooking-s3-images.s3.amazonaws.com/apartments/orillaMansa/291916227.jpg");
@@ -279,7 +294,7 @@ public class DigitalbookingApplication {
             Imagen orillaMansa3 = new Imagen("Imagen 3", "https://grupo1-digitalbooking-s3-images.s3.amazonaws.com/apartments/orillaMansa/291916952.jpg");
             Imagen orillaMansa4 = new Imagen("Imagen 4", "https://grupo1-digitalbooking-s3-images.s3.amazonaws.com/apartments/orillaMansa/440726088.jpg");
             Imagen orillaMansa5 = new Imagen("Imagen 5", "https://grupo1-digitalbooking-s3-images.s3.amazonaws.com/apartments/orillaMansa/440726101.jpg");
-            Imagen orillaMansa6 = new Imagen("Imagen 6", "https://grupo1-digitalbooking-s3-images.s3.amazonaws.com/apartments/orillaMansa/440726961.jpg");
+            Imagen orillaMansa6 = new Imagen("Imagen 6", "https://grupo1-digitalbooking-s3-images.s3.amazonaws.com/apartments/orillaMansa/440726961.jpg", 1);
             Imagen orillaMansa7 = new Imagen("Imagen 7", "https://grupo1-digitalbooking-s3-images.s3.amazonaws.com/apartments/orillaMansa/440727282.jpg");
             Imagen orillaMansa8 = new Imagen("Imagen 8", "https://grupo1-digitalbooking-s3-images.s3.amazonaws.com/apartments/orillaMansa/440727370.jpg");
 
@@ -292,7 +307,7 @@ public class DigitalbookingApplication {
             Imagen laReservaVirginLodge6 = new Imagen("Imagen 6", "https://grupo1-digitalbooking-s3-images.s3.amazonaws.com/apartments/laReservaLodge/36817791.jpg");
             Imagen laReservaVirginLodge7 = new Imagen("Imagen 7", "https://grupo1-digitalbooking-s3-images.s3.amazonaws.com/apartments/laReservaLodge/37579647.jpg");
             Imagen laReservaVirginLodge8 = new Imagen("Imagen 8", "https://grupo1-digitalbooking-s3-images.s3.amazonaws.com/apartments/laReservaLodge/37579676.jpg");
-            Imagen laReservaVirginLodge9 = new Imagen("Imagen 9", "https://grupo1-digitalbooking-s3-images.s3.amazonaws.com/apartments/laReservaLodge/37579995.jpg");
+            Imagen laReservaVirginLodge9 = new Imagen("Imagen 9", "https://grupo1-digitalbooking-s3-images.s3.amazonaws.com/apartments/laReservaLodge/37579995.jpg", 1);
             Imagen laReservaVirginLodge10 = new Imagen("Imagen 10", "https://grupo1-digitalbooking-s3-images.s3.amazonaws.com/apartments/laReservaLodge/38312132.jpg");
 
             //bonFim
@@ -300,12 +315,12 @@ public class DigitalbookingApplication {
             Imagen bonFim2 = new Imagen("Imagen 2", "https://grupo1-digitalbooking-s3-images.s3.amazonaws.com/bedAndBreakfast/posadabom/16785629.jpg");
             Imagen bonFim3 = new Imagen("Imagen 3", "https://grupo1-digitalbooking-s3-images.s3.amazonaws.com/bedAndBreakfast/posadabom/228280.webp");
             Imagen bonFim4 = new Imagen("Imagen 4", "https://grupo1-digitalbooking-s3-images.s3.amazonaws.com/bedAndBreakfast/posadabom/63895518.jpg");
-            Imagen bonFim5 = new Imagen("Imagen 5", "https://grupo1-digitalbooking-s3-images.s3.amazonaws.com/bedAndBreakfast/posadabom/93812496.jpg");
+            Imagen bonFim5 = new Imagen("Imagen 5", "https://grupo1-digitalbooking-s3-images.s3.amazonaws.com/bedAndBreakfast/posadabom/93812496.jpg", 1);
 
             //nacionalDeCuba
             Imagen nacionaldeCuba1 = new Imagen("Imagen 1", "https://grupo1-digitalbooking-s3-images.s3.amazonaws.com/hoteles/Nacional/182553824.jpg");
             Imagen nacionaldeCuba2 = new Imagen("Imagen 2", "https://grupo1-digitalbooking-s3-images.s3.amazonaws.com/hoteles/Nacional/182574494.jpg");
-            Imagen nacionaldeCuba3 = new Imagen("Imagen 3", "https://grupo1-digitalbooking-s3-images.s3.amazonaws.com/hoteles/Nacional/400798721.jpg");
+            Imagen nacionaldeCuba3 = new Imagen("Imagen 3", "https://grupo1-digitalbooking-s3-images.s3.amazonaws.com/hoteles/Nacional/400798721.jpg", 1);
             Imagen nacionaldeCuba4 = new Imagen("Imagen 4", "https://grupo1-digitalbooking-s3-images.s3.amazonaws.com/hoteles/Nacional/400802292.jpg");
             Imagen nacionaldeCuba5 = new Imagen("Imagen 5", "https://grupo1-digitalbooking-s3-images.s3.amazonaws.com/hoteles/Nacional/400802332.jpg");
 
@@ -314,13 +329,13 @@ public class DigitalbookingApplication {
             Imagen interContinental2 = new Imagen("Imagen 2", "https://grupo1-digitalbooking-s3-images.s3.amazonaws.com/hoteles/intercontinental/341425558.jpg");
             Imagen interContinental3 = new Imagen("Imagen 3", "https://grupo1-digitalbooking-s3-images.s3.amazonaws.com/hoteles/intercontinental/341436162.jpg");
             Imagen interContinental4 = new Imagen("Imagen 4", "https://grupo1-digitalbooking-s3-images.s3.amazonaws.com/hoteles/intercontinental/341439879.jpg");
-            Imagen interContinental5 = new Imagen("Imagen 5", "https://grupo1-digitalbooking-s3-images.s3.amazonaws.com/hoteles/intercontinental/341466879.jpg");
+            Imagen interContinental5 = new Imagen("Imagen 5", "https://grupo1-digitalbooking-s3-images.s3.amazonaws.com/hoteles/intercontinental/341466879.jpg", 1);
             Imagen interContinental6 = new Imagen("Imagen 6", "https://grupo1-digitalbooking-s3-images.s3.amazonaws.com/hoteles/intercontinental/341466875.jpg");
             Imagen interContinental7 = new Imagen("Imagen 7", "https://grupo1-digitalbooking-s3-images.s3.amazonaws.com/hoteles/intercontinental/359664047.jpg");
             Imagen interContinental8 = new Imagen("Imagen 8", "https://grupo1-digitalbooking-s3-images.s3.amazonaws.com/hoteles/intercontinental/419472171.jpg");
 
             //inineHours
-            Imagen nineHours1 = new Imagen("Imagen 1", "https://grupo1-digitalbooking-s3-images.s3.amazonaws.com/hostels/ninehours/247091310.jpg");
+            Imagen nineHours1 = new Imagen("Imagen 1", "https://grupo1-digitalbooking-s3-images.s3.amazonaws.com/hostels/ninehours/247091310.jpg", 1);
             Imagen nineHours2 = new Imagen("Imagen 2", "https://grupo1-digitalbooking-s3-images.s3.amazonaws.com/hostels/ninehours/249664182.jpg");
             Imagen nineHours3 = new Imagen("Imagen 3", "https://grupo1-digitalbooking-s3-images.s3.amazonaws.com/hostels/ninehours/249664193.jpg");
             Imagen nineHours4 = new Imagen("Imagen 4", "https://grupo1-digitalbooking-s3-images.s3.amazonaws.com/hostels/ninehours/249664204.jpg");
@@ -350,14 +365,14 @@ public class DigitalbookingApplication {
             Imagen mandarin3 = new Imagen("Imagen 3", "https://grupo1-digitalbooking-s3-images.s3.amazonaws.com/hoteles/mandarin/233112283.jpg");
             Imagen mandarin4 = new Imagen("Imagen 4", "https://grupo1-digitalbooking-s3-images.s3.amazonaws.com/hoteles/mandarin/233112480.jpg");
             Imagen mandarin5 = new Imagen("Imagen 5", "https://grupo1-digitalbooking-s3-images.s3.amazonaws.com/hoteles/mandarin/239889460.jpg");
-            Imagen mandarin6 = new Imagen("Imagen 6", "https://grupo1-digitalbooking-s3-images.s3.amazonaws.com/hoteles/mandarin/239899002.jpg");
+            Imagen mandarin6 = new Imagen("Imagen 6", "https://grupo1-digitalbooking-s3-images.s3.amazonaws.com/hoteles/mandarin/239899002.jpg", 1);
             Imagen mandarin7 = new Imagen("Imagen 7", "https://grupo1-digitalbooking-s3-images.s3.amazonaws.com/hoteles/mandarin/241804125.jpg");
             Imagen mandarin8 = new Imagen("Imagen 8", "https://grupo1-digitalbooking-s3-images.s3.amazonaws.com/hoteles/mandarin/250322928.jpg");
             Imagen mandarin9 = new Imagen("Imagen 9", "https://grupo1-digitalbooking-s3-images.s3.amazonaws.com/hoteles/mandarin/250323305.jpg");
 
 
             //iriari
-            Imagen riari1 = new Imagen("Imagen 1", "https://grupo1-digitalbooking-s3-images.s3.amazonaws.com/bedAndBreakfast/Riari/12923368.jpg");
+            Imagen riari1 = new Imagen("Imagen 1", "https://grupo1-digitalbooking-s3-images.s3.amazonaws.com/bedAndBreakfast/Riari/12923368.jpg", 1);
             Imagen riari2 = new Imagen("Imagen 2", "https://grupo1-digitalbooking-s3-images.s3.amazonaws.com/bedAndBreakfast/Riari/32212853.jpg");
             Imagen riari3 = new Imagen("Imagen 3", "https://grupo1-digitalbooking-s3-images.s3.amazonaws.com/bedAndBreakfast/Riari/32220044.jpg");
             Imagen riari4 = new Imagen("Imagen 4", "https://grupo1-digitalbooking-s3-images.s3.amazonaws.com/bedAndBreakfast/Riari/32220119.jpg");
@@ -375,7 +390,7 @@ public class DigitalbookingApplication {
             Imagen higashiGinza7 = new Imagen("Imagen 7", "https://grupo1-digitalbooking-s3-images.s3.amazonaws.com/hoteles/higashi/347374544.jpg");
             Imagen higashiGinza8 = new Imagen("Imagen 8", "https://grupo1-digitalbooking-s3-images.s3.amazonaws.com/hoteles/higashi/446039267.jpg");
             Imagen higashiGinza9 = new Imagen("Imagen 9", "https://grupo1-digitalbooking-s3-images.s3.amazonaws.com/hoteles/higashi/446039323.jpg");
-            Imagen higashiGinza10 = new Imagen("Imagen 10", "https://grupo1-digitalbooking-s3-images.s3.amazonaws.com/hoteles/higashi/446702783.jpg");
+            Imagen higashiGinza10 = new Imagen("Imagen 10", "https://grupo1-digitalbooking-s3-images.s3.amazonaws.com/hoteles/higashi/446702783.jpg", 1);
             Imagen higashiGinza11 = new Imagen("Imagen 10", "https://grupo1-digitalbooking-s3-images.s3.amazonaws.com/hoteles/higashi/446919588.jpg");
 
 
@@ -540,7 +555,7 @@ public class DigitalbookingApplication {
             zero.setPrecioPorNoche(new BigDecimal("39200.00"));
             zero.setCategoria(hostel);
             zero.setCiudad(barcelona);
-            zero.setCaracteristicas(caracteristicas3);
+            zero.setCaracteristicas(caracteristicas1);
             zero.setImagenes(izero);
             zero.setPoliticas(pzero);
             zero.setCoordenadas(zeroc);
@@ -557,10 +572,10 @@ public class DigitalbookingApplication {
                     "\n" +
                     "Nuestros clientes dicen que esta parte de Florencia es su favorita, según los comentarios independientes. ");
             antico.setDireccion("Via De' Brunelleschi, 5, Uffizi, 50122 Florencia, Italia");
-            antico.setPrecioPorNoche(new BigDecimal("46400.00"));
+            antico.setPrecioPorNoche(new BigDecimal("52000.00"));
             antico.setCategoria(bedAndBreakfast);
             antico.setCiudad(florencia);
-            antico.setCaracteristicas(caracteristicas3);
+            antico.setCaracteristicas(caracteristicas2);
             antico.setImagenes(iantico);
             antico.setPoliticas(pantico);
             antico.setCoordenadas(anticoc);
@@ -600,7 +615,7 @@ public class DigitalbookingApplication {
             leBatiment.setPrecioPorNoche(new BigDecimal("55675.00"));
             leBatiment.setCategoria(departamento);
             leBatiment.setCiudad(buenosaires);
-            leBatiment.setCaracteristicas(caracteristicas3);
+            leBatiment.setCaracteristicas(caracteristicas4);
             leBatiment.setImagenes(iLeBatiment);
             leBatiment.setPoliticas(pleBatiment);
             leBatiment.setCoordenadas(leBatimentc);
@@ -617,10 +632,10 @@ public class DigitalbookingApplication {
                     "\n" +
                     "El restaurante del establecimiento sirve una excelente selección de platos de cocina occidental y china.\n");
             hiltongarden.setDireccion("Sales Torres 98-1, Q8300ASV Neuquén");
-            hiltongarden.setPrecioPorNoche(new BigDecimal("520000.00"));
+            hiltongarden.setPrecioPorNoche(new BigDecimal("72500.00"));
             hiltongarden.setCategoria(hotel);
             hiltongarden.setCiudad(neuquen);
-            hiltongarden.setCaracteristicas(caracteristicas3);
+            hiltongarden.setCaracteristicas(caracteristicas5);
             hiltongarden.setImagenes(ihiltongarden);
             hiltongarden.setPoliticas(philtongarden);
             hiltongarden.setCoordenadas(hiltongardenc);
@@ -634,7 +649,7 @@ public class DigitalbookingApplication {
             laBrisa.setPrecioPorNoche(new BigDecimal("36000.00"));
             laBrisa.setCategoria(hostel);
             laBrisa.setCiudad(santaMa);
-            laBrisa.setCaracteristicas(caracteristicas2);
+            laBrisa.setCaracteristicas(caracteristicas6);
             laBrisa.setImagenes(ilaBrisa);
             laBrisa.setPoliticas(plaBrisa);
             laBrisa.setCoordenadas(laBrisaLocaHostel);
@@ -655,7 +670,7 @@ public class DigitalbookingApplication {
                     "\n" +
                     "El apartamento está a 4,4 km del Museo Vizcaya y a 5,7 km de la Universidad de Miami. El aeropuerto más cercano es el aeropuerto internacional de Miami, ubicado a 10 km del iCoconutGrove - Luxurious Vacation Rentals in Coconut Grove. ");
             nuovoMiami.setDireccion("2889 McFarlane Rd, Coconut Grove, Miami, FL");
-            nuovoMiami.setPrecioPorNoche(new BigDecimal("360000.00"));
+            nuovoMiami.setPrecioPorNoche(new BigDecimal("58200.00"));
             nuovoMiami.setCategoria(hotel);
             nuovoMiami.setCiudad(miami);
             nuovoMiami.setCaracteristicas(caracteristicas1);
@@ -677,7 +692,7 @@ public class DigitalbookingApplication {
                     "\n" +
                     "El Urbany Hostel está situado a 5 minutos a pie del centro comercial Glòries y a 15 minutos a pie de la Sagrada Familia de Gaudí. Asimismo, el establecimiento se halla a 15 minutos en metro o en autobús del centro de la ciudad y a 2 km de la playa.\n");
             urbanyHostel.setDireccion("Avenida Meridiana, 97, Sant Martí, 08026 Barcelona, España");
-            urbanyHostel.setPrecioPorNoche(new BigDecimal("36000.00"));
+            urbanyHostel.setPrecioPorNoche(new BigDecimal("23700.00"));
             urbanyHostel.setCategoria(hostel);
             urbanyHostel.setCiudad(barcelona);
             urbanyHostel.setCaracteristicas(caracteristicas2);
@@ -695,7 +710,7 @@ public class DigitalbookingApplication {
                     "\n" +
                     "El almuerzo y la cena se pueden disfrutar en un hotel asociado, situado a 60 metros del Villa D'Este Hotel.");
             villadEste.setDireccion("Via Giuseppe Parini 9, 34073 Grado, Italia");
-            villadEste.setPrecioPorNoche(new BigDecimal("380500.00"));
+            villadEste.setPrecioPorNoche(new BigDecimal("38050.00"));
             villadEste.setCategoria(hotel);
             villadEste.setCiudad(grado);
             villadEste.setCaracteristicas(caracteristicas3);
@@ -715,10 +730,10 @@ public class DigitalbookingApplication {
                     "\n" +
                     "La estación de autobuses de El Calafate se encuentra a 8,1 km de la posada, mientras que las ruinas de Puerto Irma están a 20 km. El aeropuerto más cercano es el aeropuerto internacional Comandante Armando Tola, ubicado a 27 km de la Hostería La Soberana.\n");
             laSoberanaHosteria.setDireccion("Calle 218 N° 347, 9405 El Calafate, Argentina");
-            laSoberanaHosteria.setPrecioPorNoche(new BigDecimal("380500.00"));
+            laSoberanaHosteria.setPrecioPorNoche(new BigDecimal("38100.00"));
             laSoberanaHosteria.setCategoria(bedAndBreakfast);
             laSoberanaHosteria.setCiudad(elCalafate);
-            laSoberanaHosteria.setCaracteristicas(caracteristicas1);
+            laSoberanaHosteria.setCaracteristicas(caracteristicas4);
             laSoberanaHosteria.setImagenes(ilaSoberanaHosteria);
             laSoberanaHosteria.setPoliticas(plaSoberanaHosteria);
             laSoberanaHosteria.setCoordenadas(laSoberanaHosteriac);
@@ -738,7 +753,7 @@ public class DigitalbookingApplication {
             utaka.setPrecioPorNoche(new BigDecimal("19515.00"));
             utaka.setCategoria(departamento);
             utaka.setCiudad(ushuaia);
-            utaka.setCaracteristicas(caracteristicas3);
+            utaka.setCaracteristicas(caracteristicas5);
             utaka.setImagenes(iutaka);
             utaka.setPoliticas(putaka);
             utaka.setCoordenadas(utakac);
@@ -758,7 +773,7 @@ public class DigitalbookingApplication {
             orillaMansa.setPrecioPorNoche(new BigDecimal("24286.00"));
             orillaMansa.setCategoria(departamento);
             orillaMansa.setCiudad(sanMartindelosAndes);
-            orillaMansa.setCaracteristicas(caracteristicas2);
+            orillaMansa.setCaracteristicas(caracteristicas6);
             orillaMansa.setImagenes(iorillaMansa);
             orillaMansa.setPoliticas(porillaMansa);
             orillaMansa.setCoordenadas(orillaMansac);
@@ -796,10 +811,10 @@ public class DigitalbookingApplication {
                             "\n" +
                             "A 1 km del establecimiento hay bares, tiendas y restaurantes. La terminal de autobuses de Búzios está a 1 km de la Bonfim Pousada y el aeropuerto de Cabo Frio, a 34 km.\n");
             pousadaBonfim.setDireccion("Rua Agripino de Souza, 166, Ossos, Búzios, CEP 28950-000, Brasil");
-            pousadaBonfim.setPrecioPorNoche(new BigDecimal("133450.00"));
+            pousadaBonfim.setPrecioPorNoche(new BigDecimal("39500.00"));
             pousadaBonfim.setCategoria(bedAndBreakfast);
             pousadaBonfim.setCiudad(buzios);
-            pousadaBonfim.setCaracteristicas(caracteristicas3);
+            pousadaBonfim.setCaracteristicas(caracteristicas2);
             pousadaBonfim.setImagenes(ipousadaBonfim);
             pousadaBonfim.setPoliticas(ppousadaBonfim);
             pousadaBonfim.setCoordenadas(pousadaBonfimc);
@@ -810,10 +825,10 @@ public class DigitalbookingApplication {
             nacionaldeCuba.setTituloDescripcion("Nostalgia isleña con arquitectura colonial");
             nacionaldeCuba.setDescripcion("La arquitectura colonial española en el centro de la Habana Vieja del siglo XVI incluye el Castillo de la Fuerza Real, un fuerte y un museo marítimo. El edificio del Capitolio Nacional es un monumento icónico de la década de 1920. En la Habana Vieja también se encuentra la catedral barroca de San Cristóbal y la Plaza Vieja, cuyos edificios reflejan la dinámica mezcla arquitectónica de la ciudad.");
             nacionaldeCuba.setDireccion("Calle O Esq. 21, Vedado. La Habana, Cuba");
-            nacionaldeCuba.setPrecioPorNoche(new BigDecimal("360000.00"));
+            nacionaldeCuba.setPrecioPorNoche(new BigDecimal("36000.00"));
             nacionaldeCuba.setCategoria(hotel);
             nacionaldeCuba.setCiudad(laHabana);
-            nacionaldeCuba.setCaracteristicas(caracteristicas2);
+            nacionaldeCuba.setCaracteristicas(caracteristicas3);
             nacionaldeCuba.setImagenes(inacionaldeCuba);
             nacionaldeCuba.setPoliticas(pnacionaldeCuba);
             nacionaldeCuba.setCoordenadas(nacionaldeCubac);
@@ -837,7 +852,7 @@ public class DigitalbookingApplication {
             interContinental.setPrecioPorNoche(new BigDecimal("88113.00"));
             interContinental.setCategoria(hotel);
             interContinental.setCiudad(newyork);
-            interContinental.setCaracteristicas(caracteristicas1);
+            interContinental.setCaracteristicas(caracteristicas4);
             interContinental.setImagenes(iinterContinental);
             interContinental.setPoliticas(pnacionaldeCuba);
             interContinental.setCoordenadas(interContinentalc);
@@ -850,10 +865,10 @@ public class DigitalbookingApplication {
                     "\n" +
                     "Cerca del hotel cápsula hay varios lugares de interés, como el Museo de Arte del Centro de la Amistad de Japón-China, el Museo y Salón de la Fama del Béisbol y el centro comercial Ramla. El nine hours Suidobashi se halla a 16 km del aeropuerto internacional de Tokio-Haneda, el más cercano. ");
             nineHours.setDireccion("100-8283 Tokio, Chiyoda-ku, Marunouchi Trust Tower Main, 1-8-3 Marunouchi,Japón");
-            nineHours.setPrecioPorNoche(new BigDecimal("323124.00"));
+            nineHours.setPrecioPorNoche(new BigDecimal("11200.00"));
             nineHours.setCategoria(hostel);
             nineHours.setCiudad(tokio);
-            nineHours.setCaracteristicas(caracteristicas2);
+            nineHours.setCaracteristicas(caracteristicas5);
             nineHours.setImagenes(ininehours);
             nineHours.setPoliticas(pnineHours);
             nineHours.setCoordenadas(nineHoursc);
@@ -874,10 +889,10 @@ public class DigitalbookingApplication {
                     "\n" +
                     "El establecimiento está cerca de varios lugares de interés, como el Museo Samurai, el parque Okubo y el santuario de Inari. El aeropuerto internacional de Tokio Haneda es el más cercano y queda a 17 km del APA Hotel Higashi Shinjuku Kabukicho Tower.\n");
             apaTokio.setDireccion("160-0021 Prefectura de Tokio, Shinjuku-ku Kabukicho 2-31-12, Japón ");
-            apaTokio.setPrecioPorNoche(new BigDecimal("88657.00"));
+            apaTokio.setPrecioPorNoche(new BigDecimal("71700.00"));
             apaTokio.setCategoria(hotel);
             apaTokio.setCiudad(tokio);
-            apaTokio.setCaracteristicas(caracteristicas2);
+            apaTokio.setCaracteristicas(caracteristicas6);
             apaTokio.setImagenes(iapaTokio);
             apaTokio.setPoliticas(papaTokio);
             apaTokio.setCoordenadas(apaTokioc);
@@ -896,10 +911,10 @@ public class DigitalbookingApplication {
                     "\n" +
                     "El Hotel Washington Akihabara está a 25 minutos en coche del parque temático Tokyo Disneyland. Queda a 19 km del aeropuerto de Haneda.\n");
             akihabara.setDireccion("160-0021 Prefectura de Tokio, Shinjuku-ku Kabukicho 2-31-12, Japón ");
-            akihabara.setPrecioPorNoche(new BigDecimal("88657.00"));
+            akihabara.setPrecioPorNoche(new BigDecimal("62600.00"));
             akihabara.setCategoria(hotel);
             akihabara.setCiudad(tokio);
-            akihabara.setCaracteristicas(caracteristicas2);
+            akihabara.setCaracteristicas(caracteristicas1);
             akihabara.setImagenes(iakihabara);
             akihabara.setPoliticas(pakihabara);
             akihabara.setCoordenadas(akihabarac);
@@ -920,7 +935,7 @@ public class DigitalbookingApplication {
                     "\n" +
                     "El Cerulean Tower Tokyu Hotel cuenta con 8 restaurantes que sirven cocina japonesa, china y francesa. El bar de la última planta, el Garden Lounge y el Jazz Club sirven bebidas.\n");
             cerulean.setDireccion("150-8512 Prefectura de Tokio, Shibuya-ku, Sakuragaokacho 26-1, Japón ");
-            cerulean.setPrecioPorNoche(new BigDecimal("88657.00"));
+            cerulean.setPrecioPorNoche(new BigDecimal("90200.00"));
             cerulean.setCategoria(hotel);
             cerulean.setCiudad(tokio);
             cerulean.setCaracteristicas(caracteristicas2);
@@ -940,10 +955,10 @@ public class DigitalbookingApplication {
                     "Las habitaciones del Mandarin Oriental, Tokyo disponen de ventanales con un diseño elegante inspirado en la estética japonesa. Además, incluyen una amplia variedad de comodidades modernas como TV de pantalla plana con canales vía satélite. Todas las habitaciones tienen sofá, zona de estar con escritorio y baño con bañera grande y ducha independiente."
             );
             mandarin.setDireccion("103-8328 Prefectura de Tokio, Chuo-ku Nihonbashi Muromachi 2-1-1, Japón");
-            mandarin.setPrecioPorNoche(new BigDecimal("839552.00"));
+            mandarin.setPrecioPorNoche(new BigDecimal("83950.00"));
             mandarin.setCategoria(hotel);
             mandarin.setCiudad(tokio);
-            mandarin.setCaracteristicas(caracteristicas2);
+            mandarin.setCaracteristicas(caracteristicas3);
             mandarin.setImagenes(imandarin);
             mandarin.setPoliticas(pmandarin);
             mandarin.setCoordenadas(mandarinc);
@@ -966,7 +981,7 @@ public class DigitalbookingApplication {
             higashiGinza.setPrecioPorNoche(new BigDecimal("95800.00"));
             higashiGinza.setCategoria(hotel);
             higashiGinza.setCiudad(tokio);
-            higashiGinza.setCaracteristicas(caracteristicas2);
+            higashiGinza.setCaracteristicas(caracteristicas4);
             higashiGinza.setImagenes(ihigashiGinza);
             higashiGinza.setPoliticas(phigashiGinza);
             higashiGinza.setCoordenadas(higashiGinzac);
