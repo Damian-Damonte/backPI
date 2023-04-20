@@ -320,9 +320,17 @@ public class DigitalbookingApplication {
             //nacionalDeCuba
             Imagen nacionaldeCuba1 = new Imagen("Imagen 1", "https://grupo1-digitalbooking-s3-images.s3.amazonaws.com/hoteles/Nacional/182553824.jpg");
             Imagen nacionaldeCuba2 = new Imagen("Imagen 2", "https://grupo1-digitalbooking-s3-images.s3.amazonaws.com/hoteles/Nacional/182574494.jpg");
-            Imagen nacionaldeCuba3 = new Imagen("Imagen 3", "https://grupo1-digitalbooking-s3-images.s3.amazonaws.com/hoteles/Nacional/400798721.jpg", 1);
-            Imagen nacionaldeCuba4 = new Imagen("Imagen 4", "https://grupo1-digitalbooking-s3-images.s3.amazonaws.com/hoteles/Nacional/400802292.jpg");
+            Imagen nacionaldeCuba3 = new Imagen("Imagen 3", "https://grupo1-digitalbooking-s3-images.s3.amazonaws.com/hoteles/Nacional/400798721.jpg");
+            Imagen nacionaldeCuba4 = new Imagen("Imagen 4", "https://grupo1-digitalbooking-s3-images.s3.amazonaws.com/hoteles/Nacional/400802292.jpg", 1);
             Imagen nacionaldeCuba5 = new Imagen("Imagen 5", "https://grupo1-digitalbooking-s3-images.s3.amazonaws.com/hoteles/Nacional/400802332.jpg");
+
+            //sanRemo
+            Imagen sanRemo1 = new Imagen("Imagen 1", "https://grupo1-digitalbooking-s3-images.s3.amazonaws.com/hoteles/Nacional/182553824.jpg");
+            Imagen sanRemo2 = new Imagen("Imagen 2", "https://grupo1-digitalbooking-s3-images.s3.amazonaws.com/hoteles/Nacional/182574494.jpg");
+            Imagen sanRemo3 = new Imagen("Imagen 3", "https://grupo1-digitalbooking-s3-images.s3.amazonaws.com/hoteles/Nacional/400798721.jpg", 1);
+            Imagen sanRemo4 = new Imagen("Imagen 4", "https://grupo1-digitalbooking-s3-images.s3.amazonaws.com/hoteles/Nacional/400802292.jpg");
+            Imagen sanRemo5 = new Imagen("Imagen 5", "https://grupo1-digitalbooking-s3-images.s3.amazonaws.com/hoteles/Nacional/400802332.jpg");
+
 
             //interContinental
             Imagen interContinental1 = new Imagen("Imagen 1", "https://grupo1-digitalbooking-s3-images.s3.amazonaws.com/hoteles/intercontinental/260331427.jpg");
@@ -333,6 +341,17 @@ public class DigitalbookingApplication {
             Imagen interContinental6 = new Imagen("Imagen 6", "https://grupo1-digitalbooking-s3-images.s3.amazonaws.com/hoteles/intercontinental/341466875.jpg");
             Imagen interContinental7 = new Imagen("Imagen 7", "https://grupo1-digitalbooking-s3-images.s3.amazonaws.com/hoteles/intercontinental/359664047.jpg");
             Imagen interContinental8 = new Imagen("Imagen 8", "https://grupo1-digitalbooking-s3-images.s3.amazonaws.com/hoteles/intercontinental/419472171.jpg");
+
+            // fonteArcada
+            Imagen fonteArcada1 = new Imagen("Imagen 1", "https://grupo1-digitalbooking-s3-images.s3.amazonaws.com/hoteles/intercontinental/260331427.jpg");
+            Imagen fonteArcada2 = new Imagen("Imagen 2", "https://grupo1-digitalbooking-s3-images.s3.amazonaws.com/hoteles/intercontinental/341425558.jpg", 1);
+            Imagen fonteArcada3 = new Imagen("Imagen 3", "https://grupo1-digitalbooking-s3-images.s3.amazonaws.com/hoteles/intercontinental/341436162.jpg");
+            Imagen fonteArcada4 = new Imagen("Imagen 4", "https://grupo1-digitalbooking-s3-images.s3.amazonaws.com/hoteles/intercontinental/341439879.jpg");
+            Imagen fonteArcada5 = new Imagen("Imagen 5", "https://grupo1-digitalbooking-s3-images.s3.amazonaws.com/hoteles/intercontinental/341466879.jpg");
+            Imagen fonteArcada6 = new Imagen("Imagen 6", "https://grupo1-digitalbooking-s3-images.s3.amazonaws.com/hoteles/intercontinental/341466875.jpg");
+            Imagen fonteArcada7 = new Imagen("Imagen 7", "https://grupo1-digitalbooking-s3-images.s3.amazonaws.com/hoteles/intercontinental/359664047.jpg");
+            Imagen fonteArcada8 = new Imagen("Imagen 8", "https://grupo1-digitalbooking-s3-images.s3.amazonaws.com/hoteles/intercontinental/419472171.jpg");
+
 
             //inineHours
             Imagen nineHours1 = new Imagen("Imagen 1", "https://grupo1-digitalbooking-s3-images.s3.amazonaws.com/hostels/ninehours/247091310.jpg", 1);
@@ -409,7 +428,9 @@ public class DigitalbookingApplication {
             Set<Imagen> ilaReservaVirginLodge= new HashSet<>(Set.of(laReservaVirginLodge1, laReservaVirginLodge2, laReservaVirginLodge3, laReservaVirginLodge4, laReservaVirginLodge5, laReservaVirginLodge6, laReservaVirginLodge7, laReservaVirginLodge8, laReservaVirginLodge9, laReservaVirginLodge10));
             Set<Imagen> ipousadaBonfim= new HashSet<>(Set.of(bonFim1, bonFim2, bonFim3, bonFim4, bonFim5));
             Set<Imagen> inacionaldeCuba= new HashSet<>(Set.of(nacionaldeCuba1, nacionaldeCuba2, nacionaldeCuba3, nacionaldeCuba4, nacionaldeCuba5));
+            Set<Imagen> isanRemo= new HashSet<>(Set.of(sanRemo1, sanRemo2, sanRemo3, sanRemo4, sanRemo5));
             Set<Imagen> iinterContinental= new HashSet<>(Set.of(interContinental1, interContinental2, interContinental3, interContinental4, interContinental5, interContinental6, interContinental7, interContinental8));
+            Set<Imagen> ifonteArcada= new HashSet<>(Set.of(fonteArcada1, fonteArcada2, fonteArcada3, fonteArcada4, fonteArcada5, fonteArcada6, fonteArcada7, fonteArcada8));
             Set<Imagen> ininehours= new HashSet<>(Set.of(nineHours1, nineHours2, nineHours3, nineHours4, nineHours5, nineHours6, nineHours7, nineHours8, nineHours9, nineHours10));
             Set<Imagen> izero= new HashSet<>(Set.of(zero1, zero2, zero3, zero4, zero5, zero6, zero7, zero8, zero9, zero10));
             Set<Imagen> iapaTokio= new HashSet<>(Set.of(apaTokio1, apaTokio2, apaTokio3, apaTokio4, apaTokio5, apaTokio6, apaTokio7, apaTokio8, apaTokio9, apaTokio10));
@@ -542,7 +563,7 @@ public class DigitalbookingApplication {
 
 
             Producto zero = new Producto();
-            zero.setTitulo("Hotel SB Diagonal Zero Barcelona");
+            zero.setTitulo("Hostel SB Diagonal Zero Barcelona");
             zero.setTituloDescripcion("Alojate en el corazón de Florencia");
             zero.setDescripcion("El Hotel SB Diagonal Zero Barcelona se encuentra en Barcelona, frente al centro internacional de convenciones y el Auditori Fòrum. Cuenta con spa, centro de fitness, piscina panorámica de temporada y solárium en la azotea.\n" +
                     "\n" +
@@ -560,6 +581,25 @@ public class DigitalbookingApplication {
             zero.setPoliticas(pzero);
             zero.setCoordenadas(zeroc);
             productoServiceImp.saveProducto(zero);
+
+            Producto sanRemo = new Producto();
+            sanRemo.setTitulo("Hostel San Remo Palace");
+            sanRemo.setTituloDescripcion("Hostel super comodo");
+            sanRemo.setDescripcion("El San Remo Palace Hotel se encuentra en la ciudad histórica de Villa Gesell y ofrece piscina climatizada cubierta y servicios de lujo. El establecimiento está cerca de la playa y tiene habitaciones con TV con canales por cable. Hay WiFi gratuita en las zonas comunes.\n" +
+                    "\n" +
+                    "El centro de fitness es de acceso gratuito. El acceso al spa es solo para mayores de 14 años e incluye baño turco y sauna finlandesa. Se ofrecen tratamientos de belleza y masajes por un suplemento.\n" +
+                    "\n" +
+                    "Los huéspedes disponen de utensilios de planchado, set de té y café, hervidor de agua, sistema de pantalla táctil para regular la luz y la temperatura, y baño privado con secador de pelo. Se facilitan albornoces y zapatillas bajo petición.");
+            sanRemo.setDireccion("Alameda 203 Nº 22, B7165JHB Buenos Aires, Argentina");
+            sanRemo.setPrecioPorNoche(new BigDecimal("21200.00"));
+            sanRemo.setCategoria(hostel);
+            sanRemo.setCiudad(buenosaires);
+            sanRemo.setCaracteristicas(caracteristicas2);
+            sanRemo.setImagenes(isanRemo);
+            sanRemo.setPoliticas(pzero);
+            sanRemo.setCoordenadas(zeroc);
+            productoServiceImp.saveProducto(sanRemo);
+
 
             Producto antico = new Producto();
             antico.setTitulo("L'antica Locanda Dell'Orso");
@@ -858,6 +898,30 @@ public class DigitalbookingApplication {
             interContinental.setCoordenadas(interContinentalc);
             productoServiceImp.saveProducto(interContinental);
 
+            Producto fonteArcada  = new Producto();
+            fonteArcada.setTitulo("Departamento Fonte Arcada");
+            fonteArcada.setTituloDescripcion("Ambiente acogedor con vistas a la ciudad");
+            fonteArcada.setDescripcion(
+
+                    "El Fonte Arcada ofrece una piscina al aire libre/cubierta e instalaciones de spa en el centro de Villa Gesell, a solo 100 metros de la playa. Hay WiFi gratis.\n" +
+                    "\n" +
+                    "Todas las habitaciones tienen TV de pantalla plana, amplia zona de trabajo, baño inspirado en un spa con ducha de efecto lluvia a ras de suelo, cafetera, minibar y secador de pelo.\n" +
+                    "\n" +
+                    "En la 3ª planta del Intercontinental se encuentra un gimnasio abierto las 24 horas, que ofrece vistas a 44th Street y cuenta con cintas de correr y pesas libres.\n" +
+                    "\n" +
+                    "El InterContinental está a 37 metros de una parada de subte y a 322 metros de Times Square. En los alrededores hay teatros, comercios y restaurantes.\n" +
+                    "\n" +
+                    "El Stinger Cocktail Bar & Kitchen ofrece un ambiente animado, cócteles artesanales y un menú a la carta. El ambiente acogedor y las deliciosas bebidas son el lugar perfecto para disfrutar del final de la noche.\n");
+            fonteArcada.setDireccion("300 West 44th Street, Midtown West, Nueva York, NY");
+            fonteArcada.setPrecioPorNoche(new BigDecimal("88113.00"));
+            fonteArcada.setCategoria(departamento);
+            fonteArcada.setCiudad(newyork);
+            fonteArcada.setCaracteristicas(caracteristicas4);
+            fonteArcada.setImagenes(ifonteArcada);
+            fonteArcada.setPoliticas(pnacionaldeCuba);
+            fonteArcada.setCoordenadas(interContinentalc);
+            productoServiceImp.saveProducto(fonteArcada);
+
             Producto nineHours  = new Producto();
             nineHours.setTitulo("Nine Hours Shinjuku-North");
             nineHours.setTituloDescripcion("Alojate en el corazón de Tokio");
@@ -1030,6 +1094,12 @@ public class DigitalbookingApplication {
             puntuacionInterContinental.setUsuario(usuarioAdmin);
             puntuacionServiceImp.savePuntuacion(puntuacionInterContinental, userDetailsDtoAdmin);
 
+            Puntuacion puntuacionInterFonteArcada = new Puntuacion();
+            puntuacionInterFonteArcada.setValor(3);
+            puntuacionInterFonteArcada.setProducto(fonteArcada);
+            puntuacionInterFonteArcada.setUsuario(usuarioAdmin);
+            puntuacionServiceImp.savePuntuacion(puntuacionInterFonteArcada, userDetailsDtoAdmin);
+
             Puntuacion puntuacionapaTokio = new Puntuacion();
             puntuacionapaTokio.setValor(4);
             puntuacionapaTokio.setProducto(apaTokio);
@@ -1086,6 +1156,12 @@ public class DigitalbookingApplication {
             puntuacionZero.setProducto(zero);
             puntuacionZero.setUsuario(usuarioAdmin);
             puntuacionServiceImp.savePuntuacion(puntuacionZero, userDetailsDtoAdmin);
+
+            Puntuacion puntuacionSanRemo = new Puntuacion();
+            puntuacionSanRemo.setValor(4);
+            puntuacionSanRemo.setProducto(sanRemo);
+            puntuacionSanRemo.setUsuario(usuarioAdmin);
+            puntuacionServiceImp.savePuntuacion(puntuacionSanRemo, userDetailsDtoAdmin);
 
 //			putuaciones departamentos
             Puntuacion puntuacionUtaka = new Puntuacion();
