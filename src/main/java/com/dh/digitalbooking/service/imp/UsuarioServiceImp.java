@@ -4,7 +4,7 @@ import com.dh.digitalbooking.dto.FavoritoDto;
 import com.dh.digitalbooking.dto.UserDetailsDto;
 import com.dh.digitalbooking.dto.UsuarioRequestDto;
 import com.dh.digitalbooking.dto.UsuarioResponseDto;
-import com.dh.digitalbooking.dtoMapper.UsuarioResponseDtoMapper;
+import com.dh.digitalbooking.mapper.UsuarioResponseDtoMapper;
 import com.dh.digitalbooking.exception.BadRequestException;
 import com.dh.digitalbooking.exception.NotFoundException;
 import com.dh.digitalbooking.entity.Producto;

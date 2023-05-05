@@ -1,8 +1,10 @@
 package com.dh.digitalbooking.service.imp;
 
+import com.dh.digitalbooking.dto.pais.PaisDTO;
 import com.dh.digitalbooking.exception.BadRequestException;
 import com.dh.digitalbooking.exception.NotFoundException;
 import com.dh.digitalbooking.entity.Pais;
+import com.dh.digitalbooking.mapper.PaisMapper;
 import com.dh.digitalbooking.repository.PaisRepository;
 import com.dh.digitalbooking.service.PaisService;
 import org.springframework.stereotype.Service;
@@ -12,29 +14,32 @@ import java.util.List;
 public class PaisServiceImp implements PaisService {
 
     private final PaisRepository paisRepository;
+    private final PaisMapper paisMapper;
 
-    public PaisServiceImp(PaisRepository paisRepository) {
+    public PaisServiceImp(PaisRepository paisRepository, PaisMapper paisMapper) {
         this.paisRepository = paisRepository;
+        this.paisMapper = paisMapper;
     }
 
     @Override
-    public List<Pais> allPais() {
-        return paisRepository.findAll();
+    public List<PaisDTO> allPais() {
+        return paisMapper.listPaisToPaisDTO(paisRepository.findAll());
     }
 
     @Override
-    public Pais getByIdPais(Long id) {
-        return existByIdValidation(id);
+    public PaisDTO getByIdPais(Long id) {
+        return paisMapper.paisToPaisDTO(existByIdValidation(id));
     }
 
     @Override
-    public Pais savePais(Pais pais) {
+    public PaisDTO savePais(PaisDTO paisDTO) {
+        Pais pais = paisMapper.paisDTOtoPais(paisDTO);
         String nombre = pais.getNombre();
         emptyNombreValidation(nombre);
         if(paisRepository.findByNombre(nombre).isPresent())
             throw new BadRequestException("Ya existe un pais con el nombre '" + nombre + "'");
 
-        return paisRepository.save(pais);
+        return paisMapper.paisToPaisDTO(paisRepository.save(pais));
     }
 
     @Override
@@ -47,9 +52,10 @@ public class PaisServiceImp implements PaisService {
     }
 
     @Override
-    public Pais updatePais(Pais updatePais) {
-        Long id = updatePais.getId();
-        String nombre = updatePais.getNombre();
+    public PaisDTO updatePais(PaisDTO paisDTO) {
+        Pais pais = paisMapper.paisDTOtoPais(paisDTO);
+        Long id = pais.getId();
+        String nombre = pais.getNombre();
 
         emptyNombreValidation(nombre);
         existByIdValidation(id);
@@ -58,7 +64,7 @@ public class PaisServiceImp implements PaisService {
         if(paisByNombre != null && !(paisByNombre.getId().equals(id)))
             throw new BadRequestException("Ya existe un pais con el nombre '" + nombre + "'");
 
-        return paisRepository.save(updatePais);
+        return paisMapper.paisToPaisDTO(paisRepository.save(pais));
     }
 
     public Pais existByIdValidation(Long id) {

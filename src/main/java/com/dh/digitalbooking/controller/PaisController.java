@@ -1,6 +1,8 @@
 package com.dh.digitalbooking.controller;
 
+import com.dh.digitalbooking.dto.pais.PaisDTO;
 import com.dh.digitalbooking.entity.Pais;
+import com.dh.digitalbooking.mapper.PaisMapper;
 import com.dh.digitalbooking.service.imp.PaisServiceImp;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
@@ -18,18 +20,18 @@ public class PaisController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Pais>> getAll() {
+    public ResponseEntity<List<PaisDTO>> getAll() {
         return ResponseEntity.ok(paisServiceImp.allPais());
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Pais> getById(@PathVariable("id") Long id) {
+    public ResponseEntity<PaisDTO> getById(@PathVariable("id") Long id) {
         return ResponseEntity.ok(paisServiceImp.getByIdPais(id));
     }
 
     @PostMapping
-    public ResponseEntity<Pais> savePais(@RequestBody @Valid Pais pais) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(paisServiceImp.savePais(pais));
+    public ResponseEntity<PaisDTO> savePais(@RequestBody @Valid PaisDTO PaisDTO) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(paisServiceImp.savePais(PaisDTO));
     }
 
     @DeleteMapping("/{id}")
@@ -39,7 +41,7 @@ public class PaisController {
     }
 
     @PutMapping
-    public ResponseEntity<Pais> updatePais(@RequestBody @Valid Pais pais) {
-        return ResponseEntity.ok(paisServiceImp.updatePais(pais));
+    public ResponseEntity<PaisDTO> updatePais(@RequestBody @Valid PaisDTO PaisDTO) {
+        return ResponseEntity.ok(paisServiceImp.updatePais(PaisDTO));
     }
 }

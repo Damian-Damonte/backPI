@@ -1,4 +1,4 @@
-package com.dh.digitalbooking.dtoMapper;
+package com.dh.digitalbooking.mapper;
 
 import com.dh.digitalbooking.dto.UsuarioResponseDto;
 import com.dh.digitalbooking.entity.Usuario;

@@ -20,8 +20,6 @@ public class Pais {
     @Column(name = "id", updatable = false)
     private Long id;
     @Column(name = "nombre", nullable = false)
-    @NotNull(message = "El pais debe contener un nombre")
-    @Size(max = 45, message = "El nombre del pais no debe tener mas de 45 caracteres")
     private String nombre;
 
     @OneToMany(mappedBy = "pais")

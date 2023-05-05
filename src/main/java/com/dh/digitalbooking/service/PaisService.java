@@ -1,12 +1,12 @@
 package com.dh.digitalbooking.service;
 
-import com.dh.digitalbooking.entity.Pais;
+import com.dh.digitalbooking.dto.pais.PaisDTO;
 import java.util.List;
 
 public interface PaisService {
-    List<Pais> allPais();
-    Pais getByIdPais(Long id);
-    Pais savePais(Pais pais);
+    List<PaisDTO> allPais();
+    PaisDTO getByIdPais(Long id);
+    PaisDTO savePais(PaisDTO pais);
     void deletePais(Long id);
-    Pais updatePais(Pais pais);
+    PaisDTO updatePais(PaisDTO pais);
 }
