@@ -2,7 +2,7 @@ package com.dh.digitalbooking.service;
 
 import com.dh.digitalbooking.dto.ProductPageDto;
 import com.dh.digitalbooking.dto.ProductoFilterRequest;
-import com.dh.digitalbooking.model.Producto;
+import com.dh.digitalbooking.entity.Producto;
 import org.springframework.data.domain.Page;
 
 import java.util.List;

@@ -1,6 +1,6 @@
 package com.dh.digitalbooking.service;
 
-import com.dh.digitalbooking.model.Pais;
+import com.dh.digitalbooking.entity.Pais;
 import java.util.List;
 
 public interface PaisService {

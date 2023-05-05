@@ -1,6 +1,6 @@
 package com.dh.digitalbooking.controller;
 
-import com.dh.digitalbooking.model.TipoPolitica;
+import com.dh.digitalbooking.entity.TipoPolitica;
 import com.dh.digitalbooking.service.imp.TipoPoliticaServiceImp;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

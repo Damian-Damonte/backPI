@@ -1,4 +1,4 @@
-package com.dh.digitalbooking.model;
+package com.dh.digitalbooking.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;

@@ -1,11 +1,12 @@
 package com.dh.digitalbooking;
 
 import com.dh.digitalbooking.dto.UserDetailsDto;
-import com.dh.digitalbooking.model.*;
+import com.dh.digitalbooking.entity.*;
 import com.dh.digitalbooking.repository.*;
 import com.dh.digitalbooking.service.imp.CategoriaServiceImp;
 import com.dh.digitalbooking.service.imp.ProductoServiceImp;
 import com.dh.digitalbooking.service.imp.PuntuacionServiceImp;
+import com.dh.digitalbooking.service.imp.ReservaServiceImp;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -13,6 +14,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -34,7 +37,8 @@ public class DigitalbookingApplication {
             RoleRepository roleRepository,
             UsuarioRepository usuarioRepository,
             PasswordEncoder passwordEncoder,
-            PuntuacionServiceImp puntuacionServiceImp
+            PuntuacionServiceImp puntuacionServiceImp,
+            ReservaServiceImp reservaServiceImp
     ) {
         return args -> {
             Rol rolUser = roleRepository.save(new Rol("ROLE_USER"));
@@ -192,6 +196,17 @@ public class DigitalbookingApplication {
             puntuacionProducto1.setProducto(producto1);
             puntuacionProducto1.setUsuario(usuarioAdmin);
             puntuacionServiceImp.savePuntuacion(puntuacionProducto1, userDetailsDtoAdmin);
+
+            Reserva reserva1 = new Reserva();
+            reserva1.setCheckIn(LocalDate.of(2023, 6, 22));
+            reserva1.setCheckOut(LocalDate.of(2023, 6, 25));
+            reserva1.setHoraLlegada(LocalTime.now());
+            reserva1.setCiudadUsuario("Buenos aires");
+            reserva1.setUsuario(usuarioAdmin);
+            reserva1.setProducto(producto1);
+            reservaServiceImp.saveReserva(reserva1, userDetailsDtoAdmin);
+
+
         };
     }
 }

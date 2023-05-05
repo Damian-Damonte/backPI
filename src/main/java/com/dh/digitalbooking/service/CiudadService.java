@@ -1,6 +1,6 @@
 package com.dh.digitalbooking.service;
 
-import com.dh.digitalbooking.model.Ciudad;
+import com.dh.digitalbooking.entity.Ciudad;
 import org.springframework.stereotype.Repository;
 import java.util.List;
 

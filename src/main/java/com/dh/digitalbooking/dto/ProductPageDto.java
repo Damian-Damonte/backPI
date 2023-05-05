@@ -1,6 +1,6 @@
 package com.dh.digitalbooking.dto;
 
-import com.dh.digitalbooking.model.Producto;
+import com.dh.digitalbooking.entity.Producto;
 
 import java.util.ArrayList;
 import java.util.List;

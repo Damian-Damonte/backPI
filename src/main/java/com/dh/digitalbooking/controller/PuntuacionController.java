@@ -1,7 +1,7 @@
 package com.dh.digitalbooking.controller;
 
 import com.dh.digitalbooking.dto.UserDetailsDto;
-import com.dh.digitalbooking.model.Puntuacion;
+import com.dh.digitalbooking.entity.Puntuacion;
 import com.dh.digitalbooking.security.AuthenticationFacade;
 import com.dh.digitalbooking.service.imp.PuntuacionServiceImp;
 import jakarta.validation.Valid;

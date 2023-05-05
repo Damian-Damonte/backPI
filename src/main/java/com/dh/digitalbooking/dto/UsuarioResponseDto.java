@@ -1,13 +1,11 @@
 package com.dh.digitalbooking.dto;
 
-import com.dh.digitalbooking.model.Producto;
-import com.dh.digitalbooking.model.Reserva;
-import com.dh.digitalbooking.model.Rol;
+import com.dh.digitalbooking.entity.Producto;
+import com.dh.digitalbooking.entity.Reserva;
+import com.dh.digitalbooking.entity.Rol;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonIncludeProperties;
 
 import java.util.List;
-import java.util.Set;
 
 public class UsuarioResponseDto {
     private Long id;

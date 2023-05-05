@@ -1,6 +1,6 @@
 package com.dh.digitalbooking.controller;
 
-import com.dh.digitalbooking.model.Pais;
+import com.dh.digitalbooking.entity.Pais;
 import com.dh.digitalbooking.service.imp.PaisServiceImp;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;

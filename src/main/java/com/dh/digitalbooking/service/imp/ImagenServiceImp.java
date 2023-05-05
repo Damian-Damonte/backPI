@@ -1,7 +1,7 @@
 package com.dh.digitalbooking.service.imp;
 
 import com.dh.digitalbooking.exception.NotFoundException;
-import com.dh.digitalbooking.model.Imagen;
+import com.dh.digitalbooking.entity.Imagen;
 import com.dh.digitalbooking.repository.ImagenRepository;
 import com.dh.digitalbooking.service.ImagenService;
 import org.springframework.stereotype.Service;

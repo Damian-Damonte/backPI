@@ -1,6 +1,6 @@
 package com.dh.digitalbooking.repository;
 
-import com.dh.digitalbooking.model.Usuario;
+import com.dh.digitalbooking.entity.Usuario;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

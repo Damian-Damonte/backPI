@@ -1,6 +1,6 @@
 package com.dh.digitalbooking.service;
 
-import com.dh.digitalbooking.model.Coordenadas;
+import com.dh.digitalbooking.entity.Coordenadas;
 import org.springframework.stereotype.Service;
 
 @Service

@@ -1,7 +1,7 @@
 package com.dh.digitalbooking.service.imp;
 
 import com.dh.digitalbooking.exception.NotFoundException;
-import com.dh.digitalbooking.model.Coordenadas;
+import com.dh.digitalbooking.entity.Coordenadas;
 import com.dh.digitalbooking.repository.CoordenadasRepository;
 import com.dh.digitalbooking.service.CoordenadasService;
 import org.springframework.stereotype.Service;

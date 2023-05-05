@@ -3,16 +3,10 @@ package com.dh.digitalbooking.security;
 import com.dh.digitalbooking.dto.AuthenticateRequest;
 import com.dh.digitalbooking.dto.AuthenticationResponse;
 import com.dh.digitalbooking.dto.UsuarioRequestDto;
-import com.dh.digitalbooking.exception.BadRequestException;
-import com.dh.digitalbooking.exception.NotFoundException;
-import com.dh.digitalbooking.model.Rol;
-import com.dh.digitalbooking.model.Usuario;
-import com.dh.digitalbooking.repository.RoleRepository;
-import com.dh.digitalbooking.repository.UsuarioRepository;
+import com.dh.digitalbooking.entity.Usuario;
 import com.dh.digitalbooking.service.imp.UsuarioServiceImp;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;

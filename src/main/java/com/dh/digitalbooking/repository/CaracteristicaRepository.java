@@ -1,6 +1,6 @@
 package com.dh.digitalbooking.repository;
 
-import com.dh.digitalbooking.model.Caracteristica;
+import com.dh.digitalbooking.entity.Caracteristica;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import java.util.Optional;

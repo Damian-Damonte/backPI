@@ -2,7 +2,7 @@ package com.dh.digitalbooking.service.imp;
 
 import com.dh.digitalbooking.exception.BadRequestException;
 import com.dh.digitalbooking.exception.NotFoundException;
-import com.dh.digitalbooking.model.TipoPolitica;
+import com.dh.digitalbooking.entity.TipoPolitica;
 import com.dh.digitalbooking.repository.TipoPoliticaRepository;
 import com.dh.digitalbooking.service.TipoPoliticaService;
 import org.springframework.stereotype.Service;

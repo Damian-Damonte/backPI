@@ -1,7 +1,7 @@
 package com.dh.digitalbooking.dtoMapper;
 
 import com.dh.digitalbooking.dto.UsuarioResponseDto;
-import com.dh.digitalbooking.model.Usuario;
+import com.dh.digitalbooking.entity.Usuario;
 import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.stream.Collectors;

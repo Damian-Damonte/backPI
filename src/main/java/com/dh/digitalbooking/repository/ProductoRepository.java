@@ -1,6 +1,6 @@
 package com.dh.digitalbooking.repository;
 
-import com.dh.digitalbooking.model.Producto;
+import com.dh.digitalbooking.entity.Producto;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;

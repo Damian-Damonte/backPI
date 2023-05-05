@@ -1,7 +1,7 @@
 package com.dh.digitalbooking.service;
 
 import com.dh.digitalbooking.dto.UserDetailsDto;
-import com.dh.digitalbooking.model.Reserva;
+import com.dh.digitalbooking.entity.Reserva;
 import java.util.List;
 
 public interface ReservaService {

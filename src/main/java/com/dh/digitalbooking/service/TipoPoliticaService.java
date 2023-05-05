@@ -1,6 +1,6 @@
 package com.dh.digitalbooking.service;
 
-import com.dh.digitalbooking.model.TipoPolitica;
+import com.dh.digitalbooking.entity.TipoPolitica;
 import java.util.List;
 
 public interface TipoPoliticaService {

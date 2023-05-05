@@ -7,13 +7,12 @@ import com.dh.digitalbooking.dto.UsuarioResponseDto;
 import com.dh.digitalbooking.dtoMapper.UsuarioResponseDtoMapper;
 import com.dh.digitalbooking.exception.BadRequestException;
 import com.dh.digitalbooking.exception.NotFoundException;
-import com.dh.digitalbooking.model.Producto;
-import com.dh.digitalbooking.model.Rol;
-import com.dh.digitalbooking.model.Usuario;
+import com.dh.digitalbooking.entity.Producto;
+import com.dh.digitalbooking.entity.Rol;
+import com.dh.digitalbooking.entity.Usuario;
 import com.dh.digitalbooking.repository.RoleRepository;
 import com.dh.digitalbooking.repository.UsuarioRepository;
 import com.dh.digitalbooking.service.UsuarioService;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 

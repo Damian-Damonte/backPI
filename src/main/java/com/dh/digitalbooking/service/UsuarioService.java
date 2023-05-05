@@ -4,8 +4,7 @@ import com.dh.digitalbooking.dto.FavoritoDto;
 import com.dh.digitalbooking.dto.UserDetailsDto;
 import com.dh.digitalbooking.dto.UsuarioRequestDto;
 import com.dh.digitalbooking.dto.UsuarioResponseDto;
-import com.dh.digitalbooking.model.Producto;
-import com.dh.digitalbooking.model.Usuario;
+import com.dh.digitalbooking.entity.Usuario;
 
 import java.util.List;
 

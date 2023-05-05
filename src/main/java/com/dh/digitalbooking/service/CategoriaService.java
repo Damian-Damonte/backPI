@@ -1,6 +1,6 @@
 package com.dh.digitalbooking.service;
 
-import com.dh.digitalbooking.model.Categoria;
+import com.dh.digitalbooking.entity.Categoria;
 
 import java.util.List;
 

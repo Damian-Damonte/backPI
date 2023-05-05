@@ -5,7 +5,7 @@ import com.dh.digitalbooking.dto.ProductPageDto;
 import com.dh.digitalbooking.dto.ProductoFilterRequest;
 import com.dh.digitalbooking.exception.BadRequestException;
 import com.dh.digitalbooking.exception.NotFoundException;
-import com.dh.digitalbooking.model.*;
+import com.dh.digitalbooking.entity.*;
 import com.dh.digitalbooking.repository.ProductoRepository;
 import com.dh.digitalbooking.service.ProductoService;
 import org.springframework.data.domain.Page;

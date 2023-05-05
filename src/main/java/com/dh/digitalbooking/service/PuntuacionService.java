@@ -1,8 +1,7 @@
 package com.dh.digitalbooking.service;
 
 import com.dh.digitalbooking.dto.UserDetailsDto;
-import com.dh.digitalbooking.model.Pais;
-import com.dh.digitalbooking.model.Puntuacion;
+import com.dh.digitalbooking.entity.Puntuacion;
 
 import java.util.List;
 

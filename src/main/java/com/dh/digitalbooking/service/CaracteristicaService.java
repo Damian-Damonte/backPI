@@ -1,6 +1,6 @@
 package com.dh.digitalbooking.service;
 
-import com.dh.digitalbooking.model.Caracteristica;
+import com.dh.digitalbooking.entity.Caracteristica;
 import java.util.List;
 
 public interface CaracteristicaService {

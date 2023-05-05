@@ -2,8 +2,8 @@ package com.dh.digitalbooking.service.imp;
 
 import com.dh.digitalbooking.exception.BadRequestException;
 import com.dh.digitalbooking.exception.NotFoundException;
-import com.dh.digitalbooking.model.Caracteristica;
-import com.dh.digitalbooking.model.Producto;
+import com.dh.digitalbooking.entity.Caracteristica;
+import com.dh.digitalbooking.entity.Producto;
 import com.dh.digitalbooking.repository.CaracteristicaRepository;
 import com.dh.digitalbooking.service.CaracteristicaService;
 import org.springframework.stereotype.Service;

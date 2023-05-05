@@ -2,7 +2,7 @@ package com.dh.digitalbooking.controller;
 
 import com.dh.digitalbooking.dto.ProductPageDto;
 import com.dh.digitalbooking.dto.ProductoFilterRequest;
-import com.dh.digitalbooking.model.Producto;
+import com.dh.digitalbooking.entity.Producto;
 import com.dh.digitalbooking.service.imp.ProductoServiceImp;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;

@@ -1,6 +1,6 @@
 package com.dh.digitalbooking.controller;
 
-import com.dh.digitalbooking.model.Categoria;
+import com.dh.digitalbooking.entity.Categoria;
 import com.dh.digitalbooking.service.imp.CategoriaServiceImp;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;

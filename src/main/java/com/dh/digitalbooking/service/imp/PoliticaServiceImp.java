@@ -1,7 +1,7 @@
 package com.dh.digitalbooking.service.imp;
 
 import com.dh.digitalbooking.exception.NotFoundException;
-import com.dh.digitalbooking.model.Politica;
+import com.dh.digitalbooking.entity.Politica;
 import com.dh.digitalbooking.repository.PoliticaRepository;
 import com.dh.digitalbooking.service.PoliticaService;
 import org.springframework.stereotype.Service;

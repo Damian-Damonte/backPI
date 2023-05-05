@@ -1,7 +1,7 @@
 package com.dh.digitalbooking.controller;
 
 import com.dh.digitalbooking.dto.UserDetailsDto;
-import com.dh.digitalbooking.model.Reserva;
+import com.dh.digitalbooking.entity.Reserva;
 import com.dh.digitalbooking.security.AuthenticationFacade;
 import com.dh.digitalbooking.service.imp.ReservaServiceImp;
 import com.dh.digitalbooking.service.imp.UsuarioServiceImp;

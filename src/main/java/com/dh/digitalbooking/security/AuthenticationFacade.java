@@ -2,7 +2,7 @@ package com.dh.digitalbooking.security;
 
 import com.dh.digitalbooking.dto.UserDetailsDto;
 import com.dh.digitalbooking.exception.BadRequestException;
-import com.dh.digitalbooking.model.Usuario;
+import com.dh.digitalbooking.entity.Usuario;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Component;
