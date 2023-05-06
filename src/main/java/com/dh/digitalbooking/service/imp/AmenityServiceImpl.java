@@ -69,6 +69,7 @@ public class AmenityServiceImpl implements AmenityService {
         return amenityFullDTO;
     }
 
+    @Override
     public Amenity existByIdValidation(Long id) {
         return amenityRepository.findById(id).orElseThrow(() ->
                 new NotFoundException("Amenity with id " + id + " not found"));

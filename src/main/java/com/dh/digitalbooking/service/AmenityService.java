@@ -12,4 +12,5 @@ public interface AmenityService {
     AmenityFullDTO saveAmenity(AmenityOnlyNameDTO amenityOnlyNameDTO);
     void deleteAmenity(Long id);
     AmenityFullDTO updateAmenity(AmenityFullDTO amenityFullDTO);
+    Amenity existByIdValidation(Long id);
 }

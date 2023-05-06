@@ -1,12 +1,14 @@
 package com.dh.digitalbooking.service.imp;
 
-
 import com.dh.digitalbooking.dto.ProductPageDto;
 import com.dh.digitalbooking.dto.ProductoFilterRequest;
 import com.dh.digitalbooking.exception.BadRequestException;
 import com.dh.digitalbooking.exception.NotFoundException;
 import com.dh.digitalbooking.entity.*;
 import com.dh.digitalbooking.repository.ProductoRepository;
+import com.dh.digitalbooking.service.AmenityService;
+import com.dh.digitalbooking.service.CityService;
+import com.dh.digitalbooking.service.PolicyTypeService;
 import com.dh.digitalbooking.service.ProductoService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -20,22 +22,21 @@ import java.util.Set;
 
 @Service
 public class ProductoServiceImp implements ProductoService {
-
     private final ProductoRepository productoRepository;
     private final CategoriaServiceImp categoriaServiceImp;
-    private final CityServiceImpl cityServiceImpl;
-    private final AmenityServiceImpl caracteristicaServiceImp;
-    private final PolicyTypeServiceImp tipoPoliticaServiceImp;
+    private final CityService cityService;
+    private final AmenityService amenityService;
+    private final PolicyTypeService policyTypeService;
     private final ImageServiceImp imagenServiceImp;
     private final PoliticaServiceImp politicaServiceImp;
     private final CoordenadasServiceImp coordenadasServiceImp;
 
-    public ProductoServiceImp(ProductoRepository productoRepository, CategoriaServiceImp categoriaServiceImp, CityServiceImpl cityServiceImpl, AmenityServiceImpl caracteristicaServiceImp, PolicyTypeServiceImp tipoPoliticaServiceImp, ImageServiceImp imagenServiceImp, PoliticaServiceImp politicaServiceImp, CoordenadasServiceImp coordenadasServiceImp) {
+    public ProductoServiceImp(ProductoRepository productoRepository, CategoriaServiceImp categoriaServiceImp, CityService cityService, AmenityService amenityService, PolicyTypeService policyTypeService, ImageServiceImp imagenServiceImp, PoliticaServiceImp politicaServiceImp, CoordenadasServiceImp coordenadasServiceImp) {
         this.productoRepository = productoRepository;
         this.categoriaServiceImp = categoriaServiceImp;
-        this.cityServiceImpl = cityServiceImpl;
-        this.caracteristicaServiceImp = caracteristicaServiceImp;
-        this.tipoPoliticaServiceImp = tipoPoliticaServiceImp;
+        this.cityService = cityService;
+        this.amenityService = amenityService;
+        this.policyTypeService = policyTypeService;
         this.imagenServiceImp = imagenServiceImp;
         this.politicaServiceImp = politicaServiceImp;
         this.coordenadasServiceImp = coordenadasServiceImp;
@@ -123,7 +124,7 @@ public class ProductoServiceImp implements ProductoService {
     }
 
     private Producto getProducto(Producto producto) {
-        producto.setCiudad(cityServiceImpl.existByIdValidation(producto.getCiudad().getId()));
+        producto.setCiudad(cityService.existByIdValidation(producto.getCiudad().getId()));
         producto.setCategoria(categoriaServiceImp.existByIdValidation(producto.getCategoria().getId()));
 
         getCaracteristicas(producto);
@@ -137,7 +138,7 @@ public class ProductoServiceImp implements ProductoService {
     private void getCaracteristicas(Producto producto) {
         Set<Amenity> amenities = new HashSet<>();
         producto.getCaracteristicas().forEach(car -> {
-            Amenity currentCar = caracteristicaServiceImp.existByIdValidation(car.getId());
+            Amenity currentCar = amenityService.existByIdValidation(car.getId());
             amenities.add(currentCar);
         });
         producto.setCaracteristicas(amenities);
@@ -170,10 +171,12 @@ public class ProductoServiceImp implements ProductoService {
 
     private void getTipoPolitica(Politica politica) {
         Long tipoPoliticaId = politica.getTipoPolitica().getId();
+        PolicyType policyType = policyTypeService.existByIdValidation(tipoPoliticaId);
 
-        PolicyType policyType = tipoPoliticaId != null
-                ? tipoPoliticaServiceImp.existByIdValidation(tipoPoliticaId)
-                : tipoPoliticaServiceImp.savePolicyType(politica.getTipoPolitica());
+//        Ahora no se puede crear el tipo de politica cuando creamos un producto
+//        PolicyType policyType = tipoPoliticaId != null
+//                ? tipoPoliticaServiceImp.existByIdValidation(tipoPoliticaId)
+//                : tipoPoliticaServiceImp.savePolicyType(politica.getTipoPolitica());
 
         politica.setTipoPolitica(policyType);
     }
@@ -229,7 +232,7 @@ public class ProductoServiceImp implements ProductoService {
         LocalDate checkOut = filters.getCheckOut();
 
         if (ciudadId != null)
-            cityServiceImpl.existByIdValidation(ciudadId);
+            cityService.existByIdValidation(ciudadId);
         if (categoriaId != null)
             categoriaServiceImp.existByIdValidation(categoriaId);
         if (checkIn != null)

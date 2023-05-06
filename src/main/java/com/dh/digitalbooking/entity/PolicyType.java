@@ -22,8 +22,6 @@ public class PolicyType {
     private Long id;
 
     @Column(name = "name", length = 100)
-    @NotBlank(message = "Policy name requiered")
-    @Size(max = 255, message = "Policy name cannot be longer than 255 characters")
     private String name;
 
     @OneToMany(mappedBy = "policyType")

@@ -70,7 +70,7 @@ public class CityServiceImpl implements CityService {
         return cityRepository.existsByCountry_Id(id);
     }
 
-
+    @Override
     public City existByIdValidation(Long id) {
         return cityRepository.findById(id).orElseThrow(() ->
                 new NotFoundException("City with id  " + id + " not found"));

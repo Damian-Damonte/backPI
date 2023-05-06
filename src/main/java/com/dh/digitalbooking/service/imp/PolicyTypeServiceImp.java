@@ -1,42 +1,53 @@
 package com.dh.digitalbooking.service.imp;
 
+import com.dh.digitalbooking.dto.policyType.PolicyTypeFullDTO;
+import com.dh.digitalbooking.dto.policyType.PolicyTypeNoIdDTO;
 import com.dh.digitalbooking.exception.BadRequestException;
 import com.dh.digitalbooking.exception.NotFoundException;
 import com.dh.digitalbooking.entity.PolicyType;
+import com.dh.digitalbooking.mapper.PolicyTypeMapper;
 import com.dh.digitalbooking.repository.PolicyTypeRepository;
 import com.dh.digitalbooking.service.PolicyTypeService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import java.util.List;
 
 @Service
 public class PolicyTypeServiceImp implements PolicyTypeService {
     private final PolicyTypeRepository policyTypeRepository;
+    private final PolicyTypeMapper policyTypeMapper;
 
-    public PolicyTypeServiceImp(PolicyTypeRepository policyTypeRepository) {
+    public PolicyTypeServiceImp(PolicyTypeRepository policyTypeRepository, PolicyTypeMapper policyTypeMapper) {
         this.policyTypeRepository = policyTypeRepository;
+        this.policyTypeMapper = policyTypeMapper;
     }
 
     @Override
-    public List<PolicyType> allPoliciesTypes() {
-        return policyTypeRepository.findAll();
+    public List<PolicyTypeFullDTO> allPoliciesTypes() {
+        return policyTypeRepository.findAll().stream().map(policyTypeMapper::policyTypeToPolicyTypeFullDTO).toList();
     }
 
     @Override
-    public PolicyType getPolicieTypeById(Long id) {
-        return existByIdValidation(id);
+    public PolicyTypeFullDTO getPolicieTypeById(Long id) {
+        return policyTypeMapper.policyTypeToPolicyTypeFullDTO(existByIdValidation(id));
     }
 
     @Override
-    public PolicyType savePolicyType(PolicyType policyType) {
-        String name = policyType.getName();
+    @Transactional
+    public PolicyTypeFullDTO savePolicyType(PolicyTypeNoIdDTO policyTypeNoIdDTO) {
+        String name = policyTypeNoIdDTO.name();
 
         if(policyTypeRepository.findByName(name).isPresent())
             throw new BadRequestException("There is already a policy with the name '" + name + "'");
+        PolicyType policyType = policyTypeMapper.policyTypeNoIdToPolicyType(policyTypeNoIdDTO);
 
-        return policyTypeRepository.save(policyType);
+        return policyTypeMapper.policyTypeToPolicyTypeFullDTO(policyTypeRepository.save(policyType));
     }
 
+//    BORRAR RELACION BIDIRECCIONAL
     @Override
+    @Transactional
     public void deletePolicyType(Long id) {
         PolicyType policyType = existByIdValidation(id);
         if(!(policyType.getPoliticas().isEmpty()))
@@ -45,20 +56,23 @@ public class PolicyTypeServiceImp implements PolicyTypeService {
     }
 
     @Override
-    public PolicyType updatePolicyType(PolicyType policyType) {
-        Long id = policyType.getId();
-        String nombre = policyType.getName();
-        existByIdValidation(id);
+    @Transactional
+    public PolicyTypeFullDTO updatePolicyType(PolicyTypeFullDTO policyTypeFullDTO) {
+        Long id = policyTypeFullDTO.id();
+        PolicyType policyType = existByIdValidation(id);
+        String name = policyTypeFullDTO.name();
 
-        PolicyType policyTypeByNombre = policyTypeRepository.findByName(nombre).orElse(null);
+        PolicyType policyTypeByNombre = policyTypeRepository.findByName(name).orElse(null);
         if(policyTypeByNombre != null && !(policyTypeByNombre.getId().equals(id)))
-            throw new BadRequestException("There is already a policy with the name '" + nombre + "'");
+            throw new BadRequestException("There is already a policy with the name '" + name + "'");
 
-        return policyTypeRepository.save(policyType);
+        policyType.setName(name);
+        return policyTypeFullDTO;
     }
 
+    @Override
     public PolicyType existByIdValidation(Long id) {
         return policyTypeRepository.findById(id).orElseThrow(() ->
-                new NotFoundException("Tipo de politica con id " + id + " no encontrado"));
+                new NotFoundException("PolicyType with " + id + " not found"));
     }
 }
