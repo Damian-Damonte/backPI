@@ -6,10 +6,7 @@ import com.dh.digitalbooking.exception.BadRequestException;
 import com.dh.digitalbooking.exception.NotFoundException;
 import com.dh.digitalbooking.entity.*;
 import com.dh.digitalbooking.repository.ProductoRepository;
-import com.dh.digitalbooking.service.AmenityService;
-import com.dh.digitalbooking.service.CityService;
-import com.dh.digitalbooking.service.PolicyTypeService;
-import com.dh.digitalbooking.service.ProductoService;
+import com.dh.digitalbooking.service.*;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
@@ -29,9 +26,9 @@ public class ProductoServiceImp implements ProductoService {
     private final PolicyTypeService policyTypeService;
     private final ImageServiceImp imagenServiceImp;
     private final PolicyServiceImp politicaServiceImp;
-    private final CoordenadasServiceImp coordenadasServiceImp;
+    private final CoordinatesService coordinatesService;
 
-    public ProductoServiceImp(ProductoRepository productoRepository, CategoryServiceImp categoriaServiceImp, CityService cityService, AmenityService amenityService, PolicyTypeService policyTypeService, ImageServiceImp imagenServiceImp, PolicyServiceImp politicaServiceImp, CoordenadasServiceImp coordenadasServiceImp) {
+    public ProductoServiceImp(ProductoRepository productoRepository, CategoryServiceImp categoriaServiceImp, CityService cityService, AmenityService amenityService, PolicyTypeService policyTypeService, ImageServiceImp imagenServiceImp, PolicyServiceImp politicaServiceImp, CoordinatesService coordinatesService) {
         this.productoRepository = productoRepository;
         this.categoriaServiceImp = categoriaServiceImp;
         this.cityService = cityService;
@@ -39,7 +36,7 @@ public class ProductoServiceImp implements ProductoService {
         this.policyTypeService = policyTypeService;
         this.imagenServiceImp = imagenServiceImp;
         this.politicaServiceImp = politicaServiceImp;
-        this.coordenadasServiceImp = coordenadasServiceImp;
+        this.coordinatesService = coordinatesService;
     }
 
     @Override
@@ -82,8 +79,8 @@ public class ProductoServiceImp implements ProductoService {
     public Producto saveProducto(Producto producto) {
         producto.getImagenes().forEach(img -> img.setId(null));
         producto.getPoliticas().forEach(pol -> pol.setId(null));
-        if (producto.getCoordenadas() != null)
-            producto.getCoordenadas().setId(null);
+        if (producto.getCoordinates() != null)
+            producto.getCoordinates().setId(null);
         categoriaServiceImp.incrementCount(producto.getCategoria().getId());
 
         return getProducto(producto);
@@ -182,12 +179,12 @@ public class ProductoServiceImp implements ProductoService {
     }
 
     public void getCoordenadas(Producto producto) {
-        if (producto.getCoordenadas() != null) {
+        if (producto.getCoordinates() != null) {
             Long productoId = producto.getId();
-            Coordenadas coordenadas = producto.getCoordenadas();
-            coordenadasValidation(productoId, coordenadas);
-            coordenadas.setProducto(producto);
-            producto.setCoordenadas(coordenadas);
+            Coordinates coordinates = producto.getCoordinates();
+            coordenadasValidation(productoId, coordinates);
+            coordinates.setProduct(producto);
+            producto.setCoordinates(coordinates);
         }
     }
 
@@ -216,12 +213,12 @@ public class ProductoServiceImp implements ProductoService {
         }
     }
 
-    private void coordenadasValidation(Long productoId, Coordenadas coordenadas) {
-        Long id = coordenadas.getId();
+    private void coordenadasValidation(Long productoId, Coordinates coordinates) {
+        Long id = coordinates.getId();
         if (id != null) {
-            Coordenadas currentCoordenadas = coordenadasServiceImp.getByIdCoordenadas(id);
-            if (!(currentCoordenadas.getProducto().getId().equals(productoId)))
-                throw new BadRequestException("Las coordenadas con id " + id + " no pertenecen a este producto");
+            Coordinates currentCoordinates = coordinatesService.getCoordinatesById(id);
+            if (!(currentCoordinates.getProduct().getId().equals(productoId)))
+                throw new BadRequestException("Las coordinates con id " + id + " no pertenecen a este producto");
         }
     }
 

@@ -94,7 +94,7 @@ public class Producto {
             foreignKey = @ForeignKey(name = "coordenadas_id_fk")
     )
     @Valid
-    private Coordenadas coordenadas;
+    private Coordinates coordinates;
 
     @OneToMany(mappedBy = "producto", cascade = CascadeType.REMOVE, orphanRemoval = true)
     @JsonIgnoreProperties("producto")
@@ -119,7 +119,7 @@ public class Producto {
         this.city = city;
     }
 
-    public Producto(String titulo, String tituloDescripcion, String descripcion, Category category, City city, Set<Amenity> amenities, Set<Image> imagenes, Set<Policy> policies, Coordenadas coordenadas) {
+    public Producto(String titulo, String tituloDescripcion, String descripcion, Category category, City city, Set<Amenity> amenities, Set<Image> imagenes, Set<Policy> policies, Coordinates coordinates) {
         this.titulo = titulo;
         this.tituloDescripcion = tituloDescripcion;
         this.descripcion = descripcion;
@@ -128,7 +128,7 @@ public class Producto {
         this.amenities = amenities;
         this.imagenes = imagenes;
         this.policies = policies;
-        this.coordenadas = coordenadas;
+        this.coordinates = coordinates;
     }
 
     public Long getId() {
@@ -203,12 +203,12 @@ public class Producto {
         this.policies = policies;
     }
 
-    public Coordenadas getCoordenadas() {
-        return coordenadas;
+    public Coordinates getCoordinates() {
+        return coordinates;
     }
 
-    public void setCoordenadas(Coordenadas coordenadas) {
-        this.coordenadas = coordenadas;
+    public void setCoordinates(Coordinates coordinates) {
+        this.coordinates = coordinates;
     }
 
     public Set<Reserva> getReservas() {

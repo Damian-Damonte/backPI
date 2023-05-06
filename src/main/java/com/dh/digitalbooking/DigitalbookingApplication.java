@@ -157,19 +157,19 @@ public class DigitalbookingApplication {
             Set<Image> setFotos= new HashSet<>(Set.of(foto1, foto2, foto3, foto4, foto5, foto6));
 
 
-            Coordenadas hiltongardenc = new Coordenadas(
+            Coordinates hiltongardenc = new Coordinates(
                     new BigDecimal("-38.941697761424834"),
                     new BigDecimal("-68.05962964717754"));
 
-            Coordenadas laBrisaLocaHostel = new Coordenadas(
+            Coordinates laBrisaLocaHostel = new Coordinates(
                     new BigDecimal("11.24500468403564"),
                     new BigDecimal("-74.21162384247455"));
 
-            Coordenadas nuoMiamiApartaments = new Coordenadas(
+            Coordinates nuoMiamiApartaments = new Coordinates(
                     new BigDecimal("25.734365891053194"),
                     new BigDecimal("-80.23622998084356"));
 
-            Coordenadas urbanyHostelc = new Coordenadas(
+            Coordinates urbanyHostelc = new Coordinates(
                     new BigDecimal("41.407725926268164"),
                     new BigDecimal("2.1863069709469762"));
 
@@ -184,7 +184,7 @@ public class DigitalbookingApplication {
             producto1.setCaracteristicas(caracteristicas1);
             producto1.setImagenes(setFotos);
             producto1.setPoliticas(setPolicies);
-            producto1.setCoordenadas(hiltongardenc);
+            producto1.setCoordinates(hiltongardenc);
             productoServiceImp.saveProducto(producto1);
 
             UserDetailsDto userDetailsDtoAdmin = new UserDetailsDto();

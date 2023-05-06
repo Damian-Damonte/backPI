@@ -8,9 +8,9 @@ import jakarta.validation.constraints.NotNull;
 
 import java.math.BigDecimal;
 
-@Entity(name = "Coordenadas")
-@Table(name = "coordenadas")
-public class Coordenadas {
+@Entity(name = "Coordinates")
+@Table(name = "coordinates")
+public class Coordinates {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", updatable = false)
@@ -20,23 +20,23 @@ public class Coordenadas {
     @NotNull(message = "Las coordenadas debe tener una latitud")
     @DecimalMin(value = "-90.0",  message = "La latitud no debe ser menor a -90.0")
     @DecimalMax(value = "90.0", message = "La latitud no debe ser mayor a 90.0")
-    private BigDecimal latitud;
+    private BigDecimal latitude;
     @Column(precision = 18, scale = 15, nullable = false)
     @NotNull(message = "Las coordenadas debe tener una longitud")
     @DecimalMin(value = "-180.0",  message = "La longitud no debe ser menor a -180.0")
     @DecimalMax(value = "180.0", message = "La latitud no debe ser mayor a 180.0")
-    private BigDecimal longitud;
+    private BigDecimal longitude;
 
-    @OneToOne(mappedBy = "coordenadas")
+    @OneToOne(mappedBy = "coordinates")
     @JsonIgnore
-    private Producto producto;
+    private Producto product;
 
-    public Coordenadas() {
+    public Coordinates() {
     }
 
-    public Coordenadas(BigDecimal latitud, BigDecimal longitud) {
-        this.latitud = latitud;
-        this.longitud = longitud;
+    public Coordinates(BigDecimal latitude, BigDecimal longitude) {
+        this.latitude = latitude;
+        this.longitude = longitude;
     }
 
     public Long getId() {
@@ -47,27 +47,27 @@ public class Coordenadas {
         this.id = id;
     }
 
-    public BigDecimal getLatitud() {
-        return latitud;
+    public BigDecimal getLatitude() {
+        return latitude;
     }
 
-    public void setLatitud(BigDecimal latitud) {
-        this.latitud = latitud;
+    public void setLatitude(BigDecimal latitude) {
+        this.latitude = latitude;
     }
 
-    public BigDecimal getLongitud() {
-        return longitud;
+    public BigDecimal getLongitude() {
+        return longitude;
     }
 
-    public void setLongitud(BigDecimal longitud) {
-        this.longitud = longitud;
+    public void setLongitude(BigDecimal longitude) {
+        this.longitude = longitude;
     }
 
-    public Producto getProducto() {
-        return producto;
+    public Producto getProduct() {
+        return product;
     }
 
-    public void setProducto(Producto producto) {
-        this.producto = producto;
+    public void setProduct(Producto product) {
+        this.product = product;
     }
 }
