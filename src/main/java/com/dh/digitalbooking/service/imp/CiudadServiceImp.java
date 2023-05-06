@@ -6,7 +6,7 @@ import com.dh.digitalbooking.dto.ciudad.CityPutDTO;
 import com.dh.digitalbooking.exception.BadRequestException;
 import com.dh.digitalbooking.exception.NotFoundException;
 import com.dh.digitalbooking.entity.Ciudad;
-import com.dh.digitalbooking.entity.Pais;
+import com.dh.digitalbooking.entity.Country;
 import com.dh.digitalbooking.mapper.CiudadMapper;
 import com.dh.digitalbooking.repository.CiudadRepository;
 import com.dh.digitalbooking.service.CiudadService;
@@ -37,9 +37,9 @@ public class CiudadServiceImp implements CiudadService {
 
     @Override
     public CiudadDTO saveCiudad(CiudadPostDTO ciudadPostDTO) {
-        Pais pais = paisServiceImp.existByIdValidation(ciudadPostDTO.paisId());
+        Country country = paisServiceImp.existByIdValidation(ciudadPostDTO.paisId());
         Ciudad ciudad = ciudadMapper.ciudadPostDTOToCiudad(ciudadPostDTO);
-        ciudad.setPais(pais);
+        ciudad.setPais(country);
         return ciudadMapper.ciudadToCiudadDTO(ciudadRepository.save(ciudad));
     }
 
@@ -54,9 +54,9 @@ public class CiudadServiceImp implements CiudadService {
     @Override
     public CiudadDTO updateCiudad(CityPutDTO cityPutDTO) {
         existByIdValidation(cityPutDTO.id());
-        Pais pais = paisServiceImp.existByIdValidation(cityPutDTO.paisId());
+        Country country = paisServiceImp.existByIdValidation(cityPutDTO.paisId());
         Ciudad ciudad = ciudadMapper.cityPutDTOToCity(cityPutDTO);
-        ciudad.setPais(pais);
+        ciudad.setPais(country);
         return ciudadMapper.ciudadToCiudadDTO(ciudadRepository.save(ciudad));
     }
 

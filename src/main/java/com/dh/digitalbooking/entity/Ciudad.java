@@ -24,7 +24,7 @@ public class Ciudad {
             referencedColumnName = "id",
             foreignKey = @ForeignKey(name = "ciudades_paises_fk")
     )
-    private Pais pais;
+    private Country country;
 
     @OneToMany(mappedBy = "ciudad")
     @JsonIgnore
@@ -33,9 +33,9 @@ public class Ciudad {
     public Ciudad() {
     }
 
-    public Ciudad(String nombre, Pais pais) {
+    public Ciudad(String nombre, Country country) {
         this.nombre = nombre;
-        this.pais = pais;
+        this.country = country;
     }
 
     public Long getId() {
@@ -54,12 +54,12 @@ public class Ciudad {
         this.nombre = nombre;
     }
 
-    public Pais getPais() {
-        return pais;
+    public Country getPais() {
+        return country;
     }
 
-    public void setPais(Pais pais) {
-        this.pais = pais;
+    public void setPais(Country country) {
+        this.country = country;
     }
 
     public Set<Producto> getProductos() {

@@ -2,8 +2,6 @@ package com.dh.digitalbooking.controller;
 
 import com.dh.digitalbooking.dto.pais.PaisDTO;
 import com.dh.digitalbooking.dto.pais.PaisNoIdDTO;
-import com.dh.digitalbooking.entity.Pais;
-import com.dh.digitalbooking.mapper.PaisMapper;
 import com.dh.digitalbooking.service.imp.PaisServiceImp;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;

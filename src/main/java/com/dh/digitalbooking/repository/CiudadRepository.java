@@ -6,6 +6,6 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 public interface CiudadRepository extends JpaRepository<Ciudad, Long> {
-    @Query("SELECT COUNT(c) FROM Ciudad c WHERE c.pais.id = :paisId")
-    int existsByPaisId(@Param("paisId") Long paisId);
+    @Query("SELECT COUNT(c) FROM Ciudad c WHERE c.country.id = :countryId")
+    int existsByPaisId(@Param("countryId") Long countryId);
 }
