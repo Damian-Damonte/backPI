@@ -66,6 +66,7 @@ public class CountryServiceImpl implements CountryService {
         return countryMapper.countryToContryFullDTO(countryRepository.save(country));
     }
 
+    @Override
     public Country existByIdValidation(Long id) {
         return countryRepository.findById(id).orElseThrow(() ->
                 new NotFoundException("Country with id " + id + " not found"));

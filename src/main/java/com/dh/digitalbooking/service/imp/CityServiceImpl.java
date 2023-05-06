@@ -10,18 +10,19 @@ import com.dh.digitalbooking.entity.Country;
 import com.dh.digitalbooking.mapper.CityMapper;
 import com.dh.digitalbooking.repository.CityRepository;
 import com.dh.digitalbooking.service.CityService;
+import com.dh.digitalbooking.service.CountryService;
 import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
 public class CityServiceImpl implements CityService {
     private final CityRepository cityRepository;
-    private final CountryServiceImpl countryServiceImpl;
+    private final CountryService countryService;
     private final CityMapper cityMapper;
 
-    public CityServiceImpl(CityRepository cityRepository, CountryServiceImpl countryServiceImpl, CityMapper cityMapper) {
+    public CityServiceImpl(CityRepository cityRepository, CountryService countryService, CityMapper cityMapper) {
         this.cityRepository = cityRepository;
-        this.countryServiceImpl = countryServiceImpl;
+        this.countryService = countryService;
         this.cityMapper = cityMapper;
     }
 
@@ -37,7 +38,7 @@ public class CityServiceImpl implements CityService {
 
     @Override
     public CityFullDTO saveCity(CityPostDTO cityPostDTO) {
-        Country country = countryServiceImpl.existByIdValidation(cityPostDTO.countryId());
+        Country country = countryService.existByIdValidation(cityPostDTO.countryId());
         City city = cityMapper.cityPostDTOToCity(cityPostDTO);
         city.setCountry(country);
         return cityMapper.cityToCityFullDTO(cityRepository.save(city));
@@ -55,7 +56,7 @@ public class CityServiceImpl implements CityService {
     @Override
     public CityFullDTO updateCity(CityPutDTO cityPutDTO) {
         existByIdValidation(cityPutDTO.id());
-        Country country = countryServiceImpl.existByIdValidation(cityPutDTO.countryId());
+        Country country = countryService.existByIdValidation(cityPutDTO.countryId());
         City city = cityMapper.cityPutDTOToCity(cityPutDTO);
         city.setCountry(country);
         return cityMapper.cityToCityFullDTO(cityRepository.save(city));

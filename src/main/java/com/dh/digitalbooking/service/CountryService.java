@@ -2,6 +2,7 @@ package com.dh.digitalbooking.service;
 
 import com.dh.digitalbooking.dto.country.CountryFullDTO;
 import com.dh.digitalbooking.dto.country.CountryNoIdDTO;
+import com.dh.digitalbooking.entity.Country;
 
 import java.util.List;
 
@@ -11,4 +12,5 @@ public interface CountryService {
     CountryFullDTO saveCountry(CountryNoIdDTO countryNoIdDTO);
     void deleteCountry(Long id);
     CountryFullDTO updateCountry(CountryFullDTO countryFullDTO);
+    Country existByIdValidation(Long id);
 }
