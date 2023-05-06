@@ -2,34 +2,39 @@ package com.dh.digitalbooking.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
+
 import java.util.HashSet;
 import java.util.Set;
 
-@Entity(name = "TipoPolitica")
+@Entity(name = "PolicyType")
 @Table(
-        name = "tipos_politicas",
+        name = "policies_types",
         uniqueConstraints = {
-                @UniqueConstraint(name = "tipo_politica_nombre_unique", columnNames = "name")
+                @UniqueConstraint(name = "policy_type_name_unique", columnNames = "name")
         }
 )
-public class TipoPolitica {
+public class PolicyType {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", updatable = false)
     private Long id;
 
     @Column(name = "name", length = 100)
-    private String nombre;
+    @NotBlank(message = "Policy name requiered")
+    @Size(max = 255, message = "Policy name cannot be longer than 255 characters")
+    private String name;
 
-    @OneToMany(mappedBy = "tipoPolitica")
+    @OneToMany(mappedBy = "policyType")
     @JsonIgnore
     Set<Politica> politicas = new HashSet<>();
 
-    public TipoPolitica() {
+    public PolicyType() {
     }
 
-    public TipoPolitica(String nombre) {
-        this.nombre = nombre;
+    public PolicyType(String name) {
+        this.name = name;
     }
 
     public Long getId() {
@@ -40,12 +45,12 @@ public class TipoPolitica {
         this.id = id;
     }
 
-    public String getNombre() {
-        return nombre;
+    public String getName() {
+        return name;
     }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public Set<Politica> getPoliticas() {

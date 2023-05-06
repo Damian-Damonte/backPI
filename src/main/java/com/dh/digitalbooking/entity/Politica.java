@@ -27,7 +27,7 @@ public class Politica {
             foreignKey = @ForeignKey(name = "politicas_tipo_politicas_fk")
     )
     @NotNull(message = "La polílica debe tener un tipo de política")
-    private TipoPolitica tipoPolitica;
+    private PolicyType policyType;
 
     @ManyToOne
     @JoinColumn(
@@ -42,9 +42,9 @@ public class Politica {
     public Politica() {
     }
 
-    public Politica(String descripcion, TipoPolitica tipoPolitica) {
+    public Politica(String descripcion, PolicyType policyType) {
         this.descripcion = descripcion;
-        this.tipoPolitica = tipoPolitica;
+        this.policyType = policyType;
     }
 
     public Long getId() {
@@ -63,12 +63,12 @@ public class Politica {
         this.descripcion = descripcion;
     }
 
-    public TipoPolitica getTipoPolitica() {
-        return tipoPolitica;
+    public PolicyType getTipoPolitica() {
+        return policyType;
     }
 
-    public void setTipoPolitica(TipoPolitica tipoPolitica) {
-        this.tipoPolitica = tipoPolitica;
+    public void setTipoPolitica(PolicyType policyType) {
+        this.policyType = policyType;
     }
 
     public Producto getProducto() {

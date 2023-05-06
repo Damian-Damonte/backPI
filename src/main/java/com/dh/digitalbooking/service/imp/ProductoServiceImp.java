@@ -25,12 +25,12 @@ public class ProductoServiceImp implements ProductoService {
     private final CategoriaServiceImp categoriaServiceImp;
     private final CityServiceImpl cityServiceImpl;
     private final AmenityServiceImpl caracteristicaServiceImp;
-    private final TipoPoliticaServiceImp tipoPoliticaServiceImp;
+    private final PolicyTypeServiceImp tipoPoliticaServiceImp;
     private final ImageServiceImp imagenServiceImp;
     private final PoliticaServiceImp politicaServiceImp;
     private final CoordenadasServiceImp coordenadasServiceImp;
 
-    public ProductoServiceImp(ProductoRepository productoRepository, CategoriaServiceImp categoriaServiceImp, CityServiceImpl cityServiceImpl, AmenityServiceImpl caracteristicaServiceImp, TipoPoliticaServiceImp tipoPoliticaServiceImp, ImageServiceImp imagenServiceImp, PoliticaServiceImp politicaServiceImp, CoordenadasServiceImp coordenadasServiceImp) {
+    public ProductoServiceImp(ProductoRepository productoRepository, CategoriaServiceImp categoriaServiceImp, CityServiceImpl cityServiceImpl, AmenityServiceImpl caracteristicaServiceImp, PolicyTypeServiceImp tipoPoliticaServiceImp, ImageServiceImp imagenServiceImp, PoliticaServiceImp politicaServiceImp, CoordenadasServiceImp coordenadasServiceImp) {
         this.productoRepository = productoRepository;
         this.categoriaServiceImp = categoriaServiceImp;
         this.cityServiceImpl = cityServiceImpl;
@@ -171,11 +171,11 @@ public class ProductoServiceImp implements ProductoService {
     private void getTipoPolitica(Politica politica) {
         Long tipoPoliticaId = politica.getTipoPolitica().getId();
 
-        TipoPolitica tipoPolitica = tipoPoliticaId != null
+        PolicyType policyType = tipoPoliticaId != null
                 ? tipoPoliticaServiceImp.existByIdValidation(tipoPoliticaId)
-                : tipoPoliticaServiceImp.saveTipoPolitica(politica.getTipoPolitica());
+                : tipoPoliticaServiceImp.savePolicyType(politica.getTipoPolitica());
 
-        politica.setTipoPolitica(tipoPolitica);
+        politica.setTipoPolitica(policyType);
     }
 
     public void getCoordenadas(Producto producto) {

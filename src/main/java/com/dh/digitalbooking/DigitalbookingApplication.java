@@ -33,7 +33,7 @@ public class DigitalbookingApplication {
             CityRepository cityRepository,
             ProductoServiceImp productoServiceImp,
             AmenityRepository amenityRepository,
-            TipoPoliticaRepository tipoPoliticaRepository,
+            PolicyTypeRepository policyTypeRepository,
             RoleRepository roleRepository,
             UsuarioRepository usuarioRepository,
             PasswordEncoder passwordEncoder,
@@ -110,9 +110,9 @@ public class DigitalbookingApplication {
             Amenity minibar = amenityRepository.save(new Amenity("Minibar"));
             Amenity chimenea = amenityRepository.save(new Amenity("Chimenea"));
 
-            TipoPolitica normasDeLaCasa = tipoPoliticaRepository.save(new TipoPolitica("Normas de la casa"));
-            TipoPolitica saludYSeguridad = tipoPoliticaRepository.save(new TipoPolitica("Salud y seguridad"));
-            TipoPolitica politicaDeCancelacion = tipoPoliticaRepository.save(new TipoPolitica("Politicas de cancelacion"));
+            PolicyType normasDeLaCasa = policyTypeRepository.save(new PolicyType("Normas de la casa"));
+            PolicyType saludYSeguridad = policyTypeRepository.save(new PolicyType("Salud y seguridad"));
+            PolicyType politicaDeCancelacion = policyTypeRepository.save(new PolicyType("Politicas de cancelacion"));
 
             Politica politica1 = new Politica(
                 """
