@@ -1,9 +1,13 @@
 package com.dh.digitalbooking.service.imp;
 
+import com.dh.digitalbooking.dto.ciudad.CiudadDTO;
+import com.dh.digitalbooking.dto.ciudad.CiudadPostDTO;
+import com.dh.digitalbooking.dto.ciudad.CityPutDTO;
 import com.dh.digitalbooking.exception.BadRequestException;
 import com.dh.digitalbooking.exception.NotFoundException;
 import com.dh.digitalbooking.entity.Ciudad;
 import com.dh.digitalbooking.entity.Pais;
+import com.dh.digitalbooking.mapper.CiudadMapper;
 import com.dh.digitalbooking.repository.CiudadRepository;
 import com.dh.digitalbooking.service.CiudadService;
 import org.springframework.stereotype.Service;
@@ -13,28 +17,30 @@ import java.util.List;
 public class CiudadServiceImp implements CiudadService {
     private final CiudadRepository ciudadRepository;
     private final PaisServiceImp paisServiceImp;
+    private final CiudadMapper ciudadMapper;
 
-    public CiudadServiceImp(CiudadRepository ciudadRepository, PaisServiceImp paisServiceImp) {
+    public CiudadServiceImp(CiudadRepository ciudadRepository, PaisServiceImp paisServiceImp, CiudadMapper ciudadMapper) {
         this.ciudadRepository = ciudadRepository;
         this.paisServiceImp = paisServiceImp;
+        this.ciudadMapper = ciudadMapper;
     }
 
     @Override
-    public List<Ciudad> allCiudad() {
-        return ciudadRepository.findAll();
+    public List<CiudadDTO> allCiudad() {
+        return ciudadRepository.findAll().stream().map(ciudadMapper::ciudadToCiudadDTO).toList();
     }
 
     @Override
-    public Ciudad getByIdCiudad(Long id) {
-        return existByIdValidation(id);
+    public CiudadDTO getByIdCiudad(Long id) {
+        return ciudadMapper.ciudadToCiudadDTO(existByIdValidation(id));
     }
 
     @Override
-    public Ciudad saveCiudad(Ciudad ciudad) {
-        Pais pais = paisServiceImp.existByIdValidation(ciudad.getPais().getId());
+    public CiudadDTO saveCiudad(CiudadPostDTO ciudadPostDTO) {
+        Pais pais = paisServiceImp.existByIdValidation(ciudadPostDTO.paisId());
+        Ciudad ciudad = ciudadMapper.ciudadPostDTOToCiudad(ciudadPostDTO);
         ciudad.setPais(pais);
-
-        return ciudadRepository.save(ciudad);
+        return ciudadMapper.ciudadToCiudadDTO(ciudadRepository.save(ciudad));
     }
 
     @Override
@@ -42,22 +48,24 @@ public class CiudadServiceImp implements CiudadService {
         Ciudad ciudad = existByIdValidation(id);
         if(!(ciudad.getProductos().isEmpty()))
             throw new BadRequestException("No puede eliminar la ciudad con id " + id + " ya que hay productos que en dicha ciudad");
-
         ciudadRepository.deleteById(id);
     }
 
     @Override
-    public Ciudad updateCiudad(Ciudad ciudad) {
-        existByIdValidation(ciudad.getId());
-        Pais pais = paisServiceImp.existByIdValidation(ciudad.getPais().getId());
+    public CiudadDTO updateCiudad(CityPutDTO cityPutDTO) {
+        existByIdValidation(cityPutDTO.id());
+        Pais pais = paisServiceImp.existByIdValidation(cityPutDTO.paisId());
+        Ciudad ciudad = ciudadMapper.cityPutDTOToCity(cityPutDTO);
         ciudad.setPais(pais);
+        return ciudadMapper.ciudadToCiudadDTO(ciudadRepository.save(ciudad));
+    }
 
-        return ciudadRepository.save(ciudad);
+    @Override
+    public boolean existsCityByCountryId(Long id) {
+        return ciudadRepository.existsByPaisId(id) > 0;
     }
 
     public Ciudad existByIdValidation(Long id) {
-        if(id == null)
-            throw new BadRequestException("Debe enviar el id de la ciudad");
         return ciudadRepository.findById(id).orElseThrow(() ->
                 new NotFoundException("Ciudad con id " + id + " no encontrada"));
     }

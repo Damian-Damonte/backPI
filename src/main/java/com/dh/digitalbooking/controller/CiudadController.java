@@ -1,6 +1,8 @@
 package com.dh.digitalbooking.controller;
 
-import com.dh.digitalbooking.entity.Ciudad;
+import com.dh.digitalbooking.dto.ciudad.CiudadDTO;
+import com.dh.digitalbooking.dto.ciudad.CiudadPostDTO;
+import com.dh.digitalbooking.dto.ciudad.CityPutDTO;
 import com.dh.digitalbooking.service.imp.CiudadServiceImp;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
@@ -18,18 +20,18 @@ public class CiudadController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Ciudad>> getAll() {
+    public ResponseEntity<List<CiudadDTO>> getAll() {
         return ResponseEntity.ok(ciudadServiceImp.allCiudad());
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Ciudad> getById(@PathVariable("id") Long id) {
+    public ResponseEntity<CiudadDTO> getById(@PathVariable("id") Long id) {
         return ResponseEntity.ok(ciudadServiceImp.getByIdCiudad(id));
     }
 
     @PostMapping
-    public ResponseEntity<Ciudad> saveCiudad(@RequestBody @Valid Ciudad ciudad) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(ciudadServiceImp.saveCiudad(ciudad));
+    public ResponseEntity<CiudadDTO> saveCiudad(@RequestBody @Valid CiudadPostDTO ciudadPostDTO) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(ciudadServiceImp.saveCiudad(ciudadPostDTO));
     }
 
     @DeleteMapping("/{id}")
@@ -39,7 +41,7 @@ public class CiudadController {
     }
 
     @PutMapping
-    public ResponseEntity<Ciudad> updateCiudad(@RequestBody @Valid Ciudad ciudad) {
-        return ResponseEntity.ok(ciudadServiceImp.updateCiudad(ciudad));
+    public ResponseEntity<CiudadDTO> updateCiudad(@RequestBody @Valid CityPutDTO cityPutDTO) {
+        return ResponseEntity.ok(ciudadServiceImp.updateCiudad(cityPutDTO));
     }
 }

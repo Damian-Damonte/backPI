@@ -1,14 +1,18 @@
 package com.dh.digitalbooking.service;
 
+import com.dh.digitalbooking.dto.ciudad.CityPutDTO;
+import com.dh.digitalbooking.dto.ciudad.CiudadDTO;
+import com.dh.digitalbooking.dto.ciudad.CiudadPostDTO;
 import com.dh.digitalbooking.entity.Ciudad;
 import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
 public interface CiudadService {
-    List<Ciudad> allCiudad();
-    Ciudad getByIdCiudad(Long id);
-    Ciudad saveCiudad(Ciudad ciudad);
+    List<CiudadDTO> allCiudad();
+    CiudadDTO getByIdCiudad(Long id);
+    CiudadDTO saveCiudad(CiudadPostDTO ciudadPostDTO);
     void deleteCiudad(Long id);
-    Ciudad updateCiudad(Ciudad ciudad);
+    CiudadDTO updateCiudad(CityPutDTO cityPutDTO);
+    boolean existsCityByCountryId(Long id);
 }

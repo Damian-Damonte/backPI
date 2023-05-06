@@ -1,6 +1,7 @@
 package com.dh.digitalbooking.controller;
 
 import com.dh.digitalbooking.dto.pais.PaisDTO;
+import com.dh.digitalbooking.dto.pais.PaisNoIdDTO;
 import com.dh.digitalbooking.entity.Pais;
 import com.dh.digitalbooking.mapper.PaisMapper;
 import com.dh.digitalbooking.service.imp.PaisServiceImp;
@@ -30,8 +31,8 @@ public class PaisController {
     }
 
     @PostMapping
-    public ResponseEntity<PaisDTO> savePais(@RequestBody @Valid PaisDTO PaisDTO) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(paisServiceImp.savePais(PaisDTO));
+    public ResponseEntity<PaisDTO> savePais(@RequestBody @Valid PaisNoIdDTO paisNoIdDTO) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(paisServiceImp.savePais(paisNoIdDTO));
     }
 
     @DeleteMapping("/{id}")

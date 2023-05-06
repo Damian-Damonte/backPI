@@ -1,6 +1,7 @@
 package com.dh.digitalbooking.mapper;
 
 import com.dh.digitalbooking.dto.pais.PaisDTO;
+import com.dh.digitalbooking.dto.pais.PaisNoIdDTO;
 import com.dh.digitalbooking.entity.Pais;
 import org.springframework.stereotype.Component;
 
@@ -16,6 +17,12 @@ public class PaisMapper {
         Pais pais = new Pais();
         pais.setId(paisDTO.id());
         pais.setNombre(paisDTO.nombre());
+        return pais;
+    }
+
+    public Pais paisNoIdDTOToPais(PaisNoIdDTO paisNoIdDTO) {
+        Pais pais = new Pais();
+        pais.setNombre(paisNoIdDTO.nombre());
         return pais;
     }
 

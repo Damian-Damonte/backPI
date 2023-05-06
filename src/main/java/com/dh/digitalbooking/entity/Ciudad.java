@@ -2,9 +2,6 @@ package com.dh.digitalbooking.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -18,8 +15,6 @@ public class Ciudad {
     private Long id;
 
     @Column(name = "nombre", nullable = false)
-    @NotBlank(message = "La ciudad debe tener un nombre")
-    @Size(max = 255, message = "El nombre de la ciudad no debe tener más de 255 caracteres")
     private String nombre;
 
     @ManyToOne
@@ -29,7 +24,6 @@ public class Ciudad {
             referencedColumnName = "id",
             foreignKey = @ForeignKey(name = "ciudades_paises_fk")
     )
-    @NotNull(message = "La ciudad debe pertenecer a un país")
     private Pais pais;
 
     @OneToMany(mappedBy = "ciudad")
