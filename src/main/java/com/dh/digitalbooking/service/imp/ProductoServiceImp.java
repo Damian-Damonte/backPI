@@ -26,11 +26,11 @@ public class ProductoServiceImp implements ProductoService {
     private final CityServiceImpl cityServiceImpl;
     private final AmenityServiceImpl caracteristicaServiceImp;
     private final TipoPoliticaServiceImp tipoPoliticaServiceImp;
-    private final ImagenServiceImp imagenServiceImp;
+    private final ImageServiceImp imagenServiceImp;
     private final PoliticaServiceImp politicaServiceImp;
     private final CoordenadasServiceImp coordenadasServiceImp;
 
-    public ProductoServiceImp(ProductoRepository productoRepository, CategoriaServiceImp categoriaServiceImp, CityServiceImpl cityServiceImpl, AmenityServiceImpl caracteristicaServiceImp, TipoPoliticaServiceImp tipoPoliticaServiceImp, ImagenServiceImp imagenServiceImp, PoliticaServiceImp politicaServiceImp, CoordenadasServiceImp coordenadasServiceImp) {
+    public ProductoServiceImp(ProductoRepository productoRepository, CategoriaServiceImp categoriaServiceImp, CityServiceImpl cityServiceImpl, AmenityServiceImpl caracteristicaServiceImp, TipoPoliticaServiceImp tipoPoliticaServiceImp, ImageServiceImp imagenServiceImp, PoliticaServiceImp politicaServiceImp, CoordenadasServiceImp coordenadasServiceImp) {
         this.productoRepository = productoRepository;
         this.categoriaServiceImp = categoriaServiceImp;
         this.cityServiceImpl = cityServiceImpl;
@@ -142,7 +142,7 @@ public class ProductoServiceImp implements ProductoService {
         if (producto.getImagenes().isEmpty())
             throw new BadRequestException("El producto debe tener por lo menos una imagen");
         Long productoId = producto.getId();
-        Set<Imagen> imagenes = new HashSet<>();
+        Set<Image> imagenes = new HashSet<>();
         producto.getImagenes().forEach(img -> {
             imagenValidation(productoId, img);
             img.setProducto(producto);
@@ -190,12 +190,12 @@ public class ProductoServiceImp implements ProductoService {
                 new NotFoundException("Producto con id " + id + " no encontrado"));
     }
 
-    private void imagenValidation(Long productoId, Imagen imagen) {
-        Long id = imagen.getId();
+    private void imagenValidation(Long productoId, Image image) {
+        Long id = image.getId();
         if (id != null) {
-            Imagen currentImg = imagenServiceImp.getByIdImagen(id);
+            Image currentImg = imagenServiceImp.getImageById(id);
             if (!(currentImg.getProducto().getId().equals(productoId)))
-                throw new BadRequestException("La imagen con id " + id + " no pertenece a este producto");
+                throw new BadRequestException("La image con id " + id + " no pertenece a este producto");
         }
     }
 

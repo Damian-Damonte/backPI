@@ -78,10 +78,10 @@ public class Producto {
     private Set<Amenity> amenities = new HashSet<>();
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "producto")
-    @OrderBy("orden ASC NULLS LAST ")
+    @OrderBy("order ASC NULLS LAST ")
     @Valid
     @Size(max = 50, message = "El producto no puede tener más de 50 imágenes")
-    private Set<Imagen> imagenes = new HashSet<>();
+    private Set<Image> imagenes = new HashSet<>();
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "producto")
     @Valid
@@ -119,7 +119,7 @@ public class Producto {
         this.city = city;
     }
 
-    public Producto(String titulo, String tituloDescripcion, String descripcion, Categoria categoria, City city, Set<Amenity> amenities, Set<Imagen> imagenes, Set<Politica> politicas, Coordenadas coordenadas) {
+    public Producto(String titulo, String tituloDescripcion, String descripcion, Categoria categoria, City city, Set<Amenity> amenities, Set<Image> imagenes, Set<Politica> politicas, Coordenadas coordenadas) {
         this.titulo = titulo;
         this.tituloDescripcion = tituloDescripcion;
         this.descripcion = descripcion;
@@ -187,11 +187,11 @@ public class Producto {
         this.amenities = amenities;
     }
 
-    public Set<Imagen> getImagenes() {
+    public Set<Image> getImagenes() {
         return imagenes;
     }
 
-    public void setImagenes(Set<Imagen> imagenes) {
+    public void setImagenes(Set<Image> imagenes) {
         this.imagenes = imagenes;
     }
 

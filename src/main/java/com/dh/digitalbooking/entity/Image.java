@@ -8,9 +8,9 @@ import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
-@Entity(name = "Imagen")
-@Table(name = "imagenes")
-public class Imagen {
+@Entity(name = "Image")
+@Table(name = "images")
+public class Image {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", updatable = false)
@@ -19,7 +19,7 @@ public class Imagen {
     @Column(name = "titulo", nullable = false, length = 50)
     @Size(max = 50, message = "El titulo de la imagen no debe tener más de 50 caracteres")
     @NotBlank(message = "La imagen debe tener un titulo")
-    private String titulo;
+    private String title;
 
     @Column(name = "url", nullable = false)
     @NotBlank(message = "La imagen debe tener una url")
@@ -29,7 +29,7 @@ public class Imagen {
     @Min(value = 0, message = "El valor del orden debe ser mayor o igual a 0.")
     @Max(value = 100, message = "El valor del orden debe ser menor o igual a 100.")
     @Nullable
-    private Integer orden;
+    private Integer order;
 
     @ManyToOne
     @JoinColumn(
@@ -41,18 +41,18 @@ public class Imagen {
     @JsonIgnore
     private Producto producto;
 
-    public Imagen() {
+    public Image() {
     }
 
-    public Imagen(String titulo, String url) {
-        this.titulo = titulo;
+    public Image(String title, String url) {
+        this.title = title;
         this.url = url;
     }
 
-    public Imagen(String titulo, String url, Integer orden) {
-        this.titulo = titulo;
+    public Image(String title, String url, Integer order) {
+        this.title = title;
         this.url = url;
-        this.orden = orden;
+        this.order = order;
     }
 
     public Long getId() {
@@ -63,12 +63,12 @@ public class Imagen {
         this.id = id;
     }
 
-    public String getTitulo() {
-        return titulo;
+    public String getTitle() {
+        return this.title;
     }
 
-    public void setTitulo(String titulo) {
-        this.titulo = titulo;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public String getUrl() {
@@ -83,15 +83,15 @@ public class Imagen {
         return producto;
     }
 
-    public void setProducto(Producto producto) {
-        this.producto = producto;
+    public void setProducto(Producto product) {
+        this.producto = product;
     }
 
-    public Integer getOrden() {
-        return orden;
+    public Integer getOrder() {
+        return order;
     }
 
-    public void setOrden(Integer orden) {
-        this.orden = orden;
+    public void setOrder(Integer order) {
+        this.order = order;
     }
 }
