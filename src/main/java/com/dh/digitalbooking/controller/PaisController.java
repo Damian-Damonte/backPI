@@ -1,6 +1,6 @@
 package com.dh.digitalbooking.controller;
 
-import com.dh.digitalbooking.dto.pais.PaisDTO;
+import com.dh.digitalbooking.dto.pais.CountryFullDTO;
 import com.dh.digitalbooking.dto.pais.PaisNoIdDTO;
 import com.dh.digitalbooking.service.imp.PaisServiceImp;
 import jakarta.validation.Valid;
@@ -19,17 +19,17 @@ public class PaisController {
     }
 
     @GetMapping
-    public ResponseEntity<List<PaisDTO>> getAll() {
+    public ResponseEntity<List<CountryFullDTO>> getAll() {
         return ResponseEntity.ok(paisServiceImp.allPais());
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<PaisDTO> getById(@PathVariable("id") Long id) {
+    public ResponseEntity<CountryFullDTO> getById(@PathVariable("id") Long id) {
         return ResponseEntity.ok(paisServiceImp.getByIdPais(id));
     }
 
     @PostMapping
-    public ResponseEntity<PaisDTO> savePais(@RequestBody @Valid PaisNoIdDTO paisNoIdDTO) {
+    public ResponseEntity<CountryFullDTO> savePais(@RequestBody @Valid PaisNoIdDTO paisNoIdDTO) {
         return ResponseEntity.status(HttpStatus.CREATED).body(paisServiceImp.savePais(paisNoIdDTO));
     }
 
@@ -40,7 +40,7 @@ public class PaisController {
     }
 
     @PutMapping
-    public ResponseEntity<PaisDTO> updatePais(@RequestBody @Valid PaisDTO PaisDTO) {
-        return ResponseEntity.ok(paisServiceImp.updatePais(PaisDTO));
+    public ResponseEntity<CountryFullDTO> updatePais(@RequestBody @Valid CountryFullDTO CountryFullDTO) {
+        return ResponseEntity.ok(paisServiceImp.updatePais(CountryFullDTO));
     }
 }

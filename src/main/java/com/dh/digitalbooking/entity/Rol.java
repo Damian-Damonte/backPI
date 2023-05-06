@@ -5,7 +5,7 @@ import jakarta.persistence.*;
 @Table(
         name = "roles",
         uniqueConstraints = {
-                @UniqueConstraint(name = "usuario_email_unique", columnNames = "nombre")
+                @UniqueConstraint(name = "usuario_email_unique", columnNames = "name")
         })
 public class Rol {
     @Id
@@ -13,7 +13,7 @@ public class Rol {
     @Column(name = "id", updatable = false)
     private Long id;
 
-    @Column(name = "nombre", nullable = false)
+    @Column(name = "name", nullable = false)
     private String nombre;
 
     public Rol() {

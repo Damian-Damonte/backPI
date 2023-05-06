@@ -31,7 +31,7 @@ public class CaracteristicaServiceImp implements CaracteristicaService {
     public Caracteristica saveCaracteristica(Caracteristica caracteristica) {
         String nombre = caracteristica.getNombre();
         if(caracteristicaRepository.findByNombre(nombre).isPresent())
-            throw new BadRequestException("Ya existe una caracteristica con el nombre '" + nombre + "'");
+            throw new BadRequestException("Ya existe una caracteristica con el name '" + nombre + "'");
 
         return caracteristicaRepository.save(caracteristica);
     }
@@ -54,7 +54,7 @@ public class CaracteristicaServiceImp implements CaracteristicaService {
 
         Caracteristica caracteristicaByNombre = caracteristicaRepository.findByNombre(nombre).orElse(null);
         if(caracteristicaByNombre != null && !(caracteristicaByNombre.getId().equals(id)))
-            throw new BadRequestException("Ya existe una caracteristica con el nombre '" + nombre + "'");
+            throw new BadRequestException("Ya existe una caracteristica con el name '" + nombre + "'");
 
         return caracteristicaRepository.save(caracteristica);
     }

@@ -1,11 +1,11 @@
 package com.dh.digitalbooking.service.imp;
 
-import com.dh.digitalbooking.dto.pais.PaisDTO;
+import com.dh.digitalbooking.dto.pais.CountryFullDTO;
 import com.dh.digitalbooking.dto.pais.PaisNoIdDTO;
 import com.dh.digitalbooking.exception.BadRequestException;
 import com.dh.digitalbooking.exception.NotFoundException;
 import com.dh.digitalbooking.entity.Country;
-import com.dh.digitalbooking.mapper.PaisMapper;
+import com.dh.digitalbooking.mapper.CountryMapper;
 import com.dh.digitalbooking.repository.PaisRepository;
 import com.dh.digitalbooking.service.PaisService;
 import org.springframework.context.annotation.Lazy;
@@ -16,33 +16,33 @@ import java.util.List;
 public class PaisServiceImp implements PaisService {
 
     private final PaisRepository paisRepository;
-    private final PaisMapper paisMapper;
+    private final CountryMapper countryMapper;
     private final CiudadServiceImp ciudadServiceImp;
 
-    public PaisServiceImp(PaisRepository paisRepository, PaisMapper paisMapper, @Lazy CiudadServiceImp ciudadServiceImp) {
+    public PaisServiceImp(PaisRepository paisRepository, CountryMapper countryMapper, @Lazy CiudadServiceImp ciudadServiceImp) {
         this.paisRepository = paisRepository;
-        this.paisMapper = paisMapper;
+        this.countryMapper = countryMapper;
         this.ciudadServiceImp = ciudadServiceImp;
     }
 
     @Override
-    public List<PaisDTO> allPais() {
-        return paisMapper.listPaisToPaisDTO(paisRepository.findAll());
+    public List<CountryFullDTO> allPais() {
+        return countryMapper.listCountryToCountryFullDTO(paisRepository.findAll());
     }
 
     @Override
-    public PaisDTO getByIdPais(Long id) {
-        return paisMapper.paisToPaisDTO(existByIdValidation(id));
+    public CountryFullDTO getByIdPais(Long id) {
+        return countryMapper.countryToContryFullDTO(existByIdValidation(id));
     }
 
     @Override
-    public PaisDTO savePais(PaisNoIdDTO paisNoIdDTO) {
-        String nombre = paisNoIdDTO.nombre();
+    public CountryFullDTO savePais(PaisNoIdDTO paisNoIdDTO) {
+        String nombre = paisNoIdDTO.name();
         if(paisRepository.findByName(nombre).isPresent())
-            throw new BadRequestException("Ya existe un pais con el nombre '" + nombre + "'");
-        Country country = paisMapper.paisNoIdDTOToPais(paisNoIdDTO);
+            throw new BadRequestException("Ya existe un pais con el name '" + nombre + "'");
+        Country country = countryMapper.countryNoIdDTOToCountry(paisNoIdDTO);
 
-        return paisMapper.paisToPaisDTO(paisRepository.save(country));
+        return countryMapper.countryToContryFullDTO(paisRepository.save(country));
     }
 
     @Override
@@ -54,17 +54,17 @@ public class PaisServiceImp implements PaisService {
     }
 
     @Override
-    public PaisDTO updatePais(PaisDTO paisDTO) {
-        Long id = paisDTO.id();
-        String nombre = paisDTO.nombre();
+    public CountryFullDTO updatePais(CountryFullDTO countryFullDTO) {
+        Long id = countryFullDTO.id();
+        String nombre = countryFullDTO.name();
         existByIdValidation(id);
 
         Country countryByNombre = paisRepository.findByName(nombre).orElse(null);
         if(countryByNombre != null && !(countryByNombre.getId().equals(id)))
-            throw new BadRequestException("Ya existe un pais con el nombre '" + nombre + "'");
+            throw new BadRequestException("Ya existe un pais con el name '" + nombre + "'");
 
-        Country country = paisMapper.paisDTOtoPais(paisDTO);
-        return paisMapper.paisToPaisDTO(paisRepository.save(country));
+        Country country = countryMapper.countryFullDTOToCountry(countryFullDTO);
+        return countryMapper.countryToContryFullDTO(paisRepository.save(country));
     }
 
     public Country existByIdValidation(Long id) {

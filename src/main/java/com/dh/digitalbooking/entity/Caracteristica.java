@@ -12,7 +12,7 @@ import java.util.Set;
 @Table(
         name = "caracteristicas",
         uniqueConstraints = {
-                @UniqueConstraint(name = "caracteristicas_nombre_unique", columnNames = "nombre")
+                @UniqueConstraint(name = "caracteristicas_nombre_unique", columnNames = "name")
         }
 )
 public class Caracteristica {
@@ -20,9 +20,9 @@ public class Caracteristica {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", updatable = false)
     private Long id;
-    @Column(name = "nombre", nullable = false)
-    @NotBlank(message = "La característica debe tener un nombre")
-    @Size(max = 255, message = "El nombre de la característica no debe tener más de 255 caracteres")
+    @Column(name = "name", nullable = false)
+    @NotBlank(message = "La característica debe tener un name")
+    @Size(max = 255, message = "El name de la característica no debe tener más de 255 caracteres")
     private String nombre;
 
     @ManyToMany(mappedBy = "caracteristicas")

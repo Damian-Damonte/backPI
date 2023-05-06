@@ -9,7 +9,7 @@ import java.util.Set;
 @Table(
         name = "tipos_politicas",
         uniqueConstraints = {
-                @UniqueConstraint(name = "tipo_politica_nombre_unique", columnNames = "nombre")
+                @UniqueConstraint(name = "tipo_politica_nombre_unique", columnNames = "name")
         }
 )
 public class TipoPolitica {
@@ -18,7 +18,7 @@ public class TipoPolitica {
     @Column(name = "id", updatable = false)
     private Long id;
 
-    @Column(name = "nombre", length = 100)
+    @Column(name = "name", length = 100)
     private String nombre;
 
     @OneToMany(mappedBy = "tipoPolitica")

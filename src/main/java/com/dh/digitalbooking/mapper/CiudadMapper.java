@@ -3,7 +3,7 @@ package com.dh.digitalbooking.mapper;
 import com.dh.digitalbooking.dto.ciudad.CityPutDTO;
 import com.dh.digitalbooking.dto.ciudad.CiudadDTO;
 import com.dh.digitalbooking.dto.ciudad.CiudadPostDTO;
-import com.dh.digitalbooking.dto.pais.PaisDTO;
+import com.dh.digitalbooking.dto.pais.CountryFullDTO;
 import com.dh.digitalbooking.entity.Ciudad;
 import com.dh.digitalbooking.entity.Country;
 import org.springframework.stereotype.Component;
@@ -11,8 +11,8 @@ import org.springframework.stereotype.Component;
 @Component
 public class CiudadMapper {
     public CiudadDTO ciudadToCiudadDTO(Ciudad ciudad) {
-        PaisDTO paisDTO = new PaisDTO(ciudad.getPais().getId(), ciudad.getPais().getName());
-        return new CiudadDTO(ciudad.getId(), ciudad.getNombre(), paisDTO);
+        CountryFullDTO countryFullDTO = new CountryFullDTO(ciudad.getPais().getId(), ciudad.getPais().getName());
+        return new CiudadDTO(ciudad.getId(), ciudad.getNombre(), countryFullDTO);
     }
 
     public Ciudad ciudadPostDTOToCiudad(CiudadPostDTO ciudadPostDTO) {

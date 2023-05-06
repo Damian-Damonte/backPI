@@ -5,8 +5,8 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
 public class UsuarioRequestDto {
-    @NotBlank(message = "El usuario debe tener un nombre")
-    @Size(max = 45, message = "El nombre no debe tener más de 45 caracteres")
+    @NotBlank(message = "El usuario debe tener un name")
+    @Size(max = 45, message = "El name no debe tener más de 45 caracteres")
     private String nombre;
     @NotBlank(message = "El usuario debe tener un apellido")
     @Size(max = 45, message = "El apellido no debe tener más de 45 caracteres")
@@ -15,7 +15,7 @@ public class UsuarioRequestDto {
     @NotBlank(message = "El usuario debe tener un email")
     @Size(max = 255, message = "El email no debe tener más de 255 caracteres")
     private String email;
-    @NotBlank(message = "El usuario debe tener un nombre")
+    @NotBlank(message = "El usuario debe tener un name")
     @Size(max = 255, message = "El email no debe tener más de 255 caracteres")
     private String password;
 

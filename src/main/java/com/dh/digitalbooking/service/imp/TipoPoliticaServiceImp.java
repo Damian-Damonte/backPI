@@ -33,7 +33,7 @@ public class TipoPoliticaServiceImp implements TipoPoliticaService {
         nombreValidation(nombre);
 
         if(tipoPoliticaRepository.findByNombre(nombre).isPresent())
-            throw new BadRequestException("Ya existe un tipo de politica con el nombre '" + nombre + "'");
+            throw new BadRequestException("Ya existe un tipo de politica con el name '" + nombre + "'");
 
         return tipoPoliticaRepository.save(tipoPolitica);
     }
@@ -71,8 +71,8 @@ public class TipoPoliticaServiceImp implements TipoPoliticaService {
 
     private void nombreValidation(String nombre) {
         if(nombre == null || nombre.equals(""))
-            throw new BadRequestException("El tipo de politica debe contener un nombre");
+            throw new BadRequestException("El tipo de politica debe contener un name");
         if(nombre.length() > 100)
-            throw new BadRequestException("El nombre del tipo de politica no debe tener mas de 45 caracteres");
+            throw new BadRequestException("El name del tipo de politica no debe tener mas de 45 caracteres");
     }
 }
