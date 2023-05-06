@@ -1,7 +1,7 @@
 package com.dh.digitalbooking.mapper;
 
 import com.dh.digitalbooking.dto.pais.CountryFullDTO;
-import com.dh.digitalbooking.dto.pais.PaisNoIdDTO;
+import com.dh.digitalbooking.dto.pais.CountryNoIdDTO;
 import com.dh.digitalbooking.entity.Country;
 import org.springframework.stereotype.Component;
 
@@ -20,9 +20,9 @@ public class CountryMapper {
         return country;
     }
 
-    public Country countryNoIdDTOToCountry(PaisNoIdDTO paisNoIdDTO) {
+    public Country countryNoIdDTOToCountry(CountryNoIdDTO countryNoIdDTO) {
         Country country = new Country();
-        country.setName(paisNoIdDTO.name());
+        country.setName(countryNoIdDTO.name());
         return country;
     }
 

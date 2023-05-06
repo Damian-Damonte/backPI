@@ -8,6 +8,6 @@ import java.util.Optional;
 
 @Repository
 @Transactional(readOnly = true)
-public interface PaisRepository extends JpaRepository<Country, Long> {
+public interface CountryRepository extends JpaRepository<Country, Long> {
     Optional<Country> findByName(String name);
 }

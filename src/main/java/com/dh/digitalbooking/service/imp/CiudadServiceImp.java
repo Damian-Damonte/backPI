@@ -16,12 +16,12 @@ import java.util.List;
 @Service
 public class CiudadServiceImp implements CiudadService {
     private final CiudadRepository ciudadRepository;
-    private final PaisServiceImp paisServiceImp;
+    private final CountryServiceImpl countryServiceImpl;
     private final CiudadMapper ciudadMapper;
 
-    public CiudadServiceImp(CiudadRepository ciudadRepository, PaisServiceImp paisServiceImp, CiudadMapper ciudadMapper) {
+    public CiudadServiceImp(CiudadRepository ciudadRepository, CountryServiceImpl countryServiceImpl, CiudadMapper ciudadMapper) {
         this.ciudadRepository = ciudadRepository;
-        this.paisServiceImp = paisServiceImp;
+        this.countryServiceImpl = countryServiceImpl;
         this.ciudadMapper = ciudadMapper;
     }
 
@@ -37,7 +37,7 @@ public class CiudadServiceImp implements CiudadService {
 
     @Override
     public CiudadDTO saveCiudad(CiudadPostDTO ciudadPostDTO) {
-        Country country = paisServiceImp.existByIdValidation(ciudadPostDTO.paisId());
+        Country country = countryServiceImpl.existByIdValidation(ciudadPostDTO.paisId());
         Ciudad ciudad = ciudadMapper.ciudadPostDTOToCiudad(ciudadPostDTO);
         ciudad.setPais(country);
         return ciudadMapper.ciudadToCiudadDTO(ciudadRepository.save(ciudad));
@@ -50,11 +50,11 @@ public class CiudadServiceImp implements CiudadService {
             throw new BadRequestException("No puede eliminar la ciudad con id " + id + " ya que hay productos que en dicha ciudad");
         ciudadRepository.deleteById(id);
     }
-
+//  CREAR METODO GET CIUDAD, se usa el mismo codigo en save y update
     @Override
     public CiudadDTO updateCiudad(CityPutDTO cityPutDTO) {
         existByIdValidation(cityPutDTO.id());
-        Country country = paisServiceImp.existByIdValidation(cityPutDTO.paisId());
+        Country country = countryServiceImpl.existByIdValidation(cityPutDTO.paisId());
         Ciudad ciudad = ciudadMapper.cityPutDTOToCity(cityPutDTO);
         ciudad.setPais(country);
         return ciudadMapper.ciudadToCiudadDTO(ciudadRepository.save(ciudad));

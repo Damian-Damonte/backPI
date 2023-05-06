@@ -29,7 +29,7 @@ public class DigitalbookingApplication {
     @Bean
     CommandLineRunner commandLineRunner(
             CategoriaServiceImp categoriaServiceImp,
-            PaisRepository paisRepository,
+            CountryRepository countryRepository,
             CiudadRepository ciudadRepository,
             ProductoServiceImp productoServiceImp,
             CaracteristicaRepository caracteristicaRepository,
@@ -57,14 +57,14 @@ public class DigitalbookingApplication {
             Categoria departamento = categoriaServiceImp.saveCategoria(new Categoria("Departamento", "Descripcion de la categoria Departamento", "https://images.unsplash.com/photo-1563298723-dcfebaa392e3?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1767&q=80%27"));
 //            Categoria bedAndBreakfast = categoriaServiceImp.saveCategoria(new Categoria("Bed and breakfast", "Descripcion de la categoria Bed and breakfast", "https://images.unsplash.com/photo-1463620910506-d0458143143e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80%27"));
 
-            Country argentina = paisRepository.save(new Country("Argentina"));
-            Country italia = paisRepository.save(new Country("Italia"));
-            Country brasil = paisRepository.save(new Country("Brasil"));
-            Country colombia = paisRepository.save(new Country("Colombia"));
-            Country estadosUnidos = paisRepository.save(new Country("Estados Unidos"));
-            Country espania = paisRepository.save(new Country("España"));
-            Country cuba = paisRepository.save(new Country("Cuba"));
-            Country japon = paisRepository.save(new Country("Japón"));
+            Country argentina = countryRepository.save(new Country("Argentina"));
+            Country italia = countryRepository.save(new Country("Italia"));
+            Country brasil = countryRepository.save(new Country("Brasil"));
+            Country colombia = countryRepository.save(new Country("Colombia"));
+            Country estadosUnidos = countryRepository.save(new Country("Estados Unidos"));
+            Country espania = countryRepository.save(new Country("España"));
+            Country cuba = countryRepository.save(new Country("Cuba"));
+            Country japon = countryRepository.save(new Country("Japón"));
 
             Ciudad puertoIguazu = ciudadRepository.save(new Ciudad("Puerto Iguazú", argentina));
             Ciudad sanMartindelosAndes = ciudadRepository.save(new Ciudad("San Martín de los Andes", argentina));
