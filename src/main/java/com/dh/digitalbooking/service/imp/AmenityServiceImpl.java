@@ -60,22 +60,16 @@ public class AmenityServiceImpl implements AmenityService {
     public AmenityFullDTO updateAmenity(AmenityFullDTO amenityFullDTO) {
         Long id = amenityFullDTO.id();
         String name = amenityFullDTO.name();
-        existByIdValidation(id);
-
+        Amenity amenity = existByIdValidation(id);
         Amenity amenityByNombre = amenityRepository.findByName(name).orElse(null);
         if(amenityByNombre != null && !(amenityByNombre.getId().equals(id)))
             throw new BadRequestException("There is already an amenity with the name '" + name + "'");
 
-//        probar hacerlo sin el .save, simplemente settearle el nuevo nombre, ya que tiene @Transactional
-        Amenity amenity = amenityMapper.amenityFullDTOToAmenity(amenityFullDTO);
-
-
-        return amenityMapper.amenityToAmenityFullDTO(amenityRepository.save(amenity));
+        amenity.setName(name);
+        return amenityFullDTO;
     }
 
     public Amenity existByIdValidation(Long id) {
-//        if(id == null)
-//            throw new BadRequestException("Debe enviar el id de la caracteristica");
         return amenityRepository.findById(id).orElseThrow(() ->
                 new NotFoundException("Amenity with id " + id + " not found"));
     }
