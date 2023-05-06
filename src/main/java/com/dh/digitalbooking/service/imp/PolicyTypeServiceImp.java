@@ -8,7 +8,7 @@ import com.dh.digitalbooking.entity.PolicyType;
 import com.dh.digitalbooking.mapper.PolicyTypeMapper;
 import com.dh.digitalbooking.repository.PolicyTypeRepository;
 import com.dh.digitalbooking.service.PolicyTypeService;
-import com.dh.digitalbooking.service.PoliticaService;
+import com.dh.digitalbooking.service.PolicyService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,12 +18,12 @@ import java.util.List;
 public class PolicyTypeServiceImp implements PolicyTypeService {
     private final PolicyTypeRepository policyTypeRepository;
     private final PolicyTypeMapper policyTypeMapper;
-    private final PoliticaService politicaService;
+    private final PolicyService policyService;
 
-    public PolicyTypeServiceImp(PolicyTypeRepository policyTypeRepository, PolicyTypeMapper policyTypeMapper, PoliticaService politicaService) {
+    public PolicyTypeServiceImp(PolicyTypeRepository policyTypeRepository, PolicyTypeMapper policyTypeMapper, PolicyService policyService) {
         this.policyTypeRepository = policyTypeRepository;
         this.policyTypeMapper = policyTypeMapper;
-        this.politicaService = politicaService;
+        this.policyService = policyService;
     }
 
     @Override
@@ -52,7 +52,7 @@ public class PolicyTypeServiceImp implements PolicyTypeService {
     @Transactional
     public void deletePolicyType(Long id) {
         existByIdValidation(id);
-        if(politicaService.existsByPolicyType_id(id))
+        if(policyService.existsByPolicyType_id(id))
             throw new BadRequestException("You cannot delete the policy type with id " + id + " because there are policies registered with this type");
         policyTypeRepository.deleteById(id);
     }

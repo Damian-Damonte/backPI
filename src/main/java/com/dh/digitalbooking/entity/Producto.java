@@ -83,9 +83,9 @@ public class Producto {
     @Size(max = 50, message = "El producto no puede tener más de 50 imágenes")
     private Set<Image> imagenes = new HashSet<>();
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "producto")
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "product")
     @Valid
-    private Set<Politica> politicas = new HashSet<>();
+    private Set<Policy> policies = new HashSet<>();
 
     @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(
@@ -119,7 +119,7 @@ public class Producto {
         this.city = city;
     }
 
-    public Producto(String titulo, String tituloDescripcion, String descripcion, Categoria categoria, City city, Set<Amenity> amenities, Set<Image> imagenes, Set<Politica> politicas, Coordenadas coordenadas) {
+    public Producto(String titulo, String tituloDescripcion, String descripcion, Categoria categoria, City city, Set<Amenity> amenities, Set<Image> imagenes, Set<Policy> policies, Coordenadas coordenadas) {
         this.titulo = titulo;
         this.tituloDescripcion = tituloDescripcion;
         this.descripcion = descripcion;
@@ -127,7 +127,7 @@ public class Producto {
         this.city = city;
         this.amenities = amenities;
         this.imagenes = imagenes;
-        this.politicas = politicas;
+        this.policies = policies;
         this.coordenadas = coordenadas;
     }
 
@@ -195,12 +195,12 @@ public class Producto {
         this.imagenes = imagenes;
     }
 
-    public Set<Politica> getPoliticas() {
-        return politicas;
+    public Set<Policy> getPoliticas() {
+        return policies;
     }
 
-    public void setPoliticas(Set<Politica> politicas) {
-        this.politicas = politicas;
+    public void setPoliticas(Set<Policy> policies) {
+        this.policies = policies;
     }
 
     public Coordenadas getCoordenadas() {

@@ -28,10 +28,10 @@ public class ProductoServiceImp implements ProductoService {
     private final AmenityService amenityService;
     private final PolicyTypeService policyTypeService;
     private final ImageServiceImp imagenServiceImp;
-    private final PoliticaServiceImp politicaServiceImp;
+    private final PolicyServiceImp politicaServiceImp;
     private final CoordenadasServiceImp coordenadasServiceImp;
 
-    public ProductoServiceImp(ProductoRepository productoRepository, CategoriaServiceImp categoriaServiceImp, CityService cityService, AmenityService amenityService, PolicyTypeService policyTypeService, ImageServiceImp imagenServiceImp, PoliticaServiceImp politicaServiceImp, CoordenadasServiceImp coordenadasServiceImp) {
+    public ProductoServiceImp(ProductoRepository productoRepository, CategoriaServiceImp categoriaServiceImp, CityService cityService, AmenityService amenityService, PolicyTypeService policyTypeService, ImageServiceImp imagenServiceImp, PolicyServiceImp politicaServiceImp, CoordenadasServiceImp coordenadasServiceImp) {
         this.productoRepository = productoRepository;
         this.categoriaServiceImp = categoriaServiceImp;
         this.cityService = cityService;
@@ -159,26 +159,26 @@ public class ProductoServiceImp implements ProductoService {
 
     private void getPoliticas(Producto producto) {
         Long productoId = producto.getId();
-        Set<Politica> politicas = new HashSet<>();
+        Set<Policy> policies = new HashSet<>();
         producto.getPoliticas().forEach(politica -> {
             politicaValidation(productoId, politica);
             getTipoPolitica(politica);
-            politica.setProducto(producto);
-            politicas.add(politica);
+            politica.setProduct(producto);
+            policies.add(politica);
         });
-        producto.setPoliticas(politicas);
+        producto.setPoliticas(policies);
     }
 
-    private void getTipoPolitica(Politica politica) {
-        Long tipoPoliticaId = politica.getTipoPolitica().getId();
+    private void getTipoPolitica(Policy policy) {
+        Long tipoPoliticaId = policy.getPolicyType().getId();
         PolicyType policyType = policyTypeService.existByIdValidation(tipoPoliticaId);
 
-//        Ahora no se puede crear el tipo de politica cuando creamos un producto
+//        Ahora no se puede crear el tipo de policy cuando creamos un producto
 //        PolicyType policyType = tipoPoliticaId != null
 //                ? tipoPoliticaServiceImp.existByIdValidation(tipoPoliticaId)
-//                : tipoPoliticaServiceImp.savePolicyType(politica.getTipoPolitica());
+//                : tipoPoliticaServiceImp.savePolicyType(policy.getTipoPolitica());
 
-        politica.setTipoPolitica(policyType);
+        policy.setPolicyType(policyType);
     }
 
     public void getCoordenadas(Producto producto) {
@@ -207,12 +207,12 @@ public class ProductoServiceImp implements ProductoService {
         }
     }
 
-    private void politicaValidation(Long productoId, Politica politica) {
-        Long id = politica.getId();
+    private void politicaValidation(Long productoId, Policy policy) {
+        Long id = policy.getId();
         if (id != null) {
-            Politica currentPolitica = politicaServiceImp.getByIdPolitica(id);
-            if (!(currentPolitica.getProducto().getId().equals(productoId)))
-                throw new BadRequestException("La politica con id " + id + " no pertenece a este producto");
+            Policy currentPolicy = politicaServiceImp.getPolicyById(id);
+            if (!(currentPolicy.getProduct().getId().equals(productoId)))
+                throw new BadRequestException("La policy con id " + id + " no pertenece a este producto");
         }
     }
 

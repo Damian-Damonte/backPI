@@ -114,7 +114,7 @@ public class DigitalbookingApplication {
             PolicyType saludYSeguridad = policyTypeRepository.save(new PolicyType("Salud y seguridad"));
             PolicyType politicaDeCancelacion = policyTypeRepository.save(new PolicyType("Politicas de cancelacion"));
 
-            Politica politica1 = new Politica(
+            Policy policy1 = new Policy(
                 """
                             Se aplican las pautas de distanciamiento social y otras normas relacionadas con el coronavirus
                             Detector de humo
@@ -124,7 +124,7 @@ public class DigitalbookingApplication {
                             """
                     , saludYSeguridad);
 
-            Politica politica2 = new Politica(
+            Policy policy2 = new Policy(
                     "Check-out: 22:00\n"+
                             "No se permiten fiestas\n" +
                             "No fumar\n" +
@@ -132,11 +132,11 @@ public class DigitalbookingApplication {
                     normasDeLaCasa
             );
 
-            Politica politica3 = new Politica(
+            Policy policy3 = new Policy(
                     "Agregá las fechas de tu viaje para obtener los detalles de cancelacion de esta estadía",
                     politicaDeCancelacion
             );
-            Set<Politica> setPoliticas = new HashSet<>(Set.of(politica1, politica2, politica3));
+            Set<Policy> setPolicies = new HashSet<>(Set.of(policy1, policy2, policy3));
 
             Set<Amenity> caracteristicas1 = new HashSet<>(Set.of(televisor, desayuno, bar, noFumar));
             Set<Amenity> caracteristicas2 = new HashSet<>(Set.of(cajaFuerte, parrilla, lavadora, pileta, aptoMascotas, seguridad24));
@@ -183,7 +183,7 @@ public class DigitalbookingApplication {
             producto1.setCiudad(barcelona);
             producto1.setCaracteristicas(caracteristicas1);
             producto1.setImagenes(setFotos);
-            producto1.setPoliticas(setPoliticas);
+            producto1.setPoliticas(setPolicies);
             producto1.setCoordenadas(hiltongardenc);
             productoServiceImp.saveProducto(producto1);
 

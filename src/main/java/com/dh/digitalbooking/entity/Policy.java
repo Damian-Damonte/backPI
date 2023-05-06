@@ -6,9 +6,9 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
-@Entity(name = "Politica")
-@Table(name = "politicas")
-public class Politica {
+@Entity(name = "Policy")
+@Table(name = "policies")
+public class Policy {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", updatable = false)
@@ -17,7 +17,7 @@ public class Politica {
     @Column(name = "descripcion", nullable = false, columnDefinition = "TEXT", length = 600)
     @Size(max = 600, message = "La descripcion de la política no debe tener más de 600 caracteres")
     @NotBlank(message = "La política debe tener una descrpción")
-    private String descripcion;
+    private String description;
 
     @ManyToOne
     @JoinColumn(
@@ -37,13 +37,13 @@ public class Politica {
             foreignKey = @ForeignKey(name = "productos_politicas_id_fk")
     )
     @JsonIgnore
-    private Producto producto;
+    private Producto product;
 
-    public Politica() {
+    public Policy() {
     }
 
-    public Politica(String descripcion, PolicyType policyType) {
-        this.descripcion = descripcion;
+    public Policy(String description, PolicyType policyType) {
+        this.description = description;
         this.policyType = policyType;
     }
 
@@ -55,27 +55,27 @@ public class Politica {
         this.id = id;
     }
 
-    public String getDescripcion() {
-        return descripcion;
+    public String getDescription() {
+        return description;
     }
 
-    public void setDescripcion(String descripcion) {
-        this.descripcion = descripcion;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
-    public PolicyType getTipoPolitica() {
+    public PolicyType getPolicyType() {
         return policyType;
     }
 
-    public void setTipoPolitica(PolicyType policyType) {
+    public void setPolicyType(PolicyType policyType) {
         this.policyType = policyType;
     }
 
-    public Producto getProducto() {
-        return producto;
+    public Producto getProduct() {
+        return product;
     }
 
-    public void setProducto(Producto producto) {
-        this.producto = producto;
+    public void setProduct(Producto product) {
+        this.product = product;
     }
 }
