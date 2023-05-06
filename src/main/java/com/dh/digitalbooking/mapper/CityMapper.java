@@ -1,0 +1,38 @@
+package com.dh.digitalbooking.mapper;
+
+import com.dh.digitalbooking.dto.city.CityPutDTO;
+import com.dh.digitalbooking.dto.city.CityFullDTO;
+import com.dh.digitalbooking.dto.city.CityPostDTO;
+import com.dh.digitalbooking.dto.country.CountryFullDTO;
+import com.dh.digitalbooking.entity.City;
+import com.dh.digitalbooking.entity.Country;
+import org.springframework.stereotype.Component;
+
+@Component
+public class CityMapper {
+    public CityFullDTO cityToCityFullDTO(City city) {
+        CountryFullDTO countryFullDTO = new CountryFullDTO(city.getPais().getId(), city.getPais().getName());
+        return new CityFullDTO(city.getId(), city.getName(), countryFullDTO);
+    }
+
+    public City cityPostDTOToCity(CityPostDTO cityPostDTO) {
+        Country country = new Country();
+        country.setId(cityPostDTO.countryId());
+
+        City city = new City();
+        city.setName(cityPostDTO.name());
+        city.setPais(country);
+        return city;
+    }
+
+    public City cityPutDTOToCity(CityPutDTO cityPutDTO) {
+        Country country = new Country();
+        country.setId(cityPutDTO.countryId());
+
+        City city = new City();
+        city.setId(cityPutDTO.id());
+        city.setName(cityPutDTO.name());
+        city.setPais(country);
+        return city;
+    }
+}

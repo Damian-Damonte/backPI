@@ -1,7 +1,7 @@
 package com.dh.digitalbooking.service.imp;
 
-import com.dh.digitalbooking.dto.pais.CountryFullDTO;
-import com.dh.digitalbooking.dto.pais.CountryNoIdDTO;
+import com.dh.digitalbooking.dto.country.CountryFullDTO;
+import com.dh.digitalbooking.dto.country.CountryNoIdDTO;
 import com.dh.digitalbooking.exception.BadRequestException;
 import com.dh.digitalbooking.exception.NotFoundException;
 import com.dh.digitalbooking.entity.Country;
@@ -16,12 +16,12 @@ import java.util.List;
 public class CountryServiceImpl implements CountryService {
     private final CountryRepository countryRepository;
     private final CountryMapper countryMapper;
-    private final CiudadServiceImp ciudadServiceImp;
+    private final CityService cityService;
 
-    public CountryServiceImpl(CountryRepository countryRepository, CountryMapper countryMapper, @Lazy CiudadServiceImp ciudadServiceImp) {
+    public CountryServiceImpl(CountryRepository countryRepository, CountryMapper countryMapper, @Lazy CityService cityService) {
         this.countryRepository = countryRepository;
         this.countryMapper = countryMapper;
-        this.ciudadServiceImp = ciudadServiceImp;
+        this.cityService = cityService;
     }
 
     @Override
@@ -47,7 +47,7 @@ public class CountryServiceImpl implements CountryService {
     @Override
     public void deleteCountry(Long id) {
         existByIdValidation(id);
-        if(ciudadServiceImp.existsCityByCountryId(id))
+        if(cityService.existsCityByCountryId(id))
             throw new BadRequestException("You cannot delete the country with id " + id + " because there are cities registered in that country");
         countryRepository.deleteById(id);
     }

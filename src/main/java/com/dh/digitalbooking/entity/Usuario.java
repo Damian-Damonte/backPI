@@ -30,7 +30,7 @@ public class Usuario implements UserDetails {
     @Column(name = "password", nullable = false)
     @JsonIgnore
     private String password;
-    @Column(name = "ciudad")
+    @Column(name = "city")
     private String ciudad;
 
     @ManyToOne()

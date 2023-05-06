@@ -1,7 +1,7 @@
 package com.dh.digitalbooking.controller;
 
-import com.dh.digitalbooking.dto.pais.CountryFullDTO;
-import com.dh.digitalbooking.dto.pais.CountryNoIdDTO;
+import com.dh.digitalbooking.dto.country.CountryFullDTO;
+import com.dh.digitalbooking.dto.country.CountryNoIdDTO;
 import com.dh.digitalbooking.service.CountryService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;

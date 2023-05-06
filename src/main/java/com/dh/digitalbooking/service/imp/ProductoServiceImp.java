@@ -23,17 +23,17 @@ public class ProductoServiceImp implements ProductoService {
 
     private final ProductoRepository productoRepository;
     private final CategoriaServiceImp categoriaServiceImp;
-    private final CiudadServiceImp ciudadServiceImp;
+    private final CityService cityService;
     private final CaracteristicaServiceImp caracteristicaServiceImp;
     private final TipoPoliticaServiceImp tipoPoliticaServiceImp;
     private final ImagenServiceImp imagenServiceImp;
     private final PoliticaServiceImp politicaServiceImp;
     private final CoordenadasServiceImp coordenadasServiceImp;
 
-    public ProductoServiceImp(ProductoRepository productoRepository, CategoriaServiceImp categoriaServiceImp, CiudadServiceImp ciudadServiceImp, CaracteristicaServiceImp caracteristicaServiceImp, TipoPoliticaServiceImp tipoPoliticaServiceImp, ImagenServiceImp imagenServiceImp, PoliticaServiceImp politicaServiceImp, CoordenadasServiceImp coordenadasServiceImp) {
+    public ProductoServiceImp(ProductoRepository productoRepository, CategoriaServiceImp categoriaServiceImp, CityService cityService, CaracteristicaServiceImp caracteristicaServiceImp, TipoPoliticaServiceImp tipoPoliticaServiceImp, ImagenServiceImp imagenServiceImp, PoliticaServiceImp politicaServiceImp, CoordenadasServiceImp coordenadasServiceImp) {
         this.productoRepository = productoRepository;
         this.categoriaServiceImp = categoriaServiceImp;
-        this.ciudadServiceImp = ciudadServiceImp;
+        this.cityService = cityService;
         this.caracteristicaServiceImp = caracteristicaServiceImp;
         this.tipoPoliticaServiceImp = tipoPoliticaServiceImp;
         this.imagenServiceImp = imagenServiceImp;
@@ -118,7 +118,7 @@ public class ProductoServiceImp implements ProductoService {
     }
 
     private Producto getProducto(Producto producto) {
-        producto.setCiudad(ciudadServiceImp.existByIdValidation(producto.getCiudad().getId()));
+        producto.setCiudad(cityService.existByIdValidation(producto.getCiudad().getId()));
         producto.setCategoria(categoriaServiceImp.existByIdValidation(producto.getCategoria().getId()));
 
         getCaracteristicas(producto);
@@ -224,7 +224,7 @@ public class ProductoServiceImp implements ProductoService {
         LocalDate checkOut = filters.getCheckOut();
 
         if (ciudadId != null)
-            ciudadServiceImp.existByIdValidation(ciudadId);
+            cityService.existByIdValidation(ciudadId);
         if (categoriaId != null)
             categoriaServiceImp.existByIdValidation(categoriaId);
         if (checkIn != null)

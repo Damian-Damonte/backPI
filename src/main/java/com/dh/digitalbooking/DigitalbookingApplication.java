@@ -30,7 +30,7 @@ public class DigitalbookingApplication {
     CommandLineRunner commandLineRunner(
             CategoriaServiceImp categoriaServiceImp,
             CountryRepository countryRepository,
-            CiudadRepository ciudadRepository,
+            CityRepository cityRepository,
             ProductoServiceImp productoServiceImp,
             CaracteristicaRepository caracteristicaRepository,
             TipoPoliticaRepository tipoPoliticaRepository,
@@ -66,22 +66,22 @@ public class DigitalbookingApplication {
             Country cuba = countryRepository.save(new Country("Cuba"));
             Country japon = countryRepository.save(new Country("Japón"));
 
-            Ciudad puertoIguazu = ciudadRepository.save(new Ciudad("Puerto Iguazú", argentina));
-            Ciudad sanMartindelosAndes = ciudadRepository.save(new Ciudad("San Martín de los Andes", argentina));
-            Ciudad elCalafate = ciudadRepository.save(new Ciudad("El Calafate", argentina));
-            Ciudad neuquen = ciudadRepository.save(new Ciudad("Neuquen", argentina));
-            Ciudad barcelona = ciudadRepository.save(new Ciudad("Barcelona", espania));
-            Ciudad grado = ciudadRepository.save(new Ciudad("Grado", italia));
-            Ciudad ushuaia = ciudadRepository.save(new Ciudad("Ushuaia", argentina));
-            Ciudad buzios = ciudadRepository.save(new Ciudad("Buzios", brasil));
-            Ciudad miami = ciudadRepository.save(new Ciudad("Miami", estadosUnidos));
-            Ciudad santaMa = ciudadRepository.save(new Ciudad("Santa María", colombia));
-            Ciudad laHabana = ciudadRepository.save(new Ciudad("La Habana", cuba));
-            Ciudad newyork = ciudadRepository.save(new Ciudad("New York", estadosUnidos));
-            Ciudad tokio = ciudadRepository.save(new Ciudad("Tokio", japon));
-            Ciudad buenosaires = ciudadRepository.save(new Ciudad("Buenos Aires", argentina));
-            Ciudad roma = ciudadRepository.save(new Ciudad("Roma", italia));
-            Ciudad florencia = ciudadRepository.save(new Ciudad("Florencia", italia));
+            City puertoIguazu = cityRepository.save(new City("Puerto Iguazú", argentina));
+            City sanMartindelosAndes = cityRepository.save(new City("San Martín de los Andes", argentina));
+            City elCalafate = cityRepository.save(new City("El Calafate", argentina));
+            City neuquen = cityRepository.save(new City("Neuquen", argentina));
+            City barcelona = cityRepository.save(new City("Barcelona", espania));
+            City grado = cityRepository.save(new City("Grado", italia));
+            City ushuaia = cityRepository.save(new City("Ushuaia", argentina));
+            City buzios = cityRepository.save(new City("Buzios", brasil));
+            City miami = cityRepository.save(new City("Miami", estadosUnidos));
+            City santaMa = cityRepository.save(new City("Santa María", colombia));
+            City laHabana = cityRepository.save(new City("La Habana", cuba));
+            City newyork = cityRepository.save(new City("New York", estadosUnidos));
+            City tokio = cityRepository.save(new City("Tokio", japon));
+            City buenosaires = cityRepository.save(new City("Buenos Aires", argentina));
+            City roma = cityRepository.save(new City("Roma", italia));
+            City florencia = cityRepository.save(new City("Florencia", italia));
 
 //            Caracteristica wifi = caracteristicaRepository.save(new Caracteristica("Wifi"));
             Caracteristica cocina = caracteristicaRepository.save(new Caracteristica("Cocina"));
@@ -92,7 +92,7 @@ public class DigitalbookingApplication {
             Caracteristica lavadora = caracteristicaRepository.save(new Caracteristica("Lavadora"));
             Caracteristica banioPrivado = caracteristicaRepository.save(new Caracteristica("Baño privado"));
             Caracteristica noFumar = caracteristicaRepository.save(new Caracteristica("No fumar"));
-            Caracteristica vistaCiudad = caracteristicaRepository.save(new Caracteristica("Vistas a la ciudad"));
+            Caracteristica vistaCiudad = caracteristicaRepository.save(new Caracteristica("Vistas a la city"));
 
             Caracteristica desayuno = caracteristicaRepository.save(new Caracteristica("Desayuno incluido"));
             Caracteristica calefaccion = caracteristicaRepository.save(new Caracteristica("Calefaccion"));

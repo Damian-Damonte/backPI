@@ -20,7 +20,7 @@ public interface ProductoRepository extends JpaRepository<Producto, Long> {
 
     @Query(
             "SELECT p FROM Producto p WHERE " +
-                "(:ciudadId IS NULL OR p.ciudad.id = :ciudadId) " +
+                "(:ciudadId IS NULL OR p.city.id = :ciudadId) " +
                 "AND (:categoriaId IS NULL OR p.categoria.id = :categoriaId) " +
                 "AND ((:checkIn IS NULL AND :checkOut IS NULL) OR p.id NOT IN " +
                 "(SELECT r.producto.id FROM Reserva r WHERE " +

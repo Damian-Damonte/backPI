@@ -1,7 +1,7 @@
 package com.dh.digitalbooking.mapper;
 
-import com.dh.digitalbooking.dto.pais.CountryFullDTO;
-import com.dh.digitalbooking.dto.pais.CountryNoIdDTO;
+import com.dh.digitalbooking.dto.country.CountryFullDTO;
+import com.dh.digitalbooking.dto.country.CountryNoIdDTO;
 import com.dh.digitalbooking.entity.Country;
 import org.springframework.stereotype.Component;
 

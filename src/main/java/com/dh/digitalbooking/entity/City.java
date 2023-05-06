@@ -6,35 +6,35 @@ import jakarta.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
-@Entity(name = "Ciudad")
-@Table(name = "ciudades")
-public class Ciudad {
+@Entity(name = "City")
+@Table(name = "cities")
+public class City {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", updatable = false)
     private Long id;
 
     @Column(name = "name", nullable = false)
-    private String nombre;
+    private String name;
 
     @ManyToOne
     @JoinColumn(
-            name = "pais_id",
+            name = "country_id",
             nullable = false,
             referencedColumnName = "id",
-            foreignKey = @ForeignKey(name = "ciudades_paises_fk")
+            foreignKey = @ForeignKey(name = "cities_countries_fk")
     )
     private Country country;
 
-    @OneToMany(mappedBy = "ciudad")
+    @OneToMany(mappedBy = "city")
     @JsonIgnore
-    private Set<Producto> productos = new HashSet<>();
+    private Set<Producto> products = new HashSet<>();
 
-    public Ciudad() {
+    public City() {
     }
 
-    public Ciudad(String nombre, Country country) {
-        this.nombre = nombre;
+    public City(String name, Country country) {
+        this.name = name;
         this.country = country;
     }
 
@@ -46,12 +46,12 @@ public class Ciudad {
         this.id = id;
     }
 
-    public String getNombre() {
-        return nombre;
+    public String getName() {
+        return name;
     }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public Country getPais() {
@@ -62,11 +62,11 @@ public class Ciudad {
         this.country = country;
     }
 
-    public Set<Producto> getProductos() {
-        return productos;
+    public Set<Producto> getProducts() {
+        return products;
     }
 
-    public void setProductos(Set<Producto> productos) {
-        this.productos = productos;
+    public void setProducts(Set<Producto> productos) {
+        this.products = productos;
     }
 }

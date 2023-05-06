@@ -27,8 +27,8 @@ public class Reserva {
     @NotNull(message = "Debe ingresar la hora de llegada")
     private LocalTime horaLlegada;
     @Column(name = "ciudad_usuario", nullable = false, length = 100)
-    @NotBlank(message = "Debe ingresar la ciudad del usuario")
-    @Size(max = 100, message = "La ciudad del usuario no debe tener más de 100 caracteres")
+    @NotBlank(message = "Debe ingresar la city del usuario")
+    @Size(max = 100, message = "La city del usuario no debe tener más de 100 caracteres")
     private String ciudadUsuario;
     @Column(name = "datos_extra", columnDefinition = "TEXT", length = 500)
     @Size(max = 500, message = "Los datos extra al vendedor no deben tener más de 500 caracteres")

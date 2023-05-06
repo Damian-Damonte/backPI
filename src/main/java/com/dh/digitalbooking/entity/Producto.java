@@ -60,8 +60,8 @@ public class Producto {
             referencedColumnName = "id",
             foreignKey = @ForeignKey(name = "productos_ciudad_fk")
     )
-    @NotNull(message = "El producto debe pertenecer a una ciudad")
-    private Ciudad ciudad;
+    @NotNull(message = "El producto debe pertenecer a una city")
+    private City city;
 
     @ManyToMany
     @JoinTable(
@@ -111,20 +111,20 @@ public class Producto {
     public Producto() {
     }
 
-    public Producto(String titulo, String tituloDescripcion, String descripcion, Categoria categoria, Ciudad ciudad) {
+    public Producto(String titulo, String tituloDescripcion, String descripcion, Categoria categoria, City city) {
         this.titulo = titulo;
         this.tituloDescripcion = tituloDescripcion;
         this.descripcion = descripcion;
         this.categoria = categoria;
-        this.ciudad = ciudad;
+        this.city = city;
     }
 
-    public Producto(String titulo, String tituloDescripcion, String descripcion, Categoria categoria, Ciudad ciudad, Set<Caracteristica> caracteristicas, Set<Imagen> imagenes, Set<Politica> politicas, Coordenadas coordenadas) {
+    public Producto(String titulo, String tituloDescripcion, String descripcion, Categoria categoria, City city, Set<Caracteristica> caracteristicas, Set<Imagen> imagenes, Set<Politica> politicas, Coordenadas coordenadas) {
         this.titulo = titulo;
         this.tituloDescripcion = tituloDescripcion;
         this.descripcion = descripcion;
         this.categoria = categoria;
-        this.ciudad = ciudad;
+        this.city = city;
         this.caracteristicas = caracteristicas;
         this.imagenes = imagenes;
         this.politicas = politicas;
@@ -171,12 +171,12 @@ public class Producto {
         this.categoria = categoria;
     }
 
-    public Ciudad getCiudad() {
-        return ciudad;
+    public City getCiudad() {
+        return city;
     }
 
-    public void setCiudad(Ciudad ciudad) {
-        this.ciudad = ciudad;
+    public void setCiudad(City city) {
+        this.city = city;
     }
 
     public Set<Caracteristica> getCaracteristicas() {

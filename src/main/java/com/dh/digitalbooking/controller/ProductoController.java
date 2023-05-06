@@ -30,7 +30,7 @@ public class ProductoController {
 
     @GetMapping("/filters")
     @Operation(
-            summary = "Productos filtrados por ciudad, categoría, fecha checkIn y fecha checkOut",
+            summary = "Productos filtrados por city, categoría, fecha checkIn y fecha checkOut",
             description = "En caso de no enviar ningún parámetro devolverá todos los productos. " +
                     "No es necesario enviar todos los parámetros para para poder realizar un filtrado."
     )
