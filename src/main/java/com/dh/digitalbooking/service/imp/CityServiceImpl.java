@@ -9,16 +9,17 @@ import com.dh.digitalbooking.exception.NotFoundException;
 import com.dh.digitalbooking.entity.Country;
 import com.dh.digitalbooking.mapper.CityMapper;
 import com.dh.digitalbooking.repository.CityRepository;
+import com.dh.digitalbooking.service.CityService;
 import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class CityService implements com.dh.digitalbooking.service.CityService {
+public class CityServiceImpl implements CityService {
     private final CityRepository cityRepository;
     private final CountryServiceImpl countryServiceImpl;
     private final CityMapper cityMapper;
 
-    public CityService(CityRepository cityRepository, CountryServiceImpl countryServiceImpl, CityMapper cityMapper) {
+    public CityServiceImpl(CityRepository cityRepository, CountryServiceImpl countryServiceImpl, CityMapper cityMapper) {
         this.cityRepository = cityRepository;
         this.countryServiceImpl = countryServiceImpl;
         this.cityMapper = cityMapper;
@@ -38,7 +39,7 @@ public class CityService implements com.dh.digitalbooking.service.CityService {
     public CityFullDTO saveCity(CityPostDTO cityPostDTO) {
         Country country = countryServiceImpl.existByIdValidation(cityPostDTO.countryId());
         City city = cityMapper.cityPostDTOToCity(cityPostDTO);
-        city.setPais(country);
+        city.setCountry(country);
         return cityMapper.cityToCityFullDTO(cityRepository.save(city));
     }
 
@@ -56,7 +57,7 @@ public class CityService implements com.dh.digitalbooking.service.CityService {
         existByIdValidation(cityPutDTO.id());
         Country country = countryServiceImpl.existByIdValidation(cityPutDTO.countryId());
         City city = cityMapper.cityPutDTOToCity(cityPutDTO);
-        city.setPais(country);
+        city.setCountry(country);
         return cityMapper.cityToCityFullDTO(cityRepository.save(city));
     }
 

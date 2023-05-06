@@ -16,12 +16,12 @@ import java.util.List;
 public class CountryServiceImpl implements CountryService {
     private final CountryRepository countryRepository;
     private final CountryMapper countryMapper;
-    private final CityService cityService;
+    private final CityServiceImpl cityServiceImpl;
 
-    public CountryServiceImpl(CountryRepository countryRepository, CountryMapper countryMapper, @Lazy CityService cityService) {
+    public CountryServiceImpl(CountryRepository countryRepository, CountryMapper countryMapper, @Lazy CityServiceImpl cityServiceImpl) {
         this.countryRepository = countryRepository;
         this.countryMapper = countryMapper;
-        this.cityService = cityService;
+        this.cityServiceImpl = cityServiceImpl;
     }
 
     @Override
@@ -47,7 +47,7 @@ public class CountryServiceImpl implements CountryService {
     @Override
     public void deleteCountry(Long id) {
         existByIdValidation(id);
-        if(cityService.existsCityByCountryId(id))
+        if(cityServiceImpl.existsCityByCountryId(id))
             throw new BadRequestException("You cannot delete the country with id " + id + " because there are cities registered in that country");
         countryRepository.deleteById(id);
     }

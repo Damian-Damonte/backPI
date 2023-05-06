@@ -54,11 +54,11 @@ public class City {
         this.name = name;
     }
 
-    public Country getPais() {
+    public Country getCountry() {
         return country;
     }
 
-    public void setPais(Country country) {
+    public void setCountry(Country country) {
         this.country = country;
     }
 

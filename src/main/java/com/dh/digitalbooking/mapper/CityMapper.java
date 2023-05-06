@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class CityMapper {
     public CityFullDTO cityToCityFullDTO(City city) {
-        CountryFullDTO countryFullDTO = new CountryFullDTO(city.getPais().getId(), city.getPais().getName());
+        CountryFullDTO countryFullDTO = new CountryFullDTO(city.getCountry().getId(), city.getCountry().getName());
         return new CityFullDTO(city.getId(), city.getName(), countryFullDTO);
     }
 
@@ -21,7 +21,7 @@ public class CityMapper {
 
         City city = new City();
         city.setName(cityPostDTO.name());
-        city.setPais(country);
+        city.setCountry(country);
         return city;
     }
 
@@ -32,7 +32,7 @@ public class CityMapper {
         City city = new City();
         city.setId(cityPutDTO.id());
         city.setName(cityPutDTO.name());
-        city.setPais(country);
+        city.setCountry(country);
         return city;
     }
 }

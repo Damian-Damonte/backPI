@@ -32,7 +32,7 @@ public class DigitalbookingApplication {
             CountryRepository countryRepository,
             CityRepository cityRepository,
             ProductoServiceImp productoServiceImp,
-            CaracteristicaRepository caracteristicaRepository,
+            AmenityRepository amenityRepository,
             TipoPoliticaRepository tipoPoliticaRepository,
             RoleRepository roleRepository,
             UsuarioRepository usuarioRepository,
@@ -83,32 +83,32 @@ public class DigitalbookingApplication {
             City roma = cityRepository.save(new City("Roma", italia));
             City florencia = cityRepository.save(new City("Florencia", italia));
 
-//            Caracteristica wifi = caracteristicaRepository.save(new Caracteristica("Wifi"));
-            Caracteristica cocina = caracteristicaRepository.save(new Caracteristica("Cocina"));
-            Caracteristica televisor = caracteristicaRepository.save(new Caracteristica("Televisor"));
-            Caracteristica pileta = caracteristicaRepository.save(new Caracteristica("Pileta"));
-            Caracteristica aptoMascotas = caracteristicaRepository.save(new Caracteristica("Apto mascotas"));
-            Caracteristica parrilla = caracteristicaRepository.save(new Caracteristica("Parrilla"));
-            Caracteristica lavadora = caracteristicaRepository.save(new Caracteristica("Lavadora"));
-            Caracteristica banioPrivado = caracteristicaRepository.save(new Caracteristica("Baño privado"));
-            Caracteristica noFumar = caracteristicaRepository.save(new Caracteristica("No fumar"));
-            Caracteristica vistaCiudad = caracteristicaRepository.save(new Caracteristica("Vistas a la city"));
+//            Amenity wifi = caracteristicaRepository.save(new Amenity("Wifi"));
+            Amenity cocina = amenityRepository.save(new Amenity("Cocina"));
+            Amenity televisor = amenityRepository.save(new Amenity("Televisor"));
+            Amenity pileta = amenityRepository.save(new Amenity("Pileta"));
+            Amenity aptoMascotas = amenityRepository.save(new Amenity("Apto mascotas"));
+            Amenity parrilla = amenityRepository.save(new Amenity("Parrilla"));
+            Amenity lavadora = amenityRepository.save(new Amenity("Lavadora"));
+            Amenity banioPrivado = amenityRepository.save(new Amenity("Baño privado"));
+            Amenity noFumar = amenityRepository.save(new Amenity("No fumar"));
+            Amenity vistaCiudad = amenityRepository.save(new Amenity("Vistas a la city"));
 
-            Caracteristica desayuno = caracteristicaRepository.save(new Caracteristica("Desayuno incluido"));
-            Caracteristica calefaccion = caracteristicaRepository.save(new Caracteristica("Calefaccion"));
-            Caracteristica gimnasio = caracteristicaRepository.save(new Caracteristica("Gimnasio"));
-            Caracteristica recepcion24 = caracteristicaRepository.save(new Caracteristica("Recepcion 24hs"));
-            Caracteristica spa = caracteristicaRepository.save(new Caracteristica("Spa"));
-            Caracteristica seguridad24 = caracteristicaRepository.save(new Caracteristica("Seguridad las 24hs"));
-            Caracteristica bicicletas = caracteristicaRepository.save(new Caracteristica("Alquiler de bicicletas"));
-            Caracteristica conferencias = caracteristicaRepository.save(new Caracteristica("Sala de conferencias"));
-            Caracteristica restaurant = caracteristicaRepository.save(new Caracteristica("Restaurant"));
-            Caracteristica playa = caracteristicaRepository.save(new Caracteristica("Acceso a la playa"));
-            Caracteristica infantil = caracteristicaRepository.save(new Caracteristica("Zona infantil"));
-            Caracteristica bar = caracteristicaRepository.save(new Caracteristica("Bar"));
-            Caracteristica cajaFuerte = caracteristicaRepository.save(new Caracteristica("Caja fuerte"));
-            Caracteristica minibar = caracteristicaRepository.save(new Caracteristica("Minibar"));
-            Caracteristica chimenea = caracteristicaRepository.save(new Caracteristica("Chimenea"));
+            Amenity desayuno = amenityRepository.save(new Amenity("Desayuno incluido"));
+            Amenity calefaccion = amenityRepository.save(new Amenity("Calefaccion"));
+            Amenity gimnasio = amenityRepository.save(new Amenity("Gimnasio"));
+            Amenity recepcion24 = amenityRepository.save(new Amenity("Recepcion 24hs"));
+            Amenity spa = amenityRepository.save(new Amenity("Spa"));
+            Amenity seguridad24 = amenityRepository.save(new Amenity("Seguridad las 24hs"));
+            Amenity bicicletas = amenityRepository.save(new Amenity("Alquiler de bicicletas"));
+            Amenity conferencias = amenityRepository.save(new Amenity("Sala de conferencias"));
+            Amenity restaurant = amenityRepository.save(new Amenity("Restaurant"));
+            Amenity playa = amenityRepository.save(new Amenity("Acceso a la playa"));
+            Amenity infantil = amenityRepository.save(new Amenity("Zona infantil"));
+            Amenity bar = amenityRepository.save(new Amenity("Bar"));
+            Amenity cajaFuerte = amenityRepository.save(new Amenity("Caja fuerte"));
+            Amenity minibar = amenityRepository.save(new Amenity("Minibar"));
+            Amenity chimenea = amenityRepository.save(new Amenity("Chimenea"));
 
             TipoPolitica normasDeLaCasa = tipoPoliticaRepository.save(new TipoPolitica("Normas de la casa"));
             TipoPolitica saludYSeguridad = tipoPoliticaRepository.save(new TipoPolitica("Salud y seguridad"));
@@ -138,12 +138,12 @@ public class DigitalbookingApplication {
             );
             Set<Politica> setPoliticas = new HashSet<>(Set.of(politica1, politica2, politica3));
 
-            Set<Caracteristica> caracteristicas1 = new HashSet<>(Set.of(televisor, desayuno, bar, noFumar));
-            Set<Caracteristica> caracteristicas2 = new HashSet<>(Set.of(cajaFuerte, parrilla, lavadora, pileta, aptoMascotas, seguridad24));
-            Set<Caracteristica> caracteristicas3 = new HashSet<>(Set.of(televisor, pileta, aptoMascotas, banioPrivado, vistaCiudad, parrilla, lavadora));
-            Set<Caracteristica> caracteristicas4 = new HashSet<>(Set.of(desayuno, calefaccion, gimnasio, recepcion24, spa, noFumar, bicicletas, conferencias, restaurant));
-            Set<Caracteristica> caracteristicas5 = new HashSet<>(Set.of(playa, infantil, bar, cajaFuerte, seguridad24, pileta, aptoMascotas, televisor));
-            Set<Caracteristica> caracteristicas6 = new HashSet<>(Set.of( desayuno, bicicletas, televisor, playa, noFumar, aptoMascotas, restaurant));
+            Set<Amenity> caracteristicas1 = new HashSet<>(Set.of(televisor, desayuno, bar, noFumar));
+            Set<Amenity> caracteristicas2 = new HashSet<>(Set.of(cajaFuerte, parrilla, lavadora, pileta, aptoMascotas, seguridad24));
+            Set<Amenity> caracteristicas3 = new HashSet<>(Set.of(televisor, pileta, aptoMascotas, banioPrivado, vistaCiudad, parrilla, lavadora));
+            Set<Amenity> caracteristicas4 = new HashSet<>(Set.of(desayuno, calefaccion, gimnasio, recepcion24, spa, noFumar, bicicletas, conferencias, restaurant));
+            Set<Amenity> caracteristicas5 = new HashSet<>(Set.of(playa, infantil, bar, cajaFuerte, seguridad24, pileta, aptoMascotas, televisor));
+            Set<Amenity> caracteristicas6 = new HashSet<>(Set.of( desayuno, bicicletas, televisor, playa, noFumar, aptoMascotas, restaurant));
 
 
 //          FOTOS 1

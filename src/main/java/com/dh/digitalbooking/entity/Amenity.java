@@ -8,14 +8,14 @@ import jakarta.validation.constraints.Size;
 import java.util.HashSet;
 import java.util.Set;
 
-@Entity(name = "Caracteristica")
+@Entity(name = "Amenity")
 @Table(
-        name = "caracteristicas",
+        name = "amenities",
         uniqueConstraints = {
-                @UniqueConstraint(name = "caracteristicas_nombre_unique", columnNames = "name")
+                @UniqueConstraint(name = "amenities_name_unique", columnNames = "name")
         }
 )
-public class Caracteristica {
+public class Amenity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", updatable = false)
@@ -23,17 +23,17 @@ public class Caracteristica {
     @Column(name = "name", nullable = false)
     @NotBlank(message = "La característica debe tener un name")
     @Size(max = 255, message = "El name de la característica no debe tener más de 255 caracteres")
-    private String nombre;
+    private String name;
 
-    @ManyToMany(mappedBy = "caracteristicas")
+    @ManyToMany(mappedBy = "amenities")
     @JsonIgnore
-    private Set<Producto> productos = new HashSet<>();
+    private Set<Producto> products = new HashSet<>();
 
-    public Caracteristica() {
+    public Amenity() {
     }
 
-    public Caracteristica(String nombre) {
-        this.nombre = nombre;
+    public Amenity(String name) {
+        this.name = name;
     }
 
     public Long getId() {
@@ -44,19 +44,19 @@ public class Caracteristica {
         this.id = id;
     }
 
-    public String getNombre() {
-        return nombre;
+    public String getName() {
+        return name;
     }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public Set<Producto> getProductos() {
-        return productos;
+    public Set<Producto> getProducts() {
+        return products;
     }
 
-    public void setProductos(Set<Producto> productos) {
-        this.productos = productos;
+    public void setProducts(Set<Producto> products) {
+        this.products = products;
     }
 }

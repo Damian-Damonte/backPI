@@ -75,7 +75,7 @@ public class Producto {
                     foreignKey = @ForeignKey(name = "caracteristica_producto_id")
             )
     )
-    private Set<Caracteristica> caracteristicas = new HashSet<>();
+    private Set<Amenity> amenities = new HashSet<>();
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "producto")
     @OrderBy("orden ASC NULLS LAST ")
@@ -119,13 +119,13 @@ public class Producto {
         this.city = city;
     }
 
-    public Producto(String titulo, String tituloDescripcion, String descripcion, Categoria categoria, City city, Set<Caracteristica> caracteristicas, Set<Imagen> imagenes, Set<Politica> politicas, Coordenadas coordenadas) {
+    public Producto(String titulo, String tituloDescripcion, String descripcion, Categoria categoria, City city, Set<Amenity> amenities, Set<Imagen> imagenes, Set<Politica> politicas, Coordenadas coordenadas) {
         this.titulo = titulo;
         this.tituloDescripcion = tituloDescripcion;
         this.descripcion = descripcion;
         this.categoria = categoria;
         this.city = city;
-        this.caracteristicas = caracteristicas;
+        this.amenities = amenities;
         this.imagenes = imagenes;
         this.politicas = politicas;
         this.coordenadas = coordenadas;
@@ -179,12 +179,12 @@ public class Producto {
         this.city = city;
     }
 
-    public Set<Caracteristica> getCaracteristicas() {
-        return caracteristicas;
+    public Set<Amenity> getCaracteristicas() {
+        return amenities;
     }
 
-    public void setCaracteristicas(Set<Caracteristica> caracteristicas) {
-        this.caracteristicas = caracteristicas;
+    public void setCaracteristicas(Set<Amenity> amenities) {
+        this.amenities = amenities;
     }
 
     public Set<Imagen> getImagenes() {
