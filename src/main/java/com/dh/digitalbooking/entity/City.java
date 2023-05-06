@@ -1,10 +1,6 @@
 package com.dh.digitalbooking.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-
-import java.util.HashSet;
-import java.util.Set;
 
 @Entity(name = "City")
 @Table(name = "cities")
@@ -25,10 +21,6 @@ public class City {
             foreignKey = @ForeignKey(name = "cities_countries_fk")
     )
     private Country country;
-
-    @OneToMany(mappedBy = "city")
-    @JsonIgnore
-    private Set<Producto> products = new HashSet<>();
 
     public City() {
     }
@@ -60,13 +52,5 @@ public class City {
 
     public void setCountry(Country country) {
         this.country = country;
-    }
-
-    public Set<Producto> getProducts() {
-        return products;
-    }
-
-    public void setProducts(Set<Producto> productos) {
-        this.products = productos;
     }
 }

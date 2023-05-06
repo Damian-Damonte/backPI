@@ -117,6 +117,11 @@ public class ProductoServiceImp implements ProductoService {
         return getProducto(updateProducto);
     }
 
+    @Override
+    public boolean existByCityId(Long id) {
+        return productoRepository.existsByCity_id(id);
+    }
+
     private Producto getProducto(Producto producto) {
         producto.setCiudad(cityServiceImpl.existByIdValidation(producto.getCiudad().getId()));
         producto.setCategoria(categoriaServiceImp.existByIdValidation(producto.getCategoria().getId()));

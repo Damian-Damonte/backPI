@@ -34,4 +34,6 @@ public interface ProductoRepository extends JpaRepository<Producto, Long> {
             @Param("checkOut") LocalDate checkOut,
             Pageable pageable
     );
+
+    boolean existsByCity_id(Long id);
 }

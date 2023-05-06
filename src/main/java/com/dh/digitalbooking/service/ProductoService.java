@@ -16,4 +16,5 @@ public interface ProductoService {
     Producto saveProducto(Producto producto);
     void deleteProducto(Long id);
     Producto updateProducto(Producto updateProducto);
+    boolean existByCityId(Long id);
 }
