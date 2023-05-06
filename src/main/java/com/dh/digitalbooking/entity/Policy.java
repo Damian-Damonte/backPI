@@ -15,8 +15,6 @@ public class Policy {
     private Long id;
 
     @Column(name = "descripcion", nullable = false, columnDefinition = "TEXT", length = 600)
-    @Size(max = 600, message = "La descripcion de la política no debe tener más de 600 caracteres")
-    @NotBlank(message = "La política debe tener una descrpción")
     private String description;
 
     @ManyToOne
@@ -26,7 +24,6 @@ public class Policy {
             referencedColumnName = "id",
             foreignKey = @ForeignKey(name = "politicas_tipo_politicas_fk")
     )
-    @NotNull(message = "La polílica debe tener un tipo de política")
     private PolicyType policyType;
 
     @ManyToOne
