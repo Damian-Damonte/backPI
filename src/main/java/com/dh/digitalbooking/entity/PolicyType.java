@@ -1,12 +1,6 @@
 package com.dh.digitalbooking.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Size;
-
-import java.util.HashSet;
-import java.util.Set;
 
 @Entity(name = "PolicyType")
 @Table(
@@ -23,10 +17,6 @@ public class PolicyType {
 
     @Column(name = "name", length = 100)
     private String name;
-
-    @OneToMany(mappedBy = "policyType")
-    @JsonIgnore
-    Set<Politica> politicas = new HashSet<>();
 
     public PolicyType() {
     }
@@ -49,13 +39,5 @@ public class PolicyType {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public Set<Politica> getPoliticas() {
-        return politicas;
-    }
-
-    public void setPoliticas(Set<Politica> politicas) {
-        this.politicas = politicas;
     }
 }

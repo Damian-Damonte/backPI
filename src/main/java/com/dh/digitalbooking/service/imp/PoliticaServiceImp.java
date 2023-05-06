@@ -20,4 +20,9 @@ public class PoliticaServiceImp implements PoliticaService {
                 () -> new NotFoundException("Politica con id " + id + " no encontrada")
         );
     }
+
+    @Override
+    public boolean existsByPolicyType_id(Long id) {
+        return politicaRepository.existsByPolicyType_id(id);
+    }
 }

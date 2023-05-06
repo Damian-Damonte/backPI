@@ -8,6 +8,7 @@ import com.dh.digitalbooking.entity.PolicyType;
 import com.dh.digitalbooking.mapper.PolicyTypeMapper;
 import com.dh.digitalbooking.repository.PolicyTypeRepository;
 import com.dh.digitalbooking.service.PolicyTypeService;
+import com.dh.digitalbooking.service.PoliticaService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,10 +18,12 @@ import java.util.List;
 public class PolicyTypeServiceImp implements PolicyTypeService {
     private final PolicyTypeRepository policyTypeRepository;
     private final PolicyTypeMapper policyTypeMapper;
+    private final PoliticaService politicaService;
 
-    public PolicyTypeServiceImp(PolicyTypeRepository policyTypeRepository, PolicyTypeMapper policyTypeMapper) {
+    public PolicyTypeServiceImp(PolicyTypeRepository policyTypeRepository, PolicyTypeMapper policyTypeMapper, PoliticaService politicaService) {
         this.policyTypeRepository = policyTypeRepository;
         this.policyTypeMapper = policyTypeMapper;
+        this.politicaService = politicaService;
     }
 
     @Override
@@ -45,13 +48,12 @@ public class PolicyTypeServiceImp implements PolicyTypeService {
         return policyTypeMapper.policyTypeToPolicyTypeFullDTO(policyTypeRepository.save(policyType));
     }
 
-//    BORRAR RELACION BIDIRECCIONAL
     @Override
     @Transactional
     public void deletePolicyType(Long id) {
-        PolicyType policyType = existByIdValidation(id);
-        if(!(policyType.getPoliticas().isEmpty()))
-            throw new BadRequestException("You cannot delete the policy with id " + id + " because there are policies registered with this type");
+        existByIdValidation(id);
+        if(politicaService.existsByPolicyType_id(id))
+            throw new BadRequestException("You cannot delete the policy type with id " + id + " because there are policies registered with this type");
         policyTypeRepository.deleteById(id);
     }
 
@@ -73,6 +75,6 @@ public class PolicyTypeServiceImp implements PolicyTypeService {
     @Override
     public PolicyType existByIdValidation(Long id) {
         return policyTypeRepository.findById(id).orElseThrow(() ->
-                new NotFoundException("PolicyType with " + id + " not found"));
+                new NotFoundException("Policy type with " + id + " not found"));
     }
 }

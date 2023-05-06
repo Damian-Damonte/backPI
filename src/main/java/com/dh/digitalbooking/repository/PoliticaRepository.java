@@ -6,4 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface PoliticaRepository extends JpaRepository<Politica, Long> {
+    boolean existsByPolicyType_id(Long id);
 }
