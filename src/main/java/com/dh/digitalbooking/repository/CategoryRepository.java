@@ -1,6 +1,6 @@
 package com.dh.digitalbooking.repository;
 
-import com.dh.digitalbooking.entity.Categoria;
+import com.dh.digitalbooking.entity.Category;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -9,16 +9,16 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
-public interface CategoriaRepository extends JpaRepository<Categoria, Long> {
+public interface CategoryRepository extends JpaRepository<Category, Long> {
     @Transactional(readOnly = true)
-    Optional<Categoria> findByTitulo (String titulo);
+    Optional<Category> findByName(String name);
 
     @Modifying
     @Transactional
-    @Query("UPDATE Categoria c SET c.cantProductos = c.cantProductos + 1 WHERE c.id = :id")
-    void sumarProducto(@Param("id") Long id);
+    @Query("UPDATE Category c SET c.productsCount = c.productsCount + 1 WHERE c.id = :id")
+    void incrementCount(@Param("id") Long id);
     @Modifying
     @Transactional
-    @Query("UPDATE Categoria c SET c.cantProductos = c.cantProductos - 1 WHERE c.id = :id")
-    void restarProducto(@Param("id") Long id);
+    @Query("UPDATE Category c SET c.productsCount = c.productsCount - 1 WHERE c.id = :id")
+    void decrementCount(@Param("id") Long id);
 }

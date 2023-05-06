@@ -50,8 +50,8 @@ public class Producto {
             referencedColumnName = "id",
             foreignKey = @ForeignKey(name = "productos_categorias_fk")
     )
-    @NotNull(message = "El producto debe pertenecer a una categoria")
-    private Categoria categoria;
+    @NotNull(message = "El producto debe pertenecer a una category")
+    private Category category;
 
     @ManyToOne
     @JoinColumn(
@@ -111,19 +111,19 @@ public class Producto {
     public Producto() {
     }
 
-    public Producto(String titulo, String tituloDescripcion, String descripcion, Categoria categoria, City city) {
+    public Producto(String titulo, String tituloDescripcion, String descripcion, Category category, City city) {
         this.titulo = titulo;
         this.tituloDescripcion = tituloDescripcion;
         this.descripcion = descripcion;
-        this.categoria = categoria;
+        this.category = category;
         this.city = city;
     }
 
-    public Producto(String titulo, String tituloDescripcion, String descripcion, Categoria categoria, City city, Set<Amenity> amenities, Set<Image> imagenes, Set<Policy> policies, Coordenadas coordenadas) {
+    public Producto(String titulo, String tituloDescripcion, String descripcion, Category category, City city, Set<Amenity> amenities, Set<Image> imagenes, Set<Policy> policies, Coordenadas coordenadas) {
         this.titulo = titulo;
         this.tituloDescripcion = tituloDescripcion;
         this.descripcion = descripcion;
-        this.categoria = categoria;
+        this.category = category;
         this.city = city;
         this.amenities = amenities;
         this.imagenes = imagenes;
@@ -163,12 +163,12 @@ public class Producto {
         this.descripcion = description;
     }
 
-    public Categoria getCategoria() {
-        return categoria;
+    public Category getCategoria() {
+        return category;
     }
 
-    public void setCategoria(Categoria categoria) {
-        this.categoria = categoria;
+    public void setCategoria(Category category) {
+        this.category = category;
     }
 
     public City getCiudad() {

@@ -23,7 +23,7 @@ import java.util.Set;
 @Service
 public class ProductoServiceImp implements ProductoService {
     private final ProductoRepository productoRepository;
-    private final CategoriaServiceImp categoriaServiceImp;
+    private final CategoryServiceImp categoriaServiceImp;
     private final CityService cityService;
     private final AmenityService amenityService;
     private final PolicyTypeService policyTypeService;
@@ -31,7 +31,7 @@ public class ProductoServiceImp implements ProductoService {
     private final PolicyServiceImp politicaServiceImp;
     private final CoordenadasServiceImp coordenadasServiceImp;
 
-    public ProductoServiceImp(ProductoRepository productoRepository, CategoriaServiceImp categoriaServiceImp, CityService cityService, AmenityService amenityService, PolicyTypeService policyTypeService, ImageServiceImp imagenServiceImp, PolicyServiceImp politicaServiceImp, CoordenadasServiceImp coordenadasServiceImp) {
+    public ProductoServiceImp(ProductoRepository productoRepository, CategoryServiceImp categoriaServiceImp, CityService cityService, AmenityService amenityService, PolicyTypeService policyTypeService, ImageServiceImp imagenServiceImp, PolicyServiceImp politicaServiceImp, CoordenadasServiceImp coordenadasServiceImp) {
         this.productoRepository = productoRepository;
         this.categoriaServiceImp = categoriaServiceImp;
         this.cityService = cityService;
@@ -84,7 +84,7 @@ public class ProductoServiceImp implements ProductoService {
         producto.getPoliticas().forEach(pol -> pol.setId(null));
         if (producto.getCoordenadas() != null)
             producto.getCoordenadas().setId(null);
-        categoriaServiceImp.sumarProducto(producto.getCategoria().getId());
+        categoriaServiceImp.incrementCount(producto.getCategoria().getId());
 
         return getProducto(producto);
     }
@@ -99,7 +99,7 @@ public class ProductoServiceImp implements ProductoService {
         Set<Usuario> usuariosFav = producto.getFavoritos();
         usuariosFav.forEach(user -> user.removeFav(producto));
 
-        categoriaServiceImp.restarProducto(producto.getCategoria().getId());
+        categoriaServiceImp.decrementCount(producto.getCategoria().getId());
         productoRepository.deleteById(id);
     }
 
@@ -111,8 +111,8 @@ public class ProductoServiceImp implements ProductoService {
         updateProducto.setReservas(producto.getReservas());
 
         if (!(updateProducto.getCategoria().getId().equals(producto.getCategoria().getId()))) {
-            categoriaServiceImp.restarProducto(producto.getCategoria().getId());
-            categoriaServiceImp.sumarProducto(updateProducto.getCategoria().getId());
+            categoriaServiceImp.decrementCount(producto.getCategoria().getId());
+            categoriaServiceImp.incrementCount(updateProducto.getCategoria().getId());
         }
 
         return getProducto(updateProducto);

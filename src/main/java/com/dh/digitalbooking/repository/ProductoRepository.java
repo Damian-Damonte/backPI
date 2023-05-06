@@ -21,7 +21,7 @@ public interface ProductoRepository extends JpaRepository<Producto, Long> {
     @Query(
             "SELECT p FROM Producto p WHERE " +
                 "(:ciudadId IS NULL OR p.city.id = :ciudadId) " +
-                "AND (:categoriaId IS NULL OR p.categoria.id = :categoriaId) " +
+                "AND (:categoriaId IS NULL OR p.category.id = :categoryId) " +
                 "AND ((:checkIn IS NULL AND :checkOut IS NULL) OR p.id NOT IN " +
                 "(SELECT r.producto.id FROM Reserva r WHERE " +
                     "(r.checkIn <= :checkOut AND r.checkOut >= :checkIn))) " +
@@ -29,7 +29,7 @@ public interface ProductoRepository extends JpaRepository<Producto, Long> {
     )
     Page<Producto> findAllFilters(
             @Param("ciudadId") Long ciudadId,
-            @Param("categoriaId") Long categoriaId,
+            @Param("categoryId") Long categoryId,
             @Param("checkIn") LocalDate checkIn,
             @Param("checkOut") LocalDate checkOut,
             Pageable pageable
