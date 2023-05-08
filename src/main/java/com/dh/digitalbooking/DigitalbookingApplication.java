@@ -154,7 +154,10 @@ public class DigitalbookingApplication {
             Image foto5 = new Image("Image 5", "https://images.unsplash.com/photo-1455587734955-081b22074882?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8M3x8aG90ZWx8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60");
             Image foto6 = new Image("Image 6", "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NXx8aG90ZWx8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60", 1);
 
-            Set<Image> setFotos= new HashSet<>(Set.of(foto1, foto2, foto3, foto4, foto5, foto6));
+            Image foto7 = new Image("Image 5", "https://images.unsplash.com/photo-1455587734955-081b22074882?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8M3x8aG90ZWx8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60", 1);
+
+            Set<Image> setFotos = new HashSet<>(Set.of(foto1, foto2, foto3, foto4, foto5, foto6));
+            Set<Image> setFotos2 = new HashSet<>(Set.of(foto1, foto2, foto3, foto4, foto5, foto7));
 
 
             Coordinates hiltongardenc = new Coordinates(
@@ -205,6 +208,35 @@ public class DigitalbookingApplication {
             reserva1.setUsuario(usuarioAdmin);
             reserva1.setProducto(producto1);
             reservaServiceImp.saveReserva(reserva1, userDetailsDtoAdmin);
+
+            Producto producto2 = new Producto();
+            producto2.setTitulo("Departamento numero 1");
+            producto2.setTituloDescripcion("Titulo descripcion Departamento 1");
+            producto2.setDescripcion("Esta es la descripcion del Departamento numero 1 y esto es un poco de texto de relleno");
+            producto2.setDireccion("Avenida Tucuman 6435");
+            producto2.setPrecioPorNoche(new BigDecimal("53200.00"));
+            producto2.setCategoria(departamento);
+            producto2.setCiudad(miami);
+            producto2.setCaracteristicas(caracteristicas3);
+            producto2.setImagenes(setFotos2);
+            producto2.setPoliticas(setPolicies);
+            producto2.setCoordinates(laBrisaLocaHostel);
+            productoServiceImp.saveProducto(producto2);
+
+            Puntuacion puntuacionProducto2 = new Puntuacion();
+            puntuacionProducto2.setValor(5);
+            puntuacionProducto2.setProducto(producto2);
+            puntuacionProducto2.setUsuario(usuarioAdmin);
+            puntuacionServiceImp.savePuntuacion(puntuacionProducto2, userDetailsDtoAdmin);
+
+            Reserva reserva2 = new Reserva();
+            reserva2.setCheckIn(LocalDate.of(2023, 6, 22));
+            reserva2.setCheckOut(LocalDate.of(2023, 6, 25));
+            reserva2.setHoraLlegada(LocalTime.now());
+            reserva2.setCiudadUsuario("La Plata");
+            reserva2.setUsuario(usuarioAdmin);
+            reserva2.setProducto(producto2);
+            reservaServiceImp.saveReserva(reserva2, userDetailsDtoAdmin);
 
 
         };
