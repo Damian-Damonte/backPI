@@ -101,9 +101,9 @@ public class Producto {
     @JsonIgnoreProperties("product")
     private Set<Booking> bookings = new HashSet<>();
 
-    @OneToMany(cascade = CascadeType.REMOVE, orphanRemoval = true, mappedBy = "producto")
+    @OneToMany(cascade = CascadeType.REMOVE, orphanRemoval = true, mappedBy = "product")
     @JsonIgnore
-    private Set<Puntuacion> puntuaciones = new HashSet<>();
+    private Set<Rating> puntuaciones = new HashSet<>();
 
     @ManyToMany(mappedBy = "favoritos")
     @JsonIgnore

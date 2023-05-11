@@ -5,7 +5,7 @@ import com.dh.digitalbooking.entity.*;
 import com.dh.digitalbooking.repository.*;
 import com.dh.digitalbooking.service.imp.CategoryServiceImp;
 import com.dh.digitalbooking.service.imp.ProductoServiceImp;
-import com.dh.digitalbooking.service.imp.PuntuacionServiceImp;
+import com.dh.digitalbooking.service.imp.RatingServiceImp;
 import com.dh.digitalbooking.service.imp.BookingServiceImp;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -37,7 +37,7 @@ public class DigitalbookingApplication {
             RoleRepository roleRepository,
             UsuarioRepository usuarioRepository,
             PasswordEncoder passwordEncoder,
-            PuntuacionServiceImp puntuacionServiceImp,
+            RatingServiceImp puntuacionServiceImp,
             BookingServiceImp reservaServiceImp
     ) {
         return args -> {
@@ -178,11 +178,11 @@ public class DigitalbookingApplication {
             userDetailsDtoAdmin.setUserId(1L);
             userDetailsDtoAdmin.setUserRol("ADMIN");
 
-            Puntuacion puntuacionProducto1 = new Puntuacion();
-            puntuacionProducto1.setValor(4);
-            puntuacionProducto1.setProducto(producto1);
-            puntuacionProducto1.setUsuario(usuarioAdmin);
-            puntuacionServiceImp.savePuntuacion(puntuacionProducto1, userDetailsDtoAdmin);
+            Rating ratingProducto1 = new Rating();
+            ratingProducto1.setValue(4);
+            ratingProducto1.setProduct(producto1);
+            ratingProducto1.setUser(usuarioAdmin);
+            puntuacionServiceImp.saveRating(ratingProducto1, userDetailsDtoAdmin);
 
             Booking booking1 = new Booking();
             booking1.setCheckIn(LocalDate.of(2023, 6, 22));
@@ -208,11 +208,11 @@ public class DigitalbookingApplication {
             producto2.setLongitude(new BigDecimal("-74.21162384247455"));
             productoServiceImp.saveProducto(producto2);
 
-            Puntuacion puntuacionProducto2 = new Puntuacion();
-            puntuacionProducto2.setValor(5);
-            puntuacionProducto2.setProducto(producto2);
-            puntuacionProducto2.setUsuario(usuarioAdmin);
-            puntuacionServiceImp.savePuntuacion(puntuacionProducto2, userDetailsDtoAdmin);
+            Rating ratingProducto2 = new Rating();
+            ratingProducto2.setValue(5);
+            ratingProducto2.setProduct(producto2);
+            ratingProducto2.setUser(usuarioAdmin);
+            puntuacionServiceImp.saveRating(ratingProducto2, userDetailsDtoAdmin);
 
             Booking booking2 = new Booking();
             booking2.setCheckIn(LocalDate.of(2023, 6, 22));

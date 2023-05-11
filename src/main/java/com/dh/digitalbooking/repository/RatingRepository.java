@@ -1,6 +1,6 @@
 package com.dh.digitalbooking.repository;
 
-import com.dh.digitalbooking.entity.Puntuacion;
+import com.dh.digitalbooking.entity.Rating;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -9,11 +9,11 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 @Repository
-public interface PuntuacionRepository extends JpaRepository<Puntuacion, Long> {
+public interface RatingRepository extends JpaRepository<Rating, Long> {
     @Transactional
     @Modifying
     @Query("UPDATE Producto p SET p.promedioPuntuacion = "
-            + "(SELECT AVG(punt.valor) * 2 FROM Puntuacion punt WHERE punt.producto.id = :productoId) "
-            + "WHERE p.id = :productoId")
-    int updatePromedioPuntuacionProducto(@Param("productoId") Long productoId);
+            + "(SELECT AVG(r.value) * 2 FROM Rating r WHERE r.product.id = :productId) "
+            + "WHERE p.id = :productId")
+    int updateAVGRatingInProduct(@Param("productId") Long productId);
 }

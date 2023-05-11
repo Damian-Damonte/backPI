@@ -46,9 +46,9 @@ public class Usuario implements UserDetails {
     @JsonIgnoreProperties("user")
     List<Booking> bookings = new ArrayList<>();
 
-    @OneToMany(cascade = CascadeType.REMOVE, orphanRemoval = true, mappedBy = "usuario")
+    @OneToMany(cascade = CascadeType.REMOVE, orphanRemoval = true, mappedBy = "user")
     @JsonIgnore
-    private Set<Puntuacion> puntuaciones = new HashSet<>();
+    private Set<Rating> puntuaciones = new HashSet<>();
 
     @ManyToMany()
     @JoinTable(
