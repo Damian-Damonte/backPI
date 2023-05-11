@@ -42,6 +42,16 @@ public class Producto {
     @DecimalMin(value = "0.00",  message = "El promedio no puede ser menor a 0.00")
     @DecimalMax(value = "10.0", message = "El promedio no puede ser mayor a 10.0")
     private BigDecimal promedioPuntuacion;
+    @Column(name = "latitude", precision = 17, scale = 15, nullable = false)
+    @NotNull(message = "Debe agregar la latitud de las coordenadas del producto")
+    @DecimalMin(value = "-90.0",  message = "La latitud no debe ser menor a -90.0")
+    @DecimalMax(value = "90.0", message = "La latitud no debe ser mayor a 90.0")
+    private BigDecimal latitude;
+    @Column(name = "longitude", precision = 18, scale = 15, nullable = false)
+    @NotNull(message = "Debe agregar la longitud de las coordenadas del producto")
+    @DecimalMin(value = "-180.0",  message = "La longitud no debe ser menor a -180.0")
+    @DecimalMax(value = "180.0", message = "La latitud no debe ser mayor a 180.0")
+    private BigDecimal longitude;
 
     @ManyToOne
     @JoinColumn(
@@ -87,15 +97,6 @@ public class Producto {
     @Valid
     private Set<Policy> policies = new HashSet<>();
 
-    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(
-            name = "coordenadas_id",
-            referencedColumnName = "id",
-            foreignKey = @ForeignKey(name = "coordenadas_id_fk")
-    )
-    @Valid
-    private Coordinates coordinates;
-
     @OneToMany(mappedBy = "producto", cascade = CascadeType.REMOVE, orphanRemoval = true)
     @JsonIgnoreProperties("producto")
     private Set<Reserva> reservas = new HashSet<>();
@@ -119,7 +120,7 @@ public class Producto {
         this.city = city;
     }
 
-    public Producto(String titulo, String tituloDescripcion, String descripcion, Category category, City city, Set<Amenity> amenities, Set<Image> imagenes, Set<Policy> policies, Coordinates coordinates) {
+    public Producto(String titulo, String tituloDescripcion, String descripcion, Category category, City city, Set<Amenity> amenities, Set<Image> imagenes, Set<Policy> policies) {
         this.titulo = titulo;
         this.tituloDescripcion = tituloDescripcion;
         this.descripcion = descripcion;
@@ -128,7 +129,6 @@ public class Producto {
         this.amenities = amenities;
         this.imagenes = imagenes;
         this.policies = policies;
-        this.coordinates = coordinates;
     }
 
     public Long getId() {
@@ -161,6 +161,22 @@ public class Producto {
 
     public void setDescripcion(String description) {
         this.descripcion = description;
+    }
+
+    public BigDecimal getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(BigDecimal latitude) {
+        this.latitude = latitude;
+    }
+
+    public BigDecimal getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(BigDecimal longitude) {
+        this.longitude = longitude;
     }
 
     public Category getCategoria() {
@@ -201,14 +217,6 @@ public class Producto {
 
     public void setPoliticas(Set<Policy> policies) {
         this.policies = policies;
-    }
-
-    public Coordinates getCoordinates() {
-        return coordinates;
-    }
-
-    public void setCoordinates(Coordinates coordinates) {
-        this.coordinates = coordinates;
     }
 
     public Set<Reserva> getReservas() {

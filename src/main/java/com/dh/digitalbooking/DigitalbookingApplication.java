@@ -159,23 +159,6 @@ public class DigitalbookingApplication {
             Set<Image> setFotos = new HashSet<>(Set.of(foto1, foto2, foto3, foto4, foto5, foto6));
             Set<Image> setFotos2 = new HashSet<>(Set.of(foto1, foto2, foto3, foto4, foto5, foto7));
 
-
-            Coordinates hiltongardenc = new Coordinates(
-                    new BigDecimal("-38.941697761424834"),
-                    new BigDecimal("-68.05962964717754"));
-
-            Coordinates laBrisaLocaHostel = new Coordinates(
-                    new BigDecimal("11.24500468403564"),
-                    new BigDecimal("-74.21162384247455"));
-
-            Coordinates nuoMiamiApartaments = new Coordinates(
-                    new BigDecimal("25.734365891053194"),
-                    new BigDecimal("-80.23622998084356"));
-
-            Coordinates urbanyHostelc = new Coordinates(
-                    new BigDecimal("41.407725926268164"),
-                    new BigDecimal("2.1863069709469762"));
-
             Producto producto1 = new Producto();
             producto1.setTitulo("Hotel numero 1");
             producto1.setTituloDescripcion("Titulo descripcion hotel 1");
@@ -187,7 +170,8 @@ public class DigitalbookingApplication {
             producto1.setCaracteristicas(caracteristicas1);
             producto1.setImagenes(setFotos);
             producto1.setPoliticas(setPolicies);
-            producto1.setCoordinates(hiltongardenc);
+            producto1.setLatitude(new BigDecimal("-38.941697761424834"));
+            producto1.setLongitude(new BigDecimal("-68.05962964717754"));
             productoServiceImp.saveProducto(producto1);
 
             UserDetailsDto userDetailsDtoAdmin = new UserDetailsDto();
@@ -217,10 +201,11 @@ public class DigitalbookingApplication {
             producto2.setPrecioPorNoche(new BigDecimal("53200.00"));
             producto2.setCategoria(departamento);
             producto2.setCiudad(miami);
-            producto2.setCaracteristicas(caracteristicas3);
+            producto2.setCaracteristicas(caracteristicas2);
             producto2.setImagenes(setFotos2);
             producto2.setPoliticas(setPolicies);
-            producto2.setCoordinates(laBrisaLocaHostel);
+            producto2.setLatitude(new BigDecimal("11.24500468403564"));
+            producto2.setLongitude(new BigDecimal("-74.21162384247455"));
             productoServiceImp.saveProducto(producto2);
 
             Puntuacion puntuacionProducto2 = new Puntuacion();
@@ -237,8 +222,6 @@ public class DigitalbookingApplication {
             reserva2.setUsuario(usuarioAdmin);
             reserva2.setProducto(producto2);
             reservaServiceImp.saveReserva(reserva2, userDetailsDtoAdmin);
-
-
         };
     }
 }
