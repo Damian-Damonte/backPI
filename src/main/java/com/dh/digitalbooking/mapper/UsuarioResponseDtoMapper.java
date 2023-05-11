@@ -17,7 +17,7 @@ public class UsuarioResponseDtoMapper {
         usuarioResponseDto.setEmail(usuario.getEmail());
         usuarioResponseDto.setCiudad(usuario.getCiudad());
         usuarioResponseDto.setRol(usuario.getRol());
-        usuarioResponseDto.setReservas(usuario.getReservas());
+        usuarioResponseDto.setReservas(usuario.getBookings());
         usuarioResponseDto.setFavoritos(usuario.getFavoritos());
 
         return usuarioResponseDto;

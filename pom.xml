@@ -12,7 +12,7 @@
 	<artifactId>digitalbooking</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>digitalbooking</name>
-	<description>API REST para manejo de reservas digitales</description>
+	<description>API REST para manejo de bookings digitales</description>
 	<properties>
 		<java.version>17</java.version>
 	</properties>

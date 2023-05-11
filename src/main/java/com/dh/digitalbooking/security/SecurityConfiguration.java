@@ -26,7 +26,7 @@ public class SecurityConfiguration {
         http
                 .csrf().disable()
                 .authorizeHttpRequests(requests -> requests
-                        .requestMatchers(HttpMethod.POST, "/reservas").authenticated()
+                        .requestMatchers(HttpMethod.POST, "/bookings").authenticated()
                         .requestMatchers(HttpMethod.POST, "/puntuaciones").authenticated()
                         .requestMatchers(HttpMethod.POST, "/usuarios/favoritos").authenticated()
                         .requestMatchers(HttpMethod.GET, "/usuarios/{id}").authenticated()

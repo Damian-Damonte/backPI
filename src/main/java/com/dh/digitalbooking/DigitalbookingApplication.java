@@ -6,7 +6,7 @@ import com.dh.digitalbooking.repository.*;
 import com.dh.digitalbooking.service.imp.CategoryServiceImp;
 import com.dh.digitalbooking.service.imp.ProductoServiceImp;
 import com.dh.digitalbooking.service.imp.PuntuacionServiceImp;
-import com.dh.digitalbooking.service.imp.ReservaServiceImp;
+import com.dh.digitalbooking.service.imp.BookingServiceImp;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -38,7 +38,7 @@ public class DigitalbookingApplication {
             UsuarioRepository usuarioRepository,
             PasswordEncoder passwordEncoder,
             PuntuacionServiceImp puntuacionServiceImp,
-            ReservaServiceImp reservaServiceImp
+            BookingServiceImp reservaServiceImp
     ) {
         return args -> {
             Rol rolUser = roleRepository.save(new Rol("ROLE_USER"));
@@ -184,14 +184,14 @@ public class DigitalbookingApplication {
             puntuacionProducto1.setUsuario(usuarioAdmin);
             puntuacionServiceImp.savePuntuacion(puntuacionProducto1, userDetailsDtoAdmin);
 
-            Reserva reserva1 = new Reserva();
-            reserva1.setCheckIn(LocalDate.of(2023, 6, 22));
-            reserva1.setCheckOut(LocalDate.of(2023, 6, 25));
-            reserva1.setHoraLlegada(LocalTime.now());
-            reserva1.setCiudadUsuario("Buenos aires");
-            reserva1.setUsuario(usuarioAdmin);
-            reserva1.setProducto(producto1);
-            reservaServiceImp.saveReserva(reserva1, userDetailsDtoAdmin);
+            Booking booking1 = new Booking();
+            booking1.setCheckIn(LocalDate.of(2023, 6, 22));
+            booking1.setCheckOut(LocalDate.of(2023, 6, 25));
+            booking1.setArrivalTime(LocalTime.now());
+            booking1.setUserCity("Buenos aires");
+            booking1.setUser(usuarioAdmin);
+            booking1.setProduct(producto1);
+            reservaServiceImp.saveBooking(booking1, userDetailsDtoAdmin);
 
             Producto producto2 = new Producto();
             producto2.setTitulo("Departamento numero 1");
@@ -214,14 +214,14 @@ public class DigitalbookingApplication {
             puntuacionProducto2.setUsuario(usuarioAdmin);
             puntuacionServiceImp.savePuntuacion(puntuacionProducto2, userDetailsDtoAdmin);
 
-            Reserva reserva2 = new Reserva();
-            reserva2.setCheckIn(LocalDate.of(2023, 6, 22));
-            reserva2.setCheckOut(LocalDate.of(2023, 6, 25));
-            reserva2.setHoraLlegada(LocalTime.now());
-            reserva2.setCiudadUsuario("La Plata");
-            reserva2.setUsuario(usuarioAdmin);
-            reserva2.setProducto(producto2);
-            reservaServiceImp.saveReserva(reserva2, userDetailsDtoAdmin);
+            Booking booking2 = new Booking();
+            booking2.setCheckIn(LocalDate.of(2023, 6, 22));
+            booking2.setCheckOut(LocalDate.of(2023, 6, 25));
+            booking2.setArrivalTime(LocalTime.now());
+            booking2.setUserCity("La Plata");
+            booking2.setUser(usuarioAdmin);
+            booking2.setProduct(producto2);
+            reservaServiceImp.saveBooking(booking2, userDetailsDtoAdmin);
         };
     }
 }

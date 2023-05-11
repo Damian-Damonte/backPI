@@ -1,7 +1,7 @@
 package com.dh.digitalbooking.dto;
 
+import com.dh.digitalbooking.entity.Booking;
 import com.dh.digitalbooking.entity.Producto;
-import com.dh.digitalbooking.entity.Reserva;
 import com.dh.digitalbooking.entity.Rol;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
@@ -15,8 +15,8 @@ public class UsuarioResponseDto {
     private String ciudad;
     private Rol rol;
     @JsonIgnoreProperties("usuario")
-    private List<Reserva> reservas;
-    @JsonIgnoreProperties("reservas")
+    private List<Booking> bookings;
+    @JsonIgnoreProperties("bookings")
     private List<Producto> favoritos;
 
     public UsuarioResponseDto() {
@@ -79,12 +79,12 @@ public class UsuarioResponseDto {
         this.rol = rol;
     }
 
-    public List<Reserva> getReservas() {
-        return reservas;
+    public List<Booking> getReservas() {
+        return bookings;
     }
 
-    public void setReservas(List<Reserva> reservas) {
-        this.reservas = reservas;
+    public void setReservas(List<Booking> bookings) {
+        this.bookings = bookings;
     }
 
     public List<Producto> getFavoritos() {

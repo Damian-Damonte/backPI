@@ -23,7 +23,7 @@ public interface ProductoRepository extends JpaRepository<Producto, Long> {
                 "(:ciudadId IS NULL OR p.city.id = :ciudadId) " +
                 "AND (:categoriaId IS NULL OR p.category.id = :categoryId) " +
                 "AND ((:checkIn IS NULL AND :checkOut IS NULL) OR p.id NOT IN " +
-                "(SELECT r.producto.id FROM Reserva r WHERE " +
+                "(SELECT r.product.id FROM Booking r WHERE " +
                     "(r.checkIn <= :checkOut AND r.checkOut >= :checkIn))) " +
                 "ORDER BY p.id ASC"
     )

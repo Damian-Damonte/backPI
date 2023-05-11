@@ -28,7 +28,7 @@ public class Puntuacion {
             foreignKey = @ForeignKey(name = "puntuacion_usuario_fk")
     )
     @NotNull(message = "La puntuacion debe estar asociada a un usuario")
-    @JsonIgnoreProperties({"reservas", "favoritos"})
+    @JsonIgnoreProperties({"bookings", "favoritos"})
     private Usuario usuario;
     @ManyToOne
     @JoinColumn(
@@ -38,7 +38,7 @@ public class Puntuacion {
             foreignKey = @ForeignKey(name = "puntuacion_producto_fk")
     )
     @NotNull(message = "La puntuacion debe estar asociada a un producto")
-    @JsonIgnoreProperties("reservas")
+    @JsonIgnoreProperties("bookings")
     private Producto producto;
 
     public Puntuacion() {

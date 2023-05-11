@@ -42,9 +42,9 @@ public class Usuario implements UserDetails {
     )
     private Rol rol;
 
-    @OneToMany(mappedBy = "usuario", cascade = CascadeType.REMOVE, orphanRemoval = true)
-    @JsonIgnoreProperties("usuario")
-    List<Reserva> reservas = new ArrayList<>();
+    @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE, orphanRemoval = true)
+    @JsonIgnoreProperties("user")
+    List<Booking> bookings = new ArrayList<>();
 
     @OneToMany(cascade = CascadeType.REMOVE, orphanRemoval = true, mappedBy = "usuario")
     @JsonIgnore
@@ -62,7 +62,7 @@ public class Usuario implements UserDetails {
                     foreignKey = @ForeignKey(name = "producto_usuario_id")
             )
     )
-    @JsonIgnoreProperties("reservas")
+    @JsonIgnoreProperties("bookings")
     private List<Producto> favoritos = new ArrayList<>();
 
     public Usuario() {
@@ -176,12 +176,12 @@ public class Usuario implements UserDetails {
         this.rol = rol;
     }
 
-    public List<Reserva> getReservas() {
-        return reservas;
+    public List<Booking> getBookings() {
+        return bookings;
     }
 
-    public void setReservas(List<Reserva> reservas) {
-        this.reservas = reservas;
+    public void setBookings(List<Booking> bookings) {
+        this.bookings = bookings;
     }
 
     public List<Producto> getFavoritos() {

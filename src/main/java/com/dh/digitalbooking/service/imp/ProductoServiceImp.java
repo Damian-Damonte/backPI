@@ -86,7 +86,7 @@ public class ProductoServiceImp implements ProductoService {
     @Override
     public void deleteProducto(Long id) {
         Producto producto = existByIdValidation(id);
-        if (!(producto.getReservas().isEmpty()))
+        if (!(producto.getBookings().isEmpty()))
             throw new BadRequestException("El producto con id " + id + " no puede ser eliminado ya que se encuentra reservado");
 
         Set<Usuario> usuariosFav = producto.getFavoritos();
@@ -101,7 +101,7 @@ public class ProductoServiceImp implements ProductoService {
     public Producto updateProducto(Producto updateProducto) {
         Producto producto = existByIdValidation(updateProducto.getId());
         updateProducto.setPromedioPuntuacion(producto.getPromedioPuntuacion());
-        updateProducto.setReservas(producto.getReservas());
+        updateProducto.setBookings(producto.getBookings());
 
         if (!(updateProducto.getCategoria().getId().equals(producto.getCategoria().getId()))) {
             categoriaServiceImp.decrementCount(producto.getCategoria().getId());

@@ -97,9 +97,9 @@ public class Producto {
     @Valid
     private Set<Policy> policies = new HashSet<>();
 
-    @OneToMany(mappedBy = "producto", cascade = CascadeType.REMOVE, orphanRemoval = true)
-    @JsonIgnoreProperties("producto")
-    private Set<Reserva> reservas = new HashSet<>();
+    @OneToMany(mappedBy = "product", cascade = CascadeType.REMOVE, orphanRemoval = true)
+    @JsonIgnoreProperties("product")
+    private Set<Booking> bookings = new HashSet<>();
 
     @OneToMany(cascade = CascadeType.REMOVE, orphanRemoval = true, mappedBy = "producto")
     @JsonIgnore
@@ -219,12 +219,12 @@ public class Producto {
         this.policies = policies;
     }
 
-    public Set<Reserva> getReservas() {
-        return reservas;
+    public Set<Booking> getBookings() {
+        return bookings;
     }
 
-    public void setReservas(Set<Reserva> reservas) {
-        this.reservas = reservas;
+    public void setBookings(Set<Booking> bookings) {
+        this.bookings = bookings;
     }
 
     public String getDireccion() {
