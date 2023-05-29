@@ -57,14 +57,14 @@ public class DigitalbookingApplication {
             Category departamento = categoriaServiceImp.saveCategory(new Category("Departamento", "Descripcion de la categoria Departamento", "https://images.unsplash.com/photo-1563298723-dcfebaa392e3?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1767&q=80%27"));
 //            Category bedAndBreakfast = categoriaServiceImp.saveCategoria(new Category("Bed and breakfast", "Descripcion de la categoria Bed and breakfast", "https://images.unsplash.com/photo-1463620910506-d0458143143e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80%27"));
 
-            Country argentina = countryRepository.save(new Country("Argentina"));
-            Country italia = countryRepository.save(new Country("Italia"));
-            Country brasil = countryRepository.save(new Country("Brasil"));
-            Country colombia = countryRepository.save(new Country("Colombia"));
-            Country estadosUnidos = countryRepository.save(new Country("Estados Unidos"));
-            Country espania = countryRepository.save(new Country("España"));
-            Country cuba = countryRepository.save(new Country("Cuba"));
-            Country japon = countryRepository.save(new Country("Japón"));
+            Country argentina = countryRepository.save(Country.builder().name("Argentina").build());
+            Country italia = countryRepository.save(Country.builder().name("Italia").build());
+            Country brasil = countryRepository.save(Country.builder().name("Brasil").build());
+            Country colombia = countryRepository.save(Country.builder().name("Colobia").build());
+            Country estadosUnidos = countryRepository.save(Country.builder().name("Estados unidos").build());
+            Country espania = countryRepository.save(Country.builder().name("España").build());
+            Country cuba = countryRepository.save(Country.builder().name("Cuba").build());
+            Country japon = countryRepository.save(Country.builder().name("Japon").build());
 
             City puertoIguazu = cityRepository.save(new City("Puerto Iguazú", argentina));
             City sanMartindelosAndes = cityRepository.save(new City("San Martín de los Andes", argentina));
