@@ -1,8 +1,7 @@
 package com.dh.digitalbooking.service.imp;
 
-import com.dh.digitalbooking.dto.city.CityFullDTO;
-import com.dh.digitalbooking.dto.city.CityPostDTO;
-import com.dh.digitalbooking.dto.city.CityPutDTO;
+import com.dh.digitalbooking.dto.city.CityFullDto;
+import com.dh.digitalbooking.dto.city.CityRequest;
 import com.dh.digitalbooking.entity.City;
 import com.dh.digitalbooking.exception.BadRequestException;
 import com.dh.digitalbooking.exception.NotFoundException;
@@ -19,32 +18,31 @@ import java.util.List;
 public class CityServiceImpl implements CityService {
     private final CityRepository cityRepository;
     private final CountryService countryService;
-    private final CityMapper cityMapper;
     private final ProductoServiceImp productoServiceImp;
+    private final CityMapper cityMapper;
 
-    public CityServiceImpl(CityRepository cityRepository, CountryService countryService, CityMapper cityMapper, @Lazy ProductoServiceImp productoServiceImp) {
+    public CityServiceImpl(CityRepository cityRepository, CountryService countryService, @Lazy ProductoServiceImp productoServiceImp, CityMapper cityMapper) {
         this.cityRepository = cityRepository;
         this.countryService = countryService;
-        this.cityMapper = cityMapper;
         this.productoServiceImp = productoServiceImp;
+        this.cityMapper = cityMapper;
     }
 
     @Override
-    public List<CityFullDTO> getAllCities() {
-        return cityRepository.findAll().stream().map(cityMapper::cityToCityFullDTO).toList();
+    public List<CityFullDto> getAllCities() {
+        return cityRepository.findAll().stream().map(cityMapper::cityToCityFullDto).toList();
     }
 
     @Override
-    public CityFullDTO getCityById(Long id) {
-        return cityMapper.cityToCityFullDTO(existByIdValidation(id));
+    public CityFullDto getCityById(Long id) {
+        return cityMapper.cityToCityFullDto(existByIdValidation(id));
     }
 
     @Override
-    public CityFullDTO saveCity(CityPostDTO cityPostDTO) {
-        Country country = countryService.countryExistsById(cityPostDTO.countryId());
-        City city = cityMapper.cityPostDTOToCity(cityPostDTO);
-        city.setCountry(country);
-        return cityMapper.cityToCityFullDTO(cityRepository.save(city));
+    public CityFullDto saveCity(CityRequest cityRequest) {
+        Country country = countryService.countryExistsById(cityRequest.countryId());
+        City city = City.builder().name(cityRequest.name()).country(country).build();
+        return cityMapper.cityToCityFullDto(cityRepository.save(city));
     }
 
     @Override
@@ -56,13 +54,11 @@ public class CityServiceImpl implements CityService {
     }
 
     @Override
-    public CityFullDTO updateCity(CityPutDTO cityPutDTO) {
-        existByIdValidation(cityPutDTO.id());
-        Country country = countryService.countryExistsById(cityPutDTO.countryId());
-        City city = cityMapper.cityPutDTOToCity(cityPutDTO);
-        city.setCountry(country);
-
-        return cityMapper.cityToCityFullDTO(cityRepository.save(city));
+    public CityFullDto updateCity(Long id, CityRequest cityRequest) {
+        existByIdValidation(id);
+        Country country = countryService.countryExistsById(cityRequest.countryId());
+        City city = City.builder().id(id).name(cityRequest.name()).country(country).build();
+        return cityMapper.cityToCityFullDto(cityRepository.save(city));
     }
 
     @Override

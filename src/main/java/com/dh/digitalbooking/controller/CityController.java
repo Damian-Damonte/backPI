@@ -1,10 +1,8 @@
 package com.dh.digitalbooking.controller;
 
-import com.dh.digitalbooking.dto.city.CityFullDTO;
-import com.dh.digitalbooking.dto.city.CityPostDTO;
-import com.dh.digitalbooking.dto.city.CityPutDTO;
+import com.dh.digitalbooking.dto.city.CityFullDto;
+import com.dh.digitalbooking.dto.city.CityRequest;
 import com.dh.digitalbooking.service.CityService;
-import com.dh.digitalbooking.service.imp.CityServiceImpl;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,18 +19,18 @@ public class CityController {
     }
 
     @GetMapping
-    public ResponseEntity<List<CityFullDTO>> getAllCities() {
+    public ResponseEntity<List<CityFullDto>> getAllCities() {
         return ResponseEntity.ok(cityService.getAllCities());
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<CityFullDTO> getCityById(@PathVariable("id") Long id) {
+    public ResponseEntity<CityFullDto> getCityById(@PathVariable("id") Long id) {
         return ResponseEntity.ok(cityService.getCityById(id));
     }
 
     @PostMapping
-    public ResponseEntity<CityFullDTO> saveCity(@RequestBody @Valid CityPostDTO cityPostDTO) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(cityService.saveCity(cityPostDTO));
+    public ResponseEntity<CityFullDto> saveCity(@RequestBody @Valid CityRequest cityRequest) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(cityService.saveCity(cityRequest));
     }
 
     @DeleteMapping("/{id}")
@@ -41,8 +39,9 @@ public class CityController {
         return ResponseEntity.noContent().build();
     }
 
-    @PutMapping
-    public ResponseEntity<CityFullDTO> updateCity(@RequestBody @Valid CityPutDTO cityPutDTO) {
-        return ResponseEntity.ok(cityService.updateCity(cityPutDTO));
+    @PutMapping("/{id}")
+    public ResponseEntity<CityFullDto> updateCity(@PathVariable Long id,
+                                                  @RequestBody @Valid CityRequest cityRequest) {
+        return ResponseEntity.ok(cityService.updateCity(id, cityRequest));
     }
 }

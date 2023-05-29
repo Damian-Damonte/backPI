@@ -5,6 +5,7 @@ import com.dh.digitalbooking.dto.country.CountryRequest;
 import com.dh.digitalbooking.service.CountryService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,7 +13,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/countries")
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class CountryController {
     private final CountryService countryService;
 
