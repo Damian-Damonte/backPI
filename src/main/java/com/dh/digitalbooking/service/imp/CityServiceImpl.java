@@ -41,7 +41,7 @@ public class CityServiceImpl implements CityService {
 
     @Override
     public CityFullDTO saveCity(CityPostDTO cityPostDTO) {
-        Country country = countryService.existByIdValidation(cityPostDTO.countryId());
+        Country country = countryService.countryExistsById(cityPostDTO.countryId());
         City city = cityMapper.cityPostDTOToCity(cityPostDTO);
         city.setCountry(country);
         return cityMapper.cityToCityFullDTO(cityRepository.save(city));
@@ -58,7 +58,7 @@ public class CityServiceImpl implements CityService {
     @Override
     public CityFullDTO updateCity(CityPutDTO cityPutDTO) {
         existByIdValidation(cityPutDTO.id());
-        Country country = countryService.existByIdValidation(cityPutDTO.countryId());
+        Country country = countryService.countryExistsById(cityPutDTO.countryId());
         City city = cityMapper.cityPutDTOToCity(cityPutDTO);
         city.setCountry(country);
 

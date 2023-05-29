@@ -1,6 +1,6 @@
 package com.dh.digitalbooking.dto.city;
 
-import com.dh.digitalbooking.dto.country.CountryFullDTO;
+import com.dh.digitalbooking.dto.country.CountryFull;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -13,6 +13,6 @@ public record CityFullDTO(
         @Size(max = 100, message = "City name cannot be longer than 100 characters")
         String name,
         @NotNull(message = "Country ID is required") @Valid
-        CountryFullDTO country
+        CountryFull country
 ) {
 }
