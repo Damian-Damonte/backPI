@@ -7,7 +7,6 @@ import com.dh.digitalbooking.exception.BadRequestException;
 import com.dh.digitalbooking.exception.NotFoundException;
 import com.dh.digitalbooking.entity.Producto;
 import com.dh.digitalbooking.mapper.AmenityMapper;
-import com.dh.digitalbooking.mapper.AmenityMapperOld;
 import com.dh.digitalbooking.repository.AmenityRepository;
 import com.dh.digitalbooking.service.AmenityService;
 import org.springframework.stereotype.Service;

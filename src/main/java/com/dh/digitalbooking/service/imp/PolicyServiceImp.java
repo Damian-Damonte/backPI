@@ -22,7 +22,7 @@ public class PolicyServiceImp implements PolicyService {
     }
 
     @Override
-    public boolean existsByPolicyType_id(Long id) {
+    public boolean existsByPolicyTypeId(Long id) {
         return policyRepository.existsByPolicyType_id(id);
     }
 }

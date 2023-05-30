@@ -50,7 +50,7 @@ public class PolicyTypeServiceImp implements PolicyTypeService {
     @Transactional
     public void deletePolicyType(Long id) {
         existById(id);
-        if(policyService.existsByPolicyType_id(id))
+        if(policyService.existsByPolicyTypeId(id))
             throw new BadRequestException("You cannot delete the policy type with id " + id + " because there are policies registered with this type");
         policyTypeRepository.deleteById(id);
     }

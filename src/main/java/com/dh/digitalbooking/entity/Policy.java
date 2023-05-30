@@ -5,7 +5,15 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity(name = "Policy")
 @Table(name = "policies")
 public class Policy {
@@ -35,44 +43,4 @@ public class Policy {
     )
     @JsonIgnore
     private Producto product;
-
-    public Policy() {
-    }
-
-    public Policy(String description, PolicyType policyType) {
-        this.description = description;
-        this.policyType = policyType;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public PolicyType getPolicyType() {
-        return policyType;
-    }
-
-    public void setPolicyType(PolicyType policyType) {
-        this.policyType = policyType;
-    }
-
-    public Producto getProduct() {
-        return product;
-    }
-
-    public void setProduct(Producto product) {
-        this.product = product;
-    }
 }

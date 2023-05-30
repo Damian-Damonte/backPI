@@ -5,7 +5,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
-public record PolicyFullDTO(
+public record PolicyFullDto(
         @NotNull(message = "Policy ID is required")
         Long id,
         @Size(max = 600, message = "Policy description cannot be longer than 600 characters")

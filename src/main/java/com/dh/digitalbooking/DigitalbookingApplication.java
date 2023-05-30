@@ -114,28 +114,32 @@ public class DigitalbookingApplication {
             PolicyType saludYSeguridad = policyTypeRepository.save(PolicyType.builder().name("Salud y seguridad").build());
             PolicyType politicaDeCancelacion = policyTypeRepository.save(PolicyType.builder().name("Politicas de cancelacion").build());
 
-            Policy policy1 = new Policy(
-                """
+            Policy policy1 = Policy.builder()
+                    .description("""
                             Se aplican las pautas de distanciamiento social y otras normas relacionadas con el coronavirus
                             Detector de humo
                             Depósito de seguridad
                             Camaras de seguridad
                             Matafuegos
-                            """
-                    , saludYSeguridad);
+                            """)
+                    .policyType(saludYSeguridad)
+                    .build();
 
-            Policy policy2 = new Policy(
-                    "Check-out: 22:00\n"+
-                            "No se permiten fiestas\n" +
-                            "No fumar\n" +
-                            "Check-in: 10:00",
-                    normasDeLaCasa
-            );
+            Policy policy2 = Policy.builder()
+                    .description("""
+                            Check-out: 22:00
+                            No se permiten fiestas
+                            No fumar
+                            Check-in: 10:00
+                            """)
+                    .policyType(normasDeLaCasa)
+                    .build();
 
-            Policy policy3 = new Policy(
-                    "Agregá las fechas de tu viaje para obtener los detalles de cancelacion de esta estadía",
-                    politicaDeCancelacion
-            );
+            Policy policy3 = Policy.builder()
+                    .description("Agregá las fechas de tu viaje para obtener los detalles de cancelacion de esta estadía")
+                    .policyType(politicaDeCancelacion)
+                    .build();
+
             Set<Policy> setPolicies = new HashSet<>(Set.of(policy1, policy2, policy3));
 
             Set<Amenity> caracteristicas1 = new HashSet<>(Set.of(televisor, desayuno, bar, noFumar));
