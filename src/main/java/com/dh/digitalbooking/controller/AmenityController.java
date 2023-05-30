@@ -1,10 +1,11 @@
 package com.dh.digitalbooking.controller;
 
-import com.dh.digitalbooking.dto.amenity.AmenityFullDTO;
-import com.dh.digitalbooking.dto.amenity.AmenityOnlyNameDTO;
+import com.dh.digitalbooking.dto.amenity.AmenityFullDto;
+import com.dh.digitalbooking.dto.amenity.AmenityRequest;
 import com.dh.digitalbooking.service.AmenityService;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -20,18 +21,18 @@ public class AmenityController {
     }
 
     @GetMapping
-    public ResponseEntity<List<AmenityFullDTO>> getAllAmenities() {
+    public ResponseEntity<List<AmenityFullDto>> getAllAmenities() {
         return ResponseEntity.ok(amenityService.getAllAmenities());
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<AmenityFullDTO> getAmenityById(@PathVariable("id") Long id) {
+    public ResponseEntity<AmenityFullDto> getAmenityById(@PathVariable("id") Long id) {
         return ResponseEntity.ok(amenityService.getAmenityById(id));
     }
 
     @PostMapping
-    public ResponseEntity<AmenityFullDTO> saveAmenity(@RequestBody @Valid AmenityOnlyNameDTO amenityOnlyNameDTO) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(amenityService.saveAmenity(amenityOnlyNameDTO));
+    public ResponseEntity<AmenityFullDto> saveAmenity(@RequestBody @Valid AmenityRequest amenityRequest) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(amenityService.saveAmenity(amenityRequest));
     }
 
     @DeleteMapping("/{id}")
@@ -41,8 +42,9 @@ public class AmenityController {
         return ResponseEntity.noContent().build();
     }
 
-    @PutMapping
-    public ResponseEntity<AmenityFullDTO> updateAmenity(@RequestBody @Valid AmenityFullDTO amenityFullDTO) {
-        return ResponseEntity.ok(amenityService.updateAmenity(amenityFullDTO));
+    @PutMapping("/{id}")
+    public ResponseEntity<AmenityFullDto> updateAmenity(@PathVariable Long id,
+                                                        @RequestBody @Valid AmenityRequest amenityRequest) {
+        return ResponseEntity.ok(amenityService.updateAmenity(id, amenityRequest));
     }
 }

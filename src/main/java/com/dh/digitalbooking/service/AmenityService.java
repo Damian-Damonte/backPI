@@ -1,16 +1,16 @@
 package com.dh.digitalbooking.service;
 
-import com.dh.digitalbooking.dto.amenity.AmenityFullDTO;
-import com.dh.digitalbooking.dto.amenity.AmenityOnlyNameDTO;
+import com.dh.digitalbooking.dto.amenity.AmenityFullDto;
+import com.dh.digitalbooking.dto.amenity.AmenityRequest;
 import com.dh.digitalbooking.entity.Amenity;
 
 import java.util.List;
 
 public interface AmenityService {
-    List<AmenityFullDTO> getAllAmenities();
-    AmenityFullDTO getAmenityById(Long id);
-    AmenityFullDTO saveAmenity(AmenityOnlyNameDTO amenityOnlyNameDTO);
+    List<AmenityFullDto> getAllAmenities();
+    AmenityFullDto getAmenityById(Long id);
+    AmenityFullDto saveAmenity(AmenityRequest amenityRequest);
     void deleteAmenity(Long id);
-    AmenityFullDTO updateAmenity(AmenityFullDTO amenityFullDTO);
+    AmenityFullDto updateAmenity(Long id, AmenityRequest amenityRequest);
     Amenity existByIdValidation(Long id);
 }

@@ -3,6 +3,10 @@ package com.dh.digitalbooking.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity(name = "Country")
 @Table(
         name = "countries",
@@ -10,11 +14,6 @@ import lombok.*;
                 @UniqueConstraint(name = "country_name_unique", columnNames = "name")
         }
 )
-@Getter
-@Setter
-@NoArgsConstructor
-@AllArgsConstructor
-@Builder
 public class Country {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

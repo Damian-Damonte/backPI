@@ -1,12 +1,13 @@
 package com.dh.digitalbooking.service.imp;
 
-import com.dh.digitalbooking.dto.amenity.AmenityFullDTO;
-import com.dh.digitalbooking.dto.amenity.AmenityOnlyNameDTO;
+import com.dh.digitalbooking.dto.amenity.AmenityFullDto;
+import com.dh.digitalbooking.dto.amenity.AmenityRequest;
 import com.dh.digitalbooking.entity.Amenity;
 import com.dh.digitalbooking.exception.BadRequestException;
 import com.dh.digitalbooking.exception.NotFoundException;
 import com.dh.digitalbooking.entity.Producto;
 import com.dh.digitalbooking.mapper.AmenityMapper;
+import com.dh.digitalbooking.mapper.AmenityMapperOld;
 import com.dh.digitalbooking.repository.AmenityRepository;
 import com.dh.digitalbooking.service.AmenityService;
 import org.springframework.stereotype.Service;
@@ -25,24 +26,23 @@ public class AmenityServiceImpl implements AmenityService {
     }
 
     @Override
-    public List<AmenityFullDTO> getAllAmenities() {
-        return amenityRepository.findAll().stream().map(amenityMapper::amenityToAmenityFullDTO).toList();
+    public List<AmenityFullDto> getAllAmenities() {
+        return amenityRepository.findAll().stream().map(amenityMapper::amenityToAmenityFullDto).toList();
     }
 
     @Override
-    public AmenityFullDTO getAmenityById(Long id) {
-        return amenityMapper.amenityToAmenityFullDTO(existByIdValidation(id));
+    public AmenityFullDto getAmenityById(Long id) {
+        return amenityMapper.amenityToAmenityFullDto(existByIdValidation(id));
     }
 
     @Override
     @Transactional
-    public AmenityFullDTO saveAmenity(AmenityOnlyNameDTO amenityOnlyNameDTO) {
-        String name = amenityOnlyNameDTO.name();
+    public AmenityFullDto saveAmenity(AmenityRequest amenityRequest) {
+        String name = amenityRequest.name();
         if(amenityRepository.findByName(name).isPresent())
             throw new BadRequestException("There is already an amenity with the name'" + name + "'");
-
-        Amenity amenity = amenityMapper.amenityOnlyNameDTOToAmenity(amenityOnlyNameDTO);
-        return amenityMapper.amenityToAmenityFullDTO(amenityRepository.save(amenity));
+        Amenity amenity = amenityRepository.save(Amenity.builder().name(name).build());
+        return amenityMapper.amenityToAmenityFullDto(amenity);
     }
 
     @Override
@@ -57,16 +57,14 @@ public class AmenityServiceImpl implements AmenityService {
 
     @Override
     @Transactional
-    public AmenityFullDTO updateAmenity(AmenityFullDTO amenityFullDTO) {
-        Long id = amenityFullDTO.id();
-        String name = amenityFullDTO.name();
+    public AmenityFullDto updateAmenity(Long id, AmenityRequest amenityRequest) {
+        String name = amenityRequest.name();
         Amenity amenity = existByIdValidation(id);
         Amenity amenityByNombre = amenityRepository.findByName(name).orElse(null);
         if(amenityByNombre != null && !(amenityByNombre.getId().equals(id)))
             throw new BadRequestException("There is already an amenity with the name '" + name + "'");
-
         amenity.setName(name);
-        return amenityFullDTO;
+        return amenityMapper.amenityToAmenityFullDto(amenity);
     }
 
     @Override

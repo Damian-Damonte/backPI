@@ -4,11 +4,11 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
-public record AmenityFullDTO(
+public record AmenityFullDto(
         @NotNull(message = "Amenity ID is required")
         Long id,
         @NotBlank(message = "Amenity name is required")
-        @Size(max = 100, message = "Amenity name cannot be longer than 100 characters")
+        @Size(max = 255, message = "Amenity name cannot be longer than 255 characters")
         String name
         ) {
 }
