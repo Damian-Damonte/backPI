@@ -1,8 +1,11 @@
 package com.dh.digitalbooking.service.imp;
 
+import com.dh.digitalbooking.dto.category.CategoryFullDto;
+import com.dh.digitalbooking.dto.category.CategoryRequest;
 import com.dh.digitalbooking.entity.Category;
 import com.dh.digitalbooking.exception.BadRequestException;
 import com.dh.digitalbooking.exception.NotFoundException;
+import com.dh.digitalbooking.mapper.CategoryMapper;
 import com.dh.digitalbooking.repository.CategoryRepository;
 import com.dh.digitalbooking.service.CategoryService;
 import org.springframework.stereotype.Service;
@@ -14,31 +17,36 @@ import java.util.Objects;
 @Service
 public class CategoryServiceImp implements CategoryService {
     private final CategoryRepository categoryRepository;
+    private final CategoryMapper categoryMapper;
 
-    public CategoryServiceImp(CategoryRepository categoryRepository) {
+    public CategoryServiceImp(CategoryRepository categoryRepository, CategoryMapper categoryMapper) {
         this.categoryRepository = categoryRepository;
+        this.categoryMapper = categoryMapper;
     }
 
     @Override
-    public List<Category> getAllCategories() {
-        return categoryRepository.findAll();
+    public List<CategoryFullDto> getAllCategories() {
+        return categoryRepository.findAll().stream().map(categoryMapper::categoryToCategoryFullDto).toList();
     }
 
     @Override
-    public Category getCategoryById(Long id) {
-        return existByIdValidation(id);
+    public CategoryFullDto getCategoryById(Long id) {
+        return categoryMapper.categoryToCategoryFullDto(existByIdValidation(id));
     }
 
     @Override
     @Transactional
-    public Category saveCategory(Category category) {
-        String name = category.getName();
-
+    public CategoryFullDto saveCategory(CategoryRequest categoryRequest) {
+        String name = categoryRequest.name();
         if (categoryRepository.findByName(name).isPresent())
             throw new BadRequestException("There is already a category with the name '" + name + "'");
-        category.setProductsCount(0);
-
-        return categoryRepository.save(category);
+        Category category = categoryRepository.save(Category.builder()
+                        .name(categoryRequest.name())
+                        .description(categoryRequest.description())
+                        .imageUrl(categoryRequest.imageUrl())
+                        .productsCount(0)
+                        .build());
+        return categoryMapper.categoryToCategoryFullDto(category);
     }
 
     @Override
@@ -53,17 +61,16 @@ public class CategoryServiceImp implements CategoryService {
 
     @Override
     @Transactional
-    public Category updateCategory(Category updateCategory) {
-        Long id = updateCategory.getId();
+    public CategoryFullDto updateCategory(Long id, CategoryRequest categoryRequest) {
         Category category = existByIdValidation(id);
-        String updateName = updateCategory.getName();
-
-        Category categoryByTitulo = categoryRepository.findByName(updateName).orElse(null);
-        if (categoryByTitulo != null && !(Objects.equals(categoryByTitulo.getId(), id)))
+        String updateName = categoryRequest.name();
+        Category categoryByName = categoryRepository.findByName(updateName).orElse(null);
+        if (categoryByName != null && !(Objects.equals(categoryByName.getId(), id)))
             throw new BadRequestException("There is already a category with the name '" + updateName + "'");
-// sacar el .save, usar la @Transactional
-        updateCategory.setProductsCount(category.getProductsCount());
-        return categoryRepository.save(updateCategory);
+        category.setName(updateName);
+        category.setDescription(categoryRequest.description());
+        category.setImageUrl(categoryRequest.imageUrl());
+        return categoryMapper.categoryToCategoryFullDto(category);
     }
 
     @Override

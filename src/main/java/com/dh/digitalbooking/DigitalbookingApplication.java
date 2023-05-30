@@ -1,6 +1,7 @@
 package com.dh.digitalbooking;
 
 import com.dh.digitalbooking.dto.UserDetailsDto;
+import com.dh.digitalbooking.dto.category.CategoryRequest;
 import com.dh.digitalbooking.entity.*;
 import com.dh.digitalbooking.repository.*;
 import com.dh.digitalbooking.service.imp.CategoryServiceImp;
@@ -29,6 +30,7 @@ public class DigitalbookingApplication {
     @Bean
     CommandLineRunner commandLineRunner(
             CategoryServiceImp categoriaServiceImp,
+            CategoryRepository categoryRepository,
             CountryRepository countryRepository,
             CityRepository cityRepository,
             ProductoServiceImp productoServiceImp,
@@ -52,9 +54,9 @@ public class DigitalbookingApplication {
                     rolAdmin
             ));
 
-            Category hotel = categoriaServiceImp.saveCategory(new Category("Hotel", "Descripcion de la categoria Hotel", "https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80%27"));
-            Category hostel = categoriaServiceImp.saveCategory(new Category("Hostel", "Descripcion de la categoria Hostel", "https://images.unsplash.com/photo-1555854877-bab0e564b8d5?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1769&q=80%27"));
-            Category departamento = categoriaServiceImp.saveCategory(new Category("Departamento", "Descripcion de la categoria Departamento", "https://images.unsplash.com/photo-1563298723-dcfebaa392e3?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1767&q=80%27"));
+            categoriaServiceImp.saveCategory(new CategoryRequest("Hotel", "Descripcion de la categoria Hotel", "https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80%27"));
+            categoriaServiceImp.saveCategory(new CategoryRequest("Hostel", "Descripcion de la categoria Hostel", "https://images.unsplash.com/photo-1555854877-bab0e564b8d5?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1769&q=80%27"));
+            categoriaServiceImp.saveCategory(new CategoryRequest("Departamento", "Descripcion de la categoria departamento", "https://images.unsplash.com/photo-1563298723-dcfebaa392e3?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1767&q=80%27"));
 //            Category bedAndBreakfast = categoriaServiceImp.saveCategoria(new Category("Bed and breakfast", "Descripcion de la categoria Bed and breakfast", "https://images.unsplash.com/photo-1463620910506-d0458143143e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80%27"));
 
             Country argentina = countryRepository.save(Country.builder().name("Argentina").build());
@@ -161,6 +163,12 @@ public class DigitalbookingApplication {
 
             Set<Image> setFotos = new HashSet<>(Set.of(foto1, foto2, foto3, foto4, foto5, foto6));
             Set<Image> setFotos2 = new HashSet<>(Set.of(foto1, foto2, foto3, foto4, foto5, foto7));
+
+//          GET CATEGORIES
+//          quitar esto cuando product reciba DTOs
+            Category hotel = categoryRepository.findByName("Hotel").get();
+            Category hostel = categoryRepository.findByName("Hostel").get();
+            Category departamento = categoryRepository.findByName("Departamento").get();
 
             Producto producto1 = new Producto();
             producto1.setTitulo("Hotel numero 1");
