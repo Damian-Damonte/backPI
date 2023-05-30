@@ -27,7 +27,10 @@ public class SecurityConfiguration {
                 .csrf().disable()
                 .authorizeHttpRequests(requests -> requests
                         .requestMatchers(HttpMethod.POST, "/bookings").authenticated()
+//                        optimizar los 3 metodos
                         .requestMatchers(HttpMethod.POST, "/ratings").authenticated()
+                        .requestMatchers(HttpMethod.PUT, "/ratings/**").authenticated()
+                        .requestMatchers(HttpMethod.DELETE, "/ratings/**").authenticated()
                         .requestMatchers(HttpMethod.POST, "/usuarios/favoritos").authenticated()
                         .requestMatchers(HttpMethod.GET, "/usuarios/{id}").authenticated()
                         .requestMatchers("/usuarios/**").hasRole("ADMIN")

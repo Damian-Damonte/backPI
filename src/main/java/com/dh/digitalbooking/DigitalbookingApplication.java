@@ -2,6 +2,8 @@ package com.dh.digitalbooking;
 
 import com.dh.digitalbooking.dto.UserDetailsDto;
 import com.dh.digitalbooking.dto.category.CategoryRequest;
+import com.dh.digitalbooking.dto.common.OnlyId;
+import com.dh.digitalbooking.dto.rating.RatingRequest;
 import com.dh.digitalbooking.entity.*;
 import com.dh.digitalbooking.repository.*;
 import com.dh.digitalbooking.service.imp.CategoryServiceImp;
@@ -189,11 +191,12 @@ public class DigitalbookingApplication {
             userDetailsDtoAdmin.setUserId(1L);
             userDetailsDtoAdmin.setUserRol("ADMIN");
 
-            Rating ratingProducto1 = new Rating();
-            ratingProducto1.setValue(4);
-            ratingProducto1.setProduct(producto1);
-            ratingProducto1.setUser(usuarioAdmin);
-            puntuacionServiceImp.saveRating(ratingProducto1, userDetailsDtoAdmin);
+//            Rating ratingProducto1 = new Rating();
+//            ratingProducto1.setValue(4);
+//            ratingProducto1.setProduct(producto1);
+//            ratingProducto1.setUser(usuarioAdmin);
+            RatingRequest rating1 = new RatingRequest(4, new OnlyId(1L));
+            puntuacionServiceImp.saveRating(rating1, userDetailsDtoAdmin);
 
             Booking booking1 = new Booking();
             booking1.setCheckIn(LocalDate.of(2023, 6, 22));
@@ -219,11 +222,13 @@ public class DigitalbookingApplication {
             producto2.setLongitude(new BigDecimal("-74.21162384247455"));
             productoServiceImp.saveProducto(producto2);
 
-            Rating ratingProducto2 = new Rating();
-            ratingProducto2.setValue(5);
-            ratingProducto2.setProduct(producto2);
-            ratingProducto2.setUser(usuarioAdmin);
-            puntuacionServiceImp.saveRating(ratingProducto2, userDetailsDtoAdmin);
+//            Rating ratingProducto2 = new Rating();
+//            ratingProducto2.setValue(5);
+//            ratingProducto2.setProduct(producto2);
+//            ratingProducto2.setUser(usuarioAdmin);
+            RatingRequest rating2 = new RatingRequest(5, new OnlyId(2L));
+            
+            puntuacionServiceImp.saveRating(rating2, userDetailsDtoAdmin);
 
             Booking booking2 = new Booking();
             booking2.setCheckIn(LocalDate.of(2023, 6, 22));
