@@ -12,6 +12,8 @@ import com.dh.digitalbooking.service.CityService;
 import com.dh.digitalbooking.service.CountryService;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import java.util.List;
 
 @Service
@@ -39,13 +41,15 @@ public class CityServiceImpl implements CityService {
     }
 
     @Override
+    @Transactional
     public CityFullDto saveCity(CityRequest cityRequest) {
-        Country country = countryService.countryExistsById(cityRequest.countryId());
+        Country country = countryService.countryExistsById(cityRequest.country().id());
         City city = City.builder().name(cityRequest.name()).country(country).build();
         return cityMapper.cityToCityFullDto(cityRepository.save(city));
     }
 
     @Override
+    @Transactional
     public void deleteCity(Long id) {
         existByIdValidation(id);
         if(productoServiceImp.existByCityId(id))
@@ -54,11 +58,13 @@ public class CityServiceImpl implements CityService {
     }
 
     @Override
+    @Transactional
     public CityFullDto updateCity(Long id, CityRequest cityRequest) {
-        existByIdValidation(id);
-        Country country = countryService.countryExistsById(cityRequest.countryId());
-        City city = City.builder().id(id).name(cityRequest.name()).country(country).build();
-        return cityMapper.cityToCityFullDto(cityRepository.save(city));
+        City city = existByIdValidation(id);
+        Country country = countryService.countryExistsById(cityRequest.country().id());
+        city.setName(cityRequest.name());
+        city.setCountry(country);
+        return cityMapper.cityToCityFullDto(city);
     }
 
     @Override
