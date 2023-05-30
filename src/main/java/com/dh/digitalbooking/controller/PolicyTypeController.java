@@ -1,7 +1,7 @@
 package com.dh.digitalbooking.controller;
 
-import com.dh.digitalbooking.dto.policyType.PolicyTypeFullDTO;
-import com.dh.digitalbooking.dto.policyType.PolicyTypeNoIdDTO;
+import com.dh.digitalbooking.dto.policyType.PolicyTypeFullDto;
+import com.dh.digitalbooking.dto.policyType.PolicyTypeRequest;
 import com.dh.digitalbooking.service.PolicyTypeService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
@@ -19,19 +19,19 @@ public class PolicyTypeController {
     }
 
     @GetMapping
-    public ResponseEntity<List<PolicyTypeFullDTO>> getAllPoliciesTypes() {
+    public ResponseEntity<List<PolicyTypeFullDto>> getAllPoliciesTypes() {
         return ResponseEntity.ok(policyTypeService.allPoliciesTypes());
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<PolicyTypeFullDTO> getPolicyTypeById(@PathVariable("id") Long id) {
+    public ResponseEntity<PolicyTypeFullDto> getPolicyTypeById(@PathVariable("id") Long id) {
         return ResponseEntity.ok(policyTypeService.getPolicieTypeById(id));
     }
 
     @PostMapping
-    public ResponseEntity<PolicyTypeFullDTO> savePolicyType(@RequestBody @Valid PolicyTypeNoIdDTO policyTypeNoIdDTO) {
+    public ResponseEntity<PolicyTypeFullDto> savePolicyType(@RequestBody @Valid PolicyTypeRequest policyTypeRequest) {
         return ResponseEntity.status(HttpStatus.CREATED).body(
-                policyTypeService.savePolicyType(policyTypeNoIdDTO));
+                policyTypeService.savePolicyType(policyTypeRequest));
     }
 
     @DeleteMapping("/{id}")
@@ -40,8 +40,9 @@ public class PolicyTypeController {
         return ResponseEntity.noContent().build();
     }
 
-    @PutMapping
-    public ResponseEntity<PolicyTypeFullDTO> updatePolicyType(@RequestBody @Valid PolicyTypeFullDTO policyTypeFullDTO) {
-        return ResponseEntity.ok(policyTypeService.updatePolicyType(policyTypeFullDTO));
+    @PutMapping("/{id}")
+    public ResponseEntity<PolicyTypeFullDto> updatePolicyType(@PathVariable Long id,
+                                                  @RequestBody @Valid PolicyTypeRequest policyTypeRequest) {
+        return ResponseEntity.ok(policyTypeService.updatePolicyType(id, policyTypeRequest));
     }
 }

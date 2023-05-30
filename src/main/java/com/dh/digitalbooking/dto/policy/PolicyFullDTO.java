@@ -1,6 +1,6 @@
 package com.dh.digitalbooking.dto.policy;
 
-import com.dh.digitalbooking.dto.policyType.PolicyTypeFullDTO;
+import com.dh.digitalbooking.dto.policyType.PolicyTypeFullDto;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -12,6 +12,6 @@ public record PolicyFullDTO(
         @NotBlank(message = "Policy description required")
         String description,
         @NotNull(message = "Policy type required")
-        PolicyTypeFullDTO policyType
+        PolicyTypeFullDto policyType
 ) {
 }

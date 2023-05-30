@@ -110,9 +110,9 @@ public class DigitalbookingApplication {
             Amenity minibar = amenityRepository.save(Amenity.builder().name("Minibar").build());
             Amenity chimenea = amenityRepository.save(Amenity.builder().name("Chimenea").build());
 
-            PolicyType normasDeLaCasa = policyTypeRepository.save(new PolicyType("Normas de la casa"));
-            PolicyType saludYSeguridad = policyTypeRepository.save(new PolicyType("Salud y seguridad"));
-            PolicyType politicaDeCancelacion = policyTypeRepository.save(new PolicyType("Politicas de cancelacion"));
+            PolicyType normasDeLaCasa = policyTypeRepository.save(PolicyType.builder().name("Normas de la casa").build());
+            PolicyType saludYSeguridad = policyTypeRepository.save(PolicyType.builder().name("Salud y seguridad").build());
+            PolicyType politicaDeCancelacion = policyTypeRepository.save(PolicyType.builder().name("Politicas de cancelacion").build());
 
             Policy policy1 = new Policy(
                 """

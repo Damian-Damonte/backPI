@@ -163,7 +163,7 @@ public class ProductoServiceImp implements ProductoService {
 
     private void getTipoPolitica(Policy policy) {
         Long tipoPoliticaId = policy.getPolicyType().getId();
-        PolicyType policyType = policyTypeService.existByIdValidation(tipoPoliticaId);
+        PolicyType policyType = policyTypeService.existById(tipoPoliticaId);
 
 //        Ahora no se puede crear el tipo de policy cuando creamos un producto
 //        PolicyType policyType = tipoPoliticaId != null

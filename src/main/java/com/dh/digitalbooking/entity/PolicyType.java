@@ -1,7 +1,15 @@
 package com.dh.digitalbooking.entity;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity(name = "PolicyType")
 @Table(
         name = "policies_types",
@@ -17,27 +25,4 @@ public class PolicyType {
 
     @Column(name = "name", length = 100)
     private String name;
-
-    public PolicyType() {
-    }
-
-    public PolicyType(String name) {
-        this.name = name;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
 }

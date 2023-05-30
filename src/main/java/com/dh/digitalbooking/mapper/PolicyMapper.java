@@ -2,7 +2,7 @@ package com.dh.digitalbooking.mapper;
 
 import com.dh.digitalbooking.dto.policy.PolicyFullDTO;
 import com.dh.digitalbooking.dto.policy.PolicyPostDTO;
-import com.dh.digitalbooking.dto.policyType.PolicyTypeFullDTO;
+import com.dh.digitalbooking.dto.policyType.PolicyTypeFullDto;
 import com.dh.digitalbooking.entity.Policy;
 import com.dh.digitalbooking.entity.PolicyType;
 import org.springframework.stereotype.Component;
@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class PolicyMapper {
     public PolicyFullDTO policyToPolicyFullDTO(Policy policy) {
-        PolicyTypeFullDTO policyTypeFullDTO = new PolicyTypeFullDTO(
+        PolicyTypeFullDto policyTypeFullDTO = new PolicyTypeFullDto(
                 policy.getPolicyType().getId(), policy.getPolicyType().getName());
         return new PolicyFullDTO(policy.getId(), policy.getDescription(), policyTypeFullDTO);
     }
