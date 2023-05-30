@@ -1,13 +1,16 @@
 package com.dh.digitalbooking.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Max;
-import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Size;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity(name = "Image")
 @Table(name = "images")
 public class Image {
@@ -16,82 +19,21 @@ public class Image {
     @Column(name = "id", updatable = false)
     private Long id;
 
-    @Column(name = "titulo", nullable = false, length = 50)
-    @Size(max = 50, message = "El titulo de la imagen no debe tener más de 50 caracteres")
-    @NotBlank(message = "La imagen debe tener un titulo")
+    @Column(name = "title", nullable = false, length = 100)
     private String title;
 
     @Column(name = "url", nullable = false)
-    @NotBlank(message = "La imagen debe tener una url")
-    @Size(max = 255, message = "La url de la imagen no debe tener más de 255 caracteres")
     private String url;
-    @Column(name = "orden")
-    @Min(value = 0, message = "El valor del orden debe ser mayor o igual a 0.")
-    @Max(value = 100, message = "El valor del orden debe ser menor o igual a 100.")
-    @Nullable
+    @Column(name = "image_order")
     private Integer order;
 
     @ManyToOne
     @JoinColumn(
-            name = "producto_id",
+            name = "product_id",
             referencedColumnName = "id",
             nullable = false,
-            foreignKey = @ForeignKey(name = "productos_imagenes_id_fk")
+            foreignKey = @ForeignKey(name = "products_images_id_fk")
     )
     @JsonIgnore
     private Producto producto;
-
-    public Image() {
-    }
-
-    public Image(String title, String url) {
-        this.title = title;
-        this.url = url;
-    }
-
-    public Image(String title, String url, Integer order) {
-        this.title = title;
-        this.url = url;
-        this.order = order;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getTitle() {
-        return this.title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public String getUrl() {
-        return url;
-    }
-
-    public void setUrl(String url) {
-        this.url = url;
-    }
-
-    public Producto getProducto() {
-        return producto;
-    }
-
-    public void setProducto(Producto product) {
-        this.producto = product;
-    }
-
-    public Integer getOrder() {
-        return order;
-    }
-
-    public void setOrder(Integer order) {
-        this.order = order;
-    }
 }

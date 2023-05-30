@@ -22,15 +22,15 @@ public class Policy {
     @Column(name = "id", updatable = false)
     private Long id;
 
-    @Column(name = "descripcion", nullable = false, columnDefinition = "TEXT", length = 600)
+    @Column(name = "description", nullable = false, columnDefinition = "TEXT", length = 600)
     private String description;
 
     @ManyToOne
     @JoinColumn(
-            name = "tipo_politica_id",
+            name = "policty_type_id",
             nullable = false,
             referencedColumnName = "id",
-            foreignKey = @ForeignKey(name = "politicas_tipo_politicas_fk")
+            foreignKey = @ForeignKey(name = "policy_policy_type_fk")
     )
     private PolicyType policyType;
 
@@ -39,7 +39,7 @@ public class Policy {
             name = "producto_id",
             referencedColumnName = "id",
             nullable = false,
-            foreignKey = @ForeignKey(name = "productos_politicas_id_fk")
+            foreignKey = @ForeignKey(name = "products_policies_id_fk")
     )
     @JsonIgnore
     private Producto product;
