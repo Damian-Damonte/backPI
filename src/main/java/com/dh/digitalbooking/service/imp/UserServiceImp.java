@@ -38,7 +38,6 @@ public class UserServiceImp implements UserService {
 
     @Override
     public List<UserResponse> allUsuario() {
-//        return usuarioResponseMapper.toListUsuarioResponseDto(userRespository.findAll());
         return userRespository.findAll().stream().map(userMapper::userToUserResponse).toList();
     }
 
@@ -48,7 +47,6 @@ public class UserServiceImp implements UserService {
             if (!id.equals(userDetailsDto.getUserId()))
                 throw new BadRequestException("La información del usuario proporcionado no coincide con el usuario actualmente autenticado");
         }
-//        return usuarioResponseMapper.toUsuarioResponseDto(existByIdValidation(id));
         return userMapper.userToUserFullDto(existByIdValidation(id));
     }
 
@@ -61,21 +59,12 @@ public class UserServiceImp implements UserService {
     @Override
     @Transactional
     public User saveUsuario(UserRequest userRequest) {
-//        emailValidation(usuarioRequestDto.getEmail());
         String email = userRequest.email();
         if (userRespository.findByEmail(email).isPresent())
             throw new BadRequestException("El email '" + email + "' ya se encuentra registrado");
 
         Rol userRole = roleRepository.findByNombre("ROLE_USER").orElseThrow(
                 () -> new NotFoundException("Rol no encontrado"));
-
-//        User user = new User(
-//                usuarioRequestDto.getNombre(),
-//                usuarioRequestDto.getApellido(),
-//                usuarioRequestDto.getEmail(),
-//                passwordEncoder.encode(usuarioRequestDto.getPassword()),
-//                userRole
-//        );
         User user = User.builder()
                 .firstName(userRequest.firstName())
                 .lastName(userRequest.lastName())
@@ -100,21 +89,12 @@ public class UserServiceImp implements UserService {
     public UserResponse updateUsuario(Long id, UserRequest userRequest) {
         User user = existByIdValidation(id);
         String email = userRequest.email();
-
         User userByEmail = userRespository.findByEmail(email).orElse(null);
         if (userByEmail != null && !(userByEmail.getId().equals(id)))
             throw new BadRequestException("El email '" + email + "' ya se encuentra registrado");
-
-//        user.setFirstName(usuarioResponseDto.getNombre());
-//        user.setLastName(usuarioResponseDto.getApellido());
-//        user.setEmail(email);
-//        user.setCity(usuarioResponseDto.getCiudad());
-//        user.setRole(usuarioResponseDto.getRol());
         user.setFirstName(userRequest.firstName());
         user.setLastName(userRequest.lastName());
         user.setEmail(userRequest.email());
-
-//        return usuarioResponseMapper.toUsuarioResponseDto(userRespository.save(user));
         return userMapper.userToUserResponse(user);
     }
 
@@ -145,9 +125,4 @@ public class UserServiceImp implements UserService {
         return userRespository.findById(id).orElseThrow(() ->
                 new NotFoundException("User con id " + id + " no encontrado"));
     }
-
-//    private void emailValidation(String email) {
-//        if (userRespository.findByEmail(email).isPresent())
-//            throw new BadRequestException("El email '" + email + "' ya se encuentra registrado");
-//    }
 }
