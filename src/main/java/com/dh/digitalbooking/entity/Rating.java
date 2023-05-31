@@ -30,7 +30,7 @@ public class Rating {
             foreignKey = @ForeignKey(name = "rating_user_fk")
     )
     @JsonIgnoreProperties({"bookings", "favoritos"})
-    private Usuario user;
+    private User user;
     @ManyToOne
     @JoinColumn(
             name = "product_id",

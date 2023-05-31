@@ -47,7 +47,7 @@ public class Booking {
     )
     @NotNull(message = "User is required")
     @JsonIgnoreProperties({"bookings", "favoritos"})
-    private Usuario user;
+    private User user;
     @ManyToOne
     @JoinColumn(
             name = "product_id",
@@ -137,11 +137,11 @@ public class Booking {
         this.product = product;
     }
 
-    public Usuario getUser() {
+    public User getUser() {
         return user;
     }
 
-    public void setUser(Usuario user) {
+    public void setUser(User user) {
         this.user = user;
     }
 

@@ -2,9 +2,10 @@ package com.dh.digitalbooking.security;
 
 import com.dh.digitalbooking.dto.AuthenticateRequest;
 import com.dh.digitalbooking.dto.AuthenticationResponse;
-import com.dh.digitalbooking.dto.UsuarioRequestDto;
-import com.dh.digitalbooking.entity.Usuario;
-import com.dh.digitalbooking.service.imp.UsuarioServiceImp;
+import com.dh.digitalbooking.dto.user.UserRequest;
+import com.dh.digitalbooking.entity.User;
+import com.dh.digitalbooking.service.UserService;
+import com.dh.digitalbooking.service.imp.UserServiceImp;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.stereotype.Service;
@@ -16,18 +17,18 @@ import java.util.Map;
 public class AuthenticationService {
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
-    private final UsuarioServiceImp usuarioServiceImp;
+    private final UserService userService;
 
-    public AuthenticationService(JwtService jwtService, AuthenticationManager authenticationManager, UsuarioServiceImp usuarioServiceImp) {
+    public AuthenticationService(JwtService jwtService, AuthenticationManager authenticationManager, UserService userService) {
         this.jwtService = jwtService;
         this.authenticationManager = authenticationManager;
-        this.usuarioServiceImp = usuarioServiceImp;
+        this.userService = userService;
     }
 
-    public AuthenticationResponse register(UsuarioRequestDto usuarioRequestDto) {
-        Usuario usuario = usuarioServiceImp.saveUsuario(usuarioRequestDto);
+    public AuthenticationResponse register(UserRequest userRequest) {
+        User user = userService.saveUsuario(userRequest);
 
-        String jwtToken = jwtService.generateToken(getClaims(usuario), usuario);
+        String jwtToken = jwtService.generateToken(getClaims(user), user);
         return new AuthenticationResponse(jwtToken);
     };
 
@@ -38,17 +39,17 @@ public class AuthenticationService {
                         requestPayload.getPassword()
                 )
         );
-        Usuario usuario = usuarioServiceImp.findByEmail(requestPayload.getEmail());
-        String jwtToken = jwtService.generateToken(getClaims(usuario) ,usuario);
+        User user = userService.findByEmail(requestPayload.getEmail());
+        String jwtToken = jwtService.generateToken(getClaims(user) , user);
         return new AuthenticationResponse(jwtToken);
     }
 
-    private Map<String, Object> getClaims(Usuario usuario) {
+    private Map<String, Object> getClaims(User user) {
         Map<String, Object> claims = new HashMap<>();
-        claims.put("id", usuario.getId());
-        claims.put("nombre", usuario.getNombre());
-        claims.put("apellido", usuario.getApellido());
-        claims.put("rol", usuario.getRol().getNombre().substring(5));
+        claims.put("id", user.getId());
+        claims.put("firstName", user.getFirstName());
+        claims.put("lastName", user.getLastName());
+        claims.put("role", user.getRole().getNombre().substring(5));
         return claims;
     }
 }

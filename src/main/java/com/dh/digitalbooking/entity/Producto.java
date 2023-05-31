@@ -105,9 +105,9 @@ public class Producto {
     @JsonIgnore
     private Set<Rating> puntuaciones = new HashSet<>();
 
-    @ManyToMany(mappedBy = "favoritos")
+    @ManyToMany(mappedBy = "favorites")
     @JsonIgnore
-    private Set<Usuario> favoritos = new HashSet<>();
+    private Set<User> favoritos = new HashSet<>();
 
     public Producto() {
     }
@@ -251,11 +251,11 @@ public class Producto {
         this.promedioPuntuacion = promedio_puntuacion;
     }
 
-    public Set<Usuario> getFavoritos() {
+    public Set<User> getFavoritos() {
         return favoritos;
     }
 
-    public void setFavoritos(Set<Usuario> favoritos) {
+    public void setFavoritos(Set<User> favoritos) {
         this.favoritos = favoritos;
     }
 }

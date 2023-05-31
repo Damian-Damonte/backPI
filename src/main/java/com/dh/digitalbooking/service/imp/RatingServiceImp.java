@@ -8,7 +8,7 @@ import com.dh.digitalbooking.entity.Rating;
 import com.dh.digitalbooking.exception.BadRequestException;
 import com.dh.digitalbooking.exception.NotFoundException;
 import com.dh.digitalbooking.entity.Producto;
-import com.dh.digitalbooking.entity.Usuario;
+import com.dh.digitalbooking.entity.User;
 import com.dh.digitalbooking.mapper.RatingMapper;
 import com.dh.digitalbooking.repository.RatingRepository;
 import com.dh.digitalbooking.service.RatingService;
@@ -43,8 +43,8 @@ public class RatingServiceImp implements RatingService {
     public RatingFullDto saveRating(RatingRequest ratingRequest, UserDetailsDto userDetailsDto) {
         Long userId = userDetailsDto.getUserId();
         Producto product = productoServiceImp.existByIdValidation(ratingRequest.product().id());
-//      cambiar esto usando el builder cuando actualice Usuario
-        Usuario user = new Usuario();
+//      cambiar esto usando el builder cuando actualice User
+        User user = new User();
         user.setId(userId);
 
         Rating rating = ratingRepository.save(Rating.builder()
@@ -84,7 +84,7 @@ public class RatingServiceImp implements RatingService {
 
 //    private Rating getRating(Rating rating) {
 //        Producto product = productoServiceImp.existByIdValidation(rating.getProduct().getId());
-//        Usuario user = usuarioServiceImp.existByIdValidation(rating.getUser().getId());
+//        User user = usuarioServiceImp.existByIdValidation(rating.getUser().getId());
 //        rating.setProduct(product);
 //        rating.setUser(user);
 //        Rating ratingSave = ratingRepository.save(rating);

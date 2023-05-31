@@ -39,7 +39,7 @@ public class DigitalbookingApplication {
             AmenityRepository amenityRepository,
             PolicyTypeRepository policyTypeRepository,
             RoleRepository roleRepository,
-            UsuarioRepository usuarioRepository,
+            UserRespository userRespository,
             PasswordEncoder passwordEncoder,
             RatingServiceImp puntuacionServiceImp,
             BookingServiceImp reservaServiceImp
@@ -48,13 +48,20 @@ public class DigitalbookingApplication {
             Rol rolUser = roleRepository.save(new Rol("ROLE_USER"));
             Rol rolAdmin = roleRepository.save(new Rol("ROLE_ADMIN"));
 
-            Usuario usuarioAdmin = usuarioRepository.save(new Usuario(
-                    "admin",
-                    "admin",
-                    "admin@gmail.com",
-                    passwordEncoder.encode("admin"),
-                    rolAdmin
-            ));
+//            User userAdmin = userRespository.save(new User(
+//                    "admin",
+//                    "admin",
+//                    "admin@gmail.com",
+//                    passwordEncoder.encode("admin"),
+//                    rolAdmin
+//            ));
+            User userAdmin = userRespository.save(User.builder()
+                            .firstName("admin")
+                            .lastName("admin")
+                            .email("admin@gmail.com")
+                            .password(passwordEncoder.encode("admin"))
+                            .role(rolAdmin)
+                            .build());
 
             categoriaServiceImp.saveCategory(new CategoryRequest("Hotel", "Descripcion de la categoria Hotel", "https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80%27"));
             categoriaServiceImp.saveCategory(new CategoryRequest("Hostel", "Descripcion de la categoria Hostel", "https://images.unsplash.com/photo-1555854877-bab0e564b8d5?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1769&q=80%27"));
@@ -194,7 +201,7 @@ public class DigitalbookingApplication {
 //            Rating ratingProducto1 = new Rating();
 //            ratingProducto1.setValue(4);
 //            ratingProducto1.setProduct(producto1);
-//            ratingProducto1.setUser(usuarioAdmin);
+//            ratingProducto1.setUser(userAdmin);
             RatingRequest rating1 = new RatingRequest(4, new OnlyId(1L));
             puntuacionServiceImp.saveRating(rating1, userDetailsDtoAdmin);
 
@@ -203,7 +210,7 @@ public class DigitalbookingApplication {
             booking1.setCheckOut(LocalDate.of(2023, 6, 25));
             booking1.setArrivalTime(LocalTime.now());
             booking1.setUserCity("Buenos aires");
-            booking1.setUser(usuarioAdmin);
+            booking1.setUser(userAdmin);
             booking1.setProduct(producto1);
             reservaServiceImp.saveBooking(booking1, userDetailsDtoAdmin);
 
@@ -225,7 +232,7 @@ public class DigitalbookingApplication {
 //            Rating ratingProducto2 = new Rating();
 //            ratingProducto2.setValue(5);
 //            ratingProducto2.setProduct(producto2);
-//            ratingProducto2.setUser(usuarioAdmin);
+//            ratingProducto2.setUser(userAdmin);
             RatingRequest rating2 = new RatingRequest(5, new OnlyId(2L));
             
             puntuacionServiceImp.saveRating(rating2, userDetailsDtoAdmin);
@@ -235,7 +242,7 @@ public class DigitalbookingApplication {
             booking2.setCheckOut(LocalDate.of(2023, 6, 25));
             booking2.setArrivalTime(LocalTime.now());
             booking2.setUserCity("La Plata");
-            booking2.setUser(usuarioAdmin);
+            booking2.setUser(userAdmin);
             booking2.setProduct(producto2);
             reservaServiceImp.saveBooking(booking2, userDetailsDtoAdmin);
         };

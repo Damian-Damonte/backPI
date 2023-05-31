@@ -1,8 +1,7 @@
 package com.dh.digitalbooking.security;
 
 import com.dh.digitalbooking.exception.ForbiddenException;
-import com.dh.digitalbooking.exception.NotFoundException;
-import com.dh.digitalbooking.repository.UsuarioRepository;
+import com.dh.digitalbooking.repository.UserRespository;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -17,15 +16,15 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
 public class ApplicationConfig {
-    private final UsuarioRepository usuarioRepository;
+    private final UserRespository userRespository;
 
-    public ApplicationConfig(UsuarioRepository usuarioRepository) {
-        this.usuarioRepository = usuarioRepository;
+    public ApplicationConfig(UserRespository userRespository) {
+        this.userRespository = userRespository;
     }
 
     @Bean
     public UserDetailsService userDetailsService(){
-        return email -> usuarioRepository.findByEmail(email)
+        return email -> userRespository.findByEmail(email)
                 .orElseThrow(ForbiddenException::new);
     }
 

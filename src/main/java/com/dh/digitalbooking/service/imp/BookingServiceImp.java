@@ -2,10 +2,10 @@ package com.dh.digitalbooking.service.imp;
 
 import com.dh.digitalbooking.dto.UserDetailsDto;
 import com.dh.digitalbooking.entity.Booking;
+import com.dh.digitalbooking.entity.User;
 import com.dh.digitalbooking.exception.BadRequestException;
 import com.dh.digitalbooking.exception.NotFoundException;
 import com.dh.digitalbooking.entity.Producto;
-import com.dh.digitalbooking.entity.Usuario;
 import com.dh.digitalbooking.repository.BookingRepository;
 import com.dh.digitalbooking.service.BookingService;
 import org.springframework.stereotype.Service;
@@ -20,9 +20,9 @@ import java.util.List;
 public class BookingServiceImp implements BookingService {
     private final BookingRepository bookingRepository;
     private final ProductoServiceImp productoServiceImp;
-    private final UsuarioServiceImp usuarioServiceImp;
+    private final UserServiceImp usuarioServiceImp;
 
-    public BookingServiceImp(BookingRepository bookingRepository, ProductoServiceImp productoServiceImp, UsuarioServiceImp usuarioServiceImp) {
+    public BookingServiceImp(BookingRepository bookingRepository, ProductoServiceImp productoServiceImp, UserServiceImp usuarioServiceImp) {
         this.bookingRepository = bookingRepository;
         this.productoServiceImp = productoServiceImp;
         this.usuarioServiceImp = usuarioServiceImp;
@@ -70,14 +70,14 @@ public class BookingServiceImp implements BookingService {
     private Booking getBooking(Booking booking) {
         datesValidation(booking);
         Producto product = productoServiceImp.existByIdValidation(booking.getProduct().getId());
-        Usuario user = usuarioServiceImp.existByIdValidation(booking.getUser().getId());
+        User user = usuarioServiceImp.existByIdValidation(booking.getUser().getId());
 
         booking.setTotal(getTotal(booking.getCheckIn(), booking.getCheckOut(), product.getPrecioPorNoche()));
 
         product.getBookings().add(booking);
         booking.setProduct(product);
 
-        user.setCiudad(booking.getUserCity());
+        user.setCity(booking.getUserCity());
         user.getBookings().add(booking);
         booking.setUser(user);
 
