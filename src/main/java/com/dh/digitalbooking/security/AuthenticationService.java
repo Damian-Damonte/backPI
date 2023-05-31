@@ -1,11 +1,11 @@
 package com.dh.digitalbooking.security;
 
-import com.dh.digitalbooking.dto.AuthenticateRequest;
-import com.dh.digitalbooking.dto.AuthenticationResponse;
+
+import com.dh.digitalbooking.dto.auth.AuthRequest;
+import com.dh.digitalbooking.dto.auth.AuthResponse;
 import com.dh.digitalbooking.dto.user.UserRequest;
 import com.dh.digitalbooking.entity.User;
 import com.dh.digitalbooking.service.UserService;
-import com.dh.digitalbooking.service.imp.UserServiceImp;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.stereotype.Service;
@@ -25,23 +25,23 @@ public class AuthenticationService {
         this.userService = userService;
     }
 
-    public AuthenticationResponse register(UserRequest userRequest) {
+    public AuthResponse register(UserRequest userRequest) {
         User user = userService.saveUsuario(userRequest);
 
         String jwtToken = jwtService.generateToken(getClaims(user), user);
-        return new AuthenticationResponse(jwtToken);
+        return new AuthResponse(jwtToken);
     };
 
-    public AuthenticationResponse authenticate(AuthenticateRequest requestPayload) {
+    public AuthResponse authenticate(AuthRequest authRequest) {
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
-                        requestPayload.getEmail(),
-                        requestPayload.getPassword()
+                        authRequest.email(),
+                        authRequest.password()
                 )
         );
-        User user = userService.findByEmail(requestPayload.getEmail());
+        User user = userService.findByEmail(authRequest.email());
         String jwtToken = jwtService.generateToken(getClaims(user) , user);
-        return new AuthenticationResponse(jwtToken);
+        return new AuthResponse(jwtToken);
     }
 
     private Map<String, Object> getClaims(User user) {

@@ -1,7 +1,7 @@
 package com.dh.digitalbooking.controller;
 
-import com.dh.digitalbooking.dto.AuthenticateRequest;
-import com.dh.digitalbooking.dto.AuthenticationResponse;
+import com.dh.digitalbooking.dto.auth.AuthRequest;
+import com.dh.digitalbooking.dto.auth.AuthResponse;
 import com.dh.digitalbooking.dto.user.UserRequest;
 import com.dh.digitalbooking.security.AuthenticationService;
 import jakarta.validation.Valid;
@@ -19,15 +19,15 @@ public class AuthController {
     }
 
     @PostMapping("/registro")
-    public ResponseEntity<AuthenticationResponse> register(@RequestBody @Valid UserRequest userRequest) {
+    public ResponseEntity<AuthResponse> register(@RequestBody @Valid UserRequest userRequest) {
         return ResponseEntity
                 .status(HttpStatus.CREATED)
                 .body(authenticationService.register(userRequest));
     }
 
     @PostMapping("/autenticacion")
-    public ResponseEntity<AuthenticationResponse> authenticate(
-            @RequestBody @Valid AuthenticateRequest authenticateRequest) {
-        return ResponseEntity.ok(authenticationService.authenticate(authenticateRequest));
+    public ResponseEntity<AuthResponse> authenticate(
+            @RequestBody @Valid AuthRequest authRequest) {
+        return ResponseEntity.ok(authenticationService.authenticate(authRequest));
     }
 }
