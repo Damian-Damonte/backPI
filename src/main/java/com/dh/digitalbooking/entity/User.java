@@ -40,15 +40,9 @@ public class User implements UserDetails {
     private String password;
     @Column(name = "city")
     private String city;
-
-    @ManyToOne()
-    @JoinColumn(
-            name = "rol_id",
-            nullable = false,
-            referencedColumnName = "id",
-            foreignKey = @ForeignKey(name = "usuario_rol_fk")
-    )
-    private Rol role;
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private Role role;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE, orphanRemoval = true)
     @JsonIgnoreProperties("user")
@@ -83,7 +77,7 @@ public class User implements UserDetails {
     @Override
     @JsonIgnore
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(new SimpleGrantedAuthority(role.getNombre()));
+        return List.of(new SimpleGrantedAuthority(role.name()));
     }
 
     @Override
@@ -119,5 +113,8 @@ public class User implements UserDetails {
     @JsonIgnore
     public boolean isEnabled() {
         return true;
+    }
+    public enum Role {
+        ROLE_USER, ROLE_ADMIN
     }
 }

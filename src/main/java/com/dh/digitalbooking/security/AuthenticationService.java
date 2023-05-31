@@ -49,7 +49,7 @@ public class AuthenticationService {
         claims.put("id", user.getId());
         claims.put("firstName", user.getFirstName());
         claims.put("lastName", user.getLastName());
-        claims.put("role", user.getRole().getNombre().substring(5));
+        claims.put("role", user.getRole().name().substring(5));
         return claims;
     }
 }

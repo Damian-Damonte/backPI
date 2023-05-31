@@ -38,29 +38,18 @@ public class DigitalbookingApplication {
             ProductoServiceImp productoServiceImp,
             AmenityRepository amenityRepository,
             PolicyTypeRepository policyTypeRepository,
-            RoleRepository roleRepository,
             UserRespository userRespository,
             PasswordEncoder passwordEncoder,
             RatingServiceImp puntuacionServiceImp,
             BookingServiceImp reservaServiceImp
     ) {
         return args -> {
-            Rol rolUser = roleRepository.save(new Rol("ROLE_USER"));
-            Rol rolAdmin = roleRepository.save(new Rol("ROLE_ADMIN"));
-
-//            User userAdmin = userRespository.save(new User(
-//                    "admin",
-//                    "admin",
-//                    "admin@gmail.com",
-//                    passwordEncoder.encode("admin"),
-//                    rolAdmin
-//            ));
             User userAdmin = userRespository.save(User.builder()
                             .firstName("admin")
                             .lastName("admin")
                             .email("admin@gmail.com")
                             .password(passwordEncoder.encode("admin"))
-                            .role(rolAdmin)
+                            .role(User.Role.ROLE_ADMIN)
                             .build());
 
             categoriaServiceImp.saveCategory(new CategoryRequest("Hotel", "Descripcion de la categoria Hotel", "https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80%27"));

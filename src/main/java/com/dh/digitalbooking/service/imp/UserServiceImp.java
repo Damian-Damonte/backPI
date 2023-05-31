@@ -9,9 +9,7 @@ import com.dh.digitalbooking.mapper.UserMapper;
 import com.dh.digitalbooking.exception.BadRequestException;
 import com.dh.digitalbooking.exception.NotFoundException;
 import com.dh.digitalbooking.entity.Producto;
-import com.dh.digitalbooking.entity.Rol;
 import com.dh.digitalbooking.entity.User;
-import com.dh.digitalbooking.repository.RoleRepository;
 import com.dh.digitalbooking.repository.UserRespository;
 import com.dh.digitalbooking.service.UserService;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -24,14 +22,12 @@ import java.util.List;
 public class UserServiceImp implements UserService {
     private final UserRespository userRespository;
     private final PasswordEncoder passwordEncoder;
-    private final RoleRepository roleRepository;
     private final ProductoServiceImp productoServiceImp;
     private final UserMapper userMapper;
 
-    public UserServiceImp(UserRespository userRespository, PasswordEncoder passwordEncoder, RoleRepository roleRepository, ProductoServiceImp productoServiceImp, UserMapper userMapper) {
+    public UserServiceImp(UserRespository userRespository, PasswordEncoder passwordEncoder, ProductoServiceImp productoServiceImp, UserMapper userMapper) {
         this.userRespository = userRespository;
         this.passwordEncoder = passwordEncoder;
-        this.roleRepository = roleRepository;
         this.productoServiceImp = productoServiceImp;
         this.userMapper = userMapper;
     }
@@ -63,14 +59,12 @@ public class UserServiceImp implements UserService {
         if (userRespository.findByEmail(email).isPresent())
             throw new BadRequestException("El email '" + email + "' ya se encuentra registrado");
 
-        Rol userRole = roleRepository.findByNombre("ROLE_USER").orElseThrow(
-                () -> new NotFoundException("Rol no encontrado"));
         User user = User.builder()
                 .firstName(userRequest.firstName())
                 .lastName(userRequest.lastName())
                 .email(userRequest.email())
                 .password(passwordEncoder.encode(userRequest.password()))
-                .role(userRole)
+                .role(User.Role.ROLE_USER)
                 .build();
 
         return userRespository.save(user);
