@@ -3,6 +3,9 @@ package com.dh.digitalbooking;
 import com.dh.digitalbooking.dto.UserDetailsDto;
 import com.dh.digitalbooking.dto.category.CategoryRequest;
 import com.dh.digitalbooking.dto.common.OnlyId;
+import com.dh.digitalbooking.dto.image.ImageRequest;
+import com.dh.digitalbooking.dto.policy.PolicyRequest;
+import com.dh.digitalbooking.dto.product.ProductRequest;
 import com.dh.digitalbooking.dto.rating.RatingRequest;
 import com.dh.digitalbooking.entity.*;
 import com.dh.digitalbooking.repository.*;
@@ -36,6 +39,7 @@ public class DigitalbookingApplication {
             CountryRepository countryRepository,
             CityRepository cityRepository,
             ProductServiceImp productoServiceImp,
+            ProductRepository productRepository,
             AmenityRepository amenityRepository,
             PolicyTypeRepository policyTypeRepository,
             UserRespository userRespository,
@@ -114,33 +118,34 @@ public class DigitalbookingApplication {
             PolicyType saludYSeguridad = policyTypeRepository.save(PolicyType.builder().name("Salud y seguridad").build());
             PolicyType politicaDeCancelacion = policyTypeRepository.save(PolicyType.builder().name("Politicas de cancelacion").build());
 
-            Policy policy1 = Policy.builder()
-                    .description("""
+
+            PolicyRequest policy1 = new PolicyRequest(
+                    """
                             Se aplican las pautas de distanciamiento social y otras normas relacionadas con el coronavirus
                             Detector de humo
                             Depósito de seguridad
                             Camaras de seguridad
                             Matafuegos
-                            """)
-                    .policyType(saludYSeguridad)
-                    .build();
+                            """,
+                    new OnlyId(1L)
+            );
 
-            Policy policy2 = Policy.builder()
-                    .description("""
+            PolicyRequest policy2 = new PolicyRequest(
+                    """
                             Check-out: 22:00
                             No se permiten fiestas
                             No fumar
                             Check-in: 10:00
-                            """)
-                    .policyType(normasDeLaCasa)
-                    .build();
+                            """,
+                    new OnlyId(2L)
+            );
 
-            Policy policy3 = Policy.builder()
-                    .description("Agregá las fechas de tu viaje para obtener los detalles de cancelacion de esta estadía")
-                    .policyType(politicaDeCancelacion)
-                    .build();
+            PolicyRequest policy3 = new PolicyRequest(
+                    "Agregá las fechas de tu viaje para obtener los detalles de cancelacion de esta estadía",
+                    new OnlyId(3L)
+            );
 
-            Set<Policy> setPolicies = new HashSet<>(Set.of(policy1, policy2, policy3));
+            Set<PolicyRequest> policies = new HashSet<>(Set.of(policy1, policy2, policy3));
 
             Set<Amenity> caracteristicas1 = new HashSet<>(Set.of(televisor, desayuno, bar, noFumar));
             Set<Amenity> caracteristicas2 = new HashSet<>(Set.of(cajaFuerte, parrilla, lavadora, pileta, aptoMascotas, seguridad24));
@@ -150,17 +155,17 @@ public class DigitalbookingApplication {
             Set<Amenity> caracteristicas6 = new HashSet<>(Set.of( desayuno, bicicletas, televisor, playa, noFumar, aptoMascotas, restaurant));
 
 
-//          FOTOS 1
-            Image foto1 = Image.builder().title("Image 1").url("https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80%27").build();
-            Image foto2 = Image.builder().title("Image 2").url("https://images.unsplash.com/photo-1555854877-bab0e564b8d5?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1769&q=80%27").build();
-            Image foto3 = Image.builder().title("Image 3").url("https://images.unsplash.com/photo-1563298723-dcfebaa392e3?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1767&q=80%27").build();
-            Image foto4 = Image.builder().title("Image 4").url("https://images.unsplash.com/photo-1463620910506-d0458143143e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80%27").build();
-            Image foto5 = Image.builder().title("Image 5").url("https://images.unsplash.com/photo-1455587734955-081b22074882?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8M3x8aG90ZWx8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60").build();
-            Image foto6 = Image.builder().title("Image 6").url("https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NXx8aG90ZWx8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60").order(1).build();
-            Image foto7 = Image.builder().title("Image 7").url("https://images.unsplash.com/photo-1455587734955-081b22074882?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8M3x8aG90ZWx8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60").order(1).build();
+//          IMAGES REQUEST
+            ImageRequest image1 = new ImageRequest("Image 1", "https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80%27", null);
+            ImageRequest image2 = new ImageRequest("Image 2", "https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80%27", null);
+            ImageRequest image3 = new ImageRequest("Image 3", "https://images.unsplash.com/photo-1563298723-dcfebaa392e3?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1767&q=80%27", null);
+            ImageRequest image4 = new ImageRequest("Image 4", "https://images.unsplash.com/photo-1463620910506-d0458143143e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80%27", null);
+            ImageRequest image5 = new ImageRequest("Image 5", "https://images.unsplash.com/photo-1455587734955-081b22074882?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8M3x8aG90ZWx8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60", null);
+            ImageRequest image6 = new ImageRequest("Image 6", "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NXx8aG90ZWx8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60", 1);
+            ImageRequest image7 = new ImageRequest("Image 7", "https://images.unsplash.com/photo-1455587734955-081b22074882?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8M3x8aG90ZWx8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60", 1);
 
-            Set<Image> setFotos = new HashSet<>(Set.of(foto1, foto2, foto3, foto4, foto5, foto6));
-            Set<Image> setFotos2 = new HashSet<>(Set.of(foto1, foto2, foto3, foto4, foto5, foto7));
+            Set<ImageRequest> setImages1 = new HashSet<>(Set.of(image1, image2, image3, image4, image5, image6));
+            Set<ImageRequest> setImages2 = new HashSet<>(Set.of(image1, image2, image3, image4, image5, image7));
 
 //          GET CATEGORIES
 //          quitar esto cuando product reciba DTOs
@@ -168,20 +173,22 @@ public class DigitalbookingApplication {
             Category hostel = categoryRepository.findByName("Hostel").get();
             Category departamento = categoryRepository.findByName("Departamento").get();
 
-            Product product1 = new Product();
-            product1.setTitle("Hotel numero 1");
-            product1.setTitleDescription("Titulo descripcion hotel 1");
-            product1.setDescription("Esta es la descripcion del hotel numero 1 y esto es un poco de texto de relleno");
-            product1.setAddress("Avenida Congreso 2342");
-            product1.setPricePerNight(new BigDecimal("25500.00"));
-            product1.setCategory(hotel);
-            product1.setCity(barcelona);
-            product1.setAmenities(caracteristicas1);
-            product1.setImages(setFotos);
-            product1.setPolicies(setPolicies);
-            product1.setLatitude(new BigDecimal("-38.941697761424834"));
-            product1.setLongitude(new BigDecimal("-68.05962964717754"));
-            productoServiceImp.saveProducto(product1);
+//
+            productoServiceImp.saveProducto(new ProductRequest(
+                    "Hotel numero 1",
+                    "Titulo descripcion hotel 1",
+                    "Esta es la descripcion del hotel numero 1 y esto es un poco de texto de relleno",
+                    "Avenida Congreso 2342",
+                    new BigDecimal("25500.00"),
+                    new BigDecimal("-38.941697761424834"),
+                    new BigDecimal("-68.05962964717754"),
+                    new OnlyId(1L),
+                    new OnlyId(1L),
+                    Set.of(new OnlyId(1L), new OnlyId(2L)),
+                    setImages1,
+                    policies
+            ));
+            Product product1 = productRepository.findById(1L).get();
 
             UserDetailsDto userDetailsDtoAdmin = new UserDetailsDto();
             userDetailsDtoAdmin.setUserId(1L);
@@ -200,20 +207,21 @@ public class DigitalbookingApplication {
             booking1.setProduct(product1);
             reservaServiceImp.saveBooking(booking1, userDetailsDtoAdmin);
 
-            Product product2 = new Product();
-            product2.setTitle("Departamento numero 1");
-            product2.setTitleDescription("Titulo descripcion Departamento 1");
-            product2.setDescription("Esta es la descripcion del Departamento numero 1 y esto es un poco de texto de relleno");
-            product2.setAddress("Avenida Tucuman 6435");
-            product2.setPricePerNight(new BigDecimal("53200.00"));
-            product2.setCategory(departamento);
-            product2.setCity(miami);
-            product2.setAmenities(caracteristicas2);
-            product2.setImages(setFotos2);
-            product2.setPolicies(setPolicies);
-            product2.setLatitude(new BigDecimal("11.24500468403564"));
-            product2.setLongitude(new BigDecimal("-74.21162384247455"));
-            productoServiceImp.saveProducto(product2);
+            productoServiceImp.saveProducto(new ProductRequest(
+                    "Departamento numero 1",
+                    "Titulo descripcion Departamento 1",
+                    "Esta es la descripcion del Departamento numero 1 y esto es un poco de texto de relleno",
+                    "Avenida Tucuman 6435",
+                    new BigDecimal("53200.00"),
+                    new BigDecimal("11.24500468403564"),
+                    new BigDecimal("-74.21162384247455"),
+                    new OnlyId(2L),
+                    new OnlyId(2L),
+                    Set.of(new OnlyId(2L), new OnlyId(3L)),
+                    setImages2,
+                    policies
+            ));
+            Product product2 = productRepository.findById(2L).get();
 
 
             RatingRequest rating2 = new RatingRequest(5, new OnlyId(2L));

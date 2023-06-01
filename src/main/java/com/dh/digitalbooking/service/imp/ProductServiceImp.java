@@ -2,11 +2,15 @@ package com.dh.digitalbooking.service.imp;
 
 import com.dh.digitalbooking.dto.ProductPageDto;
 import com.dh.digitalbooking.dto.ProductoFilterRequest;
+import com.dh.digitalbooking.dto.amenity.AmenityRequest;
+import com.dh.digitalbooking.dto.common.OnlyId;
+import com.dh.digitalbooking.dto.policy.PolicyRequest;
 import com.dh.digitalbooking.dto.product.ProductRequest;
 import com.dh.digitalbooking.dto.product.ProductResponse;
 import com.dh.digitalbooking.exception.BadRequestException;
 import com.dh.digitalbooking.exception.NotFoundException;
 import com.dh.digitalbooking.entity.*;
+import com.dh.digitalbooking.mapper.ImageMapper;
 import com.dh.digitalbooking.mapper.ProductMapper;
 import com.dh.digitalbooking.repository.ProductRepository;
 import com.dh.digitalbooking.service.*;
@@ -19,6 +23,7 @@ import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 public class ProductServiceImp implements ProductService {
@@ -74,23 +79,25 @@ public class ProductServiceImp implements ProductService {
 
     @Override
     public ProductResponse getProductoById(Long id) {
-//        return existByIdValidation(id);
         return productMapper.productToProductResponse(existByIdValidation(id));
     }
 
+    @Override
     @Transactional
-    @Override
-    public Product saveProducto(Product product) {
-        product.getImages().forEach(img -> img.setId(null));
-        product.getPolicies().forEach(pol -> pol.setId(null));
-        categoriaServiceImp.incrementCount(product.getCategory().getId());
-
-        return getProducto(product);
-    }
-
-    @Override
-    public ProductResponse saveProducto2(ProductRequest productRequest) {
-        return null;
+    public ProductResponse saveProducto(ProductRequest productRequest) {
+        Product product = productMapper.productRequestToProductMapper(productRequest);
+        product.setCategory(categoriaServiceImp.existByIdValidation(product.getCategory().getId()));
+        product.setCity(cityService.existByIdValidation(product.getCity().getId()));
+        product.getImages().forEach(image -> image.setProduct(product));
+        product.setAmenities(product.getAmenities().stream().map(amenity ->
+                amenityService.existByIdValidation(amenity.getId())).collect(Collectors.toSet()));
+        product.setPolicies(product.getPolicies().stream().peek(policy -> {
+            policy.setPolicyType(policyTypeService.existById(policy.getPolicyType().getId()));
+            policy.setProduct(product);
+        }).collect(Collectors.toSet()));
+        product.setBookings(new HashSet<>());
+        categoriaServiceImp.incrementCount(productRequest.category().id());
+        return productMapper.productToProductResponse(productRepository.save(product));
     }
 
     @Transactional

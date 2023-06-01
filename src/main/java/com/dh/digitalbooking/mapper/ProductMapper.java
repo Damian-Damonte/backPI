@@ -1,5 +1,6 @@
 package com.dh.digitalbooking.mapper;
 
+import com.dh.digitalbooking.dto.product.ProductRequest;
 import com.dh.digitalbooking.dto.product.ProductResponse;
 import com.dh.digitalbooking.entity.Product;
 import org.mapstruct.Mapper;
@@ -9,4 +10,5 @@ import org.springframework.stereotype.Component;
 @Component
 public interface ProductMapper {
     ProductResponse productToProductResponse(Product product);
+    Product productRequestToProductMapper(ProductRequest productRequest);
 }

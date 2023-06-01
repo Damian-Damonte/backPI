@@ -3,7 +3,6 @@ package com.dh.digitalbooking.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
-import jakarta.validation.Valid;
 import jakarta.validation.constraints.*;
 import lombok.*;
 
@@ -24,40 +23,24 @@ public class Product {
     @Column(name = "id", updatable = false)
     private Long id;
 
-    @Column(name = "title", nullable = false, length = 45)
-    @NotBlank(message = "El product debe tener un titulo")
-    @Size(max = 45, message = "El titulo no debe tener más de 45 caracteres")
+    @Column(name = "title", nullable = false, length = 60)
     private String title;
     @Column(name = "title_description", length = 100)
-    @Size(max = 100, message = "El titulo de la descripcion no debe tener más de 100 caracteres")
     private String titleDescription;
     @Column(name = "description", columnDefinition = "TEXT", length = 1200)
-    @Size(max = 1200, message = "La descripcion no debe tener más de 1200 caracteres")
     private String description;
     @Column(name = "address", nullable = false)
-    @NotBlank(message = "El product debe tener una dirección")
-    @Size(max = 255, message = "La dirección del product no debe tener más de 255 caracteres")
     private String address;
 
     @Column(name = "price_per_night",precision = 10, scale = 2, nullable = false)
-    @DecimalMin(value = "0.00",  message = "El precio por noche no puede ser menor a 0.00")
-    @DecimalMax(value = "99999999.99", message = "El precio por noche no puede ser mayor a 99999999.99")
     @NotNull(message = "El product debe tener un precio por noche")
     private BigDecimal pricePerNight;
 
     @Column(name = "promedio_puntuacion",precision = 3, scale = 1)
-    @DecimalMin(value = "0.00",  message = "El promedio no puede ser menor a 0.00")
-    @DecimalMax(value = "10.0", message = "El promedio no puede ser mayor a 10.0")
     private BigDecimal averageRating;
     @Column(name = "latitude", precision = 17, scale = 15, nullable = false)
-    @NotNull(message = "Debe agregar la latitud de las coordenadas del product")
-    @DecimalMin(value = "-90.0",  message = "La latitud no debe ser menor a -90.0")
-    @DecimalMax(value = "90.0", message = "La latitud no debe ser mayor a 90.0")
     private BigDecimal latitude;
     @Column(name = "longitude", precision = 18, scale = 15, nullable = false)
-    @NotNull(message = "Debe agregar la longitud de las coordenadas del product")
-    @DecimalMin(value = "-180.0",  message = "La longitud no debe ser menor a -180.0")
-    @DecimalMax(value = "180.0", message = "La latitud no debe ser mayor a 180.0")
     private BigDecimal longitude;
 
     @ManyToOne
@@ -67,7 +50,6 @@ public class Product {
             referencedColumnName = "id",
             foreignKey = @ForeignKey(name = "productos_categorias_fk")
     )
-    @NotNull(message = "El product debe pertenecer a una category")
     private Category category;
 
     @ManyToOne
@@ -77,7 +59,6 @@ public class Product {
             referencedColumnName = "id",
             foreignKey = @ForeignKey(name = "productos_ciudad_fk")
     )
-    @NotNull(message = "El product debe pertenecer a una city")
     private City city;
 
     @ManyToMany
@@ -96,12 +77,9 @@ public class Product {
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "product")
     @OrderBy("order ASC NULLS LAST ")
-    @Valid
-    @Size(max = 50, message = "El product no puede tener más de 50 imágenes")
     private Set<Image> images = new HashSet<>();
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "product")
-    @Valid
     private Set<Policy> policies = new HashSet<>();
 
     @OneToMany(mappedBy = "product", cascade = CascadeType.REMOVE, orphanRemoval = true)

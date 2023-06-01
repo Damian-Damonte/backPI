@@ -2,6 +2,7 @@ package com.dh.digitalbooking.controller;
 
 import com.dh.digitalbooking.dto.ProductPageDto;
 import com.dh.digitalbooking.dto.ProductoFilterRequest;
+import com.dh.digitalbooking.dto.product.ProductRequest;
 import com.dh.digitalbooking.dto.product.ProductResponse;
 import com.dh.digitalbooking.entity.Product;
 import com.dh.digitalbooking.service.imp.ProductServiceImp;
@@ -61,8 +62,8 @@ public class ProductController {
 
     @PostMapping
     @Operation(description = "Al crear un product el promedio de puntuaciones siempre será null")
-    public ResponseEntity<Product> saveProduct(@RequestBody @Valid Product product) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(productoServiceImp.saveProducto(product));
+    public ResponseEntity<ProductResponse> saveProduct(@RequestBody @Valid ProductRequest productRequest) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(productoServiceImp.saveProducto(productRequest));
     }
 
     @DeleteMapping("/{id}")

@@ -15,8 +15,7 @@ public interface ProductService {
     ProductPageDto getByAllFilters(int page, ProductoFilterRequest filters);
     List<Product> getRandomProductos();
     ProductResponse getProductoById(Long id);
-    Product saveProducto(Product product);
-    ProductResponse saveProducto2(ProductRequest productRequest);
+    ProductResponse saveProducto(ProductRequest productRequest);
     void deleteProducto(Long id);
     Product updateProducto(Product updateProduct);
     boolean existByCityId(Long id);
