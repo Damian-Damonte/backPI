@@ -2,12 +2,12 @@ package com.dh.digitalbooking.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
-@Data
+import java.util.Objects;
+
+@Getter
+@Setter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
@@ -35,5 +35,10 @@ public class Image {
             foreignKey = @ForeignKey(name = "products_images_id_fk")
     )
     @JsonIgnore
-    private Producto producto;
+    private Product product;
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, title, url, order);
+    }
 }

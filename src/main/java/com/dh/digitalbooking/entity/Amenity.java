@@ -2,15 +2,13 @@ package com.dh.digitalbooking.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.HashSet;
 import java.util.Set;
 
-@Data
+@Getter
+@Setter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
@@ -30,5 +28,5 @@ public class Amenity {
     private String name;
     @ManyToMany(mappedBy = "amenities")
     @JsonIgnore
-    private Set<Producto> products = new HashSet<>();
+    private Set<Product> products = new HashSet<>();
 }

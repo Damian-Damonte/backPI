@@ -57,7 +57,7 @@ public class Booking {
     )
     @NotNull(message = "Product is required")
     @JsonIgnoreProperties("bookings")
-    private Producto product;
+    private Product product;
 
     public Booking() {
     }
@@ -71,7 +71,7 @@ public class Booking {
         this.covidVaccine = covidVaccine;
     }
 
-    public Booking(Long id, LocalDate checkIn, LocalDate checkOut, LocalTime arrivalTime, String additionalNote, boolean covidVaccine, Producto product) {
+    public Booking(Long id, LocalDate checkIn, LocalDate checkOut, LocalTime arrivalTime, String additionalNote, boolean covidVaccine, Product product) {
         this.id = id;
         this.checkIn = checkIn;
         this.checkOut = checkOut;
@@ -129,11 +129,11 @@ public class Booking {
         this.covidVaccine = covidVaccine;
     }
 
-    public Producto getProduct() {
+    public Product getProduct() {
         return product;
     }
 
-    public void setProduct(Producto product) {
+    public void setProduct(Product product) {
         this.product = product;
     }
 

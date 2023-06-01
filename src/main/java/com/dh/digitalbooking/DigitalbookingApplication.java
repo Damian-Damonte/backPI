@@ -7,7 +7,7 @@ import com.dh.digitalbooking.dto.rating.RatingRequest;
 import com.dh.digitalbooking.entity.*;
 import com.dh.digitalbooking.repository.*;
 import com.dh.digitalbooking.service.imp.CategoryServiceImp;
-import com.dh.digitalbooking.service.imp.ProductoServiceImp;
+import com.dh.digitalbooking.service.imp.ProductServiceImp;
 import com.dh.digitalbooking.service.imp.RatingServiceImp;
 import com.dh.digitalbooking.service.imp.BookingServiceImp;
 import org.springframework.boot.CommandLineRunner;
@@ -35,7 +35,7 @@ public class DigitalbookingApplication {
             CategoryRepository categoryRepository,
             CountryRepository countryRepository,
             CityRepository cityRepository,
-            ProductoServiceImp productoServiceImp,
+            ProductServiceImp productoServiceImp,
             AmenityRepository amenityRepository,
             PolicyTypeRepository policyTypeRepository,
             UserRespository userRespository,
@@ -168,29 +168,26 @@ public class DigitalbookingApplication {
             Category hostel = categoryRepository.findByName("Hostel").get();
             Category departamento = categoryRepository.findByName("Departamento").get();
 
-            Producto producto1 = new Producto();
-            producto1.setTitulo("Hotel numero 1");
-            producto1.setTituloDescripcion("Titulo descripcion hotel 1");
-            producto1.setDescripcion("Esta es la descripcion del hotel numero 1 y esto es un poco de texto de relleno");
-            producto1.setDireccion("Avenida Congreso 2342");
-            producto1.setPrecioPorNoche(new BigDecimal("25500.00"));
-            producto1.setCategoria(hotel);
-            producto1.setCiudad(barcelona);
-            producto1.setCaracteristicas(caracteristicas1);
-            producto1.setImagenes(setFotos);
-            producto1.setPoliticas(setPolicies);
-            producto1.setLatitude(new BigDecimal("-38.941697761424834"));
-            producto1.setLongitude(new BigDecimal("-68.05962964717754"));
-            productoServiceImp.saveProducto(producto1);
+            Product product1 = new Product();
+            product1.setTitle("Hotel numero 1");
+            product1.setTitleDescription("Titulo descripcion hotel 1");
+            product1.setDescription("Esta es la descripcion del hotel numero 1 y esto es un poco de texto de relleno");
+            product1.setAddress("Avenida Congreso 2342");
+            product1.setPricePerNight(new BigDecimal("25500.00"));
+            product1.setCategory(hotel);
+            product1.setCity(barcelona);
+            product1.setAmenities(caracteristicas1);
+            product1.setImages(setFotos);
+            product1.setPolicies(setPolicies);
+            product1.setLatitude(new BigDecimal("-38.941697761424834"));
+            product1.setLongitude(new BigDecimal("-68.05962964717754"));
+            productoServiceImp.saveProducto(product1);
 
             UserDetailsDto userDetailsDtoAdmin = new UserDetailsDto();
             userDetailsDtoAdmin.setUserId(1L);
             userDetailsDtoAdmin.setUserRol("ADMIN");
 
-//            Rating ratingProducto1 = new Rating();
-//            ratingProducto1.setValue(4);
-//            ratingProducto1.setProduct(producto1);
-//            ratingProducto1.setUser(userAdmin);
+
             RatingRequest rating1 = new RatingRequest(4, new OnlyId(1L));
             puntuacionServiceImp.saveRating(rating1, userDetailsDtoAdmin);
 
@@ -200,30 +197,27 @@ public class DigitalbookingApplication {
             booking1.setArrivalTime(LocalTime.now());
             booking1.setUserCity("Buenos aires");
             booking1.setUser(userAdmin);
-            booking1.setProduct(producto1);
+            booking1.setProduct(product1);
             reservaServiceImp.saveBooking(booking1, userDetailsDtoAdmin);
 
-            Producto producto2 = new Producto();
-            producto2.setTitulo("Departamento numero 1");
-            producto2.setTituloDescripcion("Titulo descripcion Departamento 1");
-            producto2.setDescripcion("Esta es la descripcion del Departamento numero 1 y esto es un poco de texto de relleno");
-            producto2.setDireccion("Avenida Tucuman 6435");
-            producto2.setPrecioPorNoche(new BigDecimal("53200.00"));
-            producto2.setCategoria(departamento);
-            producto2.setCiudad(miami);
-            producto2.setCaracteristicas(caracteristicas2);
-            producto2.setImagenes(setFotos2);
-            producto2.setPoliticas(setPolicies);
-            producto2.setLatitude(new BigDecimal("11.24500468403564"));
-            producto2.setLongitude(new BigDecimal("-74.21162384247455"));
-            productoServiceImp.saveProducto(producto2);
+            Product product2 = new Product();
+            product2.setTitle("Departamento numero 1");
+            product2.setTitleDescription("Titulo descripcion Departamento 1");
+            product2.setDescription("Esta es la descripcion del Departamento numero 1 y esto es un poco de texto de relleno");
+            product2.setAddress("Avenida Tucuman 6435");
+            product2.setPricePerNight(new BigDecimal("53200.00"));
+            product2.setCategory(departamento);
+            product2.setCity(miami);
+            product2.setAmenities(caracteristicas2);
+            product2.setImages(setFotos2);
+            product2.setPolicies(setPolicies);
+            product2.setLatitude(new BigDecimal("11.24500468403564"));
+            product2.setLongitude(new BigDecimal("-74.21162384247455"));
+            productoServiceImp.saveProducto(product2);
 
-//            Rating ratingProducto2 = new Rating();
-//            ratingProducto2.setValue(5);
-//            ratingProducto2.setProduct(producto2);
-//            ratingProducto2.setUser(userAdmin);
+
             RatingRequest rating2 = new RatingRequest(5, new OnlyId(2L));
-            
+
             puntuacionServiceImp.saveRating(rating2, userDetailsDtoAdmin);
 
             Booking booking2 = new Booking();
@@ -232,7 +226,7 @@ public class DigitalbookingApplication {
             booking2.setArrivalTime(LocalTime.now());
             booking2.setUserCity("La Plata");
             booking2.setUser(userAdmin);
-            booking2.setProduct(producto2);
+            booking2.setProduct(product2);
             reservaServiceImp.saveBooking(booking2, userDetailsDtoAdmin);
         };
     }

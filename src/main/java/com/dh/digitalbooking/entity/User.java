@@ -65,13 +65,13 @@ public class User implements UserDetails {
             )
     )
     @JsonIgnoreProperties("bookings")
-    private List<Producto> favorites = new ArrayList<>();
+    private List<Product> favorites = new ArrayList<>();
 
-    public void addFav(Producto producto) {
-        favorites.add(producto);
+    public void addFav(Product product) {
+        favorites.add(product);
     }
-    public void removeFav(Producto producto) {
-        favorites.remove(producto);
+    public void removeFav(Product product) {
+        favorites.remove(product);
     }
 
     @Override

@@ -20,10 +20,10 @@ import java.util.List;
 public class CityServiceImpl implements CityService {
     private final CityRepository cityRepository;
     private final CountryService countryService;
-    private final ProductoServiceImp productoServiceImp;
+    private final ProductServiceImp productoServiceImp;
     private final CityMapper cityMapper;
 
-    public CityServiceImpl(CityRepository cityRepository, CountryService countryService, @Lazy ProductoServiceImp productoServiceImp, CityMapper cityMapper) {
+    public CityServiceImpl(CityRepository cityRepository, CountryService countryService, @Lazy ProductServiceImp productoServiceImp, CityMapper cityMapper) {
         this.cityRepository = cityRepository;
         this.countryService = countryService;
         this.productoServiceImp = productoServiceImp;

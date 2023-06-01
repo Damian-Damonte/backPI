@@ -5,7 +5,7 @@ import com.dh.digitalbooking.entity.Booking;
 import com.dh.digitalbooking.entity.User;
 import com.dh.digitalbooking.exception.BadRequestException;
 import com.dh.digitalbooking.exception.NotFoundException;
-import com.dh.digitalbooking.entity.Producto;
+import com.dh.digitalbooking.entity.Product;
 import com.dh.digitalbooking.repository.BookingRepository;
 import com.dh.digitalbooking.service.BookingService;
 import org.springframework.stereotype.Service;
@@ -19,10 +19,10 @@ import java.util.List;
 @Service
 public class BookingServiceImp implements BookingService {
     private final BookingRepository bookingRepository;
-    private final ProductoServiceImp productoServiceImp;
+    private final ProductServiceImp productoServiceImp;
     private final UserServiceImp usuarioServiceImp;
 
-    public BookingServiceImp(BookingRepository bookingRepository, ProductoServiceImp productoServiceImp, UserServiceImp usuarioServiceImp) {
+    public BookingServiceImp(BookingRepository bookingRepository, ProductServiceImp productoServiceImp, UserServiceImp usuarioServiceImp) {
         this.bookingRepository = bookingRepository;
         this.productoServiceImp = productoServiceImp;
         this.usuarioServiceImp = usuarioServiceImp;
@@ -69,10 +69,10 @@ public class BookingServiceImp implements BookingService {
 
     private Booking getBooking(Booking booking) {
         datesValidation(booking);
-        Producto product = productoServiceImp.existByIdValidation(booking.getProduct().getId());
+        Product product = productoServiceImp.existByIdValidation(booking.getProduct().getId());
         User user = usuarioServiceImp.existById(booking.getUser().getId());
 
-        booking.setTotal(getTotal(booking.getCheckIn(), booking.getCheckOut(), product.getPrecioPorNoche()));
+        booking.setTotal(getTotal(booking.getCheckIn(), booking.getCheckOut(), product.getPricePerNight()));
 
         product.getBookings().add(booking);
         booking.setProduct(product);

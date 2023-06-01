@@ -5,7 +5,7 @@ import com.dh.digitalbooking.dto.amenity.AmenityRequest;
 import com.dh.digitalbooking.entity.Amenity;
 import com.dh.digitalbooking.exception.BadRequestException;
 import com.dh.digitalbooking.exception.NotFoundException;
-import com.dh.digitalbooking.entity.Producto;
+import com.dh.digitalbooking.entity.Product;
 import com.dh.digitalbooking.mapper.AmenityMapper;
 import com.dh.digitalbooking.repository.AmenityRepository;
 import com.dh.digitalbooking.service.AmenityService;
@@ -48,8 +48,8 @@ public class AmenityServiceImpl implements AmenityService {
     @Transactional
     public void deleteAmenity(Long id) {
         Amenity amenity = existByIdValidation(id);
-        for (Producto producto : amenity.getProducts()) {
-            producto.getCaracteristicas().remove(amenity);
+        for (Product product : amenity.getProducts()) {
+            product.getAmenities().remove(amenity);
         }
         amenityRepository.deleteById(id);
     }

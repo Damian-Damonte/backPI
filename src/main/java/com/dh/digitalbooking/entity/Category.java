@@ -39,5 +39,5 @@ public class Category {
     private int productsCount;
     @OneToMany(mappedBy = "category")
     @JsonIgnore
-    private Set<Producto> products = new HashSet<>();
+    private Set<Product> products = new HashSet<>();
 }

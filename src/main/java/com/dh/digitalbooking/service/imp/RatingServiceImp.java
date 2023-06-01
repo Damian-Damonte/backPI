@@ -7,7 +7,7 @@ import com.dh.digitalbooking.dto.rating.RatingUpdate;
 import com.dh.digitalbooking.entity.Rating;
 import com.dh.digitalbooking.exception.BadRequestException;
 import com.dh.digitalbooking.exception.NotFoundException;
-import com.dh.digitalbooking.entity.Producto;
+import com.dh.digitalbooking.entity.Product;
 import com.dh.digitalbooking.entity.User;
 import com.dh.digitalbooking.mapper.RatingMapper;
 import com.dh.digitalbooking.repository.RatingRepository;
@@ -19,10 +19,10 @@ import java.util.List;
 @Service
 public class RatingServiceImp implements RatingService {
     private final RatingRepository ratingRepository;
-    private final ProductoServiceImp productoServiceImp;
+    private final ProductServiceImp productoServiceImp;
     private final RatingMapper ratingMapper;
 
-    public RatingServiceImp(RatingRepository ratingRepository, ProductoServiceImp productoServiceImp, RatingMapper ratingMapper) {
+    public RatingServiceImp(RatingRepository ratingRepository, ProductServiceImp productoServiceImp, RatingMapper ratingMapper) {
         this.ratingRepository = ratingRepository;
         this.productoServiceImp = productoServiceImp;
         this.ratingMapper = ratingMapper;
@@ -42,7 +42,7 @@ public class RatingServiceImp implements RatingService {
     @Transactional
     public RatingFullDto saveRating(RatingRequest ratingRequest, UserDetailsDto userDetailsDto) {
         Long userId = userDetailsDto.getUserId();
-        Producto product = productoServiceImp.existByIdValidation(ratingRequest.product().id());
+        Product product = productoServiceImp.existByIdValidation(ratingRequest.product().id());
 //      cambiar esto usando el builder cuando actualice User
         User user = new User();
         user.setId(userId);
@@ -83,7 +83,7 @@ public class RatingServiceImp implements RatingService {
     }
 
 //    private Rating getRating(Rating rating) {
-//        Producto product = productoServiceImp.existByIdValidation(rating.getProduct().getId());
+//        Product product = productoServiceImp.existByIdValidation(rating.getProduct().getId());
 //        User user = usuarioServiceImp.existByIdValidation(rating.getUser().getId());
 //        rating.setProduct(product);
 //        rating.setUser(user);

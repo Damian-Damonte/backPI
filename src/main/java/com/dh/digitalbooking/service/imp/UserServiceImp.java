@@ -4,10 +4,10 @@ import com.dh.digitalbooking.dto.UserDetailsDto;
 import com.dh.digitalbooking.dto.user.UserFullDto;
 import com.dh.digitalbooking.dto.user.UserRequest;
 import com.dh.digitalbooking.dto.user.UserResponse;
+import com.dh.digitalbooking.entity.Product;
 import com.dh.digitalbooking.mapper.UserMapper;
 import com.dh.digitalbooking.exception.BadRequestException;
 import com.dh.digitalbooking.exception.NotFoundException;
-import com.dh.digitalbooking.entity.Producto;
 import com.dh.digitalbooking.entity.User;
 import com.dh.digitalbooking.repository.UserRespository;
 import com.dh.digitalbooking.service.UserService;
@@ -21,10 +21,10 @@ import java.util.List;
 public class UserServiceImp implements UserService {
     private final UserRespository userRespository;
     private final PasswordEncoder passwordEncoder;
-    private final ProductoServiceImp productoServiceImp;
+    private final ProductServiceImp productoServiceImp;
     private final UserMapper userMapper;
 
-    public UserServiceImp(UserRespository userRespository, PasswordEncoder passwordEncoder, ProductoServiceImp productoServiceImp, UserMapper userMapper) {
+    public UserServiceImp(UserRespository userRespository, PasswordEncoder passwordEncoder, ProductServiceImp productoServiceImp, UserMapper userMapper) {
         this.userRespository = userRespository;
         this.passwordEncoder = passwordEncoder;
         this.productoServiceImp = productoServiceImp;
@@ -94,7 +94,7 @@ public class UserServiceImp implements UserService {
     @Override
     public void handleFav(Long productId, UserDetailsDto userDetailsDto) {
         User user = existById(userDetailsDto.getUserId());
-        Producto product = productoServiceImp.existByIdValidation(productId);
+        Product product = productoServiceImp.existByIdValidation(productId);
         boolean isFav = user.getFavorites().contains(product);
         if (isFav) user.removeFav(product);
          else user.addFav(product);

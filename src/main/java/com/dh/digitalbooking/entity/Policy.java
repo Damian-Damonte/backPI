@@ -2,9 +2,6 @@ package com.dh.digitalbooking.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -42,5 +39,5 @@ public class Policy {
             foreignKey = @ForeignKey(name = "products_policies_id_fk")
     )
     @JsonIgnore
-    private Producto product;
+    private Product product;
 }

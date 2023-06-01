@@ -39,5 +39,5 @@ public class Rating {
             foreignKey = @ForeignKey(name = "rating_product_fk")
     )
     @JsonIgnoreProperties("bookings")
-    private Producto product;
+    private Product product;
 }

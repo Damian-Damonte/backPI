@@ -12,7 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 public interface RatingRepository extends JpaRepository<Rating, Long> {
     @Transactional
     @Modifying
-    @Query("UPDATE Producto p SET p.promedioPuntuacion = "
+    @Query("UPDATE Product p SET p.averageRating = "
             + "(SELECT AVG(r.value) * 2 FROM Rating r WHERE r.product.id = :productId) "
             + "WHERE p.id = :productId")
     int updateAVGRatingInProduct(@Param("productId") Long productId);

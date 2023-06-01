@@ -1,12 +1,12 @@
 package com.dh.digitalbooking.dto;
 
-import com.dh.digitalbooking.entity.Producto;
+import com.dh.digitalbooking.entity.Product;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class ProductPageDto {
-    private List<Producto> content = new ArrayList<>();
+    private List<Product> content = new ArrayList<>();
     private int totalPages;
     private int currentPage;
     private Long totalElements;
@@ -14,11 +14,11 @@ public class ProductPageDto {
     public ProductPageDto() {
     }
 
-    public List<Producto> getContent() {
+    public List<Product> getContent() {
         return content;
     }
 
-    public void setContent(List<Producto> content) {
+    public void setContent(List<Product> content) {
         this.content = content;
     }
 

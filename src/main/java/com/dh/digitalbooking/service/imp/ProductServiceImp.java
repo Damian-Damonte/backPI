@@ -5,7 +5,7 @@ import com.dh.digitalbooking.dto.ProductoFilterRequest;
 import com.dh.digitalbooking.exception.BadRequestException;
 import com.dh.digitalbooking.exception.NotFoundException;
 import com.dh.digitalbooking.entity.*;
-import com.dh.digitalbooking.repository.ProductoRepository;
+import com.dh.digitalbooking.repository.ProductRepository;
 import com.dh.digitalbooking.service.*;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -18,8 +18,8 @@ import java.util.List;
 import java.util.Set;
 
 @Service
-public class ProductoServiceImp implements ProductoService {
-    private final ProductoRepository productoRepository;
+public class ProductServiceImp implements ProductService {
+    private final ProductRepository productRepository;
     private final CategoryServiceImp categoriaServiceImp;
     private final CityService cityService;
     private final AmenityService amenityService;
@@ -27,8 +27,8 @@ public class ProductoServiceImp implements ProductoService {
     private final ImageServiceImp imagenServiceImp;
     private final PolicyServiceImp politicaServiceImp;
 
-    public ProductoServiceImp(ProductoRepository productoRepository, CategoryServiceImp categoriaServiceImp, CityService cityService, AmenityService amenityService, PolicyTypeService policyTypeService, ImageServiceImp imagenServiceImp, PolicyServiceImp politicaServiceImp) {
-        this.productoRepository = productoRepository;
+    public ProductServiceImp(ProductRepository productRepository, CategoryServiceImp categoriaServiceImp, CityService cityService, AmenityService amenityService, PolicyTypeService policyTypeService, ImageServiceImp imagenServiceImp, PolicyServiceImp politicaServiceImp) {
+        this.productRepository = productRepository;
         this.categoriaServiceImp = categoriaServiceImp;
         this.cityService = cityService;
         this.amenityService = amenityService;
@@ -38,21 +38,21 @@ public class ProductoServiceImp implements ProductoService {
     }
 
     @Override
-    public List<Producto> getAllProducto() {
-        return productoRepository.findAll();
+    public List<Product> getAllProducto() {
+        return productRepository.findAll();
     }
 
     @Override
-    public Page<Producto> getAllPage(int page) {
+    public Page<Product> getAllPage(int page) {
         PageRequest pageRequest = PageRequest.ofSize(2).withPage(page);
-        return productoRepository.findAll(pageRequest);
+        return productRepository.findAll(pageRequest);
     }
 
     @Override
     public ProductPageDto getByAllFilters(int page, ProductoFilterRequest filters) {
         filtersValidations(filters);
         PageRequest pageRequest = PageRequest.ofSize(4).withPage(page);
-        Page<Producto> productoPage = productoRepository.findAllFilters(
+        Page<Product> productoPage = productRepository.findAllFilters(
                 filters.getCiudadId(),
                 filters.getCategoriaId(),
                 filters.getCheckIn(),
@@ -63,109 +63,109 @@ public class ProductoServiceImp implements ProductoService {
     }
 
     @Override
-    public List<Producto> getRandomProductos() {
-        return productoRepository.findRandom();
+    public List<Product> getRandomProductos() {
+        return productRepository.findRandom();
     }
 
     @Override
-    public Producto getProductoById(Long id) {
+    public Product getProductoById(Long id) {
         return existByIdValidation(id);
     }
 
     @Transactional
     @Override
-    public Producto saveProducto(Producto producto) {
-        producto.getImagenes().forEach(img -> img.setId(null));
-        producto.getPoliticas().forEach(pol -> pol.setId(null));
-        categoriaServiceImp.incrementCount(producto.getCategoria().getId());
+    public Product saveProducto(Product product) {
+        product.getImages().forEach(img -> img.setId(null));
+        product.getPolicies().forEach(pol -> pol.setId(null));
+        categoriaServiceImp.incrementCount(product.getCategory().getId());
 
-        return getProducto(producto);
+        return getProducto(product);
     }
 
     @Transactional
     @Override
     public void deleteProducto(Long id) {
-        Producto producto = existByIdValidation(id);
-        if (!(producto.getBookings().isEmpty()))
-            throw new BadRequestException("El producto con id " + id + " no puede ser eliminado ya que se encuentra reservado");
+        Product product = existByIdValidation(id);
+        if (!(product.getBookings().isEmpty()))
+            throw new BadRequestException("El product con id " + id + " no puede ser eliminado ya que se encuentra reservado");
 
-        Set<User> usuariosFav = producto.getFavoritos();
-        usuariosFav.forEach(user -> user.removeFav(producto));
+        Set<User> usuariosFav = product.getFavorites();
+        usuariosFav.forEach(user -> user.removeFav(product));
 
-        categoriaServiceImp.decrementCount(producto.getCategoria().getId());
-        productoRepository.deleteById(id);
+        categoriaServiceImp.decrementCount(product.getCategory().getId());
+        productRepository.deleteById(id);
     }
 
     @Transactional
     @Override
-    public Producto updateProducto(Producto updateProducto) {
-        Producto producto = existByIdValidation(updateProducto.getId());
-        updateProducto.setPromedioPuntuacion(producto.getPromedioPuntuacion());
-        updateProducto.setBookings(producto.getBookings());
+    public Product updateProducto(Product updateProduct) {
+        Product product = existByIdValidation(updateProduct.getId());
+        updateProduct.setAverageRating(product.getAverageRating());
+        updateProduct.setBookings(product.getBookings());
 
-        if (!(updateProducto.getCategoria().getId().equals(producto.getCategoria().getId()))) {
-            categoriaServiceImp.decrementCount(producto.getCategoria().getId());
-            categoriaServiceImp.incrementCount(updateProducto.getCategoria().getId());
+        if (!(updateProduct.getCategory().getId().equals(product.getCategory().getId()))) {
+            categoriaServiceImp.decrementCount(product.getCategory().getId());
+            categoriaServiceImp.incrementCount(updateProduct.getCategory().getId());
         }
 
-        return getProducto(updateProducto);
+        return getProducto(updateProduct);
     }
 
     @Override
     public boolean existByCityId(Long id) {
-        return productoRepository.existsByCity_id(id);
+        return productRepository.existsByCity_id(id);
     }
 
-    private Producto getProducto(Producto producto) {
-        producto.setCiudad(cityService.existByIdValidation(producto.getCiudad().getId()));
-        producto.setCategoria(categoriaServiceImp.existByIdValidation(producto.getCategoria().getId()));
+    private Product getProducto(Product product) {
+        product.setCity(cityService.existByIdValidation(product.getCity().getId()));
+        product.setCategory(categoriaServiceImp.existByIdValidation(product.getCategory().getId()));
 
-        getCaracteristicas(producto);
-        getImagenes(producto);
-        getPoliticas(producto);
+        getCaracteristicas(product);
+        getImagenes(product);
+        getPoliticas(product);
 
-        return productoRepository.save(producto);
+        return productRepository.save(product);
     }
 
-    private void getCaracteristicas(Producto producto) {
+    private void getCaracteristicas(Product product) {
         Set<Amenity> amenities = new HashSet<>();
-        producto.getCaracteristicas().forEach(car -> {
+        product.getAmenities().forEach(car -> {
             Amenity currentCar = amenityService.existByIdValidation(car.getId());
             amenities.add(currentCar);
         });
-        producto.setCaracteristicas(amenities);
+        product.setAmenities(amenities);
     }
 
-    private void getImagenes(Producto producto) {
-        if (producto.getImagenes().isEmpty())
-            throw new BadRequestException("El producto debe tener por lo menos una imagen");
-        Long productoId = producto.getId();
+    private void getImagenes(Product product) {
+        if (product.getImages().isEmpty())
+            throw new BadRequestException("El product debe tener por lo menos una imagen");
+        Long productoId = product.getId();
         Set<Image> imagenes = new HashSet<>();
-        producto.getImagenes().forEach(img -> {
+        product.getImages().forEach(img -> {
             imagenValidation(productoId, img);
-            img.setProducto(producto);
+            img.setProduct(product);
             imagenes.add(img);
         });
-        producto.setImagenes(imagenes);
+        product.setImages(imagenes);
     }
 
-    private void getPoliticas(Producto producto) {
-        Long productoId = producto.getId();
+    private void getPoliticas(Product product) {
+        Long productoId = product.getId();
         Set<Policy> policies = new HashSet<>();
-        producto.getPoliticas().forEach(politica -> {
+        product.getPolicies().forEach(politica -> {
             politicaValidation(productoId, politica);
             getTipoPolitica(politica);
-            politica.setProduct(producto);
+            politica.setProduct(product);
             policies.add(politica);
         });
-        producto.setPoliticas(policies);
+        product.setPolicies(policies);
     }
 
     private void getTipoPolitica(Policy policy) {
         Long tipoPoliticaId = policy.getPolicyType().getId();
         PolicyType policyType = policyTypeService.existById(tipoPoliticaId);
 
-//        Ahora no se puede crear el tipo de policy cuando creamos un producto
+//        Ahora no se puede crear el tipo de policy cuando creamos un product
 //        PolicyType policyType = tipoPoliticaId != null
 //                ? tipoPoliticaServiceImp.existByIdValidation(tipoPoliticaId)
 //                : tipoPoliticaServiceImp.savePolicyType(policy.getTipoPolitica());
@@ -173,19 +173,19 @@ public class ProductoServiceImp implements ProductoService {
         policy.setPolicyType(policyType);
     }
 
-    public Producto existByIdValidation(Long id) {
+    public Product existByIdValidation(Long id) {
         if (id == null)
-            throw new BadRequestException("Debe enviar el id del producto");
-        return productoRepository.findById(id).orElseThrow(() ->
-                new NotFoundException("Producto con id " + id + " no encontrado"));
+            throw new BadRequestException("Debe enviar el id del product");
+        return productRepository.findById(id).orElseThrow(() ->
+                new NotFoundException("Product con id " + id + " no encontrado"));
     }
 
     private void imagenValidation(Long productoId, Image image) {
         Long id = image.getId();
         if (id != null) {
             Image currentImg = imagenServiceImp.getImageById(id);
-            if (!(currentImg.getProducto().getId().equals(productoId)))
-                throw new BadRequestException("La image con id " + id + " no pertenece a este producto");
+            if (!(currentImg.getProduct().getId().equals(productoId)))
+                throw new BadRequestException("La image con id " + id + " no pertenece a este product");
         }
     }
 
@@ -194,7 +194,7 @@ public class ProductoServiceImp implements ProductoService {
         if (id != null) {
             Policy currentPolicy = politicaServiceImp.getPolicyById(id);
             if (!(currentPolicy.getProduct().getId().equals(productoId)))
-                throw new BadRequestException("La policy con id " + id + " no pertenece a este producto");
+                throw new BadRequestException("La policy con id " + id + " no pertenece a este product");
         }
     }
 
@@ -226,7 +226,7 @@ public class ProductoServiceImp implements ProductoService {
             throw new BadRequestException("Las fechas fechas no deben ser anterior al día actual");
     }
 
-    private ProductPageDto toProductPageDto(Page<Producto> page) {
+    private ProductPageDto toProductPageDto(Page<Product> page) {
         ProductPageDto pageDto = new ProductPageDto();
         pageDto.setContent(page.getContent());
         pageDto.setTotalPages(page.getTotalPages());
