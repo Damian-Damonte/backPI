@@ -2,6 +2,7 @@ package com.dh.digitalbooking.controller;
 
 import com.dh.digitalbooking.dto.ProductPageDto;
 import com.dh.digitalbooking.dto.ProductoFilterRequest;
+import com.dh.digitalbooking.dto.product.ProductResponse;
 import com.dh.digitalbooking.entity.Product;
 import com.dh.digitalbooking.service.imp.ProductServiceImp;
 import io.swagger.v3.oas.annotations.Operation;
@@ -54,7 +55,7 @@ public class ProductController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Product> getProductById(@PathVariable("id") Long id) {
+    public ResponseEntity<ProductResponse> getProductById(@PathVariable("id") Long id) {
         return ResponseEntity.ok(productoServiceImp.getProductoById(id));
     }
 

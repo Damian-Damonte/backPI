@@ -2,9 +2,12 @@ package com.dh.digitalbooking.service.imp;
 
 import com.dh.digitalbooking.dto.ProductPageDto;
 import com.dh.digitalbooking.dto.ProductoFilterRequest;
+import com.dh.digitalbooking.dto.product.ProductRequest;
+import com.dh.digitalbooking.dto.product.ProductResponse;
 import com.dh.digitalbooking.exception.BadRequestException;
 import com.dh.digitalbooking.exception.NotFoundException;
 import com.dh.digitalbooking.entity.*;
+import com.dh.digitalbooking.mapper.ProductMapper;
 import com.dh.digitalbooking.repository.ProductRepository;
 import com.dh.digitalbooking.service.*;
 import org.springframework.data.domain.Page;
@@ -26,8 +29,9 @@ public class ProductServiceImp implements ProductService {
     private final PolicyTypeService policyTypeService;
     private final ImageServiceImp imagenServiceImp;
     private final PolicyServiceImp politicaServiceImp;
+    private final ProductMapper productMapper;
 
-    public ProductServiceImp(ProductRepository productRepository, CategoryServiceImp categoriaServiceImp, CityService cityService, AmenityService amenityService, PolicyTypeService policyTypeService, ImageServiceImp imagenServiceImp, PolicyServiceImp politicaServiceImp) {
+    public ProductServiceImp(ProductRepository productRepository, CategoryServiceImp categoriaServiceImp, CityService cityService, AmenityService amenityService, PolicyTypeService policyTypeService, ImageServiceImp imagenServiceImp, PolicyServiceImp politicaServiceImp, ProductMapper productMapper) {
         this.productRepository = productRepository;
         this.categoriaServiceImp = categoriaServiceImp;
         this.cityService = cityService;
@@ -35,6 +39,7 @@ public class ProductServiceImp implements ProductService {
         this.policyTypeService = policyTypeService;
         this.imagenServiceImp = imagenServiceImp;
         this.politicaServiceImp = politicaServiceImp;
+        this.productMapper = productMapper;
     }
 
     @Override
@@ -68,8 +73,9 @@ public class ProductServiceImp implements ProductService {
     }
 
     @Override
-    public Product getProductoById(Long id) {
-        return existByIdValidation(id);
+    public ProductResponse getProductoById(Long id) {
+//        return existByIdValidation(id);
+        return productMapper.productToProductResponse(existByIdValidation(id));
     }
 
     @Transactional
@@ -80,6 +86,11 @@ public class ProductServiceImp implements ProductService {
         categoriaServiceImp.incrementCount(product.getCategory().getId());
 
         return getProducto(product);
+    }
+
+    @Override
+    public ProductResponse saveProducto2(ProductRequest productRequest) {
+        return null;
     }
 
     @Transactional
@@ -137,8 +148,6 @@ public class ProductServiceImp implements ProductService {
     }
 
     private void getImagenes(Product product) {
-        if (product.getImages().isEmpty())
-            throw new BadRequestException("El product debe tener por lo menos una imagen");
         Long productoId = product.getId();
         Set<Image> imagenes = new HashSet<>();
         product.getImages().forEach(img -> {
