@@ -1,6 +1,5 @@
 package com.dh.digitalbooking.controller;
 
-import com.dh.digitalbooking.dto.FavoritoDto;
 import com.dh.digitalbooking.dto.UserDetailsDto;
 import com.dh.digitalbooking.dto.user.UserFullDto;
 import com.dh.digitalbooking.dto.user.UserRequest;
@@ -58,11 +57,11 @@ public class UserController {
         return ResponseEntity.ok(userService.updateUsuario(id, userRequest));
     }
 
-    @PostMapping("/favoritos")
-    public ResponseEntity<Void> handleFav(@RequestBody @Valid FavoritoDto favoritoDto,
+    @PostMapping("/favorites/{productId}")
+    public ResponseEntity<Void> handleFav(@PathVariable Long productId,
                                           Authentication authentication) {
         UserDetailsDto userDto = authenticationFacade.getUserInfo(authentication);
-        userService.handleFav(favoritoDto, userDto);
+        userService.handleFav(productId, userDto);
         return ResponseEntity.noContent().build();
     }
 }

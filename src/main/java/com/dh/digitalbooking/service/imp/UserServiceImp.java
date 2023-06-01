@@ -1,6 +1,5 @@
 package com.dh.digitalbooking.service.imp;
 
-import com.dh.digitalbooking.dto.FavoritoDto;
 import com.dh.digitalbooking.dto.UserDetailsDto;
 import com.dh.digitalbooking.dto.user.UserFullDto;
 import com.dh.digitalbooking.dto.user.UserRequest;
@@ -43,7 +42,7 @@ public class UserServiceImp implements UserService {
             if (!id.equals(userDetailsDto.getUserId()))
                 throw new BadRequestException("La información del usuario proporcionado no coincide con el usuario actualmente autenticado");
         }
-        return userMapper.userToUserFullDto(existByIdValidation(id));
+        return userMapper.userToUserFullDto(existById(id));
     }
 
     @Override
@@ -73,7 +72,7 @@ public class UserServiceImp implements UserService {
     @Override
     @Transactional
     public void deleteUsuario(Long id) {
-        User user = existByIdValidation(id);
+        User user = existById(id);
         user.getFavorites().clear();
         userRespository.deleteById(id);
     }
@@ -81,7 +80,7 @@ public class UserServiceImp implements UserService {
     @Override
     @Transactional
     public UserResponse updateUsuario(Long id, UserRequest userRequest) {
-        User user = existByIdValidation(id);
+        User user = existById(id);
         String email = userRequest.email();
         User userByEmail = userRespository.findByEmail(email).orElse(null);
         if (userByEmail != null && !(userByEmail.getId().equals(id)))
@@ -93,30 +92,17 @@ public class UserServiceImp implements UserService {
     }
 
     @Override
-    public void handleFav(FavoritoDto favoritoDto, UserDetailsDto userDetailsDto) {
-        Long userId = favoritoDto.getUsuarioId();
-
-        if (!userDetailsDto.getUserRol().equals("ROLE_ADMIN")) {
-            if (!userId.equals(userDetailsDto.getUserId()))
-                throw new BadRequestException("La información del user proporcionado no coincide con el user actualmente autenticado");
-        }
-
-        Producto producto = productoServiceImp.existByIdValidation(favoritoDto.getProductoId());
-        User user = this.existByIdValidation(userId);
-
-        boolean isFav = user.getFavorites().contains(producto);
-        if (isFav) {
-            user.removeFav(producto);
-        } else {
-            user.addFav(producto);
-        }
+    public void handleFav(Long productId, UserDetailsDto userDetailsDto) {
+        User user = existById(userDetailsDto.getUserId());
+        Producto product = productoServiceImp.existByIdValidation(productId);
+        boolean isFav = user.getFavorites().contains(product);
+        if (isFav) user.removeFav(product);
+         else user.addFav(product);
         userRespository.save(user);
     }
 
-    public User existByIdValidation(Long id) {
-        if (id == null)
-            throw new BadRequestException("Debe enviar el id del usuario");
+    public User existById(Long id) {
         return userRespository.findById(id).orElseThrow(() ->
-                new NotFoundException("User con id " + id + " no encontrado"));
+                new NotFoundException("User with id " + id + " not found"));
     }
 }

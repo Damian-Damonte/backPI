@@ -70,7 +70,7 @@ public class BookingServiceImp implements BookingService {
     private Booking getBooking(Booking booking) {
         datesValidation(booking);
         Producto product = productoServiceImp.existByIdValidation(booking.getProduct().getId());
-        User user = usuarioServiceImp.existByIdValidation(booking.getUser().getId());
+        User user = usuarioServiceImp.existById(booking.getUser().getId());
 
         booking.setTotal(getTotal(booking.getCheckIn(), booking.getCheckOut(), product.getPrecioPorNoche()));
 

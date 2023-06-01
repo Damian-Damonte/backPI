@@ -31,7 +31,7 @@ public class SecurityConfiguration {
                         .requestMatchers(HttpMethod.POST, "/ratings").authenticated()
                         .requestMatchers(HttpMethod.PUT, "/ratings/**").authenticated()
                         .requestMatchers(HttpMethod.DELETE, "/ratings/**").authenticated()
-                        .requestMatchers(HttpMethod.POST, "/users/favoritos").authenticated()
+                        .requestMatchers(HttpMethod.POST, "/users/favorites/**").authenticated()
                         .requestMatchers(HttpMethod.GET, "/users/{id}").authenticated()
                         .requestMatchers("/users/**").hasRole("ADMIN")
                         .requestMatchers("/auth/**").permitAll()

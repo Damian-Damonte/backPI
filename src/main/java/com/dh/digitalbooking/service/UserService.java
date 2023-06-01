@@ -1,6 +1,5 @@
 package com.dh.digitalbooking.service;
 
-import com.dh.digitalbooking.dto.FavoritoDto;
 import com.dh.digitalbooking.dto.UserDetailsDto;
 import com.dh.digitalbooking.dto.user.UserFullDto;
 import com.dh.digitalbooking.dto.user.UserRequest;
@@ -16,5 +15,5 @@ public interface UserService {
     User saveUsuario(UserRequest userRequest);
     void deleteUsuario(Long id);
     UserResponse updateUsuario(Long id, UserRequest userRequest);
-    void handleFav(FavoritoDto favoritoDto, UserDetailsDto userDetailsDto);
+    void handleFav(Long productId, UserDetailsDto userDetailsDto);
 }
