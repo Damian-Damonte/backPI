@@ -1,11 +1,7 @@
 package com.dh.digitalbooking.service.imp;
 
 import com.dh.digitalbooking.dto.ProductPageDto;
-import com.dh.digitalbooking.dto.ProductoFilterRequest;
-import com.dh.digitalbooking.dto.product.ProductFullDto;
-import com.dh.digitalbooking.dto.product.ProductRequest;
-import com.dh.digitalbooking.dto.product.ProductResponse;
-import com.dh.digitalbooking.dto.product.ProductUpdate;
+import com.dh.digitalbooking.dto.product.*;
 import com.dh.digitalbooking.exception.BadRequestException;
 import com.dh.digitalbooking.exception.NotFoundException;
 import com.dh.digitalbooking.entity.*;
@@ -55,14 +51,14 @@ public class ProductServiceImp implements ProductService {
     }
 
     @Override
-    public ProductPageDto getByAllFilters(int page, ProductoFilterRequest filters) {
+    public ProductPageDto getByAllFilters(int page, ProductFilterRequest filters) {
         filtersValidations(filters);
         PageRequest pageRequest = PageRequest.ofSize(4).withPage(page);
         Page<Product> productoPage = productRepository.findAllFilters(
-                filters.getCiudadId(),
-                filters.getCategoriaId(),
-                filters.getCheckIn(),
-                filters.getCheckOut(),
+                filters.cityId(),
+                filters.categoryId(),
+                filters.checkIn(),
+                filters.checkOut(),
                 pageRequest
         );
         return toProductPageDto(productoPage);
@@ -159,35 +155,27 @@ public class ProductServiceImp implements ProductService {
     }
 
     public Product existByIdValidation(Long id) {
-        if (id == null)
-            throw new BadRequestException("Debe enviar el id del product");
         return productRepository.findById(id).orElseThrow(() ->
-                new NotFoundException("Product con id " + id + " no encontrado"));
+                new NotFoundException("Product with id " + id + " not found"));
     }
 
-    private void filtersValidations(ProductoFilterRequest filters) {
-        Long ciudadId = filters.getCiudadId();
-        Long categoriaId = filters.getCategoriaId();
-        LocalDate checkIn = filters.getCheckIn();
-        LocalDate checkOut = filters.getCheckOut();
-
-        if (ciudadId != null)
-            cityService.existByIdValidation(ciudadId);
-        if (categoriaId != null)
-            categoriaServiceImp.existByIdValidation(categoriaId);
-        if (checkIn != null)
+    private void filtersValidations(ProductFilterRequest filters) {
+        Long cityId = filters.cityId();
+        Long categoryId = filters.categoryId();
+        LocalDate checkIn = filters.checkIn();
+        LocalDate checkOut = filters.checkOut();
+        if (cityId != null)
+            cityService.existByIdValidation(cityId);
+        if (categoryId != null)
+            categoriaServiceImp.existByIdValidation(categoryId);
+        if(checkIn != null)
             notPastDate(checkIn);
-        if (checkOut != null)
+        if(checkOut != null)
             notPastDate(checkOut);
-        if (checkIn != null && checkOut != null)
-            datesValidation(checkIn, checkOut);
-    }
-
-    private void datesValidation(LocalDate checkIn, LocalDate checkOut) {
-        if (checkIn.isAfter(checkOut))
+        if (checkIn != null && checkOut != null && checkIn.isAfter(checkOut))
             throw new BadRequestException("La fecha de ingreso deber anterior a la fecha de finalización");
     }
-//  sacar estas validaciones, hacerlo con las anotaciones de validator
+
     private void notPastDate(LocalDate date) {
         if (date.isBefore(LocalDate.now()))
             throw new BadRequestException("Las fechas fechas no deben ser anterior al día actual");

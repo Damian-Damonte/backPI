@@ -1,11 +1,7 @@
 package com.dh.digitalbooking.controller;
 
 import com.dh.digitalbooking.dto.ProductPageDto;
-import com.dh.digitalbooking.dto.ProductoFilterRequest;
-import com.dh.digitalbooking.dto.product.ProductFullDto;
-import com.dh.digitalbooking.dto.product.ProductRequest;
-import com.dh.digitalbooking.dto.product.ProductResponse;
-import com.dh.digitalbooking.dto.product.ProductUpdate;
+import com.dh.digitalbooking.dto.product.*;
 import com.dh.digitalbooking.entity.Product;
 import com.dh.digitalbooking.service.imp.ProductServiceImp;
 import io.swagger.v3.oas.annotations.Operation;
@@ -40,12 +36,12 @@ public class ProductController {
     )
     public ResponseEntity<ProductPageDto> getAllFilters(
             @RequestParam(name = "page", required = false, defaultValue = "0") Integer page,
-            @RequestParam(name = "ciudadId", required = false) Long ciudadId,
-            @RequestParam(name = "categoriaId",required = false) Long categoriaId,
+            @RequestParam(name = "cityId", required = false) Long cityId,
+            @RequestParam(name = "categoryId",required = false) Long categoryId,
             @RequestParam(name = "checkIn",required = false) LocalDate checkIn,
             @RequestParam(name = "checkOut",required = false) LocalDate checkOut
             ) {
-        ProductoFilterRequest filters = new ProductoFilterRequest(ciudadId, categoriaId, checkIn, checkOut);
+        ProductFilterRequest filters = new ProductFilterRequest(cityId, categoryId, checkIn, checkOut);
 
         return ResponseEntity.ok(productoServiceImp.getByAllFilters(page, filters));
     }
