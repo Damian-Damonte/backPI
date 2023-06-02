@@ -51,16 +51,10 @@ public class ProductServiceImp implements ProductService {
     }
 
     @Override
-    public ProductPageDto getByAllFilters(int page, ProductFilterRequest filters) {
-        filtersValidations(filters);
+    public ProductPageDto getByAllFilters(int page, Long cityId, Long categoryId, LocalDate checkIn, LocalDate checkout) {
+        filtersValidations(cityId, categoryId, checkIn, checkout);
         PageRequest pageRequest = PageRequest.ofSize(4).withPage(page);
-        Page<Product> productoPage = productRepository.findAllFilters(
-                filters.cityId(),
-                filters.categoryId(),
-                filters.checkIn(),
-                filters.checkOut(),
-                pageRequest
-        );
+        Page<Product> productoPage = productRepository.findAllFilters(cityId, categoryId, checkIn, checkout, pageRequest);
         return toProductPageDto(productoPage);
     }
 
@@ -159,11 +153,7 @@ public class ProductServiceImp implements ProductService {
                 new NotFoundException("Product with id " + id + " not found"));
     }
 
-    private void filtersValidations(ProductFilterRequest filters) {
-        Long cityId = filters.cityId();
-        Long categoryId = filters.categoryId();
-        LocalDate checkIn = filters.checkIn();
-        LocalDate checkOut = filters.checkOut();
+    private void filtersValidations(Long cityId, Long categoryId, LocalDate checkIn, LocalDate checkOut) {
         if (cityId != null)
             cityService.existByIdValidation(cityId);
         if (categoryId != null)
@@ -173,12 +163,12 @@ public class ProductServiceImp implements ProductService {
         if(checkOut != null)
             notPastDate(checkOut);
         if (checkIn != null && checkOut != null && checkIn.isAfter(checkOut))
-            throw new BadRequestException("La fecha de ingreso deber anterior a la fecha de finalización");
+            throw new BadRequestException("The check-out date must be after the check-in date.");
     }
 
     private void notPastDate(LocalDate date) {
         if (date.isBefore(LocalDate.now()))
-            throw new BadRequestException("Las fechas fechas no deben ser anterior al día actual");
+            throw new BadRequestException("The dates must not be earlier than the current date");
     }
 
     private ProductPageDto toProductPageDto(Page<Product> page) {

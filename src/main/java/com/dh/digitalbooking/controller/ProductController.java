@@ -41,9 +41,7 @@ public class ProductController {
             @RequestParam(name = "checkIn",required = false) LocalDate checkIn,
             @RequestParam(name = "checkOut",required = false) LocalDate checkOut
             ) {
-        ProductFilterRequest filters = new ProductFilterRequest(cityId, categoryId, checkIn, checkOut);
-
-        return ResponseEntity.ok(productoServiceImp.getByAllFilters(page, filters));
+        return ResponseEntity.ok(productoServiceImp.getByAllFilters(page, cityId, categoryId, checkIn, checkOut));
     }
 
 
