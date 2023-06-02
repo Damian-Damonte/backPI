@@ -5,11 +5,13 @@ import com.dh.digitalbooking.dto.category.CategoryFullDto;
 import com.dh.digitalbooking.dto.city.CityFullDto;
 import com.dh.digitalbooking.dto.image.ImageFullDto;
 import com.dh.digitalbooking.dto.policy.PolicyFullDto;
+import com.dh.digitalbooking.entity.Booking;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import java.math.BigDecimal;
 import java.util.List;
 
-public record ProductResponse(
+public record ProductFullDto(
         Long id,
         String title,
         String titleDescription,
@@ -23,6 +25,8 @@ public record ProductResponse(
         CityFullDto city,
         List<AmenityFullDto> amenities,
         List<ImageFullDto> images,
-        List<PolicyFullDto> policies
+        List<PolicyFullDto> policies,
+        @JsonIgnoreProperties("product")
+        List<Booking> bookings
 ) {
 }

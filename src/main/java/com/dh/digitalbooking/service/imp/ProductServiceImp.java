@@ -2,15 +2,13 @@ package com.dh.digitalbooking.service.imp;
 
 import com.dh.digitalbooking.dto.ProductPageDto;
 import com.dh.digitalbooking.dto.ProductoFilterRequest;
-import com.dh.digitalbooking.dto.amenity.AmenityRequest;
-import com.dh.digitalbooking.dto.common.OnlyId;
-import com.dh.digitalbooking.dto.policy.PolicyRequest;
+import com.dh.digitalbooking.dto.product.ProductFullDto;
 import com.dh.digitalbooking.dto.product.ProductRequest;
 import com.dh.digitalbooking.dto.product.ProductResponse;
+import com.dh.digitalbooking.dto.product.ProductUpdate;
 import com.dh.digitalbooking.exception.BadRequestException;
 import com.dh.digitalbooking.exception.NotFoundException;
 import com.dh.digitalbooking.entity.*;
-import com.dh.digitalbooking.mapper.ImageMapper;
 import com.dh.digitalbooking.mapper.ProductMapper;
 import com.dh.digitalbooking.repository.ProductRepository;
 import com.dh.digitalbooking.service.*;
@@ -20,9 +18,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -33,17 +29,17 @@ public class ProductServiceImp implements ProductService {
     private final AmenityService amenityService;
     private final PolicyTypeService policyTypeService;
     private final ImageServiceImp imagenServiceImp;
-    private final PolicyServiceImp politicaServiceImp;
+    private final PolicyServiceImp policyService;
     private final ProductMapper productMapper;
 
-    public ProductServiceImp(ProductRepository productRepository, CategoryServiceImp categoriaServiceImp, CityService cityService, AmenityService amenityService, PolicyTypeService policyTypeService, ImageServiceImp imagenServiceImp, PolicyServiceImp politicaServiceImp, ProductMapper productMapper) {
+    public ProductServiceImp(ProductRepository productRepository, CategoryServiceImp categoriaServiceImp, CityService cityService, AmenityService amenityService, PolicyTypeService policyTypeService, ImageServiceImp imagenServiceImp, PolicyServiceImp policyService, ProductMapper productMapper) {
         this.productRepository = productRepository;
         this.categoriaServiceImp = categoriaServiceImp;
         this.cityService = cityService;
         this.amenityService = amenityService;
         this.policyTypeService = policyTypeService;
         this.imagenServiceImp = imagenServiceImp;
-        this.politicaServiceImp = politicaServiceImp;
+        this.policyService = policyService;
         this.productMapper = productMapper;
     }
 
@@ -78,14 +74,14 @@ public class ProductServiceImp implements ProductService {
     }
 
     @Override
-    public ProductResponse getProductoById(Long id) {
-        return productMapper.productToProductResponse(existByIdValidation(id));
+    public ProductFullDto getProductoById(Long id) {
+        return productMapper.productToProductFullDto(existByIdValidation(id));
     }
 
     @Override
     @Transactional
     public ProductResponse saveProducto(ProductRequest productRequest) {
-        Product product = productMapper.productRequestToProductMapper(productRequest);
+        Product product = productMapper.productRequestToProduct(productRequest);
         product.setCategory(categoriaServiceImp.existByIdValidation(product.getCategory().getId()));
         product.setCity(cityService.existByIdValidation(product.getCity().getId()));
         product.getImages().forEach(image -> image.setProduct(product));
@@ -115,18 +111,46 @@ public class ProductServiceImp implements ProductService {
     }
 
     @Transactional
-    @Override
-    public Product updateProducto(Product updateProduct) {
-        Product product = existByIdValidation(updateProduct.getId());
-        updateProduct.setAverageRating(product.getAverageRating());
-        updateProduct.setBookings(product.getBookings());
+    public ProductResponse updateProducto(Long id, ProductUpdate productUpdateRequest) {
+        Product product = existByIdValidation(id);
+        Product productUpdate = productMapper.productUpdateToProduct(productUpdateRequest);
+        productUpdate.setId(id);
+        productUpdate.setCategory(categoriaServiceImp.existByIdValidation(productUpdate.getCategory().getId()));
+        productUpdate.setCity(cityService.existByIdValidation(productUpdate.getCity().getId()));
 
-        if (!(updateProduct.getCategory().getId().equals(product.getCategory().getId()))) {
+        productUpdate.setAmenities(productUpdate.getAmenities().stream().map(amenity ->
+                amenityService.existByIdValidation(amenity.getId())).collect(Collectors.toSet()));
+
+
+        productUpdate.getImages().forEach(image -> {
+            if(image.getId() != null) {
+                Image saveImage = imagenServiceImp.getImageById(image.getId());
+                if(!Objects.equals(saveImage.getProduct().getId(), id))
+                    throw new BadRequestException("The image with id " + image.getId() + " not found in product with id " + id);
+            }
+            image.setProduct(productUpdate);
+        });
+
+        productUpdate.getPolicies().forEach(policy -> {
+            if(policy.getId() != null) {
+                Policy savePolicy = policyService.getPolicyById(policy.getId());
+                if(!Objects.equals(savePolicy.getProduct().getId(), id))
+                    throw new BadRequestException("The policy with id " + policy.getId() + " not found in product with id " + id);
+            }
+            policy.setProduct(productUpdate);
+        });
+
+        productUpdate.setAverageRating(product.getAverageRating());
+        productUpdate.setBookings(product.getBookings());
+        productUpdate.setRatings(product.getRatings());
+        productUpdate.setFavorites(product.getFavorites());
+
+        if (!(productUpdate.getCategory().getId().equals(product.getCategory().getId()))) {
             categoriaServiceImp.decrementCount(product.getCategory().getId());
-            categoriaServiceImp.incrementCount(updateProduct.getCategory().getId());
+            categoriaServiceImp.incrementCount(productUpdate.getCategory().getId());
         }
 
-        return getProducto(updateProduct);
+        return productMapper.productToProductResponse(productRepository.save(productUpdate));
     }
 
     @Override
@@ -134,84 +158,11 @@ public class ProductServiceImp implements ProductService {
         return productRepository.existsByCity_id(id);
     }
 
-    private Product getProducto(Product product) {
-        product.setCity(cityService.existByIdValidation(product.getCity().getId()));
-        product.setCategory(categoriaServiceImp.existByIdValidation(product.getCategory().getId()));
-
-        getCaracteristicas(product);
-        getImagenes(product);
-        getPoliticas(product);
-
-        return productRepository.save(product);
-    }
-
-    private void getCaracteristicas(Product product) {
-        Set<Amenity> amenities = new HashSet<>();
-        product.getAmenities().forEach(car -> {
-            Amenity currentCar = amenityService.existByIdValidation(car.getId());
-            amenities.add(currentCar);
-        });
-        product.setAmenities(amenities);
-    }
-
-    private void getImagenes(Product product) {
-        Long productoId = product.getId();
-        Set<Image> imagenes = new HashSet<>();
-        product.getImages().forEach(img -> {
-            imagenValidation(productoId, img);
-            img.setProduct(product);
-            imagenes.add(img);
-        });
-        product.setImages(imagenes);
-    }
-
-    private void getPoliticas(Product product) {
-        Long productoId = product.getId();
-        Set<Policy> policies = new HashSet<>();
-        product.getPolicies().forEach(politica -> {
-            politicaValidation(productoId, politica);
-            getTipoPolitica(politica);
-            politica.setProduct(product);
-            policies.add(politica);
-        });
-        product.setPolicies(policies);
-    }
-
-    private void getTipoPolitica(Policy policy) {
-        Long tipoPoliticaId = policy.getPolicyType().getId();
-        PolicyType policyType = policyTypeService.existById(tipoPoliticaId);
-
-//        Ahora no se puede crear el tipo de policy cuando creamos un product
-//        PolicyType policyType = tipoPoliticaId != null
-//                ? tipoPoliticaServiceImp.existByIdValidation(tipoPoliticaId)
-//                : tipoPoliticaServiceImp.savePolicyType(policy.getTipoPolitica());
-
-        policy.setPolicyType(policyType);
-    }
-
     public Product existByIdValidation(Long id) {
         if (id == null)
             throw new BadRequestException("Debe enviar el id del product");
         return productRepository.findById(id).orElseThrow(() ->
                 new NotFoundException("Product con id " + id + " no encontrado"));
-    }
-
-    private void imagenValidation(Long productoId, Image image) {
-        Long id = image.getId();
-        if (id != null) {
-            Image currentImg = imagenServiceImp.getImageById(id);
-            if (!(currentImg.getProduct().getId().equals(productoId)))
-                throw new BadRequestException("La image con id " + id + " no pertenece a este product");
-        }
-    }
-
-    private void politicaValidation(Long productoId, Policy policy) {
-        Long id = policy.getId();
-        if (id != null) {
-            Policy currentPolicy = politicaServiceImp.getPolicyById(id);
-            if (!(currentPolicy.getProduct().getId().equals(productoId)))
-                throw new BadRequestException("La policy con id " + id + " no pertenece a este product");
-        }
     }
 
     private void filtersValidations(ProductoFilterRequest filters) {
@@ -236,7 +187,7 @@ public class ProductServiceImp implements ProductService {
         if (checkIn.isAfter(checkOut))
             throw new BadRequestException("La fecha de ingreso deber anterior a la fecha de finalización");
     }
-
+//  sacar estas validaciones, hacerlo con las anotaciones de validator
     private void notPastDate(LocalDate date) {
         if (date.isBefore(LocalDate.now()))
             throw new BadRequestException("Las fechas fechas no deben ser anterior al día actual");

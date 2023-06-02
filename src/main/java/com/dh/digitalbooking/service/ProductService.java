@@ -2,8 +2,10 @@ package com.dh.digitalbooking.service;
 
 import com.dh.digitalbooking.dto.ProductPageDto;
 import com.dh.digitalbooking.dto.ProductoFilterRequest;
+import com.dh.digitalbooking.dto.product.ProductFullDto;
 import com.dh.digitalbooking.dto.product.ProductRequest;
 import com.dh.digitalbooking.dto.product.ProductResponse;
+import com.dh.digitalbooking.dto.product.ProductUpdate;
 import com.dh.digitalbooking.entity.Product;
 import org.springframework.data.domain.Page;
 
@@ -14,9 +16,9 @@ public interface ProductService {
     Page<Product> getAllPage(int page);
     ProductPageDto getByAllFilters(int page, ProductoFilterRequest filters);
     List<Product> getRandomProductos();
-    ProductResponse getProductoById(Long id);
+    ProductFullDto getProductoById(Long id);
     ProductResponse saveProducto(ProductRequest productRequest);
     void deleteProducto(Long id);
-    Product updateProducto(Product updateProduct);
+    ProductResponse updateProducto(Long id, ProductUpdate productUpdate);
     boolean existByCityId(Long id);
 }

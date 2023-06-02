@@ -2,8 +2,10 @@ package com.dh.digitalbooking.controller;
 
 import com.dh.digitalbooking.dto.ProductPageDto;
 import com.dh.digitalbooking.dto.ProductoFilterRequest;
+import com.dh.digitalbooking.dto.product.ProductFullDto;
 import com.dh.digitalbooking.dto.product.ProductRequest;
 import com.dh.digitalbooking.dto.product.ProductResponse;
+import com.dh.digitalbooking.dto.product.ProductUpdate;
 import com.dh.digitalbooking.entity.Product;
 import com.dh.digitalbooking.service.imp.ProductServiceImp;
 import io.swagger.v3.oas.annotations.Operation;
@@ -56,7 +58,7 @@ public class ProductController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ProductResponse> getProductById(@PathVariable("id") Long id) {
+    public ResponseEntity<ProductFullDto> getProductById(@PathVariable("id") Long id) {
         return ResponseEntity.ok(productoServiceImp.getProductoById(id));
     }
 
@@ -74,10 +76,11 @@ public class ProductController {
         return ResponseEntity.noContent().build();
     }
 
-    @PutMapping
+    @PutMapping("/{id}")
     @Operation(description = "El promedio de puntuaciones y las reservas de un product no puede ser modificadas a través de este endpoint. " +
             "Cuando se modifique un product se pueden omitir dichos atributos")
-    public ResponseEntity<Product> updateProduct(@RequestBody @Valid Product product) {
-        return ResponseEntity.ok(productoServiceImp.updateProducto(product));
+    public ResponseEntity<ProductResponse> updateProduct(@PathVariable Long id,
+                                                         @RequestBody @Valid ProductUpdate productUpdate) {
+        return ResponseEntity.ok(productoServiceImp.updateProducto(id, productUpdate));
     }
 }
