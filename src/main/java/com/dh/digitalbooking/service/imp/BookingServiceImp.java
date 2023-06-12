@@ -11,6 +11,7 @@ import com.dh.digitalbooking.entity.Product;
 import com.dh.digitalbooking.mapper.BookingMapper;
 import com.dh.digitalbooking.repository.BookingRepository;
 import com.dh.digitalbooking.service.BookingService;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -64,9 +65,12 @@ public class BookingServiceImp implements BookingService {
 
     @Override
     @Transactional
-    public void deleteBooking(Long id) {
-//        agregar validacion de propiedad de booking
-        existByIdValidation(id);
+    public void deleteBooking(Long id, UserDetailsDto userDetailsDto) {
+        Booking booking = existByIdValidation(id);
+        if (!userDetailsDto.getUserRol().equals("ROLE_ADMIN")) {
+            if (!booking.getUser().getId().equals(userDetailsDto.getUserId()))
+                throw new BadRequestException("The provided user information does not match the currently authenticated user");
+        }
         bookingRepository.deleteById(id);
     }
 
