@@ -1,11 +1,14 @@
 package com.dh.digitalbooking.service.imp;
 
 import com.dh.digitalbooking.dto.UserDetailsDto;
+import com.dh.digitalbooking.dto.booking.BookingRequest;
+import com.dh.digitalbooking.dto.booking.BookingResponse;
 import com.dh.digitalbooking.entity.Booking;
 import com.dh.digitalbooking.entity.User;
 import com.dh.digitalbooking.exception.BadRequestException;
 import com.dh.digitalbooking.exception.NotFoundException;
 import com.dh.digitalbooking.entity.Product;
+import com.dh.digitalbooking.mapper.BookingMapper;
 import com.dh.digitalbooking.repository.BookingRepository;
 import com.dh.digitalbooking.service.BookingService;
 import org.springframework.stereotype.Service;
@@ -20,102 +23,65 @@ import java.util.List;
 public class BookingServiceImp implements BookingService {
     private final BookingRepository bookingRepository;
     private final ProductServiceImp productoServiceImp;
-    private final UserServiceImp usuarioServiceImp;
+    private final UserServiceImp userService;
+    private final BookingMapper bookingMapper;
 
-    public BookingServiceImp(BookingRepository bookingRepository, ProductServiceImp productoServiceImp, UserServiceImp usuarioServiceImp) {
+    public BookingServiceImp(BookingRepository bookingRepository, ProductServiceImp productoServiceImp, UserServiceImp userService, BookingMapper bookingMapper) {
         this.bookingRepository = bookingRepository;
         this.productoServiceImp = productoServiceImp;
-        this.usuarioServiceImp = usuarioServiceImp;
+        this.userService = userService;
+        this.bookingMapper = bookingMapper;
     }
 
     @Override
-    public List<Booking> allBookings() {
-        return bookingRepository.findAll();
+    public List<BookingResponse> allBookings() {
+        return bookingRepository.findAll().stream().map(bookingMapper::bookingToBookingResponse).toList();
     }
 
     @Override
-    public Booking getBookingById(Long id) {
-        return existByIdValidation(id);
+    public BookingResponse getBookingById(Long id) {
+        return bookingMapper.bookingToBookingResponse(existByIdValidation(id));
     }
 
     @Override
     @Transactional
-    public Booking saveBooking(Booking booking, UserDetailsDto userDetailsDto) {
-        Long bookingUserId = booking.getUser().getId();
+    public BookingResponse saveBooking(BookingRequest bookingRequest, UserDetailsDto userDetailsDto) {
+        datesValidation(bookingRequest.checkIn(), bookingRequest.checkOut());
+        checkAvailability(bookingRequest);
 
-        if (!userDetailsDto.getUserRol().equals("ROLE_ADMIN")) {
-            if (!bookingUserId.equals(userDetailsDto.getUserId()))
-                throw new BadRequestException("The provided user information does not match the currently authenticated user");
-        }
+        Product product = productoServiceImp.existByIdValidation(bookingRequest.product().id());
+        User user = userService.existById(userDetailsDto.getUserId());
+        Booking booking = bookingMapper.bookingRequestToBooking(bookingRequest);
+        booking.setTotal(getTotal(bookingRequest.checkIn(), bookingRequest.checkOut(), product.getPricePerNight()));
+        booking.setUser(user);
 
-        checkAvailability(booking, true);
-        return getBooking(booking);
+        product.getBookings().add(booking);
+        user.setCity(bookingRequest.userCity());
+        user.getBookings().add(booking);
+
+        return bookingMapper.bookingToBookingResponse(bookingRepository.save(booking));
     }
 
     @Override
     @Transactional
     public void deleteBooking(Long id) {
+//        agregar validacion de propiedad de booking
         existByIdValidation(id);
         bookingRepository.deleteById(id);
     }
 
-    @Override
-    @Transactional
-    public Booking updateBooking(Booking booking) {
-        existByIdValidation(booking.getId());
-        checkAvailability(booking, false);
-        return getBooking(booking);
-    }
-
-    private Booking getBooking(Booking booking) {
-        datesValidation(booking);
-        Product product = productoServiceImp.existByIdValidation(booking.getProduct().getId());
-        User user = usuarioServiceImp.existById(booking.getUser().getId());
-
-        booking.setTotal(getTotal(booking.getCheckIn(), booking.getCheckOut(), product.getPricePerNight()));
-
-        product.getBookings().add(booking);
-        booking.setProduct(product);
-
-        user.setCity(booking.getUserCity());
-        user.getBookings().add(booking);
-        booking.setUser(user);
-
-        return bookingRepository.save(booking);
-    }
-
     public Booking existByIdValidation(Long id) {
-        if (id == null)
-            throw new BadRequestException("Booking id is required");
         return bookingRepository.findById(id).orElseThrow(() ->
                 new NotFoundException("Booking with id " + id + " not found"));
     }
 
-    private void checkAvailability(Booking booking, boolean save) {
-        int count = bookingRepository.countBookingsByDates(
-                booking.getProduct().getId(),
-                booking.getCheckIn(),
-                booking.getCheckOut()
-        );
-        if (count > 1)
-            throw new BadRequestException("Product not available for the entered dates");
-        if (save && count > 0)
-            throw new BadRequestException("Product not available for the entered dates");
-        if (!save && count == 1) {
-            Booking bookingByDates = bookingRepository.findBookingsByDates(
-                    booking.getProduct().getId(),
-                    booking.getCheckIn(),
-                    booking.getCheckOut()
-            );
-            if (!(bookingByDates.getId().equals(booking.getId())))
-                throw new BadRequestException("Product not available for the entered dates");
-        }
+    private void checkAvailability(BookingRequest bookingRequest) {
+        boolean datesAvailable = bookingRepository.existsBookingsByDates(bookingRequest.product().id(),
+                bookingRequest.checkIn(),bookingRequest.checkOut());
+        if (!datesAvailable) throw new BadRequestException("Product not available for the entered dates");
     }
 
-    private void datesValidation(Booking booking) {
-        LocalDate checkIn = booking.getCheckIn();
-        LocalDate checkOut = booking.getCheckOut();
-
+    private void datesValidation(LocalDate checkIn, LocalDate checkOut) {
         if (checkIn.isAfter(checkOut))
             throw new BadRequestException("The checkout date must be after the check-in date");
     }

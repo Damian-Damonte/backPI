@@ -1,6 +1,7 @@
 package com.dh.digitalbooking;
 
 import com.dh.digitalbooking.dto.UserDetailsDto;
+import com.dh.digitalbooking.dto.booking.BookingRequest;
 import com.dh.digitalbooking.dto.category.CategoryRequest;
 import com.dh.digitalbooking.dto.common.OnlyId;
 import com.dh.digitalbooking.dto.image.ImageRequest;
@@ -198,13 +199,15 @@ public class DigitalbookingApplication {
             RatingRequest rating1 = new RatingRequest(4, new OnlyId(1L));
             puntuacionServiceImp.saveRating(rating1, userDetailsDtoAdmin);
 
-            Booking booking1 = new Booking();
-            booking1.setCheckIn(LocalDate.of(2023, 6, 22));
-            booking1.setCheckOut(LocalDate.of(2023, 6, 25));
-            booking1.setArrivalTime(LocalTime.now());
-            booking1.setUserCity("Buenos aires");
-            booking1.setUser(userAdmin);
-            booking1.setProduct(product1);
+            BookingRequest booking1 = new BookingRequest(
+                    LocalDate.of(2023, 6, 22),
+                    LocalDate.of(2023, 6, 25),
+                    LocalTime.now(),
+                    "Buenos Aires",
+                    null,
+                    true,
+                    new OnlyId(1L)
+            );
             reservaServiceImp.saveBooking(booking1, userDetailsDtoAdmin);
 
             productoServiceImp.saveProducto(new ProductRequest(
@@ -227,14 +230,15 @@ public class DigitalbookingApplication {
             RatingRequest rating2 = new RatingRequest(5, new OnlyId(2L));
 
             puntuacionServiceImp.saveRating(rating2, userDetailsDtoAdmin);
-
-            Booking booking2 = new Booking();
-            booking2.setCheckIn(LocalDate.of(2023, 6, 22));
-            booking2.setCheckOut(LocalDate.of(2023, 6, 25));
-            booking2.setArrivalTime(LocalTime.now());
-            booking2.setUserCity("La Plata");
-            booking2.setUser(userAdmin);
-            booking2.setProduct(product2);
+            BookingRequest booking2 = new BookingRequest(
+                    LocalDate.of(2023, 6, 22),
+                    LocalDate.of(2023, 6, 25),
+                    LocalTime.now(),
+                    "La Plata",
+                    null,
+                    false,
+                    new OnlyId(2L)
+            );
             reservaServiceImp.saveBooking(booking2, userDetailsDtoAdmin);
         };
     }

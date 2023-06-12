@@ -11,20 +11,15 @@ import java.time.LocalDate;
 @Repository
 @Transactional(readOnly = true)
 public interface BookingRepository extends JpaRepository<Booking, Long> {
-
-    @Query("SELECT b FROM Booking b WHERE b.product.id = :productId " +
-            "AND ((b.checkIn <= :checkIn AND b.checkOut >= :checkIn) OR " +
-            "(b.checkIn <= :checkOut AND b.checkOut >= :checkOut) OR " +
-            "(b.checkIn >= :checkIn AND b.checkOut <= :checkOut))")
-    Booking findBookingsByDates(@Param("productId") Long productId,
-                                @Param("checkIn") LocalDate checkIn,
-                                @Param("checkOut") LocalDate checkOut);
-
-    @Query("SELECT COUNT(b) FROM Booking b WHERE b.product.id = :productId " +
-            "AND ((b.checkIn <= :checkIn AND b.checkOut >= :checkIn) OR " +
-            "(b.checkIn <= :checkOut AND b.checkOut >= :checkOut) OR " +
-            "(b.checkIn >= :checkIn AND b.checkOut <= :checkOut))")
-    int countBookingsByDates(@Param("productId") Long productId,
-                             @Param("checkIn") LocalDate checkIn,
-                             @Param("checkOut") LocalDate checkOut);
+    @Query("""
+            SELECT CASE WHEN COUNT(b) = 0 THEN TRUE ELSE FALSE END
+            FROM Booking b
+            WHERE b.product.id = :productId
+            AND ((b.checkIn <= :checkIn AND b.checkOut >= :checkIn) OR
+            (b.checkIn <= :checkOut AND b.checkOut >= :checkOut) OR
+            (b.checkIn >= :checkIn AND b.checkOut <= :checkOut))
+        """)
+    boolean existsBookingsByDates(@Param("productId") Long productId,
+                                 @Param("checkIn") LocalDate checkIn,
+                                 @Param("checkOut") LocalDate checkOut);
 }

@@ -1,6 +1,8 @@
 package com.dh.digitalbooking.controller;
 
 import com.dh.digitalbooking.dto.UserDetailsDto;
+import com.dh.digitalbooking.dto.booking.BookingRequest;
+import com.dh.digitalbooking.dto.booking.BookingResponse;
 import com.dh.digitalbooking.entity.Booking;
 import com.dh.digitalbooking.security.AuthenticationFacade;
 import com.dh.digitalbooking.service.imp.BookingServiceImp;
@@ -23,32 +25,27 @@ public class BookingController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Booking>> getAllBookings() {
+    public ResponseEntity<List<BookingResponse>> getAllBookings() {
         return ResponseEntity.ok(bookingServiceImp.allBookings());
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Booking> getBookingById(@PathVariable("id") Long id) {
+    public ResponseEntity<BookingResponse> getBookingById(@PathVariable("id") Long id) {
         return ResponseEntity.ok(bookingServiceImp.getBookingById(id));
     }
 
     @PostMapping
-    public ResponseEntity<Booking> saveBooking(
-            @RequestBody @Valid Booking booking,
+    public ResponseEntity<BookingResponse> saveBooking(
+            @RequestBody @Valid BookingRequest bookingRequest,
             Authentication authentication){
         UserDetailsDto userDto = authenticationFacade.getUserInfo(authentication);
         return ResponseEntity.status(HttpStatus.CREATED)
-                .body(bookingServiceImp.saveBooking(booking, userDto));
+                .body(bookingServiceImp.saveBooking(bookingRequest, userDto));
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteBooking(@PathVariable Long id) {
         bookingServiceImp.deleteBooking(id);
         return ResponseEntity.noContent().build();
-    }
-
-    @PutMapping
-    public ResponseEntity<Booking> updateBooking(@RequestBody @Valid Booking booking) {
-        return ResponseEntity.ok(bookingServiceImp.updateBooking(booking));
     }
 }
