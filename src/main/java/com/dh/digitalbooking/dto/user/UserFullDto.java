@@ -1,6 +1,6 @@
 package com.dh.digitalbooking.dto.user;
 
-import com.dh.digitalbooking.entity.Booking;
+import com.dh.digitalbooking.dto.booking.BookingResponse;
 import com.dh.digitalbooking.entity.Product;
 import com.dh.digitalbooking.entity.Rating;
 import com.dh.digitalbooking.entity.User;
@@ -13,7 +13,7 @@ public record UserFullDto(
         String lastName,
         String email,
         String city,
-        List<Booking> bookings,
+        List<BookingResponse> bookings,
         List<Rating> ratings,
         List<Product> favorites,
         User.Role role

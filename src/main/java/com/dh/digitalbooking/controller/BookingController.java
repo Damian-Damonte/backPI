@@ -3,7 +3,6 @@ package com.dh.digitalbooking.controller;
 import com.dh.digitalbooking.dto.UserDetailsDto;
 import com.dh.digitalbooking.dto.booking.BookingRequest;
 import com.dh.digitalbooking.dto.booking.BookingResponse;
-import com.dh.digitalbooking.entity.Booking;
 import com.dh.digitalbooking.security.AuthenticationFacade;
 import com.dh.digitalbooking.service.imp.BookingServiceImp;
 import jakarta.validation.Valid;

@@ -11,7 +11,6 @@ import com.dh.digitalbooking.entity.Product;
 import com.dh.digitalbooking.mapper.BookingMapper;
 import com.dh.digitalbooking.repository.BookingRepository;
 import com.dh.digitalbooking.service.BookingService;
-import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

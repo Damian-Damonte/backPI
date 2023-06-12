@@ -3,7 +3,6 @@ package com.dh.digitalbooking.service;
 import com.dh.digitalbooking.dto.UserDetailsDto;
 import com.dh.digitalbooking.dto.booking.BookingRequest;
 import com.dh.digitalbooking.dto.booking.BookingResponse;
-import org.springframework.security.core.Authentication;
 
 import java.util.List;
 
