@@ -42,6 +42,7 @@ public class UserServiceImp implements UserService {
             if (!id.equals(userDetailsDto.getUserId()))
                 throw new BadRequestException("La información del usuario proporcionado no coincide con el usuario actualmente autenticado");
         }
+
         return userMapper.userToUserFullDto(existById(id));
     }
 

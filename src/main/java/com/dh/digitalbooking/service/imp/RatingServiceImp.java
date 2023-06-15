@@ -21,11 +21,13 @@ public class RatingServiceImp implements RatingService {
     private final RatingRepository ratingRepository;
     private final ProductServiceImp productoServiceImp;
     private final RatingMapper ratingMapper;
+    private final UserServiceImp userService;
 
-    public RatingServiceImp(RatingRepository ratingRepository, ProductServiceImp productoServiceImp, RatingMapper ratingMapper) {
+    public RatingServiceImp(RatingRepository ratingRepository, ProductServiceImp productoServiceImp, RatingMapper ratingMapper, UserServiceImp userService) {
         this.ratingRepository = ratingRepository;
         this.productoServiceImp = productoServiceImp;
         this.ratingMapper = ratingMapper;
+        this.userService = userService;
     }
 
     @Override
@@ -43,16 +45,17 @@ public class RatingServiceImp implements RatingService {
     public RatingFullDto saveRating(RatingRequest ratingRequest, UserDetailsDto userDetailsDto) {
         Long userId = userDetailsDto.getUserId();
         Product product = productoServiceImp.existByIdValidation(ratingRequest.product().id());
-//      cambiar esto usando el builder cuando actualice User
-        User user = new User();
-        user.setId(userId);
+        User user = userService.existById(userId);
 
         Rating rating = ratingRepository.save(Rating.builder()
                 .value(ratingRequest.value())
                 .user(user)
                 .product(product)
                 .build());
+
+        user.getRatings().add(rating);
         ratingRepository.updateAVGRatingInProduct(product.getId());
+
         return ratingMapper.ratingToRatingFullDto(rating);
     }
 

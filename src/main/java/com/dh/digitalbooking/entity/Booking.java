@@ -44,7 +44,6 @@ public class Booking {
             referencedColumnName = "id",
             foreignKey = @ForeignKey(name = "booking_user_fk")
     )
-    @JsonIgnoreProperties({"bookings", "favoritos"})
     private User user;
     @ManyToOne
     @JoinColumn(
@@ -53,6 +52,5 @@ public class Booking {
             referencedColumnName = "id",
             foreignKey = @ForeignKey(name = "booking_product_fk")
     )
-    @JsonIgnoreProperties("bookings")
     private Product product;
 }

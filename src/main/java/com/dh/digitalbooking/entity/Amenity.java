@@ -27,6 +27,5 @@ public class Amenity {
     @Column(name = "name", nullable = false, length = 255)
     private String name;
     @ManyToMany(mappedBy = "amenities")
-    @JsonIgnore
     private Set<Product> products = new HashSet<>();
 }
