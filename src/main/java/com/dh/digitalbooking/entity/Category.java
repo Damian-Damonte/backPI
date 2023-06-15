@@ -1,6 +1,5 @@
 package com.dh.digitalbooking.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -38,6 +37,5 @@ public class Category {
     @Column(name = "products_count")
     private int productsCount;
     @OneToMany(mappedBy = "category")
-    @JsonIgnore
     private Set<Product> products = new HashSet<>();
 }

@@ -36,6 +36,5 @@ public class Rating {
             referencedColumnName = "id",
             foreignKey = @ForeignKey(name = "rating_product_fk")
     )
-    @JsonIgnoreProperties("bookings")
     private Product product;
 }

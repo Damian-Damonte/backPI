@@ -1,6 +1,5 @@
 package com.dh.digitalbooking.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -38,6 +37,5 @@ public class Policy {
             nullable = false,
             foreignKey = @ForeignKey(name = "products_policies_id_fk")
     )
-    @JsonIgnore
     private Product product;
 }

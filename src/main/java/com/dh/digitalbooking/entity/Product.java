@@ -1,7 +1,5 @@
 package com.dh.digitalbooking.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import lombok.*;
@@ -83,14 +81,11 @@ public class Product {
     private Set<Policy> policies = new HashSet<>();
 
     @OneToMany(mappedBy = "product", cascade = CascadeType.REMOVE, orphanRemoval = true)
-    @JsonIgnoreProperties("product")
     private Set<Booking> bookings = new HashSet<>();
 
     @OneToMany(cascade = CascadeType.REMOVE, orphanRemoval = true, mappedBy = "product")
-    @JsonIgnore
     private Set<Rating> ratings = new HashSet<>();
 
     @ManyToMany(mappedBy = "favorites")
-    @JsonIgnore
     private Set<User> favorites = new HashSet<>();
 }

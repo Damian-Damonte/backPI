@@ -1,7 +1,5 @@
 package com.dh.digitalbooking.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -36,7 +34,6 @@ public class User implements UserDetails {
     @Column(name = "email", nullable = false)
     private String email;
     @Column(name = "password", nullable = false, length = 100)
-    @JsonIgnore
     private String password;
     @Column(name = "city")
     private String city;
@@ -45,11 +42,9 @@ public class User implements UserDetails {
     private Role role;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE, orphanRemoval = true)
-    @JsonIgnoreProperties("user")
     List<Booking> bookings = new ArrayList<>();
 
     @OneToMany(cascade = CascadeType.REMOVE, orphanRemoval = true, mappedBy = "user")
-    @JsonIgnore
     private Set<Rating> ratings = new HashSet<>();
 
     @ManyToMany()
@@ -64,7 +59,6 @@ public class User implements UserDetails {
                     foreignKey = @ForeignKey(name = "producto_usuario_id")
             )
     )
-    @JsonIgnoreProperties("bookings")
     private List<Product> favorites = new ArrayList<>();
 
     public void addFav(Product product) {
@@ -75,7 +69,6 @@ public class User implements UserDetails {
     }
 
     @Override
-    @JsonIgnore
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return List.of(new SimpleGrantedAuthority(role.name()));
     }
@@ -86,31 +79,26 @@ public class User implements UserDetails {
     }
 
     @Override
-    @JsonIgnore
     public String getUsername() {
         return email;
     }
 
     @Override
-    @JsonIgnore
     public boolean isAccountNonExpired() {
         return true;
     }
 
     @Override
-    @JsonIgnore
     public boolean isAccountNonLocked() {
         return true;
     }
 
     @Override
-    @JsonIgnore
     public boolean isCredentialsNonExpired() {
         return true;
     }
 
     @Override
-    @JsonIgnore
     public boolean isEnabled() {
         return true;
     }

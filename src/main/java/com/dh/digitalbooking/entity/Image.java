@@ -1,6 +1,5 @@
 package com.dh.digitalbooking.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -34,7 +33,6 @@ public class Image {
             nullable = false,
             foreignKey = @ForeignKey(name = "products_images_id_fk")
     )
-    @JsonIgnore
     private Product product;
 
     @Override
