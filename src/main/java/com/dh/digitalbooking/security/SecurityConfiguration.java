@@ -26,20 +26,20 @@ public class SecurityConfiguration {
         http
                 .csrf().disable()
                 .authorizeHttpRequests(requests -> requests
-                        .requestMatchers(HttpMethod.POST, "/bookings").authenticated()
-                        .requestMatchers(HttpMethod.DELETE, "/bookings/{id}").authenticated()
-                        .requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll()
-//                        optimizar los 3 metodos
-                        .requestMatchers(HttpMethod.POST, "/ratings").authenticated()
-                        .requestMatchers(HttpMethod.PUT, "/ratings/**").authenticated()
-                        .requestMatchers(HttpMethod.DELETE, "/ratings/**").authenticated()
-                        .requestMatchers(HttpMethod.POST, "/users/favorites/**").authenticated()
-                        .requestMatchers(HttpMethod.GET, "/users/{id}").authenticated()
-                        .requestMatchers("/users/**").hasRole("ADMIN")
-                        .requestMatchers("/auth/**").permitAll()
-                        .requestMatchers(HttpMethod.GET).permitAll()
-                        .anyRequest().hasRole("ADMIN")
-//                        .anyRequest().permitAll()
+                                .requestMatchers(HttpMethod.GET, "/users/{id}").authenticated()
+
+                                .requestMatchers(HttpMethod.GET).permitAll()
+                                .requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll()
+                                .requestMatchers("/auth/**").permitAll()
+
+                                .requestMatchers( "/bookings/**").authenticated()
+                                .requestMatchers( "/ratings/**").authenticated()
+                                .requestMatchers( "/products/**").authenticated()
+
+                                .requestMatchers(HttpMethod.POST, "/users/favorites/{id}").authenticated()
+
+                                .anyRequest().hasRole("ADMIN")
+//                              .anyRequest().permitAll()
                 )
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
