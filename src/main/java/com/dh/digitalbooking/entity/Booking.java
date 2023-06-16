@@ -26,13 +26,13 @@ public class Booking {
     private LocalDate checkIn;
     @Column(name = "check_out", nullable = false)
     private LocalDate checkOut;
-    @Column(name = "hora_llegada", nullable = false)
+    @Column(name = "arrival_time", nullable = false)
     private LocalTime arrivalTime;
-    @Column(name = "ciudad_usuario", nullable = false, length = 100)
+    @Column(name = "user_city", nullable = false, length = 100)
     private String userCity;
-    @Column(name = "datos_extra", columnDefinition = "TEXT", length = 500)
+    @Column(name = "additional_note", columnDefinition = "TEXT", length = 500)
     private String additionalNote;
-    @Column(name = "vacuna_covid")
+    @Column(name = "covid_vaccine")
     private boolean covidVaccine;
     @Column(name = "total", precision = 14, scale = 2, nullable = false)
     private BigDecimal total;

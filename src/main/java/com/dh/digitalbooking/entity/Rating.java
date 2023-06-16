@@ -27,7 +27,6 @@ public class Rating {
             referencedColumnName = "id",
             foreignKey = @ForeignKey(name = "rating_user_fk")
     )
-    @JsonIgnoreProperties({"bookings", "favoritos"})
     private User user;
     @ManyToOne
     @JoinColumn(

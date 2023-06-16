@@ -32,7 +32,7 @@ public class Policy {
 
     @ManyToOne
     @JoinColumn(
-            name = "producto_id",
+            name = "product_id",
             referencedColumnName = "id",
             nullable = false,
             foreignKey = @ForeignKey(name = "products_policies_id_fk")

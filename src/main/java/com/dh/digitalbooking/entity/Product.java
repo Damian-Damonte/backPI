@@ -34,7 +34,7 @@ public class Product {
     @NotNull(message = "El product debe tener un precio por noche")
     private BigDecimal pricePerNight;
 
-    @Column(name = "promedio_puntuacion",precision = 3, scale = 1)
+    @Column(name = "average_rating",precision = 3, scale = 1)
     private BigDecimal averageRating;
     @Column(name = "latitude", precision = 17, scale = 15, nullable = false)
     private BigDecimal latitude;
@@ -46,7 +46,7 @@ public class Product {
             name = "category_id",
             nullable = false,
             referencedColumnName = "id",
-            foreignKey = @ForeignKey(name = "productos_categorias_fk")
+            foreignKey = @ForeignKey(name = "products_categories_fk")
     )
     private Category category;
 
@@ -55,7 +55,7 @@ public class Product {
             name = "city_id",
             nullable = false,
             referencedColumnName = "id",
-            foreignKey = @ForeignKey(name = "productos_ciudad_fk")
+            foreignKey = @ForeignKey(name = "products_cities_fk")
     )
     private City city;
 
