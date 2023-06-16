@@ -88,4 +88,13 @@ public class Product {
 
     @ManyToMany(mappedBy = "favorites")
     private Set<User> favorites = new HashSet<>();
+
+    @ManyToOne
+    @JoinColumn(
+            name = "user_id",
+            nullable = false,
+            referencedColumnName = "id",
+            foreignKey = @ForeignKey(name = "products_users_fk")
+    )
+    private User user;
 }

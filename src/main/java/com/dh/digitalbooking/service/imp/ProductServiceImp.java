@@ -1,6 +1,7 @@
 package com.dh.digitalbooking.service.imp;
 
 import com.dh.digitalbooking.dto.product.*;
+import com.dh.digitalbooking.dto.user.UserDetailsSlim;
 import com.dh.digitalbooking.exception.BadRequestException;
 import com.dh.digitalbooking.exception.NotFoundException;
 import com.dh.digitalbooking.entity.*;
@@ -9,6 +10,7 @@ import com.dh.digitalbooking.repository.ProductRepository;
 import com.dh.digitalbooking.service.*;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -26,8 +28,10 @@ public class ProductServiceImp implements ProductService {
     private final ImageService imageService;
     private final PolicyService policyService;
     private final ProductMapper productMapper;
+    private final UserService userService;
+    private final AuthenticationUserService authenticationUserService;
 
-    public ProductServiceImp(ProductRepository productRepository, CategoryService categoryService, CityService cityService, AmenityService amenityService, PolicyTypeService policyTypeService, ImageService imageService, PolicyService policyService, ProductMapper productMapper) {
+    public ProductServiceImp(ProductRepository productRepository, CategoryService categoryService, CityService cityService, AmenityService amenityService, PolicyTypeService policyTypeService, ImageService imageService, PolicyService policyService, ProductMapper productMapper, UserService userService, AuthenticationUserService authenticationUserService) {
         this.productRepository = productRepository;
         this.categoryService = categoryService;
         this.cityService = cityService;
@@ -36,6 +40,8 @@ public class ProductServiceImp implements ProductService {
         this.imageService = imageService;
         this.policyService = policyService;
         this.productMapper = productMapper;
+        this.userService = userService;
+        this.authenticationUserService = authenticationUserService;
     }
 
     @Override
@@ -63,7 +69,8 @@ public class ProductServiceImp implements ProductService {
 
     @Override
     @Transactional
-    public ProductResponse saveProduct(ProductRequest productRequest) {
+    public ProductResponse saveProduct(ProductRequest productRequest, Authentication authentication) {
+        User user = userService.existById(authenticationUserService.getUserDetailsFromAuthentication(authentication).id());
         Product product = productMapper.productRequestToProduct(productRequest);
         product.setCategory(categoryService.existByIdValidation(product.getCategory().getId()));
         product.setCity(cityService.existByIdValidation(product.getCity().getId()));
@@ -78,16 +85,21 @@ public class ProductServiceImp implements ProductService {
         }).collect(Collectors.toSet()));
 
         product.setBookings(new HashSet<>());
+        product.setUser(user);
+
+        user.addProduct(product);
         categoryService.incrementCount(productRequest.category().id());
         return productMapper.productToProductResponse(productRepository.save(product));
     }
 
     @Transactional
     @Override
-    public void deleteProduct(Long id) {
+    public void deleteProduct(Long id, Authentication authentication) {
         Product product = existById(id);
+        canModifyProduct(product, authentication);
+
         if (!(product.getBookings().isEmpty()))
-            throw new BadRequestException("The product with ID " + 1 + " cannot be deleted as it is currently booked");
+            throw new BadRequestException("The product with ID " + id + " cannot be deleted as it is currently booked");
 
         Set<User> usuariosFav = product.getFavorites();
         usuariosFav.forEach(user -> user.removeFav(product));
@@ -97,8 +109,10 @@ public class ProductServiceImp implements ProductService {
     }
 
     @Transactional
-    public ProductResponse updateProduct(Long id, ProductUpdate productUpdateRequest) {
+    public ProductResponse updateProduct(Long id, ProductUpdate productUpdateRequest, Authentication authentication) {
         Product product = existById(id);
+        canModifyProduct(product, authentication);
+
         Product productUpdate = productMapper.productUpdateToProduct(productUpdateRequest);
         productUpdate.setId(id);
         productUpdate.setCategory(categoryService.existByIdValidation(productUpdate.getCategory().getId()));
@@ -129,6 +143,7 @@ public class ProductServiceImp implements ProductService {
         productUpdate.setBookings(product.getBookings());
         productUpdate.setRatings(product.getRatings());
         productUpdate.setFavorites(product.getFavorites());
+        productUpdate.setUser(product.getUser());
 
         if (!(productUpdate.getCategory().getId().equals(product.getCategory().getId()))) {
             categoryService.decrementCount(product.getCategory().getId());
@@ -164,6 +179,14 @@ public class ProductServiceImp implements ProductService {
     private void notPastDate(LocalDate date) {
         if (date.isBefore(LocalDate.now()))
             throw new BadRequestException("The dates must not be earlier than the current date");
+    }
+
+    private void canModifyProduct(Product product, Authentication authentication) {
+        UserDetailsSlim userDetails = authenticationUserService.getUserDetailsFromAuthentication(authentication);
+        if (!userDetails.role().equals("ROLE_ADMIN")) {
+            if (!product.getUser().getId().equals(userDetails.id()))
+                throw new BadRequestException("The provided user information does not match the currently authenticated user");
+        }
     }
 
     private ProductPage toProductPageDto(Page<Product> page) {

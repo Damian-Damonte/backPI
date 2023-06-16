@@ -16,6 +16,7 @@ public record UserFullDto(
         List<BookingResponse> bookings,
         List<RatingFullDto> ratings,
         List<ProductResponse> favorites,
+        List<ProductResponse> products,
         User.Role role
 ) {
 }

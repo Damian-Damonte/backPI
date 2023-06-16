@@ -13,11 +13,13 @@ import com.dh.digitalbooking.repository.UserRespository;
 import com.dh.digitalbooking.service.AuthenticationUserService;
 import com.dh.digitalbooking.service.ProductService;
 import com.dh.digitalbooking.service.UserService;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -28,7 +30,7 @@ public class UserServiceImp implements UserService {
     private final UserMapper userMapper;
     private final AuthenticationUserService authenticationUserService;
 
-    public UserServiceImp(UserRespository userRespository, PasswordEncoder passwordEncoder, ProductServiceImp productoService, UserMapper userMapper, AuthenticationUserServiceImpl authenticationUserService) {
+    public UserServiceImp(UserRespository userRespository, PasswordEncoder passwordEncoder, @Lazy ProductServiceImp productoService, UserMapper userMapper, AuthenticationUserServiceImpl authenticationUserService) {
         this.userRespository = userRespository;
         this.passwordEncoder = passwordEncoder;
         this.productoService = productoService;
@@ -81,6 +83,10 @@ public class UserServiceImp implements UserService {
     public void deleteUsuario(Long id) {
         User user = existById(id);
         user.getFavorites().clear();
+        user.getProducts().forEach(product -> {
+            boolean anyActiveBooking = product.getBookings().stream().anyMatch(booking -> (booking.getCheckOut().isAfter(LocalDate.now()) || booking.getCheckOut().isEqual(LocalDate.now())));
+            if(anyActiveBooking) throw new BadRequestException("You cannot delete the user as some of their products are currently booked.");
+        });
         userRespository.deleteById(id);
     }
 

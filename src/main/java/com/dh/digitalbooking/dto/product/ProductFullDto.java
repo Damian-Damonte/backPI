@@ -4,6 +4,7 @@ import com.dh.digitalbooking.dto.amenity.AmenityFullDto;
 import com.dh.digitalbooking.dto.booking.BookingResponse;
 import com.dh.digitalbooking.dto.category.CategoryFullDto;
 import com.dh.digitalbooking.dto.city.CityFullDto;
+import com.dh.digitalbooking.dto.common.OnlyId;
 import com.dh.digitalbooking.dto.image.ImageFullDto;
 import com.dh.digitalbooking.dto.policy.PolicyFullDto;
 
@@ -25,6 +26,7 @@ public record ProductFullDto(
         List<AmenityFullDto> amenities,
         List<ImageFullDto> images,
         List<PolicyFullDto> policies,
-        List<BookingResponse> bookings
+        List<BookingResponse> bookings,
+        OnlyId user
 ) {
 }

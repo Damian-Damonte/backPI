@@ -190,7 +190,7 @@ public class DigitalbookingApplication {
                     Set.of(new OnlyId(1L), new OnlyId(2L)),
                     setImages1,
                     policies
-            ));
+            ), authenticationAdmin);
             Product product1 = productRepository.findById(1L).get();
 
             RatingRequest rating1 = new RatingRequest(4, new OnlyId(1L));
@@ -220,7 +220,7 @@ public class DigitalbookingApplication {
                     Set.of(new OnlyId(2L), new OnlyId(3L)),
                     setImages2,
                     policies
-            ));
+            ), authenticationAdmin);
             Product product2 = productRepository.findById(2L).get();
 
 

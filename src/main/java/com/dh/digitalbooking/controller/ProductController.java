@@ -7,6 +7,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
@@ -54,22 +55,23 @@ public class ProductController {
 
     @PostMapping
     @Operation(description = "When creating a product, the average rating will be null.")
-    public ResponseEntity<ProductResponse> saveProduct(@RequestBody @Valid ProductRequest productRequest) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(productoService.saveProduct(productRequest));
+    public ResponseEntity<ProductResponse> saveProduct(@RequestBody @Valid ProductRequest productRequest,
+                                                       Authentication authentication) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(productoService.saveProduct(productRequest, authentication));
     }
 
     @DeleteMapping("/{id}")
     @Operation(description = "When deleting the product, its images, ratings, and policies will be automatically deleted as well. " +
             "The product cannot be deleted if it has any reservations.")
-    public ResponseEntity<Void> deleteProduct(@PathVariable Long id) {
-        productoService.deleteProduct(id);
+    public ResponseEntity<Void> deleteProduct(@PathVariable Long id, Authentication authentication) {
+        productoService.deleteProduct(id, authentication);
         return ResponseEntity.noContent().build();
     }
 
     @PutMapping("/{id}")
     @Operation(description = "The average rating and bookings of a product cannot be modified.")
     public ResponseEntity<ProductResponse> updateProduct(@PathVariable Long id,
-                                                         @RequestBody @Valid ProductUpdate productUpdate) {
-        return ResponseEntity.ok(productoService.updateProduct(id, productUpdate));
+                 @RequestBody @Valid ProductUpdate productUpdate, Authentication authentication) {
+        return ResponseEntity.ok(productoService.updateProduct(id, productUpdate, authentication));
     }
 }

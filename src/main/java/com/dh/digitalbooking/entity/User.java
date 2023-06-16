@@ -61,12 +61,24 @@ public class User implements UserDetails {
     )
     private List<Product> favorites = new ArrayList<>();
 
+//    validar que el product no tenga reservas
+    @OneToMany(mappedBy = "user", orphanRemoval = true)
+    @OrderBy("id ASC")
+    private Set<Product> products = new HashSet<>();
+
     public void addFav(Product product) {
         favorites.add(product);
     }
     public void removeFav(Product product) {
         favorites.remove(product);
     }
+    public void addProduct(Product product){
+        products.add(product);
+    }
+    public void removeProduct(Product product){
+        products.remove(product);
+    }
+
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
