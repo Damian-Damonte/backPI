@@ -1,10 +1,11 @@
-package com.dh.digitalbooking.security;
-
+package com.dh.digitalbooking.service.imp;
 
 import com.dh.digitalbooking.dto.auth.AuthRequest;
 import com.dh.digitalbooking.dto.auth.AuthResponse;
 import com.dh.digitalbooking.dto.user.UserRequest;
 import com.dh.digitalbooking.entity.User;
+import com.dh.digitalbooking.security.JwtService;
+import com.dh.digitalbooking.service.AuthenticationService;
 import com.dh.digitalbooking.service.UserService;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -14,12 +15,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Service
-public class AuthenticationService {
+public class AuthenticationServiceImpl implements AuthenticationService {
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
     private final UserService userService;
 
-    public AuthenticationService(JwtService jwtService, AuthenticationManager authenticationManager, UserService userService) {
+    public AuthenticationServiceImpl(JwtService jwtService, AuthenticationManager authenticationManager, UserService userService) {
         this.jwtService = jwtService;
         this.authenticationManager = authenticationManager;
         this.userService = userService;

@@ -11,7 +11,6 @@ import com.dh.digitalbooking.entity.Product;
 import com.dh.digitalbooking.entity.User;
 import com.dh.digitalbooking.mapper.RatingMapper;
 import com.dh.digitalbooking.repository.RatingRepository;
-import com.dh.digitalbooking.security.AuthenticationFacade;
 import com.dh.digitalbooking.service.RatingService;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
@@ -24,14 +23,14 @@ public class RatingServiceImp implements RatingService {
     private final ProductServiceImp productoServiceImp;
     private final RatingMapper ratingMapper;
     private final UserServiceImp userService;
-    private final AuthenticationFacade authenticationFacade;
+    private final AuthenticationUserServiceImpl authenticationUserServiceImpl;
 
-    public RatingServiceImp(RatingRepository ratingRepository, ProductServiceImp productoServiceImp, RatingMapper ratingMapper, UserServiceImp userService, AuthenticationFacade authenticationFacade) {
+    public RatingServiceImp(RatingRepository ratingRepository, ProductServiceImp productoServiceImp, RatingMapper ratingMapper, UserServiceImp userService, AuthenticationUserServiceImpl authenticationUserServiceImpl) {
         this.ratingRepository = ratingRepository;
         this.productoServiceImp = productoServiceImp;
         this.ratingMapper = ratingMapper;
         this.userService = userService;
-        this.authenticationFacade = authenticationFacade;
+        this.authenticationUserServiceImpl = authenticationUserServiceImpl;
     }
 
     @Override
@@ -48,7 +47,7 @@ public class RatingServiceImp implements RatingService {
     @Transactional
     public RatingFullDto saveRating(RatingRequest ratingRequest, Authentication authentication) {
         Product product = productoServiceImp.existByIdValidation(ratingRequest.product().id());
-        User user = userService.existById(authenticationFacade.getUserFromAuthentication(authentication).id());
+        User user = userService.existById(authenticationUserServiceImpl.getUserDetailsFromAuthentication(authentication).id());
 
         Rating rating = ratingRepository.save(Rating.builder()
                 .value(ratingRequest.value())
@@ -66,7 +65,7 @@ public class RatingServiceImp implements RatingService {
     @Transactional
     public void deleteRating(Long id, Authentication authentication) {
         Rating rating = existByIdValidation(id);
-        UserDetailsSlim userDetails = authenticationFacade.getUserFromAuthentication(authentication);
+        UserDetailsSlim userDetails = authenticationUserServiceImpl.getUserDetailsFromAuthentication(authentication);
         if (!userDetails.role().equals("ROLE_ADMIN")) {
             if (!rating.getUser().getId().equals(userDetails.id()))
                 throw new BadRequestException("The provided user information does not match the currently authenticated user");
@@ -79,7 +78,7 @@ public class RatingServiceImp implements RatingService {
     @Transactional
     public RatingFullDto updateRating(Long id, RatingUpdate ratingUpdate, Authentication authentication) {
         Rating rating = existByIdValidation(id);
-        UserDetailsSlim userDetails = authenticationFacade.getUserFromAuthentication(authentication);
+        UserDetailsSlim userDetails = authenticationUserServiceImpl.getUserDetailsFromAuthentication(authentication);
         if (!userDetails.role().equals("ROLE_ADMIN")) {
             if (!rating.getUser().getId().equals(userDetails.id()))
                 throw new BadRequestException("The provided user information does not match the currently authenticated user");

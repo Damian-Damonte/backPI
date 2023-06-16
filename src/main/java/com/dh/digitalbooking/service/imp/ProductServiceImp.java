@@ -107,7 +107,6 @@ public class ProductServiceImp implements ProductService {
         productUpdate.setAmenities(productUpdate.getAmenities().stream().map(amenity ->
                 amenityService.existByIdValidation(amenity.getId())).collect(Collectors.toSet()));
 
-
         productUpdate.getImages().forEach(image -> {
             if(image.getId() != null) {
                 Image saveImage = imageService.getImageById(image.getId());
