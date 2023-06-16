@@ -61,7 +61,6 @@ public class User implements UserDetails {
     )
     private List<Product> favorites = new ArrayList<>();
 
-//    validar que el product no tenga reservas
     @OneToMany(mappedBy = "user", orphanRemoval = true)
     @OrderBy("id ASC")
     private Set<Product> products = new HashSet<>();

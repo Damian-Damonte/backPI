@@ -98,8 +98,8 @@ public class ProductServiceImp implements ProductService {
         Product product = existById(id);
         canModifyProduct(product, authentication);
 
-        if (!(product.getBookings().isEmpty()))
-            throw new BadRequestException("The product with ID " + id + " cannot be deleted as it is currently booked");
+        boolean anyActiveBooking = product.getBookings().stream().anyMatch(booking -> (booking.getCheckOut().isAfter(LocalDate.now()) || booking.getCheckOut().isEqual(LocalDate.now())));
+        if(anyActiveBooking) throw new BadRequestException("The product with ID " + id + " cannot be deleted as it is currently booked");
 
         Set<User> usuariosFav = product.getFavorites();
         usuariosFav.forEach(user -> user.removeFav(product));
