@@ -1,10 +1,8 @@
 package com.dh.digitalbooking.controller;
 
-import com.dh.digitalbooking.dto.UserDetailsDto;
 import com.dh.digitalbooking.dto.user.UserFullDto;
 import com.dh.digitalbooking.dto.user.UserRequest;
 import com.dh.digitalbooking.dto.user.UserResponse;
-import com.dh.digitalbooking.security.AuthenticationFacade;
 import com.dh.digitalbooking.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
@@ -18,12 +16,9 @@ import java.util.List;
 @RequestMapping("/users")
 public class UserController {
     private final UserService userService;
-    private final AuthenticationFacade authenticationFacade;
 
-
-    public UserController(UserService userService, AuthenticationFacade authenticationFacade) {
+    public UserController(UserService userService) {
         this.userService = userService;
-        this.authenticationFacade = authenticationFacade;
     }
 
     @GetMapping
@@ -32,11 +27,8 @@ public class UserController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<UserFullDto> getUserById(
-            @PathVariable("id") Long id,
-            Authentication authentication) {
-        UserDetailsDto userDto = authenticationFacade.getUserInfo(authentication);
-        return ResponseEntity.ok(userService.getByIdUsuario(id, userDto));
+    public ResponseEntity<UserFullDto> getUserById(@PathVariable("id") Long id, Authentication authentication) {
+        return ResponseEntity.ok(userService.getByIdUsuario(id, authentication));
     }
 
     @DeleteMapping("/{id}")
@@ -58,10 +50,8 @@ public class UserController {
     }
 
     @PostMapping("/favorites/{productId}")
-    public ResponseEntity<Void> handleFav(@PathVariable Long productId,
-                                          Authentication authentication) {
-        UserDetailsDto userDto = authenticationFacade.getUserInfo(authentication);
-        userService.handleFav(productId, userDto);
+    public ResponseEntity<Void> handleFav(@PathVariable Long productId, Authentication authentication) {
+        userService.handleFav(productId, authentication);
         return ResponseEntity.noContent().build();
     }
 }

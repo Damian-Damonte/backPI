@@ -1,9 +1,9 @@
 package com.dh.digitalbooking.service.imp;
 
-import com.dh.digitalbooking.dto.UserDetailsDto;
 import com.dh.digitalbooking.dto.rating.RatingFullDto;
 import com.dh.digitalbooking.dto.rating.RatingRequest;
 import com.dh.digitalbooking.dto.rating.RatingUpdate;
+import com.dh.digitalbooking.dto.user.UserDetailsSlim;
 import com.dh.digitalbooking.entity.Rating;
 import com.dh.digitalbooking.exception.BadRequestException;
 import com.dh.digitalbooking.exception.NotFoundException;
@@ -11,7 +11,9 @@ import com.dh.digitalbooking.entity.Product;
 import com.dh.digitalbooking.entity.User;
 import com.dh.digitalbooking.mapper.RatingMapper;
 import com.dh.digitalbooking.repository.RatingRepository;
+import com.dh.digitalbooking.security.AuthenticationFacade;
 import com.dh.digitalbooking.service.RatingService;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,12 +24,14 @@ public class RatingServiceImp implements RatingService {
     private final ProductServiceImp productoServiceImp;
     private final RatingMapper ratingMapper;
     private final UserServiceImp userService;
+    private final AuthenticationFacade authenticationFacade;
 
-    public RatingServiceImp(RatingRepository ratingRepository, ProductServiceImp productoServiceImp, RatingMapper ratingMapper, UserServiceImp userService) {
+    public RatingServiceImp(RatingRepository ratingRepository, ProductServiceImp productoServiceImp, RatingMapper ratingMapper, UserServiceImp userService, AuthenticationFacade authenticationFacade) {
         this.ratingRepository = ratingRepository;
         this.productoServiceImp = productoServiceImp;
         this.ratingMapper = ratingMapper;
         this.userService = userService;
+        this.authenticationFacade = authenticationFacade;
     }
 
     @Override
@@ -42,10 +46,9 @@ public class RatingServiceImp implements RatingService {
 
     @Override
     @Transactional
-    public RatingFullDto saveRating(RatingRequest ratingRequest, UserDetailsDto userDetailsDto) {
-        Long userId = userDetailsDto.getUserId();
+    public RatingFullDto saveRating(RatingRequest ratingRequest, Authentication authentication) {
         Product product = productoServiceImp.existByIdValidation(ratingRequest.product().id());
-        User user = userService.existById(userId);
+        User user = userService.existById(authenticationFacade.getUserFromAuthentication(authentication).id());
 
         Rating rating = ratingRepository.save(Rating.builder()
                 .value(ratingRequest.value())
@@ -61,10 +64,11 @@ public class RatingServiceImp implements RatingService {
 
     @Override
     @Transactional
-    public void deleteRating(Long id, UserDetailsDto userDetailsDto) {
+    public void deleteRating(Long id, Authentication authentication) {
         Rating rating = existByIdValidation(id);
-        if (!userDetailsDto.getUserRol().equals("ROLE_ADMIN")) {
-            if (!rating.getUser().getId().equals(userDetailsDto.getUserId()))
+        UserDetailsSlim userDetails = authenticationFacade.getUserFromAuthentication(authentication);
+        if (!userDetails.role().equals("ROLE_ADMIN")) {
+            if (!rating.getUser().getId().equals(userDetails.id()))
                 throw new BadRequestException("The provided user information does not match the currently authenticated user");
         }
         ratingRepository.deleteById(id);
@@ -73,10 +77,11 @@ public class RatingServiceImp implements RatingService {
 
     @Override
     @Transactional
-    public RatingFullDto updateRating(Long id, RatingUpdate ratingUpdate, UserDetailsDto userDetailsDto) {
+    public RatingFullDto updateRating(Long id, RatingUpdate ratingUpdate, Authentication authentication) {
         Rating rating = existByIdValidation(id);
-        if (!userDetailsDto.getUserRol().equals("ROLE_ADMIN")) {
-            if (!rating.getUser().getId().equals(userDetailsDto.getUserId()))
+        UserDetailsSlim userDetails = authenticationFacade.getUserFromAuthentication(authentication);
+        if (!userDetails.role().equals("ROLE_ADMIN")) {
+            if (!rating.getUser().getId().equals(userDetails.id()))
                 throw new BadRequestException("The provided user information does not match the currently authenticated user");
         }
         rating.setValue(ratingUpdate.value());
@@ -84,16 +89,6 @@ public class RatingServiceImp implements RatingService {
         ratingRepository.updateAVGRatingInProduct(rating.getProduct().getId());
         return ratingMapper.ratingToRatingFullDto(rating);
     }
-
-//    private Rating getRating(Rating rating) {
-//        Product product = productoServiceImp.existByIdValidation(rating.getProduct().getId());
-//        User user = usuarioServiceImp.existByIdValidation(rating.getUser().getId());
-//        rating.setProduct(product);
-//        rating.setUser(user);
-//        Rating ratingSave = ratingRepository.save(rating);
-//        ratingRepository.updateAVGRatingInProduct(product.getId());
-//        return ratingSave;
-//    }
 
     public Rating existByIdValidation(Long id) {
         return ratingRepository.findById(id).orElseThrow(() ->

@@ -1,10 +1,8 @@
 package com.dh.digitalbooking.controller;
 
-import com.dh.digitalbooking.dto.UserDetailsDto;
 import com.dh.digitalbooking.dto.rating.RatingFullDto;
 import com.dh.digitalbooking.dto.rating.RatingRequest;
 import com.dh.digitalbooking.dto.rating.RatingUpdate;
-import com.dh.digitalbooking.security.AuthenticationFacade;
 import com.dh.digitalbooking.service.imp.RatingServiceImp;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
@@ -18,11 +16,9 @@ import java.util.List;
 @RequestMapping("/ratings")
 public class RatingController {
     private final RatingServiceImp ratingServiceImp;
-    private final AuthenticationFacade authenticationFacade;
 
-    public RatingController(RatingServiceImp ratingServiceImp, AuthenticationFacade authenticationFacade) {
+    public RatingController(RatingServiceImp ratingServiceImp) {
         this.ratingServiceImp = ratingServiceImp;
-        this.authenticationFacade = authenticationFacade;
     }
 
     @GetMapping
@@ -40,15 +36,13 @@ public class RatingController {
             @RequestBody @Valid RatingRequest ratingRequest,
             Authentication authentication
             ) {
-        UserDetailsDto userDetailsDto = authenticationFacade.getUserInfo(authentication);
         return ResponseEntity.status(HttpStatus.CREATED).body(
-                ratingServiceImp.saveRating(ratingRequest, userDetailsDto));
+                ratingServiceImp.saveRating(ratingRequest, authentication));
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteRating(@PathVariable @Valid Long id, Authentication authentication) {
-        UserDetailsDto userDetailsDto = authenticationFacade.getUserInfo(authentication);
-        ratingServiceImp.deleteRating(id, userDetailsDto);
+        ratingServiceImp.deleteRating(id, authentication);
         return ResponseEntity.noContent().build();
     }
 
@@ -57,7 +51,6 @@ public class RatingController {
                                                @RequestBody @Valid RatingUpdate ratingUpdate,
                                                Authentication authentication
     ) {
-        UserDetailsDto userDetailsDto = authenticationFacade.getUserInfo(authentication);
-        return ResponseEntity.ok(ratingServiceImp.updateRating(id, ratingUpdate, userDetailsDto));
+        return ResponseEntity.ok(ratingServiceImp.updateRating(id, ratingUpdate, authentication));
     }
 }

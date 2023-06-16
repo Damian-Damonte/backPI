@@ -1,9 +1,7 @@
 package com.dh.digitalbooking.controller;
 
-import com.dh.digitalbooking.dto.UserDetailsDto;
 import com.dh.digitalbooking.dto.booking.BookingRequest;
 import com.dh.digitalbooking.dto.booking.BookingResponse;
-import com.dh.digitalbooking.security.AuthenticationFacade;
 import com.dh.digitalbooking.service.imp.BookingServiceImp;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
@@ -16,11 +14,9 @@ import java.util.List;
 @RequestMapping("/bookings")
 public class BookingController {
     private final BookingServiceImp bookingServiceImp;
-    private final AuthenticationFacade authenticationFacade;
 
-    public BookingController(BookingServiceImp bookingServiceImp, AuthenticationFacade authenticationFacade) {
+    public BookingController(BookingServiceImp bookingServiceImp) {
         this.bookingServiceImp = bookingServiceImp;
-        this.authenticationFacade = authenticationFacade;
     }
 
     @GetMapping
@@ -35,17 +31,14 @@ public class BookingController {
 
     @PostMapping
     public ResponseEntity<BookingResponse> saveBooking(
-            @RequestBody @Valid BookingRequest bookingRequest,
-            Authentication authentication){
-        UserDetailsDto userDto = authenticationFacade.getUserInfo(authentication);
+                @RequestBody @Valid BookingRequest bookingRequest, Authentication authentication){
         return ResponseEntity.status(HttpStatus.CREATED)
-                .body(bookingServiceImp.saveBooking(bookingRequest, userDto));
+                .body(bookingServiceImp.saveBooking(bookingRequest, authentication));
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteBooking(@PathVariable Long id, Authentication authentication) {
-        UserDetailsDto userDto = authenticationFacade.getUserInfo(authentication);
-        bookingServiceImp.deleteBooking(id, userDto);
+        bookingServiceImp.deleteBooking(id, authentication);
         return ResponseEntity.noContent().build();
     }
 }

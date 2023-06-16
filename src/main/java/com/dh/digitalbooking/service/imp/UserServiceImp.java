@@ -1,6 +1,6 @@
 package com.dh.digitalbooking.service.imp;
 
-import com.dh.digitalbooking.dto.UserDetailsDto;
+import com.dh.digitalbooking.dto.user.UserDetailsSlim;
 import com.dh.digitalbooking.dto.user.UserFullDto;
 import com.dh.digitalbooking.dto.user.UserRequest;
 import com.dh.digitalbooking.dto.user.UserResponse;
@@ -10,7 +10,9 @@ import com.dh.digitalbooking.exception.BadRequestException;
 import com.dh.digitalbooking.exception.NotFoundException;
 import com.dh.digitalbooking.entity.User;
 import com.dh.digitalbooking.repository.UserRespository;
+import com.dh.digitalbooking.security.AuthenticationFacade;
 import com.dh.digitalbooking.service.UserService;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,12 +25,14 @@ public class UserServiceImp implements UserService {
     private final PasswordEncoder passwordEncoder;
     private final ProductServiceImp productoServiceImp;
     private final UserMapper userMapper;
+    private final AuthenticationFacade authenticationFacade;
 
-    public UserServiceImp(UserRespository userRespository, PasswordEncoder passwordEncoder, ProductServiceImp productoServiceImp, UserMapper userMapper) {
+    public UserServiceImp(UserRespository userRespository, PasswordEncoder passwordEncoder, ProductServiceImp productoServiceImp, UserMapper userMapper, AuthenticationFacade authenticationFacade) {
         this.userRespository = userRespository;
         this.passwordEncoder = passwordEncoder;
         this.productoServiceImp = productoServiceImp;
         this.userMapper = userMapper;
+        this.authenticationFacade = authenticationFacade;
     }
 
     @Override
@@ -37,9 +41,10 @@ public class UserServiceImp implements UserService {
     }
 
     @Override
-    public UserFullDto getByIdUsuario(Long id, UserDetailsDto userDetailsDto) {
-        if (!userDetailsDto.getUserRol().equals("ROLE_ADMIN")) {
-            if (!id.equals(userDetailsDto.getUserId()))
+    public UserFullDto getByIdUsuario(Long id, Authentication authentication) {
+        UserDetailsSlim userDetails = authenticationFacade.getUserFromAuthentication(authentication);
+        if (!userDetails.role().equals("ROLE_ADMIN")) {
+            if (!id.equals(userDetails.id()))
                 throw new BadRequestException("La información del usuario proporcionado no coincide con el usuario actualmente autenticado");
         }
 
@@ -93,8 +98,8 @@ public class UserServiceImp implements UserService {
     }
 
     @Override
-    public void handleFav(Long productId, UserDetailsDto userDetailsDto) {
-        User user = existById(userDetailsDto.getUserId());
+    public void handleFav(Long productId, Authentication authentication) {
+        User user = existById(authenticationFacade.getUserFromAuthentication(authentication).id());
         Product product = productoServiceImp.existByIdValidation(productId);
         boolean isFav = user.getFavorites().contains(product);
         if (isFav) user.removeFav(product);

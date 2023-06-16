@@ -1,8 +1,8 @@
 package com.dh.digitalbooking.service.imp;
 
-import com.dh.digitalbooking.dto.UserDetailsDto;
 import com.dh.digitalbooking.dto.booking.BookingRequest;
 import com.dh.digitalbooking.dto.booking.BookingResponse;
+import com.dh.digitalbooking.dto.user.UserDetailsSlim;
 import com.dh.digitalbooking.entity.Booking;
 import com.dh.digitalbooking.entity.User;
 import com.dh.digitalbooking.exception.BadRequestException;
@@ -10,7 +10,9 @@ import com.dh.digitalbooking.exception.NotFoundException;
 import com.dh.digitalbooking.entity.Product;
 import com.dh.digitalbooking.mapper.BookingMapper;
 import com.dh.digitalbooking.repository.BookingRepository;
+import com.dh.digitalbooking.security.AuthenticationFacade;
 import com.dh.digitalbooking.service.BookingService;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,12 +27,14 @@ public class BookingServiceImp implements BookingService {
     private final ProductServiceImp productoServiceImp;
     private final UserServiceImp userService;
     private final BookingMapper bookingMapper;
+    private final AuthenticationFacade authenticationFacade;
 
-    public BookingServiceImp(BookingRepository bookingRepository, ProductServiceImp productoServiceImp, UserServiceImp userService, BookingMapper bookingMapper) {
+    public BookingServiceImp(BookingRepository bookingRepository, ProductServiceImp productoServiceImp, UserServiceImp userService, BookingMapper bookingMapper, AuthenticationFacade authenticationFacade) {
         this.bookingRepository = bookingRepository;
         this.productoServiceImp = productoServiceImp;
         this.userService = userService;
         this.bookingMapper = bookingMapper;
+        this.authenticationFacade = authenticationFacade;
     }
 
     @Override
@@ -45,12 +49,12 @@ public class BookingServiceImp implements BookingService {
 
     @Override
     @Transactional
-    public BookingResponse saveBooking(BookingRequest bookingRequest, UserDetailsDto userDetailsDto) {
+    public BookingResponse saveBooking(BookingRequest bookingRequest, Authentication authentication) {
         datesValidation(bookingRequest.checkIn(), bookingRequest.checkOut());
         checkAvailability(bookingRequest);
 
         Product product = productoServiceImp.existByIdValidation(bookingRequest.product().id());
-        User user = userService.existById(userDetailsDto.getUserId());
+        User user = userService.existById(authenticationFacade.getUserFromAuthentication(authentication).id());
         Booking booking = bookingMapper.bookingRequestToBooking(bookingRequest);
         booking.setTotal(getTotal(bookingRequest.checkIn(), bookingRequest.checkOut(), product.getPricePerNight()));
         booking.setUser(user);
@@ -64,10 +68,11 @@ public class BookingServiceImp implements BookingService {
 
     @Override
     @Transactional
-    public void deleteBooking(Long id, UserDetailsDto userDetailsDto) {
+    public void deleteBooking(Long id, Authentication authentication) {
         Booking booking = existByIdValidation(id);
-        if (!userDetailsDto.getUserRol().equals("ROLE_ADMIN")) {
-            if (!booking.getUser().getId().equals(userDetailsDto.getUserId()))
+        UserDetailsSlim userDetails = authenticationFacade.getUserFromAuthentication(authentication);
+        if (!userDetails.role().equals("ROLE_ADMIN")) {
+            if (!booking.getUser().getId().equals(userDetails.id()))
                 throw new BadRequestException("The provided user information does not match the currently authenticated user");
         }
         bookingRepository.deleteById(id);

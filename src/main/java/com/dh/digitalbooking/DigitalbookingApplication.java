@@ -1,6 +1,5 @@
 package com.dh.digitalbooking;
 
-import com.dh.digitalbooking.dto.UserDetailsDto;
 import com.dh.digitalbooking.dto.booking.BookingRequest;
 import com.dh.digitalbooking.dto.category.CategoryRequest;
 import com.dh.digitalbooking.dto.common.OnlyId;
@@ -18,6 +17,8 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.math.BigDecimal;
@@ -56,6 +57,7 @@ public class DigitalbookingApplication {
                             .password(passwordEncoder.encode("admin"))
                             .role(User.Role.ROLE_ADMIN)
                             .build());
+            Authentication authenticationAdmin = new UsernamePasswordAuthenticationToken(userAdmin, null, userAdmin.getAuthorities());
 
             categoriaServiceImp.saveCategory(new CategoryRequest("Hotel", "Descripcion de la categoria Hotel", "https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80%27"));
             categoriaServiceImp.saveCategory(new CategoryRequest("Hostel", "Descripcion de la categoria Hostel", "https://images.unsplash.com/photo-1555854877-bab0e564b8d5?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1769&q=80%27"));
@@ -191,13 +193,8 @@ public class DigitalbookingApplication {
             ));
             Product product1 = productRepository.findById(1L).get();
 
-            UserDetailsDto userDetailsDtoAdmin = new UserDetailsDto();
-            userDetailsDtoAdmin.setUserId(1L);
-            userDetailsDtoAdmin.setUserRol("ADMIN");
-
-
             RatingRequest rating1 = new RatingRequest(4, new OnlyId(1L));
-            puntuacionServiceImp.saveRating(rating1, userDetailsDtoAdmin);
+            puntuacionServiceImp.saveRating(rating1, authenticationAdmin);
 
             BookingRequest booking1 = new BookingRequest(
                     LocalDate.of(2023, 6, 22),
@@ -208,7 +205,7 @@ public class DigitalbookingApplication {
                     true,
                     new OnlyId(1L)
             );
-            reservaServiceImp.saveBooking(booking1, userDetailsDtoAdmin);
+            reservaServiceImp.saveBooking(booking1, authenticationAdmin);
 
             productoServiceImp.saveProducto(new ProductRequest(
                     "Departamento numero 1",
@@ -229,7 +226,7 @@ public class DigitalbookingApplication {
 
             RatingRequest rating2 = new RatingRequest(5, new OnlyId(2L));
 
-            puntuacionServiceImp.saveRating(rating2, userDetailsDtoAdmin);
+            puntuacionServiceImp.saveRating(rating2, authenticationAdmin);
             BookingRequest booking2 = new BookingRequest(
                     LocalDate.of(2023, 6, 22),
                     LocalDate.of(2023, 6, 25),
@@ -239,7 +236,7 @@ public class DigitalbookingApplication {
                     false,
                     new OnlyId(2L)
             );
-            reservaServiceImp.saveBooking(booking2, userDetailsDtoAdmin);
+            reservaServiceImp.saveBooking(booking2, authenticationAdmin);
         };
     }
 }
