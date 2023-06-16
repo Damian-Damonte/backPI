@@ -10,6 +10,8 @@ import com.dh.digitalbooking.exception.BadRequestException;
 import com.dh.digitalbooking.exception.NotFoundException;
 import com.dh.digitalbooking.entity.User;
 import com.dh.digitalbooking.repository.UserRespository;
+import com.dh.digitalbooking.service.AuthenticationUserService;
+import com.dh.digitalbooking.service.ProductService;
 import com.dh.digitalbooking.service.UserService;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -22,16 +24,16 @@ import java.util.List;
 public class UserServiceImp implements UserService {
     private final UserRespository userRespository;
     private final PasswordEncoder passwordEncoder;
-    private final ProductServiceImp productoServiceImp;
+    private final ProductService productoService;
     private final UserMapper userMapper;
-    private final AuthenticationUserServiceImpl authenticationUserServiceImpl;
+    private final AuthenticationUserService authenticationUserService;
 
-    public UserServiceImp(UserRespository userRespository, PasswordEncoder passwordEncoder, ProductServiceImp productoServiceImp, UserMapper userMapper, AuthenticationUserServiceImpl authenticationUserServiceImpl) {
+    public UserServiceImp(UserRespository userRespository, PasswordEncoder passwordEncoder, ProductServiceImp productoService, UserMapper userMapper, AuthenticationUserServiceImpl authenticationUserService) {
         this.userRespository = userRespository;
         this.passwordEncoder = passwordEncoder;
-        this.productoServiceImp = productoServiceImp;
+        this.productoService = productoService;
         this.userMapper = userMapper;
-        this.authenticationUserServiceImpl = authenticationUserServiceImpl;
+        this.authenticationUserService = authenticationUserService;
     }
 
     @Override
@@ -41,7 +43,7 @@ public class UserServiceImp implements UserService {
 
     @Override
     public UserFullDto getByIdUsuario(Long id, Authentication authentication) {
-        UserDetailsSlim userDetails = authenticationUserServiceImpl.getUserDetailsFromAuthentication(authentication);
+        UserDetailsSlim userDetails = authenticationUserService.getUserDetailsFromAuthentication(authentication);
         if (!userDetails.role().equals("ROLE_ADMIN")) {
             if (!id.equals(userDetails.id()))
                 throw new BadRequestException("La información del usuario proporcionado no coincide con el usuario actualmente autenticado");
@@ -98,8 +100,8 @@ public class UserServiceImp implements UserService {
 
     @Override
     public void handleFav(Long productId, Authentication authentication) {
-        User user = existById(authenticationUserServiceImpl.getUserDetailsFromAuthentication(authentication).id());
-        Product product = productoServiceImp.existByIdValidation(productId);
+        User user = existById(authenticationUserService.getUserDetailsFromAuthentication(authentication).id());
+        Product product = productoService.existById(productId);
         boolean isFav = user.getFavorites().contains(product);
         if (isFav) user.removeFav(product);
          else user.addFav(product);

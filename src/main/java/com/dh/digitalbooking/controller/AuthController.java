@@ -12,22 +12,22 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/auth")
 public class AuthController {
-    private final AuthenticationServiceImpl authenticationServiceImpl;
+    private final AuthenticationServiceImpl authenticationService;
 
-    public AuthController(AuthenticationServiceImpl authenticationServiceImpl) {
-        this.authenticationServiceImpl = authenticationServiceImpl;
+    public AuthController(AuthenticationServiceImpl authenticationService) {
+        this.authenticationService = authenticationService;
     }
 
     @PostMapping("/register")
     public ResponseEntity<AuthResponse> register(@RequestBody @Valid UserRequest userRequest) {
         return ResponseEntity
                 .status(HttpStatus.CREATED)
-                .body(authenticationServiceImpl.register(userRequest));
+                .body(authenticationService.register(userRequest));
     }
 
     @PostMapping("/authentication")
     public ResponseEntity<AuthResponse> authenticate(
             @RequestBody @Valid AuthRequest authRequest) {
-        return ResponseEntity.ok(authenticationServiceImpl.authenticate(authRequest));
+        return ResponseEntity.ok(authenticationService.authenticate(authRequest));
     }
 }

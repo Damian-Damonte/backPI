@@ -58,7 +58,7 @@ public class ProductServiceImp implements ProductService {
 
     @Override
     public ProductFullDto getProductById(Long id) {
-        return productMapper.productToProductFullDto(existByIdValidation(id));
+        return productMapper.productToProductFullDto(existById(id));
     }
 
     @Override
@@ -85,7 +85,7 @@ public class ProductServiceImp implements ProductService {
     @Transactional
     @Override
     public void deleteProduct(Long id) {
-        Product product = existByIdValidation(id);
+        Product product = existById(id);
         if (!(product.getBookings().isEmpty()))
             throw new BadRequestException("The product with ID " + 1 + " cannot be deleted as it is currently booked");
 
@@ -98,7 +98,7 @@ public class ProductServiceImp implements ProductService {
 
     @Transactional
     public ProductResponse updateProduct(Long id, ProductUpdate productUpdateRequest) {
-        Product product = existByIdValidation(id);
+        Product product = existById(id);
         Product productUpdate = productMapper.productUpdateToProduct(productUpdateRequest);
         productUpdate.setId(id);
         productUpdate.setCategory(categoryService.existByIdValidation(productUpdate.getCategory().getId()));
@@ -143,7 +143,7 @@ public class ProductServiceImp implements ProductService {
         return productRepository.existsByCity_id(id);
     }
 
-    public Product existByIdValidation(Long id) {
+    public Product existById(Long id) {
         return productRepository.findById(id).orElseThrow(() ->
                 new NotFoundException("Product with id " + id + " not found"));
     }

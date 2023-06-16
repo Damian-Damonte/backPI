@@ -3,6 +3,7 @@ package com.dh.digitalbooking.controller;
 import com.dh.digitalbooking.dto.rating.RatingFullDto;
 import com.dh.digitalbooking.dto.rating.RatingRequest;
 import com.dh.digitalbooking.dto.rating.RatingUpdate;
+import com.dh.digitalbooking.service.RatingService;
 import com.dh.digitalbooking.service.imp.RatingServiceImp;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
@@ -15,20 +16,20 @@ import java.util.List;
 @RestController
 @RequestMapping("/ratings")
 public class RatingController {
-    private final RatingServiceImp ratingServiceImp;
+    private final RatingService ratingService;
 
-    public RatingController(RatingServiceImp ratingServiceImp) {
-        this.ratingServiceImp = ratingServiceImp;
+    public RatingController(RatingServiceImp ratingService) {
+        this.ratingService = ratingService;
     }
 
     @GetMapping
     public ResponseEntity<List<RatingFullDto>> getAllRatings() {
-        return ResponseEntity.ok(ratingServiceImp.allRatings());
+        return ResponseEntity.ok(ratingService.allRatings());
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<RatingFullDto> getRatingById(@PathVariable("id") Long id) {
-        return ResponseEntity.ok(ratingServiceImp.getRatingById(id));
+        return ResponseEntity.ok(ratingService.getRatingById(id));
     }
 
     @PostMapping
@@ -37,12 +38,12 @@ public class RatingController {
             Authentication authentication
             ) {
         return ResponseEntity.status(HttpStatus.CREATED).body(
-                ratingServiceImp.saveRating(ratingRequest, authentication));
+                ratingService.saveRating(ratingRequest, authentication));
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteRating(@PathVariable @Valid Long id, Authentication authentication) {
-        ratingServiceImp.deleteRating(id, authentication);
+        ratingService.deleteRating(id, authentication);
         return ResponseEntity.noContent().build();
     }
 
@@ -51,6 +52,6 @@ public class RatingController {
                                                @RequestBody @Valid RatingUpdate ratingUpdate,
                                                Authentication authentication
     ) {
-        return ResponseEntity.ok(ratingServiceImp.updateRating(id, ratingUpdate, authentication));
+        return ResponseEntity.ok(ratingService.updateRating(id, ratingUpdate, authentication));
     }
 }

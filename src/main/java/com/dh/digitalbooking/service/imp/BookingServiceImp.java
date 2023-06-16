@@ -10,7 +10,10 @@ import com.dh.digitalbooking.exception.NotFoundException;
 import com.dh.digitalbooking.entity.Product;
 import com.dh.digitalbooking.mapper.BookingMapper;
 import com.dh.digitalbooking.repository.BookingRepository;
+import com.dh.digitalbooking.service.AuthenticationUserService;
 import com.dh.digitalbooking.service.BookingService;
+import com.dh.digitalbooking.service.ProductService;
+import com.dh.digitalbooking.service.UserService;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,17 +26,17 @@ import java.util.List;
 @Service
 public class BookingServiceImp implements BookingService {
     private final BookingRepository bookingRepository;
-    private final ProductServiceImp productoServiceImp;
-    private final UserServiceImp userService;
+    private final ProductService productService;
+    private final UserService userService;
     private final BookingMapper bookingMapper;
-    private final AuthenticationUserServiceImpl authenticationUserServiceImpl;
+    private final AuthenticationUserService authenticationUserService;
 
-    public BookingServiceImp(BookingRepository bookingRepository, ProductServiceImp productoServiceImp, UserServiceImp userService, BookingMapper bookingMapper, AuthenticationUserServiceImpl authenticationUserServiceImpl) {
+    public BookingServiceImp(BookingRepository bookingRepository, ProductService productService, UserService userService, BookingMapper bookingMapper, AuthenticationUserService authenticationUserService) {
         this.bookingRepository = bookingRepository;
-        this.productoServiceImp = productoServiceImp;
+        this.productService = productService;
         this.userService = userService;
         this.bookingMapper = bookingMapper;
-        this.authenticationUserServiceImpl = authenticationUserServiceImpl;
+        this.authenticationUserService = authenticationUserService;
     }
 
     @Override
@@ -52,8 +55,8 @@ public class BookingServiceImp implements BookingService {
         datesValidation(bookingRequest.checkIn(), bookingRequest.checkOut());
         checkAvailability(bookingRequest);
 
-        Product product = productoServiceImp.existByIdValidation(bookingRequest.product().id());
-        User user = userService.existById(authenticationUserServiceImpl.getUserDetailsFromAuthentication(authentication).id());
+        Product product = productService.existById(bookingRequest.product().id());
+        User user = userService.existById(authenticationUserService.getUserDetailsFromAuthentication(authentication).id());
         Booking booking = bookingMapper.bookingRequestToBooking(bookingRequest);
         booking.setTotal(getTotal(bookingRequest.checkIn(), bookingRequest.checkOut(), product.getPricePerNight()));
         booking.setUser(user);
@@ -69,7 +72,7 @@ public class BookingServiceImp implements BookingService {
     @Transactional
     public void deleteBooking(Long id, Authentication authentication) {
         Booking booking = existByIdValidation(id);
-        UserDetailsSlim userDetails = authenticationUserServiceImpl.getUserDetailsFromAuthentication(authentication);
+        UserDetailsSlim userDetails = authenticationUserService.getUserDetailsFromAuthentication(authentication);
         if (!userDetails.role().equals("ROLE_ADMIN")) {
             if (!booking.getUser().getId().equals(userDetails.id()))
                 throw new BadRequestException("The provided user information does not match the currently authenticated user");

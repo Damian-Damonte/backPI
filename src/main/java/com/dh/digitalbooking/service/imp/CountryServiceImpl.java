@@ -7,6 +7,7 @@ import com.dh.digitalbooking.exception.NotFoundException;
 import com.dh.digitalbooking.entity.Country;
 import com.dh.digitalbooking.mapper.CountryMapper;
 import com.dh.digitalbooking.repository.CountryRepository;
+import com.dh.digitalbooking.service.CityService;
 import com.dh.digitalbooking.service.CountryService;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
@@ -17,12 +18,12 @@ import java.util.List;
 @Service
 public class CountryServiceImpl implements CountryService {
     private final CountryRepository countryRepository;
-    private final CityServiceImpl cityServiceImpl;
+    private final CityService cityService;
     private final CountryMapper countryMapper;
 
-    public CountryServiceImpl(CountryRepository countryRepository, @Lazy CityServiceImpl cityServiceImpl, CountryMapper countryMapper) {
+    public CountryServiceImpl(CountryRepository countryRepository, CityService cityService, CountryMapper countryMapper) {
         this.countryRepository = countryRepository;
-        this.cityServiceImpl = cityServiceImpl;
+        this.cityService = cityService;
         this.countryMapper = countryMapper;
     }
 
@@ -50,7 +51,7 @@ public class CountryServiceImpl implements CountryService {
     @Transactional
     public void deleteCountry(Long id) {
         this.countryExistsById(id);
-        if (cityServiceImpl.existsCityByCountryId(id))
+        if (cityService.existsCityByCountryId(id))
             throw new BadRequestException("You cannot delete the country with id " + id + " because there are cities registered in that country");
         countryRepository.deleteById(id);
     }

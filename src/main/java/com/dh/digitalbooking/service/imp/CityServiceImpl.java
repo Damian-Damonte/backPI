@@ -10,6 +10,7 @@ import com.dh.digitalbooking.mapper.CityMapper;
 import com.dh.digitalbooking.repository.CityRepository;
 import com.dh.digitalbooking.service.CityService;
 import com.dh.digitalbooking.service.CountryService;
+import com.dh.digitalbooking.service.ProductService;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,13 +21,13 @@ import java.util.List;
 public class CityServiceImpl implements CityService {
     private final CityRepository cityRepository;
     private final CountryService countryService;
-    private final ProductServiceImp productoServiceImp;
+    private final ProductService productoService;
     private final CityMapper cityMapper;
 
-    public CityServiceImpl(CityRepository cityRepository, CountryService countryService, @Lazy ProductServiceImp productoServiceImp, CityMapper cityMapper) {
+    public CityServiceImpl(CityRepository cityRepository, @Lazy CountryService countryService, @Lazy ProductService productoService, CityMapper cityMapper) {
         this.cityRepository = cityRepository;
         this.countryService = countryService;
-        this.productoServiceImp = productoServiceImp;
+        this.productoService = productoService;
         this.cityMapper = cityMapper;
     }
 
@@ -52,7 +53,7 @@ public class CityServiceImpl implements CityService {
     @Transactional
     public void deleteCity(Long id) {
         existByIdValidation(id);
-        if(productoServiceImp.existByCityId(id))
+        if(productoService.existByCityId(id))
             throw new BadRequestException("You cannot delete the city with id " + id + " because there are products registered in that city");
         cityRepository.deleteById(id);
     }

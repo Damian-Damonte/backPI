@@ -15,5 +15,6 @@ public interface UserService {
     User saveUsuario(UserRequest userRequest);
     void deleteUsuario(Long id);
     UserResponse updateUsuario(Long id, UserRequest userRequest);
+    User existById(Long id);
     void handleFav(Long productId, Authentication authentication);
 }

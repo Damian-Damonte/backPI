@@ -1,6 +1,7 @@
 package com.dh.digitalbooking.controller;
 
 import com.dh.digitalbooking.dto.product.*;
+import com.dh.digitalbooking.service.ProductService;
 import com.dh.digitalbooking.service.imp.ProductServiceImp;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
@@ -14,15 +15,15 @@ import java.util.List;
 @RestController
 @RequestMapping("/products")
 public class ProductController {
-    private final ProductServiceImp productoServiceImp;
+    private final ProductService productoService;
 
-    public ProductController(ProductServiceImp productoServiceImp) {
-        this.productoServiceImp = productoServiceImp;
+    public ProductController(ProductServiceImp productoService) {
+        this.productoService = productoService;
     }
 
     @GetMapping
     public ResponseEntity<List<ProductResponse>> getAllNoPage() {
-        return ResponseEntity.ok(productoServiceImp.getAllProductNoPage());
+        return ResponseEntity.ok(productoService.getAllProductNoPage());
     }
 
     @GetMapping("/filters")
@@ -37,31 +38,31 @@ public class ProductController {
             @RequestParam(name = "checkIn",required = false) LocalDate checkIn,
             @RequestParam(name = "checkOut",required = false) LocalDate checkOut
             ) {
-        return ResponseEntity.ok(productoServiceImp.getWithFilters(page, cityId, categoryId, checkIn, checkOut));
+        return ResponseEntity.ok(productoService.getWithFilters(page, cityId, categoryId, checkIn, checkOut));
     }
 
     @GetMapping("/random")
     @Operation(summary = "Return 4 randomly products")
     public ResponseEntity<List<ProductResponse>> getRandomProducts() {
-        return ResponseEntity.ok(productoServiceImp.getRandomProducts());
+        return ResponseEntity.ok(productoService.getRandomProducts());
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<ProductFullDto> getProductById(@PathVariable("id") Long id) {
-        return ResponseEntity.ok(productoServiceImp.getProductById(id));
+        return ResponseEntity.ok(productoService.getProductById(id));
     }
 
     @PostMapping
     @Operation(description = "When creating a product, the average rating will be null.")
     public ResponseEntity<ProductResponse> saveProduct(@RequestBody @Valid ProductRequest productRequest) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(productoServiceImp.saveProduct(productRequest));
+        return ResponseEntity.status(HttpStatus.CREATED).body(productoService.saveProduct(productRequest));
     }
 
     @DeleteMapping("/{id}")
     @Operation(description = "When deleting the product, its images, ratings, and policies will be automatically deleted as well. " +
             "The product cannot be deleted if it has any reservations.")
     public ResponseEntity<Void> deleteProduct(@PathVariable Long id) {
-        productoServiceImp.deleteProduct(id);
+        productoService.deleteProduct(id);
         return ResponseEntity.noContent().build();
     }
 
@@ -69,6 +70,6 @@ public class ProductController {
     @Operation(description = "The average rating and bookings of a product cannot be modified.")
     public ResponseEntity<ProductResponse> updateProduct(@PathVariable Long id,
                                                          @RequestBody @Valid ProductUpdate productUpdate) {
-        return ResponseEntity.ok(productoServiceImp.updateProduct(id, productUpdate));
+        return ResponseEntity.ok(productoService.updateProduct(id, productUpdate));
     }
 }
