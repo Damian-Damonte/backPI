@@ -68,11 +68,8 @@ public class RatingServiceImp implements RatingService {
     @Transactional
     public void deleteRating(Long id, Authentication authentication) {
         Rating rating = existByIdValidation(id);
-        UserDetailsSlim userDetails = authenticationUserService.getUserDetailsFromAuthentication(authentication);
-        if (!userDetails.role().equals("ROLE_ADMIN")) {
-            if (!rating.getUser().getId().equals(userDetails.id()))
-                throw new BadRequestException("The provided user information does not match the currently authenticated user");
-        }
+        canModifyRating(rating, authentication);
+
         ratingRepository.deleteById(id);
         ratingRepository.updateAVGRatingInProduct(rating.getProduct().getId());
     }
@@ -81,11 +78,8 @@ public class RatingServiceImp implements RatingService {
     @Transactional
     public RatingFullDto updateRating(Long id, RatingUpdate ratingUpdate, Authentication authentication) {
         Rating rating = existByIdValidation(id);
-        UserDetailsSlim userDetails = authenticationUserService.getUserDetailsFromAuthentication(authentication);
-        if (!userDetails.role().equals("ROLE_ADMIN")) {
-            if (!rating.getUser().getId().equals(userDetails.id()))
-                throw new BadRequestException("The provided user information does not match the currently authenticated user");
-        }
+        canModifyRating(rating, authentication);
+
         rating.setValue(ratingUpdate.value());
         ratingRepository.save(rating);
         ratingRepository.updateAVGRatingInProduct(rating.getProduct().getId());
@@ -95,5 +89,13 @@ public class RatingServiceImp implements RatingService {
     public Rating existByIdValidation(Long id) {
         return ratingRepository.findById(id).orElseThrow(() ->
                 new NotFoundException("Rating with id " + id + " not found"));
+    }
+
+    private void canModifyRating(Rating rating, Authentication authentication) {
+        UserDetailsSlim userDetails = authenticationUserService.getUserDetailsFromAuthentication(authentication);
+        if (!userDetails.role().equals("ROLE_ADMIN")) {
+            if (!rating.getUser().getId().equals(userDetails.id()))
+                throw new BadRequestException("You cannot modify this rating as it does not belong to you");
+        }
     }
 }

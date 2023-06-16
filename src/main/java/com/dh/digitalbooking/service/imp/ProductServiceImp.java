@@ -185,7 +185,7 @@ public class ProductServiceImp implements ProductService {
         UserDetailsSlim userDetails = authenticationUserService.getUserDetailsFromAuthentication(authentication);
         if (!userDetails.role().equals("ROLE_ADMIN")) {
             if (!product.getUser().getId().equals(userDetails.id()))
-                throw new BadRequestException("The provided user information does not match the currently authenticated user");
+                throw new BadRequestException("You cannot modify this product as it does not belong to you");
         }
     }
 
