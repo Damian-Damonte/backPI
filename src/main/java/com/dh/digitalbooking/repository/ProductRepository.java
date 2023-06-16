@@ -15,7 +15,7 @@ import java.util.List;
 @Repository
 @Transactional(readOnly = true)
 public interface ProductRepository extends JpaRepository<Product, Long> {
-    @Query("SELECT p FROM Product p ORDER BY RAND() LIMIT 4")
+    @Query("SELECT p FROM Product p ORDER BY RAND() LIMIT 2")
     List<Product> findRandom();
 
     @Query(

@@ -25,7 +25,6 @@ public record ProductFullDto(
         List<AmenityFullDto> amenities,
         List<ImageFullDto> images,
         List<PolicyFullDto> policies,
-//        @JsonIgnoreProperties("product")
         List<BookingResponse> bookings
 ) {
 }

@@ -1,12 +1,9 @@
 package com.dh.digitalbooking.controller;
 
-import com.dh.digitalbooking.dto.ProductPageDto;
 import com.dh.digitalbooking.dto.product.*;
-import com.dh.digitalbooking.entity.Product;
 import com.dh.digitalbooking.service.imp.ProductServiceImp;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
-import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,7 +12,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 @RestController
-@RequestMapping("/productos")
+@RequestMapping("/products")
 public class ProductController {
     private final ProductServiceImp productoServiceImp;
 
@@ -24,57 +21,54 @@ public class ProductController {
     }
 
     @GetMapping
-    public ResponseEntity<Page<Product>> getAllPage(@RequestParam(defaultValue = "0") int page) {
-        return ResponseEntity.ok(productoServiceImp.getAllPage(page));
+    public ResponseEntity<List<ProductResponse>> getAllNoPage() {
+        return ResponseEntity.ok(productoServiceImp.getAllProductNoPage());
     }
 
     @GetMapping("/filters")
     @Operation(
-            summary = "Productos filtrados por city, categoría, fecha checkIn y fecha checkOut",
-            description = "En caso de no enviar ningún parámetro devolverá todos los productos. " +
-                    "No es necesario enviar todos los parámetros para para poder realizar un filtrado."
+            summary = "Get products filtered by city ID, category ID, check-in date and check-out date",
+            description = "You don't need to provide all parameters. If no parameters are specified, it will return all products"
     )
-    public ResponseEntity<ProductPageDto> getAllFilters(
+    public ResponseEntity<ProductPage> getWithFilters(
             @RequestParam(name = "page", required = false, defaultValue = "0") Integer page,
             @RequestParam(name = "cityId", required = false) Long cityId,
             @RequestParam(name = "categoryId",required = false) Long categoryId,
             @RequestParam(name = "checkIn",required = false) LocalDate checkIn,
             @RequestParam(name = "checkOut",required = false) LocalDate checkOut
             ) {
-        return ResponseEntity.ok(productoServiceImp.getByAllFilters(page, cityId, categoryId, checkIn, checkOut));
+        return ResponseEntity.ok(productoServiceImp.getWithFilters(page, cityId, categoryId, checkIn, checkOut));
     }
 
-
     @GetMapping("/random")
-    @Operation(summary = "Devuelve 4 productos de forma aleatoria")
-    public ResponseEntity<List<Product>> getRandomProduct() {
-        return ResponseEntity.ok(productoServiceImp.getRandomProductos());
+    @Operation(summary = "Return 4 randomly products")
+    public ResponseEntity<List<ProductResponse>> getRandomProducts() {
+        return ResponseEntity.ok(productoServiceImp.getRandomProducts());
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<ProductFullDto> getProductById(@PathVariable("id") Long id) {
-        return ResponseEntity.ok(productoServiceImp.getProductoById(id));
+        return ResponseEntity.ok(productoServiceImp.getProductById(id));
     }
 
     @PostMapping
-    @Operation(description = "Al crear un product el promedio de puntuaciones siempre será null")
+    @Operation(description = "When creating a product, the average rating will be null.")
     public ResponseEntity<ProductResponse> saveProduct(@RequestBody @Valid ProductRequest productRequest) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(productoServiceImp.saveProducto(productRequest));
+        return ResponseEntity.status(HttpStatus.CREATED).body(productoServiceImp.saveProduct(productRequest));
     }
 
     @DeleteMapping("/{id}")
-    @Operation(description = "Al eliminar el product se eliminarán automaticamente las imagenes, puntuaciones y politicas relacionadas a este. " +
-            "El product no podrá ser eliminado si cuenta con reservas")
+    @Operation(description = "When deleting the product, its images, ratings, and policies will be automatically deleted as well. " +
+            "The product cannot be deleted if it has any reservations.")
     public ResponseEntity<Void> deleteProduct(@PathVariable Long id) {
-        productoServiceImp.deleteProducto(id);
+        productoServiceImp.deleteProduct(id);
         return ResponseEntity.noContent().build();
     }
 
     @PutMapping("/{id}")
-    @Operation(description = "El promedio de puntuaciones y las reservas de un product no puede ser modificadas a través de este endpoint. " +
-            "Cuando se modifique un product se pueden omitir dichos atributos")
+    @Operation(description = "The average rating and bookings of a product cannot be modified.")
     public ResponseEntity<ProductResponse> updateProduct(@PathVariable Long id,
                                                          @RequestBody @Valid ProductUpdate productUpdate) {
-        return ResponseEntity.ok(productoServiceImp.updateProducto(id, productUpdate));
+        return ResponseEntity.ok(productoServiceImp.updateProduct(id, productUpdate));
     }
 }

@@ -177,7 +177,7 @@ public class DigitalbookingApplication {
             Category departamento = categoryRepository.findByName("Departamento").get();
 
 //
-            productoServiceImp.saveProducto(new ProductRequest(
+            productoServiceImp.saveProduct(new ProductRequest(
                     "Hotel numero 1",
                     "Titulo descripcion hotel 1",
                     "Esta es la descripcion del hotel numero 1 y esto es un poco de texto de relleno",
@@ -207,7 +207,7 @@ public class DigitalbookingApplication {
             );
             reservaServiceImp.saveBooking(booking1, authenticationAdmin);
 
-            productoServiceImp.saveProducto(new ProductRequest(
+            productoServiceImp.saveProduct(new ProductRequest(
                     "Departamento numero 1",
                     "Titulo descripcion Departamento 1",
                     "Esta es la descripcion del Departamento numero 1 y esto es un poco de texto de relleno",

@@ -1,6 +1,5 @@
 package com.dh.digitalbooking.service.imp;
 
-import com.dh.digitalbooking.dto.ProductPageDto;
 import com.dh.digitalbooking.dto.product.*;
 import com.dh.digitalbooking.exception.BadRequestException;
 import com.dh.digitalbooking.exception.NotFoundException;
@@ -20,38 +19,32 @@ import java.util.stream.Collectors;
 @Service
 public class ProductServiceImp implements ProductService {
     private final ProductRepository productRepository;
-    private final CategoryServiceImp categoriaServiceImp;
+    private final CategoryService categoryService;
     private final CityService cityService;
     private final AmenityService amenityService;
     private final PolicyTypeService policyTypeService;
-    private final ImageServiceImp imagenServiceImp;
-    private final PolicyServiceImp policyService;
+    private final ImageService imageService;
+    private final PolicyService policyService;
     private final ProductMapper productMapper;
 
-    public ProductServiceImp(ProductRepository productRepository, CategoryServiceImp categoriaServiceImp, CityService cityService, AmenityService amenityService, PolicyTypeService policyTypeService, ImageServiceImp imagenServiceImp, PolicyServiceImp policyService, ProductMapper productMapper) {
+    public ProductServiceImp(ProductRepository productRepository, CategoryService categoryService, CityService cityService, AmenityService amenityService, PolicyTypeService policyTypeService, ImageService imageService, PolicyService policyService, ProductMapper productMapper) {
         this.productRepository = productRepository;
-        this.categoriaServiceImp = categoriaServiceImp;
+        this.categoryService = categoryService;
         this.cityService = cityService;
         this.amenityService = amenityService;
         this.policyTypeService = policyTypeService;
-        this.imagenServiceImp = imagenServiceImp;
+        this.imageService = imageService;
         this.policyService = policyService;
         this.productMapper = productMapper;
     }
 
     @Override
-    public List<Product> getAllProducto() {
-        return productRepository.findAll();
+    public List<ProductResponse> getAllProductNoPage() {
+        return productRepository.findAll().stream().map(productMapper::productToProductResponse).toList();
     }
 
     @Override
-    public Page<Product> getAllPage(int page) {
-        PageRequest pageRequest = PageRequest.ofSize(2).withPage(page);
-        return productRepository.findAll(pageRequest);
-    }
-
-    @Override
-    public ProductPageDto getByAllFilters(int page, Long cityId, Long categoryId, LocalDate checkIn, LocalDate checkout) {
+    public ProductPage getWithFilters(int page, Long cityId, Long categoryId, LocalDate checkIn, LocalDate checkout) {
         filtersValidations(cityId, categoryId, checkIn, checkout);
         PageRequest pageRequest = PageRequest.ofSize(4).withPage(page);
         Page<Product> productoPage = productRepository.findAllFilters(cityId, categoryId, checkIn, checkout, pageRequest);
@@ -59,36 +52,39 @@ public class ProductServiceImp implements ProductService {
     }
 
     @Override
-    public List<Product> getRandomProductos() {
-        return productRepository.findRandom();
+    public List<ProductResponse> getRandomProducts() {
+        return productRepository.findRandom().stream().map(productMapper::productToProductResponse).toList();
     }
 
     @Override
-    public ProductFullDto getProductoById(Long id) {
+    public ProductFullDto getProductById(Long id) {
         return productMapper.productToProductFullDto(existByIdValidation(id));
     }
 
     @Override
     @Transactional
-    public ProductResponse saveProducto(ProductRequest productRequest) {
+    public ProductResponse saveProduct(ProductRequest productRequest) {
         Product product = productMapper.productRequestToProduct(productRequest);
-        product.setCategory(categoriaServiceImp.existByIdValidation(product.getCategory().getId()));
+        product.setCategory(categoryService.existByIdValidation(product.getCategory().getId()));
         product.setCity(cityService.existByIdValidation(product.getCity().getId()));
         product.getImages().forEach(image -> image.setProduct(product));
+
         product.setAmenities(product.getAmenities().stream().map(amenity ->
                 amenityService.existByIdValidation(amenity.getId())).collect(Collectors.toSet()));
+
         product.setPolicies(product.getPolicies().stream().peek(policy -> {
             policy.setPolicyType(policyTypeService.existById(policy.getPolicyType().getId()));
             policy.setProduct(product);
         }).collect(Collectors.toSet()));
+
         product.setBookings(new HashSet<>());
-        categoriaServiceImp.incrementCount(productRequest.category().id());
+        categoryService.incrementCount(productRequest.category().id());
         return productMapper.productToProductResponse(productRepository.save(product));
     }
 
     @Transactional
     @Override
-    public void deleteProducto(Long id) {
+    public void deleteProduct(Long id) {
         Product product = existByIdValidation(id);
         if (!(product.getBookings().isEmpty()))
             throw new BadRequestException("The product with ID " + 1 + " cannot be deleted as it is currently booked");
@@ -96,16 +92,16 @@ public class ProductServiceImp implements ProductService {
         Set<User> usuariosFav = product.getFavorites();
         usuariosFav.forEach(user -> user.removeFav(product));
 
-        categoriaServiceImp.decrementCount(product.getCategory().getId());
+        categoryService.decrementCount(product.getCategory().getId());
         productRepository.deleteById(id);
     }
 
     @Transactional
-    public ProductResponse updateProducto(Long id, ProductUpdate productUpdateRequest) {
+    public ProductResponse updateProduct(Long id, ProductUpdate productUpdateRequest) {
         Product product = existByIdValidation(id);
         Product productUpdate = productMapper.productUpdateToProduct(productUpdateRequest);
         productUpdate.setId(id);
-        productUpdate.setCategory(categoriaServiceImp.existByIdValidation(productUpdate.getCategory().getId()));
+        productUpdate.setCategory(categoryService.existByIdValidation(productUpdate.getCategory().getId()));
         productUpdate.setCity(cityService.existByIdValidation(productUpdate.getCity().getId()));
 
         productUpdate.setAmenities(productUpdate.getAmenities().stream().map(amenity ->
@@ -114,7 +110,7 @@ public class ProductServiceImp implements ProductService {
 
         productUpdate.getImages().forEach(image -> {
             if(image.getId() != null) {
-                Image saveImage = imagenServiceImp.getImageById(image.getId());
+                Image saveImage = imageService.getImageById(image.getId());
                 if(!Objects.equals(saveImage.getProduct().getId(), id))
                     throw new BadRequestException("The image with id " + image.getId() + " not found in product with id " + id);
             }
@@ -136,8 +132,8 @@ public class ProductServiceImp implements ProductService {
         productUpdate.setFavorites(product.getFavorites());
 
         if (!(productUpdate.getCategory().getId().equals(product.getCategory().getId()))) {
-            categoriaServiceImp.decrementCount(product.getCategory().getId());
-            categoriaServiceImp.incrementCount(productUpdate.getCategory().getId());
+            categoryService.decrementCount(product.getCategory().getId());
+            categoryService.incrementCount(productUpdate.getCategory().getId());
         }
 
         return productMapper.productToProductResponse(productRepository.save(productUpdate));
@@ -157,7 +153,7 @@ public class ProductServiceImp implements ProductService {
         if (cityId != null)
             cityService.existByIdValidation(cityId);
         if (categoryId != null)
-            categoriaServiceImp.existByIdValidation(categoryId);
+            categoryService.existByIdValidation(categoryId);
         if(checkIn != null)
             notPastDate(checkIn);
         if(checkOut != null)
@@ -171,12 +167,12 @@ public class ProductServiceImp implements ProductService {
             throw new BadRequestException("The dates must not be earlier than the current date");
     }
 
-    private ProductPageDto toProductPageDto(Page<Product> page) {
-        ProductPageDto pageDto = new ProductPageDto();
-        pageDto.setContent(page.getContent());
-        pageDto.setTotalPages(page.getTotalPages());
-        pageDto.setCurrentPage(page.getNumber());
-        pageDto.setTotalElements(page.getTotalElements());
-        return pageDto;
+    private ProductPage toProductPageDto(Page<Product> page) {
+        return new ProductPage(
+                page.getContent().stream().map(productMapper::productToProductResponse).toList(),
+                page.getTotalPages(),
+                page.getNumber(),
+                page.getTotalElements()
+        );
     }
 }

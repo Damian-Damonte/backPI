@@ -28,6 +28,7 @@ public class SecurityConfiguration {
                 .authorizeHttpRequests(requests -> requests
                         .requestMatchers(HttpMethod.POST, "/bookings").authenticated()
                         .requestMatchers(HttpMethod.DELETE, "/bookings/{id}").authenticated()
+                        .requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll()
 //                        optimizar los 3 metodos
                         .requestMatchers(HttpMethod.POST, "/ratings").authenticated()
                         .requestMatchers(HttpMethod.PUT, "/ratings/**").authenticated()
