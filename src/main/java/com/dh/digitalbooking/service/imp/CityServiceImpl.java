@@ -45,7 +45,10 @@ public class CityServiceImpl implements CityService {
     @Transactional
     public CityFullDto saveCity(CityRequest cityRequest) {
         Country country = countryService.countryExistsById(cityRequest.country().id());
-        City city = City.builder().name(cityRequest.name()).country(country).build();
+        String cityName = cityRequest.name();
+        validNameAndCountry(cityName, country);
+
+        City city = City.builder().name(cityName).country(country).build();
         return cityMapper.cityToCityFullDto(cityRepository.save(city));
     }
 
@@ -63,7 +66,10 @@ public class CityServiceImpl implements CityService {
     public CityFullDto updateCity(Long id, CityRequest cityRequest) {
         City city = existByIdValidation(id);
         Country country = countryService.countryExistsById(cityRequest.country().id());
-        city.setName(cityRequest.name());
+        String cityName = cityRequest.name();
+        validNameAndCountry(cityName, country);
+
+        city.setName(cityName);
         city.setCountry(country);
         return cityMapper.cityToCityFullDto(city);
     }
@@ -71,6 +77,12 @@ public class CityServiceImpl implements CityService {
     @Override
     public boolean existsCityByCountryId(Long id) {
         return cityRepository.existsByCountry_Id(id);
+    }
+
+    public void validNameAndCountry(String cityName, Country country) {
+        if(cityRepository.existsByNameAndCountry(cityName, country))
+            throw new BadRequestException("There is already a city named " + cityName + " in " + country.getName());
+
     }
 
     @Override
