@@ -3,6 +3,7 @@ package com.dh.digitalbooking.service.imp;
 import com.dh.digitalbooking.dto.product.*;
 import com.dh.digitalbooking.dto.user.UserDetailsSlim;
 import com.dh.digitalbooking.exception.BadRequestException;
+import com.dh.digitalbooking.exception.ForbiddenException;
 import com.dh.digitalbooking.exception.NotFoundException;
 import com.dh.digitalbooking.entity.*;
 import com.dh.digitalbooking.mapper.ProductMapper;
@@ -185,7 +186,7 @@ public class ProductServiceImp implements ProductService {
         UserDetailsSlim userDetails = authenticationUserService.getUserDetailsFromAuthentication(authentication);
         if (!userDetails.role().equals("ROLE_ADMIN")) {
             if (!product.getUser().getId().equals(userDetails.id()))
-                throw new BadRequestException("You cannot modify this product as it does not belong to you");
+                throw new ForbiddenException("You cannot modify this product as it does not belong to you");
         }
     }
 

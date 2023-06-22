@@ -5,6 +5,7 @@ import com.dh.digitalbooking.dto.user.UserFullDto;
 import com.dh.digitalbooking.dto.user.UserRequest;
 import com.dh.digitalbooking.dto.user.UserResponse;
 import com.dh.digitalbooking.entity.Product;
+import com.dh.digitalbooking.exception.ForbiddenException;
 import com.dh.digitalbooking.mapper.UserMapper;
 import com.dh.digitalbooking.exception.BadRequestException;
 import com.dh.digitalbooking.exception.NotFoundException;
@@ -48,7 +49,7 @@ public class UserServiceImp implements UserService {
         UserDetailsSlim userDetails = authenticationUserService.getUserDetailsFromAuthentication(authentication);
         if (!userDetails.role().equals("ROLE_ADMIN")) {
             if (!id.equals(userDetails.id()))
-                throw new BadRequestException("The provided user information does not match the currently authenticated user");
+                throw new ForbiddenException(" You do not have permission to access another user's account information");
         }
 
         return userMapper.userToUserFullDto(existById(id));

@@ -6,6 +6,7 @@ import com.dh.digitalbooking.dto.user.UserDetailsSlim;
 import com.dh.digitalbooking.entity.Booking;
 import com.dh.digitalbooking.entity.User;
 import com.dh.digitalbooking.exception.BadRequestException;
+import com.dh.digitalbooking.exception.ForbiddenException;
 import com.dh.digitalbooking.exception.NotFoundException;
 import com.dh.digitalbooking.entity.Product;
 import com.dh.digitalbooking.mapper.BookingMapper;
@@ -75,7 +76,7 @@ public class BookingServiceImp implements BookingService {
         UserDetailsSlim userDetails = authenticationUserService.getUserDetailsFromAuthentication(authentication);
         if (!userDetails.role().equals("ROLE_ADMIN")) {
             if (!booking.getUser().getId().equals(userDetails.id()))
-                throw new BadRequestException("The provided user information does not match the currently authenticated user");
+                throw new ForbiddenException("You cannot modify this booking as it does not belong to you");
         }
         bookingRepository.deleteById(id);
     }
