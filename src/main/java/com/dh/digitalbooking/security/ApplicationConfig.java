@@ -25,7 +25,7 @@ public class ApplicationConfig {
     @Bean
     public UserDetailsService userDetailsService(){
         return email -> userRespository.findByEmail(email)
-                .orElseThrow(ForbiddenException::new);
+                .orElseThrow(() -> new ForbiddenException("User not found"));
     }
 
     @Bean
