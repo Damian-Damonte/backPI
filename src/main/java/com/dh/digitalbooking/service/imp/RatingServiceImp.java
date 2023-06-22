@@ -6,6 +6,7 @@ import com.dh.digitalbooking.dto.rating.RatingUpdate;
 import com.dh.digitalbooking.dto.user.UserDetailsSlim;
 import com.dh.digitalbooking.entity.Rating;
 import com.dh.digitalbooking.exception.BadRequestException;
+import com.dh.digitalbooking.exception.ForbiddenException;
 import com.dh.digitalbooking.exception.NotFoundException;
 import com.dh.digitalbooking.entity.Product;
 import com.dh.digitalbooking.entity.User;
@@ -95,7 +96,7 @@ public class RatingServiceImp implements RatingService {
         UserDetailsSlim userDetails = authenticationUserService.getUserDetailsFromAuthentication(authentication);
         if (!userDetails.role().equals("ROLE_ADMIN")) {
             if (!rating.getUser().getId().equals(userDetails.id()))
-                throw new BadRequestException("You cannot modify this rating as it does not belong to you");
+                throw new ForbiddenException("You cannot modify this rating as it does not belong to you");
         }
     }
 }

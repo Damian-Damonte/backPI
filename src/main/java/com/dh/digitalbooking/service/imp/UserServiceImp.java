@@ -5,6 +5,7 @@ import com.dh.digitalbooking.dto.user.UserFullDto;
 import com.dh.digitalbooking.dto.user.UserRequest;
 import com.dh.digitalbooking.dto.user.UserResponse;
 import com.dh.digitalbooking.entity.Product;
+import com.dh.digitalbooking.entity.Rating;
 import com.dh.digitalbooking.exception.ForbiddenException;
 import com.dh.digitalbooking.mapper.UserMapper;
 import com.dh.digitalbooking.exception.BadRequestException;
@@ -81,8 +82,10 @@ public class UserServiceImp implements UserService {
 
     @Override
     @Transactional
-    public void deleteUser(Long id) {
+    public void deleteUser(Long id, Authentication authentication) {
         User user = existById(id);
+        canModifyUser(user, authentication);
+
         user.getFavorites().clear();
         user.getProducts().forEach(product -> {
             boolean anyActiveBooking = product.getBookings().stream().anyMatch(booking -> (booking.getCheckOut().isAfter(LocalDate.now()) || booking.getCheckOut().isEqual(LocalDate.now())));
@@ -93,8 +96,10 @@ public class UserServiceImp implements UserService {
 
     @Override
     @Transactional
-    public UserResponse updateUser(Long id, UserRequest userRequest) {
+    public UserResponse updateUser(Long id, UserRequest userRequest, Authentication authentication) {
         User user = existById(id);
+        canModifyUser(user, authentication);
+
         String email = userRequest.email();
         User userByEmail = userRespository.findByEmail(email).orElse(null);
         if (userByEmail != null && !(userByEmail.getId().equals(id)))
@@ -118,5 +123,13 @@ public class UserServiceImp implements UserService {
     public User existById(Long id) {
         return userRespository.findById(id).orElseThrow(() ->
                 new NotFoundException("User with id " + id + " not found"));
+    }
+
+    private void canModifyUser(User user, Authentication authentication) {
+        UserDetailsSlim userDetails = authenticationUserService.getUserDetailsFromAuthentication(authentication);
+        if (!userDetails.role().equals("ROLE_ADMIN")) {
+            if (!user.getId().equals(userDetails.id()))
+                throw new ForbiddenException("You cannot modify this user");
+        }
     }
 }

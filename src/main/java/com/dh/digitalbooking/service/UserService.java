@@ -13,8 +13,8 @@ public interface UserService {
     UserFullDto getUserById(Long id, Authentication authentication);
     User getUserByEmail(String email);
     User saveUser(UserRequest userRequest);
-    void deleteUser(Long id);
-    UserResponse updateUser(Long id, UserRequest userRequest);
+    void deleteUser(Long id, Authentication authentication);
+    UserResponse updateUser(Long id, UserRequest userRequest, Authentication authentication);
     User existById(Long id);
     void handleFav(Long productId, Authentication authentication);
 }

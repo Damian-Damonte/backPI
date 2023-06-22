@@ -35,8 +35,8 @@ public class UserController {
     @Operation(
             description = "When deleting a user, their bookings and ratings will also be deleted"
     )
-    public ResponseEntity<Void> deleteUser(@PathVariable Long id) {
-        userService.deleteUser(id);
+    public ResponseEntity<Void> deleteUser(@PathVariable Long id, Authentication authentication) {
+        userService.deleteUser(id, authentication);
         return ResponseEntity.noContent().build();
     }
 
@@ -45,8 +45,9 @@ public class UserController {
             description = "All attributes can be updated except for the password."
     )
     public ResponseEntity<UserResponse> updateUser(@PathVariable Long id,
-                                                   @RequestBody @Valid UserRequest userRequest) {
-        return ResponseEntity.ok(userService.updateUser(id, userRequest));
+                                                   @RequestBody @Valid UserRequest userRequest,
+                                                   Authentication authentication) {
+        return ResponseEntity.ok(userService.updateUser(id, userRequest, authentication));
     }
 
     @PostMapping("/favorites/{productId}")
