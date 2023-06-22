@@ -66,13 +66,13 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
 //          agregar logger
         } catch (MalformedJwtException ex) {
-            System.out.println("JWT mal formado");
+            System.out.println("JWT malformed");
             filterChain.doFilter(request, response);
         } catch (ExpiredJwtException ex) {
-            System.out.println("JWT expirado");
+            System.out.println("JWT expired");
             filterChain.doFilter(request, response);
         } catch (ForbiddenException ex) {
-            System.out.println("No se encontró al usuario");
+            System.out.println("User not found");
             filterChain.doFilter(request, response);
         }
     }

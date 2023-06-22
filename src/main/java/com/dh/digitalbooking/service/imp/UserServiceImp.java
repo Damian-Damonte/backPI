@@ -39,33 +39,33 @@ public class UserServiceImp implements UserService {
     }
 
     @Override
-    public List<UserResponse> allUsuario() {
+    public List<UserResponse> getAllUsers() {
         return userRespository.findAll().stream().map(userMapper::userToUserResponse).toList();
     }
 
     @Override
-    public UserFullDto getByIdUsuario(Long id, Authentication authentication) {
+    public UserFullDto getUserById(Long id, Authentication authentication) {
         UserDetailsSlim userDetails = authenticationUserService.getUserDetailsFromAuthentication(authentication);
         if (!userDetails.role().equals("ROLE_ADMIN")) {
             if (!id.equals(userDetails.id()))
-                throw new BadRequestException("La información del usuario proporcionado no coincide con el usuario actualmente autenticado");
+                throw new BadRequestException("The provided user information does not match the currently authenticated user");
         }
 
         return userMapper.userToUserFullDto(existById(id));
     }
 
     @Override
-    public User findByEmail(String email) {
+    public User getUserByEmail(String email) {
         return userRespository.findByEmail(email)
-                .orElseThrow(() -> new NotFoundException("User con email " + email + " no encontrado"));
+                .orElseThrow(() -> new NotFoundException("User with email " + email + " not found"));
     }
 
     @Override
     @Transactional
-    public User saveUsuario(UserRequest userRequest) {
+    public User saveUser(UserRequest userRequest) {
         String email = userRequest.email();
         if (userRespository.findByEmail(email).isPresent())
-            throw new BadRequestException("El email '" + email + "' ya se encuentra registrado");
+            throw new BadRequestException("The email '" + email + "' is already registered");
 
         User user = User.builder()
                 .firstName(userRequest.firstName())
@@ -80,7 +80,7 @@ public class UserServiceImp implements UserService {
 
     @Override
     @Transactional
-    public void deleteUsuario(Long id) {
+    public void deleteUser(Long id) {
         User user = existById(id);
         user.getFavorites().clear();
         user.getProducts().forEach(product -> {
@@ -92,12 +92,12 @@ public class UserServiceImp implements UserService {
 
     @Override
     @Transactional
-    public UserResponse updateUsuario(Long id, UserRequest userRequest) {
+    public UserResponse updateUser(Long id, UserRequest userRequest) {
         User user = existById(id);
         String email = userRequest.email();
         User userByEmail = userRespository.findByEmail(email).orElse(null);
         if (userByEmail != null && !(userByEmail.getId().equals(id)))
-            throw new BadRequestException("El email '" + email + "' ya se encuentra registrado");
+            throw new BadRequestException("The email '" + email + "' is already registered");
         user.setFirstName(userRequest.firstName());
         user.setLastName(userRequest.lastName());
         user.setEmail(userRequest.email());

@@ -27,7 +27,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     }
 
     public AuthResponse register(UserRequest userRequest) {
-        User user = userService.saveUsuario(userRequest);
+        User user = userService.saveUser(userRequest);
 
         String jwtToken = jwtService.generateToken(getClaims(user), user);
         return new AuthResponse(jwtToken);
@@ -40,7 +40,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
                         authRequest.password()
                 )
         );
-        User user = userService.findByEmail(authRequest.email());
+        User user = userService.getUserByEmail(authRequest.email());
         String jwtToken = jwtService.generateToken(getClaims(user) , user);
         return new AuthResponse(jwtToken);
     }

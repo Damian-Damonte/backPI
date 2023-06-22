@@ -23,30 +23,30 @@ public class UserController {
 
     @GetMapping
     public ResponseEntity<List<UserResponse>> getAllUsers() {
-        return ResponseEntity.ok(userService.allUsuario());
+        return ResponseEntity.ok(userService.getAllUsers());
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<UserFullDto> getUserById(@PathVariable("id") Long id, Authentication authentication) {
-        return ResponseEntity.ok(userService.getByIdUsuario(id, authentication));
+        return ResponseEntity.ok(userService.getUserById(id, authentication));
     }
 
     @DeleteMapping("/{id}")
     @Operation(
-            description = "Al eliminar un usuario se eliminarán automaticamente las reservas y puntuaciones relacionadas a este"
+            description = "When deleting a user, their bookings and ratings will also be deleted"
     )
     public ResponseEntity<Void> deleteUser(@PathVariable Long id) {
-        userService.deleteUsuario(id);
+        userService.deleteUser(id);
         return ResponseEntity.noContent().build();
     }
 
     @PutMapping("/{id}")
     @Operation(
-            description = "Se pueden actualizar todos los atributos excepto la contraseña. No es necesario enviar las reservas, ya que de todas formas no se pueden actualizar a través del usuario."
+            description = "All attributes can be updated except for the password."
     )
     public ResponseEntity<UserResponse> updateUser(@PathVariable Long id,
                                                    @RequestBody @Valid UserRequest userRequest) {
-        return ResponseEntity.ok(userService.updateUsuario(id, userRequest));
+        return ResponseEntity.ok(userService.updateUser(id, userRequest));
     }
 
     @PostMapping("/favorites/{productId}")

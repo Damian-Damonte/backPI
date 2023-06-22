@@ -9,12 +9,12 @@ import org.springframework.security.core.Authentication;
 import java.util.List;
 
 public interface UserService {
-    List<UserResponse> allUsuario();
-    UserFullDto getByIdUsuario(Long id, Authentication authentication);
-    User findByEmail(String email);
-    User saveUsuario(UserRequest userRequest);
-    void deleteUsuario(Long id);
-    UserResponse updateUsuario(Long id, UserRequest userRequest);
+    List<UserResponse> getAllUsers();
+    UserFullDto getUserById(Long id, Authentication authentication);
+    User getUserByEmail(String email);
+    User saveUser(UserRequest userRequest);
+    void deleteUser(Long id);
+    UserResponse updateUser(Long id, UserRequest userRequest);
     User existById(Long id);
     void handleFav(Long productId, Authentication authentication);
 }

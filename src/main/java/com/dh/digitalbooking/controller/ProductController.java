@@ -62,7 +62,7 @@ public class ProductController {
 
     @DeleteMapping("/{id}")
     @Operation(description = "When deleting the product, its images, ratings, and policies will be automatically deleted as well. " +
-            "The product cannot be deleted if it has any reservations.")
+            "The product cannot be deleted if it has any active reservations.")
     public ResponseEntity<Void> deleteProduct(@PathVariable Long id, Authentication authentication) {
         productoService.deleteProduct(id, authentication);
         return ResponseEntity.noContent().build();

@@ -3,6 +3,7 @@ package com.dh.digitalbooking.controller;
 import com.dh.digitalbooking.dto.city.CityFullDto;
 import com.dh.digitalbooking.dto.city.CityRequest;
 import com.dh.digitalbooking.service.CityService;
+import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -34,6 +35,7 @@ public class CityController {
     }
 
     @DeleteMapping("/{id}")
+    @Operation(description = "You cannot delete a city if a product is registered in it.")
     public ResponseEntity<Void> deleteCity(@PathVariable Long id) {
         cityService.deleteCity(id);
         return ResponseEntity.noContent().build();
