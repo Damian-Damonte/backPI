@@ -7,6 +7,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDate;
+import java.util.List;
 
 @Repository
 @Transactional(readOnly = true)
@@ -22,4 +23,6 @@ public interface BookingRepository extends JpaRepository<Booking, Long> {
     boolean existsBookingsByDates(@Param("productId") Long productId,
                                  @Param("checkIn") LocalDate checkIn,
                                  @Param("checkOut") LocalDate checkOut);
+
+    List<Booking> getBookingByUserId(Long id);
 }

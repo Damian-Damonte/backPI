@@ -30,6 +30,12 @@ public class BookingController {
         return ResponseEntity.ok(bookingService.getBookingById(id));
     }
 
+    @GetMapping("/user/{id}")
+    public ResponseEntity<List<BookingResponse>> getBookingByUserId(@PathVariable("id") Long id,
+                                                                    Authentication authentication) {
+        return ResponseEntity.ok(bookingService.getBookingsByUserId(id, authentication));
+    }
+
     @PostMapping
     public ResponseEntity<BookingResponse> saveBooking(
                 @RequestBody @Valid BookingRequest bookingRequest, Authentication authentication){

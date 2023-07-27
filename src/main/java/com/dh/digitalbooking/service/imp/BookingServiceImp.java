@@ -46,6 +46,17 @@ public class BookingServiceImp implements BookingService {
     }
 
     @Override
+    public List<BookingResponse> getBookingsByUserId(Long id, Authentication authentication) {
+        UserDetailsSlim userDetails = authenticationUserService.getUserDetailsFromAuthentication(authentication);
+        if (!userDetails.role().equals("ROLE_ADMIN")) {
+            if (!id.equals(userDetails.id()))
+                throw new ForbiddenException("You cannot see the bookings of this user");
+        }
+
+        return bookingRepository.getBookingByUserId(id).stream().map(bookingMapper::bookingToBookingResponse).toList();
+    }
+
+    @Override
     public BookingResponse getBookingById(Long id) {
         return bookingMapper.bookingToBookingResponse(existByIdValidation(id));
     }
@@ -64,7 +75,6 @@ public class BookingServiceImp implements BookingService {
 
         product.getBookings().add(booking);
         user.setCity(bookingRequest.userCity());
-//        user.getBookings().add(booking);
 
         return bookingMapper.bookingToBookingResponse(bookingRepository.save(booking));
     }
