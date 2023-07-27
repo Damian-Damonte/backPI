@@ -46,19 +46,20 @@ public class BookingServiceImp implements BookingService {
     }
 
     @Override
+    public BookingResponse getBookingById(Long id) {
+        return bookingMapper.bookingToBookingResponse(existByIdValidation(id));
+    }
+
+    @Override
     public List<BookingResponse> getBookingsByUserId(Long id, Authentication authentication) {
         UserDetailsSlim userDetails = authenticationUserService.getUserDetailsFromAuthentication(authentication);
         if (!userDetails.role().equals("ROLE_ADMIN")) {
             if (!id.equals(userDetails.id()))
                 throw new ForbiddenException("You cannot see the bookings of this user");
         }
+        userService.existById(id);
 
         return bookingRepository.getBookingByUserId(id).stream().map(bookingMapper::bookingToBookingResponse).toList();
-    }
-
-    @Override
-    public BookingResponse getBookingById(Long id) {
-        return bookingMapper.bookingToBookingResponse(existByIdValidation(id));
     }
 
     @Override
