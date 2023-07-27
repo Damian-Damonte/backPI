@@ -1,6 +1,7 @@
 package com.dh.digitalbooking.dto.booking;
 
 import com.dh.digitalbooking.dto.common.OnlyId;
+import com.dh.digitalbooking.dto.product.ProductResponse;
 import jakarta.validation.constraints.FutureOrPresent;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -32,6 +33,6 @@ public record BookingResponse(
         @NotNull(message = "User is required")
         OnlyId user,
         @NotNull(message = "Product is required")
-        OnlyId product
+        ProductResponse product
 ) {
 }
