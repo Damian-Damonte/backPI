@@ -64,7 +64,7 @@ public class BookingServiceImp implements BookingService {
 
         product.getBookings().add(booking);
         user.setCity(bookingRequest.userCity());
-        user.getBookings().add(booking);
+//        user.getBookings().add(booking);
 
         return bookingMapper.bookingToBookingResponse(bookingRepository.save(booking));
     }

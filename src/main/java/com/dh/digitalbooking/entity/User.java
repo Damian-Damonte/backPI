@@ -41,9 +41,6 @@ public class User implements UserDetails {
     @Column(nullable = false)
     private Role role;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE, orphanRemoval = true)
-    List<Booking> bookings = new ArrayList<>();
-
     @OneToMany(cascade = CascadeType.REMOVE, orphanRemoval = true, mappedBy = "user")
     private Set<Rating> ratings = new HashSet<>();
 

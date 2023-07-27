@@ -5,7 +5,6 @@ import com.dh.digitalbooking.dto.user.UserFullDto;
 import com.dh.digitalbooking.dto.user.UserRequest;
 import com.dh.digitalbooking.dto.user.UserResponse;
 import com.dh.digitalbooking.entity.Product;
-import com.dh.digitalbooking.entity.Rating;
 import com.dh.digitalbooking.exception.ForbiddenException;
 import com.dh.digitalbooking.mapper.UserMapper;
 import com.dh.digitalbooking.exception.BadRequestException;
@@ -104,6 +103,7 @@ public class UserServiceImp implements UserService {
         User userByEmail = userRespository.findByEmail(email).orElse(null);
         if (userByEmail != null && !(userByEmail.getId().equals(id)))
             throw new BadRequestException("The email '" + email + "' is already registered");
+
         user.setFirstName(userRequest.firstName());
         user.setLastName(userRequest.lastName());
         user.setEmail(userRequest.email());
